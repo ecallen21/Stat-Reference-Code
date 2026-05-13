@@ -28,6 +28,141 @@ runnable example.
 - R: `Rscript techniques/<name>/r/<name>.R`
 - PySpark: `python techniques/<name>/pyspark/<name>.py` (needs a local Spark install)
 
+## Loading data
+
+The examples in each technique file use small inline sample data so the script
+is self-contained. To run the same technique on a real dataset, load the data
+with your language's standard tools and pass the relevant **column** (a 1-D
+sample) to the from-scratch / library function. Below is the boilerplate for
+each common format in each language.
+
+### Python (pandas / numpy)
+
+The from-scratch functions accept any sequence (Python list, numpy array,
+pandas `Series`, etc.). The library helpers use numpy/scipy directly.
+
+```python
+import pandas as pd
+import numpy as np
+from techniques.central_tendency.python.central_tendency import arithmetic_mean, geometric_mean
+
+# --- CSV / TSV ------------------------------------------------------------
+df = pd.read_csv("data.csv")                       # default comma-separated
+df = pd.read_csv("data.tsv", sep="\t")
+df = pd.read_csv("data.csv", parse_dates=["date_col"])
+
+# --- Excel ----------------------------------------------------------------
+df = pd.read_excel("data.xlsx", sheet_name="Sheet1")     # needs `openpyxl`
+
+# --- Parquet (preferred for large, typed datasets) ------------------------
+df = pd.read_parquet("data.parquet")                     # needs `pyarrow` or `fastparquet`
+
+# --- SQL database ---------------------------------------------------------
+from sqlalchemy import create_engine
+engine = create_engine("postgresql://user:pwd@host/db")  # or sqlite:///file.db
+df = pd.read_sql("SELECT income FROM households WHERE year = 2024", engine)
+
+# --- Plain text / numpy ---------------------------------------------------
+arr = np.loadtxt("values.txt")                            # one number per line
+arr = np.genfromtxt("data.csv", delimiter=",", skip_header=1)  # missing values -> NaN
+
+# --- Pass a column into a technique function ------------------------------
+x = df["income"].dropna().to_numpy()                     # drop NA before stats!
+arithmetic_mean(x)
+geometric_mean(x[x > 0])                                  # geometric mean needs x > 0
+```
+
+### R
+
+Base R covers CSV/TSV; `readr`, `readxl`, `arrow`, and `DBI` cover the rest.
+Pass a column with `df$col_name` or `df[["col_name"]]`.
+
+```r
+# --- CSV / TSV (base R; comma-separated assumed) --------------------------
+df <- read.csv("data.csv", stringsAsFactors = FALSE)
+df <- read.delim("data.tsv")                              # tab-separated
+
+# --- Tidyverse / readr (faster, better defaults) --------------------------
+library(readr)
+df <- read_csv("data.csv")                                # auto-detects types
+df <- read_tsv("data.tsv")
+
+# --- Excel ----------------------------------------------------------------
+library(readxl)
+df <- read_excel("data.xlsx", sheet = "Sheet1")
+
+# --- Parquet --------------------------------------------------------------
+library(arrow)
+df <- read_parquet("data.parquet")
+
+# --- SQL database ---------------------------------------------------------
+library(DBI); library(RPostgres)                          # or RSQLite, odbc, etc.
+con <- dbConnect(Postgres(), dbname = "db", host = "host", user = "u", password = "p")
+df  <- dbGetQuery(con, "SELECT income FROM households WHERE year = 2024")
+dbDisconnect(con)
+
+# --- Built-in datasets (handy for testing) --------------------------------
+data(iris); data(mtcars)
+
+# --- Pass a column into a technique function ------------------------------
+source("techniques/central-tendency/r/central_tendency.R")
+x <- na.omit(df$income)                                   # drop NAs first
+arithmetic_mean(x)
+geometric_mean_scratch(x[x > 0])
+```
+
+### PySpark
+
+The PySpark functions in this repo take a `DataFrame` and the name of the
+column(s) to summarize -- no need to collect the data to the driver.
+
+```python
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+
+spark = SparkSession.builder.master("local[*]").appName("loader").getOrCreate()
+
+# --- CSV (single file or a directory of files) ----------------------------
+df = (spark.read
+        .option("header", True)
+        .option("inferSchema", True)
+        .csv("data.csv"))                                  # or "s3a://bucket/path/*.csv"
+
+# --- Parquet (preferred -- columnar, typed, splittable) -------------------
+df = spark.read.parquet("data.parquet")                    # or a directory
+
+# --- JSON, ORC, Avro ------------------------------------------------------
+df = spark.read.json("data.json")
+df = spark.read.orc("data.orc")
+
+# --- JDBC (SQL databases) -------------------------------------------------
+df = (spark.read.format("jdbc")
+        .option("url", "jdbc:postgresql://host/db")
+        .option("dbtable", "households")
+        .option("user", "u").option("password", "p")
+        .load())
+
+# --- Hive / catalog tables (in a Spark cluster with a metastore) ----------
+df = spark.table("default.households")
+df = spark.sql("SELECT income FROM default.households WHERE year = 2024")
+
+# --- From a local pandas DataFrame (great for unit tests) -----------------
+import pandas as pd
+df = spark.createDataFrame(pd.read_csv("data.csv"))
+
+# --- Drop nulls before stats and pass into a technique function -----------
+from techniques.central_tendency.pyspark.central_tendency import central_tendency
+df = df.filter(F.col("income").isNotNull())
+result = central_tendency(df, col="income")
+```
+
+**A few practical notes**
+
+- **Missing values**: handle them *before* you summarize. Python: `df["col"].dropna()`; R: `na.omit(df$col)` or `complete.cases()`; PySpark: `df.filter(F.col("c").isNotNull())` or `df.na.drop(subset=["c"])`.
+- **Numeric coercion**: if a column was read as text (common with CSV), cast it first. Python: `pd.to_numeric(s, errors="coerce")`; R: `as.numeric()`; PySpark: `F.col("c").cast("double")`.
+- **Large data**: read Parquet, not CSV — typed, columnar, splittable across a Spark cluster. CSV is fine for small files (< ~1 GB) and easy interop.
+- **Bridging Spark ↔ pandas**: small results — `df.toPandas()`; medium — `df.limit(n).toPandas()`; large — keep it in Spark and use the `pyspark/` variant of the technique.
+
 ## Notation & Conventions
 
 These names mean the same thing in every file unless a function's own docstring overrides them.
