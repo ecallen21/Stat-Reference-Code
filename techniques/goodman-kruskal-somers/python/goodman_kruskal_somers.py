@@ -108,6 +108,68 @@ def all_ordinal_associations(table) -> dict:
             "kendall_tau_b": kendall_tau_b_table(table)}
 
 
+# ===========================================================================
+# Goodman-Kruskal lambda and Goodman-Kruskal tau (NOMINAL measures)
+#
+# These are proportional-reduction-in-error (PRE) measures: by how much does
+# knowing X reduce the error in predicting Y? They are NOT ordinal -- you can
+# permute rows/columns and the value doesn't change.
+#
+# Lambda(y | x)   "mode-based" PRE
+#   P_e        = 1 - max_y(n_{.y}/N)                  prob of error without X
+#   P_{e|X}    = (N - sum_x max_y n_{xy}) / N         prob of error given X
+#   lambda     = (P_e - P_{e|X}) / P_e
+#
+# Tau(y | x)      "variance-based" PRE (Goodman-Kruskal's *own* tau)
+#   V_y        = 1 - sum_y (n_{.y}/N)^2               Gini variance of Y
+#   V_{y|X}    = 1 - sum_x (n_{x.}/N) sum_y (n_{xy}/n_{x.})^2
+#   tau        = (V_y - V_{y|X}) / V_y
+#
+# Both are asymmetric (direction matters). Symmetric versions exist; we don't
+# need them here. Note: G-K tau is *unrelated* to Kendall's tau!
+# ===========================================================================
+def gk_lambda(table, predict: str = "y_given_x") -> float:
+    """Goodman-Kruskal lambda: PRE measure for nominal categorical data.
+
+    ``predict``:
+      "y_given_x"  -- reduction in error predicting column from row
+      "x_given_y"  -- reduction in error predicting row from column
+    """
+    obs = np.asarray(table, dtype=float)
+    if predict == "x_given_y":
+        obs = obs.T
+    elif predict != "y_given_x":
+        raise ValueError("predict must be 'y_given_x' or 'x_given_y'")
+    N = obs.sum()
+    col_tot = obs.sum(axis=0)
+    P_e = 1.0 - col_tot.max() / N
+    # error given X: for each row x, the modal column predicts; misses = n_x. - max_y n_xy
+    P_e_given_x = (N - obs.max(axis=1).sum()) / N
+    return (P_e - P_e_given_x) / P_e if P_e > 0 else float("nan")
+
+
+def gk_tau(table, predict: str = "y_given_x") -> float:
+    """Goodman-Kruskal tau: variance-based PRE for nominal data.
+
+    Independent of Kendall's tau-b despite the unfortunate name overlap.
+    """
+    obs = np.asarray(table, dtype=float)
+    if predict == "x_given_y":
+        obs = obs.T
+    elif predict != "y_given_x":
+        raise ValueError("predict must be 'y_given_x' or 'x_given_y'")
+    N = obs.sum()
+    row_tot = obs.sum(axis=1)
+    col_tot = obs.sum(axis=0)
+    V_y = 1 - float(np.sum((col_tot / N) ** 2))
+    # V_{y|X}
+    V_y_given_x = 0.0
+    for i, ri in enumerate(row_tot):
+        if ri == 0: continue
+        V_y_given_x += (ri / N) * (1 - np.sum((obs[i, :] / ri) ** 2))
+    return (V_y - V_y_given_x) / V_y if V_y > 0 else float("nan")
+
+
 if __name__ == "__main__":
     # Strong positive ordinal association: rows = education, cols = income tier
     table = np.array([
@@ -119,3 +181,10 @@ if __name__ == "__main__":
     print(table)
     for k, v in all_ordinal_associations(table).items():
         print(f"  {k:24s}: {v}")
+
+    print("\n=== Nominal PRE measures on the SAME table ===")
+    print(f"  G-K lambda  (y|x): {gk_lambda(table, 'y_given_x'):+.4f}")
+    print(f"  G-K lambda  (x|y): {gk_lambda(table, 'x_given_y'):+.4f}")
+    print(f"  G-K tau     (y|x): {gk_tau(table, 'y_given_x'):+.4f}")
+    print(f"  G-K tau     (x|y): {gk_tau(table, 'x_given_y'):+.4f}")
+    print("  (G-K tau != Kendall's tau-b -- it's a PRE / variance reduction measure.)")

@@ -88,6 +88,45 @@ def mutual_information_binned(x, y, bins=None, base: float = 2.0) -> dict:
     return out
 
 
+def maximal_information_coefficient(x, y, alpha: float = 0.6, c: float = 15.0) -> dict:
+    """Maximal Information Coefficient (Reshef et al. 2011).
+
+    MIC searches over many (bx, by) bin partitions and returns the maximum
+    NORMALIZED mutual information:
+        MIC = max_{bx * by < B(n)}  I(X; Y; bx, by) / log2( min(bx, by) )
+    with B(n) = n^alpha. The intuition: try lots of grids; report the best
+    normalized score. Designed to be "equitable" across functional forms --
+    a noisy line, a parabola, and a sinusoid of the same noise level should
+    give similar MIC.
+
+    Parameters
+    ----------
+    x, y  : continuous numeric vectors.
+    alpha : exponent in the grid budget B(n) = n^alpha (default 0.6, per
+            the original paper).
+    c     : not used here (kept for API similarity to `minepy`).
+
+    This is a simple grid-search reference implementation. The original paper's
+    approximation algorithm (ApproxMaxMI) is faster; install ``minepy`` for it.
+    """
+    x = np.asarray(x, dtype=float); y = np.asarray(y, dtype=float)
+    n = len(x)
+    B = int(max(4, n ** alpha))
+    best = 0.0; best_grid = (2, 2)
+    for bx in range(2, B + 1):
+        for by in range(2, B + 1):
+            if bx * by > B: continue
+            xb = np.digitize(x, np.linspace(x.min(), x.max(), bx + 1)[1:-1])
+            yb = np.digitize(y, np.linspace(y.min(), y.max(), by + 1)[1:-1])
+            mi = mutual_information_discrete(xb.tolist(), yb.tolist(), base=2.0)["I_xy"]
+            norm = math.log2(min(bx, by))
+            if norm > 0:
+                val = mi / norm
+                if val > best:
+                    best = val; best_grid = (bx, by)
+    return {"MIC": min(1.0, best), "grid": best_grid, "B": B, "n": n}
+
+
 def library_versions(x, y):
     from sklearn.metrics import mutual_info_score, normalized_mutual_info_score
     # sklearn versions use natural log
@@ -112,6 +151,13 @@ if __name__ == "__main__":
     for k, v in mutual_information_binned(xc, yc).items():
         print(f"  {k:14s}: {v}")
     print(f"  Pearson r = {np.corrcoef(xc, yc)[0,1]:.4f}  (linear-only measure)")
+
+    print("\n=== MIC (Maximal Information Coefficient) on the same continuous data ===")
+    mic_res = maximal_information_coefficient(xc, yc, alpha=0.6)
+    for k, v in mic_res.items():
+        print(f"  {k:14s}: {v}")
+    print("  (MIC is substantial despite Pearson r ~ 0; tighter values usually need")
+    print("   the paper's optimization heuristic -- install 'minepy' for that.)")
 
     print("\n--- library (sklearn) ---")
     for k, v in library_versions(x.tolist(), y.tolist()).items():

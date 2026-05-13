@@ -433,7 +433,18 @@ Building in batches; we walk through each batch together before moving on.
 | 9 | [concordance-correlation](techniques/concordance-correlation) (Lin's CCC) | 4.9 | ✅ | ✅ | N/A |
 | 10 | [cramers-v-phi](techniques/cramers-v-phi) (+ Bergsma bias correction) | 4.10 | ✅ | ✅ | N/A |
 | 11 | [goodman-kruskal-somers](techniques/goodman-kruskal-somers) (γ, Somers' D, τ-b on tables) | 4.11, 4.12 | ✅ | ✅ | N/A |
-| 12 | [mutual-information](techniques/mutual-information) (discrete + binned continuous) | 4.14 | ✅ | ✅ | N/A |
+| 12 | [mutual-information](techniques/mutual-information) (discrete + binned + MIC) | 4.14, 4.15 | ✅ | ✅ | N/A |
+
+### Cleanup pass (Batch 3.5) — backfills for Batches 2 & 3
+
+| Addition | Where | Ref §|
+|----------|-------|------|
+| Scheffé's method (arbitrary contrasts) + Tamhane T2 + Dunnett T3 | extends `post-hoc-tests` | 3.12, 3.37 |
+| [wald-lrt-score](techniques/wald-lrt-score) — Wald, LRT, Score (Rao) tests | new | 3.18, 3.30, 3.31, 3.33 |
+| [delta-method](techniques/delta-method) — SE/CI for a function of estimates | new | 3.29 |
+| Goodman–Kruskal λ and G-K τ (nominal PRE measures) | extends `goodman-kruskal-somers` | 4.11 |
+| [eta-correlation-ratio](techniques/eta-correlation-ratio) — η between categorical X and continuous Y | new | 4.13 |
+| MIC (Maximal Information Coefficient) | extends `mutual-information` | 4.15 |
 
 Later batches will cover the remaining chapters (Regression, GLMs, Nonparametric
 Methods, Survival, Time Series, Bayesian, Causal Inference, ML, ...).

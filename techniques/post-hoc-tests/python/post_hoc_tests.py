@@ -144,6 +144,115 @@ def games_howell(groups: Sequence[Sequence[float]], labels=None, conf: float = 0
     return out
 
 
+def scheffe(groups: Sequence[Sequence[float]], contrasts=None, labels=None,
+            conf: float = 0.95):
+    """Scheffe's method for arbitrary linear contrasts among group means.
+
+    Parameters
+    ----------
+    groups : list of per-group samples.
+    contrasts : list of contrast vectors ``c = (c_1, ..., c_k)`` with ``sum(c) = 0``.
+        Default: all pairwise contrasts.
+    labels : group labels.
+    conf : confidence level.
+
+    For a contrast ``L = sum c_i * mean_i``, the test statistic is
+        F = L^2 / ((k - 1) * MS_w * sum(c_i^2 / n_i))   ~  F(k-1, N-k)
+    and L is "Scheffe-significant" iff F exceeds the F critical value.
+    Equivalently the simultaneous-CI half-width is
+        sqrt((k - 1) * F_{k-1, N-k, alpha}) * SE(L).
+    Scheffe controls FWER across **all** contrasts (not just pairwise) -- so it's
+    the right tool when you want to roam over arbitrary linear combinations.
+    """
+    labels = labels or list(range(len(groups)))
+    stats_ = [_stats(g) for g in groups]
+    ns = [s[0] for s in stats_]; means = [s[1] for s in stats_]
+    N = sum(ns); k = len(ns); df_w = N - k
+    ms_w = sum((n - 1) * s2 for (n, _, s2) in stats_) / df_w
+
+    if contrasts is None:
+        contrasts = []
+        for i, j in combinations(range(k), 2):
+            c = [0.0] * k; c[i] = 1.0; c[j] = -1.0
+            contrasts.append(c)
+
+    alpha = 1 - conf
+    f_crit = stats.f.ppf(1 - alpha, k - 1, df_w)
+    out = []
+    for c in contrasts:
+        if abs(sum(c)) > 1e-9:
+            raise ValueError(f"contrast {c} does not sum to zero")
+        L = sum(ci * m for ci, m in zip(c, means))
+        se = math.sqrt(ms_w * sum(ci ** 2 / n for ci, n in zip(c, ns)))
+        F = (L * L) / ((k - 1) * se * se) if se > 0 else float("inf")
+        p_adj = float(stats.f.sf(F, k - 1, df_w))
+        margin = math.sqrt((k - 1) * f_crit) * se
+        out.append({"contrast": c, "L": L, "se": se,
+                    "F": F, "df1": k - 1, "df2": df_w, "p_adj": p_adj,
+                    "ci_lower": L - margin, "ci_upper": L + margin,
+                    "labels": labels})
+    return out
+
+
+def tamhane_t2(groups: Sequence[Sequence[float]], labels=None, conf: float = 0.95):
+    """Tamhane's T2: Welch-style pairwise t-tests with Sidak correction.
+
+    Robust to unequal variances. Slightly conservative; less powerful than
+    Games-Howell when group sizes are reasonably large.
+    """
+    labels = labels or list(range(len(groups)))
+    stats_ = [_stats(g) for g in groups]
+    k = len(stats_); m = k * (k - 1) // 2     # number of pairwise comparisons
+    out = []
+    for i, j in combinations(range(k), 2):
+        ni, mi, vi = stats_[i]; nj, mj, vj = stats_[j]
+        diff = mi - mj
+        se = math.sqrt(vi / ni + vj / nj)
+        df = (vi / ni + vj / nj) ** 2 / (
+            (vi / ni) ** 2 / (ni - 1) + (vj / nj) ** 2 / (nj - 1)
+        )
+        t = diff / se
+        p_raw = 2 * stats.t.sf(abs(t), df)
+        # Sidak across the m comparisons
+        p_adj = min(1.0, 1.0 - (1.0 - p_raw) ** m)
+        out.append({"pair": (labels[i], labels[j]), "mean_diff": diff,
+                    "se": se, "df": df, "t": t, "p_raw": p_raw,
+                    "p_adj": p_adj, "method": "Tamhane T2 (Welch + Sidak)"})
+    return out
+
+
+def dunnett_t3(groups: Sequence[Sequence[float]], labels=None, conf: float = 0.95):
+    """Dunnett's T3: Welch-style pairwise tests with studentized maximum modulus crit.
+
+    Like Games-Howell, but uses the studentized maximum modulus distribution
+    instead of the studentized range -- slightly more conservative. Reported
+    here via the same studentized-range form for simplicity, with a note; for
+    the exact T3 critical value use ``PMCMRplus`` (R) or ``scikit-posthocs``
+    (Python).
+    """
+    labels = labels or list(range(len(groups)))
+    stats_ = [_stats(g) for g in groups]
+    k = len(stats_); m = k * (k - 1) // 2
+    out = []
+    for i, j in combinations(range(k), 2):
+        ni, mi, vi = stats_[i]; nj, mj, vj = stats_[j]
+        diff = mi - mj
+        se = math.sqrt(vi / ni + vj / nj)
+        df = (vi / ni + vj / nj) ** 2 / (
+            (vi / ni) ** 2 / (ni - 1) + (vj / nj) ** 2 / (nj - 1)
+        )
+        t = diff / se
+        p_raw = 2 * stats.t.sf(abs(t), df)
+        # Approximate T3 via Sidak on the m pairwise tests (close to the exact
+        # studentized-maximum-modulus form for moderate m and df)
+        p_adj = min(1.0, 1.0 - (1.0 - p_raw) ** m)
+        out.append({"pair": (labels[i], labels[j]), "mean_diff": diff,
+                    "se": se, "df": df, "t": t, "p_raw": p_raw,
+                    "p_adj": p_adj,
+                    "method": "Dunnett T3 (Welch + studentized max modulus; approx via Sidak)"})
+    return out
+
+
 def library_versions(groups, labels):
     from scipy.stats import tukey_hsd as scipy_tukey
     res = scipy_tukey(*groups)
@@ -173,6 +282,23 @@ if __name__ == "__main__":
     print("\n=== Games-Howell (unequal-variance) ===")
     for r in games_howell(groups, labels):
         print(f"  {r['pair']}: diff={r['mean_diff']:+.3f}  df={r['df']:.1f}  p_adj={r['p_adj']:.4f}")
+
+    print("\n=== Scheffe (default = all pairwise) ===")
+    for r in scheffe(groups, labels=labels):
+        active = [(labels[i], c) for i, c in enumerate(r["contrast"]) if c != 0]
+        print(f"  {active}: L={r['L']:+.3f}  F={r['F']:.3f}  p_adj={r['p_adj']:.4f}")
+    print("  Scheffe also handles arbitrary contrasts, e.g. (A+B)/2 vs (C+D)/2:")
+    custom = [[0.5, 0.5, -0.5, -0.5]]
+    for r in scheffe(groups, contrasts=custom, labels=labels):
+        print(f"  contrast {r['contrast']}: L={r['L']:+.3f}  F={r['F']:.3f}  p_adj={r['p_adj']:.4f}")
+
+    print("\n=== Tamhane T2 (Welch + Sidak) ===")
+    for r in tamhane_t2(groups, labels):
+        print(f"  {r['pair']}: diff={r['mean_diff']:+.3f}  p_raw={r['p_raw']:.4f}  p_adj={r['p_adj']:.4f}")
+
+    print("\n=== Dunnett T3 (Welch + studentized max modulus, approx) ===")
+    for r in dunnett_t3(groups, labels):
+        print(f"  {r['pair']}: diff={r['mean_diff']:+.3f}  p_raw={r['p_raw']:.4f}  p_adj={r['p_adj']:.4f}")
 
     print("\n--- library (scipy.stats.tukey_hsd) ---")
     for k, v in library_versions(groups, labels).items():

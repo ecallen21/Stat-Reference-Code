@@ -44,7 +44,25 @@ mutual_information_binned_scratch <- function(x, y, bins = NULL, base = 2) {
   out$bins_x <- bx; out$bins_y <- by; out
 }
 
-# Library: infotheo::mutinformation, entropy::mi.empirical, mpmi::mmi
+maximal_information_coefficient_scratch <- function(x, y, alpha = 0.6) {
+  n <- length(x); B <- max(4, floor(n^alpha))
+  best <- 0; best_grid <- c(2, 2)
+  for (bx in 2:B) for (by in 2:B) {
+    if (bx * by > B) next
+    xb <- cut(x, breaks = bx, labels = FALSE, include.lowest = TRUE)
+    yb <- cut(y, breaks = by, labels = FALSE, include.lowest = TRUE)
+    mi <- mutual_information_discrete_scratch(xb, yb, base = 2)$I_xy
+    norm <- log2(min(bx, by))
+    if (norm > 0) {
+      val <- mi / norm
+      if (val > best) { best <- val; best_grid <- c(bx, by) }
+    }
+  }
+  list(MIC = min(1, best), grid = best_grid, B = B, n = n)
+}
+
+# Library: infotheo::mutinformation, entropy::mi.empirical, mpmi::mmi,
+#          minerva::mine (the canonical MIC implementation in R)
 library_demo <- function(x, y) {
   if (requireNamespace("infotheo", quietly = TRUE)) {
     cat("infotheo::mutinformation:", infotheo::mutinformation(x, y), " nats\n")
@@ -63,5 +81,7 @@ if (sys.nframe() == 0) {
   xc <- rnorm(500); yc <- xc^2 + rnorm(500, 0, 0.2)
   print(mutual_information_binned_scratch(xc, yc))
   cat("Pearson r:", cor(xc, yc), "\n")
+  cat("\n=== MIC on the quadratic ===\n")
+  print(maximal_information_coefficient_scratch(xc, yc))
   cat("\n--- library ---\n"); library_demo(x, y)
 }

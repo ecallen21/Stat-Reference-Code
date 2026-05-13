@@ -30,7 +30,13 @@ There's no single canonical estimator. Options:
 
 ## Maximal Information Coefficient (MIC)
 
-Reshef et al. (2011). Searches over many bin grids and returns the max normalized MI, rescaled to `[0, 1]`. Designed to be "equitable" across functional forms. Implemented in the `minepy` package (Python and R bindings). **Not** implemented in this file — install `minepy` if you need it; the README notes the existence so you don't reinvent it.
+Reshef et al. (2011). Searches over many `(bx, by)` bin grids subject to a budget `bx · by < B(n) = n^α` (default α = 0.6), and returns
+
+`MIC = max_{bx·by < B(n)} I(X; Y; bx, by) / log₂(min(bx, by))`
+
+rescaled to `[0, 1]`. Designed to be "equitable" — a noisy line, parabola, and sinusoid with the same noise level should give similar MIC values.
+
+A **simple grid-search implementation** is included here (`maximal_information_coefficient`). It's `O(B²)` and roughly matches the paper's MIC on smooth functions but is slower / slightly less optimized than the **ApproxMaxMI** heuristic in the paper. For production use, install **`minepy`** (Python) or **`minerva`** (R) — both wrap the original ApproxMaxMI C library.
 
 ## Files
 - `python/mutual_information.py` — from-scratch discrete MI + entropy + all three NMI variants; binning helper for continuous data with Freedman–Diaconis defaults; compares against `sklearn.metrics.mutual_info_score` and `normalized_mutual_info_score`. Demo shows the killer use case: `y = x² + noise` has Pearson `r ≈ 0` but `NMI ≈ 0.48`.

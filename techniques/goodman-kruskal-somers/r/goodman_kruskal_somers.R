@@ -47,8 +47,35 @@ all_ordinal_associations <- function(table) {
        kendall_tau_b = kendall_tau_b_table(table))
 }
 
+# --- Goodman-Kruskal nominal PRE measures ---------------------------------
+# lambda(y|x): PRE for predicting Y from X via the mode rule
+gk_lambda <- function(table, predict = "y_given_x") {
+  obs <- as.matrix(table)
+  if (predict == "x_given_y") obs <- t(obs)
+  else if (predict != "y_given_x") stop("predict must be 'y_given_x' or 'x_given_y'")
+  N <- sum(obs); col_tot <- colSums(obs)
+  P_e <- 1 - max(col_tot) / N
+  P_e_given_x <- (N - sum(apply(obs, 1, max))) / N
+  if (P_e > 0) (P_e - P_e_given_x) / P_e else NA_real_
+}
+
+# tau(y|x): variance-based PRE; "Goodman-Kruskal tau" is NOT Kendall's tau
+gk_tau <- function(table, predict = "y_given_x") {
+  obs <- as.matrix(table)
+  if (predict == "x_given_y") obs <- t(obs)
+  else if (predict != "y_given_x") stop("predict must be 'y_given_x' or 'x_given_y'")
+  N <- sum(obs); row_tot <- rowSums(obs); col_tot <- colSums(obs)
+  V_y <- 1 - sum((col_tot / N)^2)
+  V_y_given_x <- 0
+  for (i in seq_along(row_tot)) {
+    if (row_tot[i] == 0) next
+    V_y_given_x <- V_y_given_x + (row_tot[i] / N) * (1 - sum((obs[i, ] / row_tot[i])^2))
+  }
+  if (V_y > 0) (V_y - V_y_given_x) / V_y else NA_real_
+}
+
 # Library: DescTools::GoodmanKruskalGamma, DescTools::SomersDelta,
-#          DescTools::KendallTauB (also rcompanion::cliffDelta, etc.)
+#          DescTools::KendallTauB, DescTools::Lambda, DescTools::GoodmanKruskalTau
 library_demo <- function(table) {
   if (requireNamespace("DescTools", quietly = TRUE)) {
     cat("DescTools::GoodmanKruskalGamma:", DescTools::GoodmanKruskalGamma(table), "\n")
@@ -61,5 +88,10 @@ if (sys.nframe() == 0) {
   table <- matrix(c(40, 20,  5,  15, 30, 20,  5, 15, 50), nrow = 3, byrow = TRUE)
   cat("=== Ordinal-by-ordinal table ===\n"); print(table)
   print(all_ordinal_associations(table))
+  cat("\n=== Nominal PRE measures on the same table ===\n")
+  cat(sprintf("  G-K lambda (y|x): %.4f\n", gk_lambda(table, "y_given_x")))
+  cat(sprintf("  G-K lambda (x|y): %.4f\n", gk_lambda(table, "x_given_y")))
+  cat(sprintf("  G-K tau    (y|x): %.4f\n", gk_tau(table, "y_given_x")))
+  cat(sprintf("  G-K tau    (x|y): %.4f\n", gk_tau(table, "x_given_y")))
   cat("\n--- library ---\n"); library_demo(table)
 }
