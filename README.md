@@ -446,5 +446,22 @@ Building in batches; we walk through each batch together before moving on.
 | [eta-correlation-ratio](techniques/eta-correlation-ratio) — η between categorical X and continuous Y | new | 4.13 |
 | MIC (Maximal Information Coefficient) | extends `mutual-information` | 4.15 |
 
-Later batches will cover the remaining chapters (Regression, GLMs, Nonparametric
-Methods, Survival, Time Series, Bayesian, Causal Inference, ML, ...).
+### Batch 4 — Chapter 5: Linear Regression
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [simple-linear-regression](techniques/simple-linear-regression) (OLS β, SE, t-test, CI/PI) | 5.1 | ✅ | ✅ | ✅ |
+| 2 | [multiple-linear-regression](techniques/multiple-linear-regression) (OLS, ANOVA, R², adj R²) | 5.2 | ✅ | ✅ | ✅ |
+| 3 | [regression-diagnostics](techniques/regression-diagnostics) (leverage, Cook's D, DFFITS, DFBETAS) | 5.6, 5.30, 5.39 | ✅ | ✅ | N/A |
+| 4 | [specification-tests](techniques/specification-tests) (Breusch-Pagan, White, Durbin-Watson, RESET) | 5.7, 5.21 | ✅ | ✅ | N/A |
+| 5 | [collinearity-diagnostics](techniques/collinearity-diagnostics) (VIF, condition index) | 5.23 | ✅ | ✅ | N/A |
+| 6 | [polynomial-regression](techniques/polynomial-regression) (raw + orthogonal) | 5.3 | ✅ | ✅ | N/A |
+| 7 | [interaction-terms](techniques/interaction-terms) (continuous × continuous + categorical × continuous + centering) | 5.16, 5.24, 5.25, 5.37 | ✅ | ✅ | N/A |
+| 8 | [regularization](techniques/regularization) (ridge, lasso, elastic net + CV) | 5.9, 5.17 | ✅ | ✅ | ✅ |
+| 9 | [variable-selection](techniques/variable-selection) (stepwise, best subsets, AIC/BIC) | 5.8, 5.18, 5.19, 5.36 | ✅ | ✅ | N/A |
+| 10 | [weighted-least-squares](techniques/weighted-least-squares) (known + IRWLS) | 5.10 | ✅ | ✅ | N/A |
+| 11 | [robust-regression](techniques/robust-regression) (Huber M via IRLS) | 5.11 | ✅ | ✅ | N/A |
+| 12 | [splines-segmented](techniques/splines-segmented) (piecewise linear, natural cubic, breakpoint search) | 5.4, 5.22, 5.26, 5.34 | ✅ | ✅ | N/A |
+
+Later batches will cover the remaining chapters (GLMs, Nonparametric Methods,
+Survival, Time Series, Bayesian, Causal Inference, ML, ...).
