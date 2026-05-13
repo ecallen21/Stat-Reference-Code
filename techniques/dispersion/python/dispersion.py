@@ -20,10 +20,19 @@ import numpy as np
 
 
 def value_range(x: Sequence[float]) -> float:
+    """Range = max(x) - min(x).  ``x`` is a sample."""
     return max(x) - min(x)
 
 
 def variance(x: Sequence[float], ddof: int = 1) -> float:
+    """Sample variance = sum((x - x_bar)^2) / (n - ddof).
+
+    Parameters
+    ----------
+    x : sample.
+    ddof : "delta degrees of freedom" -- divisor is ``n - ddof``. ``1`` (default) gives
+        the unbiased sample variance; ``0`` gives the population variance.
+    """
     x = list(x)
     n = len(x)
     if n - ddof <= 0:
@@ -33,11 +42,18 @@ def variance(x: Sequence[float], ddof: int = 1) -> float:
 
 
 def stddev(x: Sequence[float], ddof: int = 1) -> float:
+    """Standard deviation = sqrt(variance(x, ddof)). See ``variance`` for ``ddof``."""
     return variance(x, ddof) ** 0.5
 
 
 def quantile(x: Sequence[float], p: float) -> float:
-    """Linear-interpolation quantile (numpy's default / Hyndman-Fan type 7)."""
+    """Linear-interpolation quantile (numpy's default / Hyndman-Fan type 7).
+
+    Parameters
+    ----------
+    x : sample.
+    p : probability in ``[0, 1]`` (e.g. ``0.5`` for the median, ``0.25`` for Q1).
+    """
     s = sorted(x)
     n = len(s)
     if n == 1:
@@ -50,10 +66,15 @@ def quantile(x: Sequence[float], p: float) -> float:
 
 
 def iqr(x: Sequence[float]) -> float:
+    """Interquartile range = Q3 - Q1. Robust spread of the middle 50%. ``x`` is a sample."""
     return quantile(x, 0.75) - quantile(x, 0.25)
 
 
 def coefficient_of_variation(x: Sequence[float], ddof: int = 1) -> float:
+    """CV = SD(x) / mean(x). Unit-free relative spread; undefined when the mean is zero.
+
+    ``ddof`` is passed through to ``stddev``.
+    """
     m = sum(x) / len(x)
     if m == 0:
         raise ValueError("CV is undefined when the mean is zero")
@@ -61,25 +82,35 @@ def coefficient_of_variation(x: Sequence[float], ddof: int = 1) -> float:
 
 
 def mean_abs_deviation(x: Sequence[float], center: str = "mean") -> float:
+    """Mean absolute deviation about ``center`` ("mean" or "median"). ``x`` is a sample."""
     x = list(x)
     c = (sum(x) / len(x)) if center == "mean" else _median(x)
     return sum(abs(xi - c) for xi in x) / len(x)
 
 
 def median_abs_deviation(x: Sequence[float], scale: float = 1.4826) -> float:
-    """MAD; multiply by 1.4826 for a consistent estimator of sigma under normality."""
+    """Median absolute deviation = median(|x - median(x)|) * scale.
+
+    Parameters
+    ----------
+    x : sample.
+    scale : multiplier; ``1.4826`` makes the MAD a consistent estimator of sigma
+        under normality. Use ``1.0`` for the raw MAD.
+    """
     x = list(x)
     med = _median(x)
     return _median([abs(xi - med) for xi in x]) * scale
 
 
 def _median(x):
+    """Internal helper -- median without re-importing other modules."""
     s = sorted(x)
     n = len(s)
     return s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2.0
 
 
 def library_versions(x: Sequence[float]):
+    """numpy / scipy implementations of the same measures, for cross-checking."""
     from scipy import stats
 
     arr = np.asarray(x, dtype=float)

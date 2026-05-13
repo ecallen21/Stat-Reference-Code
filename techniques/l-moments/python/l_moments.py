@@ -33,7 +33,15 @@ def _comb(n: int, k: int) -> float:
 
 
 def pwm(x: Sequence[float], max_order: int = 3):
-    """Unbiased sample probability-weighted moments b_0 .. b_{max_order}."""
+    """Unbiased sample probability-weighted moments b_0 .. b_{max_order}.
+
+    Parameters
+    ----------
+    x : sample.
+    max_order : highest PWM order to compute (must be < n).
+
+    Returns the list ``[b_0, b_1, ..., b_max_order]``.
+    """
     s = sorted(float(v) for v in x)
     n = len(s)
     if n <= max_order:
@@ -47,7 +55,17 @@ def pwm(x: Sequence[float], max_order: int = 3):
 
 
 def l_moments(x: Sequence[float]):
-    """Return dict with L1..L4 and the ratios L-CV, L-skewness, L-kurtosis."""
+    """Sample L-moments and L-moment ratios.
+
+    Parameters
+    ----------
+    x : numeric sample (n > 3).
+
+    Returns
+    -------
+    dict with ``L1_location``, ``L2_scale``, ``L3``, ``L4`` and the ratios
+    ``L_CV`` (= L2/L1), ``L_skewness`` (= L3/L2), ``L_kurtosis`` (= L4/L2).
+    """
     b0, b1, b2, b3 = pwm(x, max_order=3)
     l1 = b0
     l2 = 2 * b1 - b0

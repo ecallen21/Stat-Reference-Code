@@ -1,5 +1,12 @@
 # Empirical Cumulative Distribution Function (Reference §1.13)
 # From-scratch base-R plus stats::ecdf. Run with:  Rscript ecdf.R
+#
+# Inputs used below:
+#   data  : numeric vector (the sample F_n is built from)
+#   Fn    : the closure returned by ecdf_scratch (carries the sorted data via attributes)
+#   t     : value(s) at which to evaluate F_n
+#   p     : probability in (0, 1] (for the inverse ECDF / quantile)
+#   alpha : 1 - confidence level for the simultaneous DKW band (0.05 -> 95%)
 
 # From scratch -------------------------------------------------------------
 ecdf_scratch <- function(data) {

@@ -27,11 +27,27 @@ import numpy as np
 # From-scratch implementations
 # --------------------------------------------------------------------------
 def arithmetic_mean(x: Sequence[float]) -> float:
+    """Sample mean = sum(x) / n.
+
+    Parameters
+    ----------
+    x : sample (sequence of numbers).
+
+    Returns
+    -------
+    float -- the arithmetic mean.
+    """
     x = list(x)
     return sum(x) / len(x)
 
 
 def median(x: Sequence[float]) -> float:
+    """Sample median (middle order statistic; average of the two middle values when n is even).
+
+    Parameters
+    ----------
+    x : sample.
+    """
     s = sorted(x)
     n = len(s)
     mid = n // 2
@@ -41,14 +57,31 @@ def median(x: Sequence[float]) -> float:
 
 
 def mode(x: Sequence) -> list:
-    """All values tied for the highest frequency (a list, since the mode need not be unique)."""
+    """Most-frequent value(s).
+
+    Parameters
+    ----------
+    x : sample (any hashable values; categorical inputs are fine).
+
+    Returns
+    -------
+    list -- every value tied for the highest frequency. The mode need not be unique
+    (e.g. ``mode([1, 1, 2, 2, 3]) == [1, 2]``).
+    """
     counts = Counter(x)
     top = max(counts.values())
     return [v for v, c in counts.items() if c == top]
 
 
 def trimmed_mean(x: Sequence[float], proportion: float = 0.1) -> float:
-    """Mean after discarding ``proportion`` of the data from *each* tail."""
+    """Mean after discarding ``proportion`` of the data from *each* tail.
+
+    Parameters
+    ----------
+    x : sample.
+    proportion : fraction to drop from each tail, in ``[0, 0.5)``. ``0.2`` drops the
+        bottom 20% and the top 20%, averaging the middle 60%.
+    """
     if not 0 <= proportion < 0.5:
         raise ValueError("proportion must be in [0, 0.5)")
     s = sorted(x)
@@ -59,7 +92,16 @@ def trimmed_mean(x: Sequence[float], proportion: float = 0.1) -> float:
 
 
 def winsorized_mean(x: Sequence[float], proportion: float = 0.1) -> float:
-    """Mean after clamping each tail to the value at the ``proportion`` cut point."""
+    """Mean after clamping each tail to the value at the ``proportion`` cut point.
+
+    Unlike the trimmed mean, the sample size stays at ``n`` -- the tail observations
+    are replaced (Winsorized), not removed.
+
+    Parameters
+    ----------
+    x : sample.
+    proportion : fraction Winsorized on each side, in ``[0, 0.5)``.
+    """
     if not 0 <= proportion < 0.5:
         raise ValueError("proportion must be in [0, 0.5)")
     s = sorted(x)
@@ -72,6 +114,14 @@ def winsorized_mean(x: Sequence[float], proportion: float = 0.1) -> float:
 
 
 def weighted_mean(x: Sequence[float], w: Sequence[float]) -> float:
+    """Weighted mean = sum(w * x) / sum(w).
+
+    Parameters
+    ----------
+    x : sample.
+    w : weights, one per observation (same length as ``x``). Survey weights,
+        meta-analysis inverse-variance weights, etc. Must sum to a non-zero value.
+    """
     if len(x) != len(w):
         raise ValueError("x and w must have the same length")
     num = sum(xi * wi for xi, wi in zip(x, w))
@@ -82,6 +132,13 @@ def weighted_mean(x: Sequence[float], w: Sequence[float]) -> float:
 
 
 def geometric_mean(x: Sequence[float]) -> float:
+    """Geometric mean = exp(mean(log x)). Use for multiplicative processes
+    (growth rates, fold-changes, antibody titers).
+
+    Parameters
+    ----------
+    x : sample, **strictly positive** values only.
+    """
     x = list(x)
     if any(v <= 0 for v in x):
         raise ValueError("geometric mean requires strictly positive values")
@@ -89,6 +146,12 @@ def geometric_mean(x: Sequence[float]) -> float:
 
 
 def harmonic_mean(x: Sequence[float]) -> float:
+    """Harmonic mean = n / sum(1/x). Use for averaging rates and ratios.
+
+    Parameters
+    ----------
+    x : sample, **strictly positive** values only.
+    """
     x = list(x)
     if any(v <= 0 for v in x):
         raise ValueError("harmonic mean requires strictly positive values")
@@ -99,6 +162,7 @@ def harmonic_mean(x: Sequence[float]) -> float:
 # Library equivalents (what you'd typically use in practice)
 # --------------------------------------------------------------------------
 def library_versions(x: Sequence[float]):
+    """Same measures via numpy / scipy -- used to cross-check the from-scratch values."""
     from scipy import stats
 
     arr = np.asarray(x, dtype=float)

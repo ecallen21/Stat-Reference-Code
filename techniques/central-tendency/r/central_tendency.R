@@ -2,6 +2,14 @@
 #
 # From-scratch implementations in base R, plus the idiomatic package calls.
 # Run with:  Rscript central_tendency.R
+#
+# Inputs used below:
+#   x          : numeric vector (the sample)
+#   w          : numeric vector of weights, same length as x (for weighted_mean)
+#   proportion : fraction trimmed/Winsorized from EACH tail, in [0, 0.5)
+#                e.g. 0.2 -> drop bottom 20% and top 20%
+# All functions return a single numeric value except mode_scratch (which may
+# return multiple values when there is a tie for most frequent).
 
 # ---------------------------------------------------------------------------
 # From scratch

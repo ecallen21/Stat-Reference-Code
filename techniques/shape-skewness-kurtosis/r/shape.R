@@ -1,6 +1,16 @@
 # Measures of distribution shape: skewness and kurtosis (Reference §1.4)
 # From-scratch base-R plus package calls (moments, e1071, psych).
 # Run with:  Rscript shape.R
+#
+# Inputs used below:
+#   x      : numeric vector (the sample)
+#   k      : moment order (for central_moment)
+#   bias   : TRUE  -> raw method-of-moments g1 / g2 (biased downward, small n)
+#            FALSE -> bias-corrected Fisher-Pearson G1 / G2 (what most software reports)
+#   excess : TRUE  -> "excess" kurtosis where a normal distribution = 0
+#            FALSE -> raw kurtosis where a normal distribution = 3
+# Note: R's moments::kurtosis() returns NON-excess kurtosis; e1071's lets you
+# pick via the type = argument.
 
 central_moment <- function(x, k) { m <- mean(x); mean((x - m)^k) }
 

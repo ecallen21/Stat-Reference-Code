@@ -21,12 +21,19 @@ class ECDF:
     """Callable empirical CDF: ``F = ECDF(data); F(t)`` returns P_n(X <= t)."""
 
     def __init__(self, data: Sequence[float]):
+        """Build the ECDF from a sample.
+
+        Parameters
+        ----------
+        data : numeric sample (sequence of values).
+        """
         self.x = sorted(float(v) for v in data)
         self.n = len(self.x)
         if self.n == 0:
             raise ValueError("empty data")
 
     def __call__(self, t):
+        """Evaluate F_n(t). ``t`` may be a scalar or array-like; the return type matches."""
         scalar = np.isscalar(t)
         ts = np.atleast_1d(np.asarray(t, dtype=float))
         # number of x_i <= t  ==  insertion point on the right
@@ -35,7 +42,7 @@ class ECDF:
         return float(out[0]) if scalar else out
 
     def quantile(self, p: float) -> float:
-        """Inverse ECDF (Hyndman-Fan type 1): smallest x with F_n(x) >= p."""
+        """Inverse ECDF (Hyndman-Fan type 1): smallest x with F_n(x) >= p. ``p`` in (0, 1]."""
         if not 0.0 < p <= 1.0:
             if p == 0.0:
                 return self.x[0]
@@ -44,7 +51,18 @@ class ECDF:
         return self.x[min(k, self.n) - 1]
 
     def dkw_band(self, alpha: float = 0.05):
-        """Return (xs, lower, upper): a 1-alpha simultaneous confidence band for F."""
+        """Dvoretzky-Kiefer-Wolfowitz simultaneous confidence band for F.
+
+        Parameters
+        ----------
+        alpha : 1 - confidence level (``0.05`` -> 95% band).
+
+        Returns
+        -------
+        (xs, lower, upper) -- xs are the sorted data points; ``lower[i]`` and
+        ``upper[i]`` bracket F at xs[i]. The band covers the *whole* curve at the
+        chosen level (unlike a pointwise CI).
+        """
         eps = math.sqrt(math.log(2.0 / alpha) / (2.0 * self.n))
         xs = self.x
         fhat = np.array([self(v) for v in xs])

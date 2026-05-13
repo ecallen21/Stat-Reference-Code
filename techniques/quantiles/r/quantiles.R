@@ -1,6 +1,14 @@
 # Sample quantiles, percentiles and order statistics (Reference §1.5)
 # From-scratch base-R plus stats::quantile (which implements all 9 HF types).
 # Run with:  Rscript quantiles.R
+#
+# Inputs used below:
+#   x     : numeric vector (the sample)
+#   p     : probability in [0, 1] (e.g. 0.5 -> median, 0.25 -> Q1)
+#   kind  : Hyndman-Fan quantile type (1 = inverse empirical CDF / no interpolation,
+#                                      6 = "Weibull", linear interp,
+#                                      7 = R's default, linear interp)
+#   value : a number whose percentile rank within x we want to compute
 
 # Hyndman-Fan types 1, 6, 7 (7 = R's default).
 quantile_hf <- function(x, p, kind = 7) {

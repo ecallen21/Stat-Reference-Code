@@ -29,21 +29,34 @@ import numpy as np
 
 
 def _mean(x):
+    """Internal: arithmetic mean."""
     return sum(x) / len(x)
 
 
 def _var(x, ddof=1):
+    """Internal: sample variance with divisor ``n - ddof`` (default ddof=1)."""
     m = _mean(x)
     return sum((v - m) ** 2 for v in x) / (len(x) - ddof)
 
 
 def cohens_d(x1: Sequence[float], x2: Sequence[float]) -> float:
+    """Cohen's d -- standardized mean difference using the pooled SD.
+
+    Parameters
+    ----------
+    x1, x2 : independent samples (group 1 and group 2). Sign convention is
+        ``(mean(x1) - mean(x2)) / s_pooled``.
+    """
     n1, n2 = len(x1), len(x2)
     sp2 = ((n1 - 1) * _var(x1) + (n2 - 1) * _var(x2)) / (n1 + n2 - 2)
     return (_mean(x1) - _mean(x2)) / math.sqrt(sp2)
 
 
 def hedges_g(x1: Sequence[float], x2: Sequence[float]) -> float:
+    """Hedges' g -- Cohen's d times the small-sample bias correction J(df).
+
+    ``x1``, ``x2`` are the two samples.
+    """
     n1, n2 = len(x1), len(x2)
     df = n1 + n2 - 2
     j = 1.0 - 3.0 / (4.0 * df - 1.0)  # bias-correction factor J(df)
@@ -51,10 +64,18 @@ def hedges_g(x1: Sequence[float], x2: Sequence[float]) -> float:
 
 
 def glass_delta(treatment: Sequence[float], control: Sequence[float]) -> float:
+    """Glass's delta -- mean difference divided by the *control* group's SD.
+
+    Use when the two groups have very different variances.
+    """
     return (_mean(treatment) - _mean(control)) / math.sqrt(_var(control))
 
 
 def cliffs_delta(x1: Sequence[float], x2: Sequence[float]) -> float:
+    """Cliff's delta = P(X1 > X2) - P(X1 < X2). Nonparametric dominance measure in [-1, 1].
+
+    ``x1`` and ``x2`` are the two samples; ties contribute zero.
+    """
     gt = lt = 0
     for a in x1:
         for b in x2:
@@ -75,7 +96,18 @@ def rank_biserial_from_u(u1: float, n1: int, n2: int) -> float:
 
 
 def eta_squared_oneway(groups: Sequence[Sequence[float]]):
-    """One-way ANOVA effect sizes. Returns dict with eta^2, omega^2, Cohen's f."""
+    """One-way ANOVA variance-explained effect sizes.
+
+    Parameters
+    ----------
+    groups : list of sub-samples, one per group (e.g. ``[group_a, group_b, group_c]``).
+
+    Returns
+    -------
+    dict with ``eta_squared`` (``SS_between / SS_total``, upward-biased),
+    ``omega_squared`` (less-biased population estimate), and ``cohens_f``
+    (``sqrt(eta2 / (1 - eta2))``, used in ANOVA power analysis).
+    """
     allvals = [v for g in groups for v in g]
     grand = _mean(allvals)
     N = len(allvals)
@@ -91,7 +123,18 @@ def eta_squared_oneway(groups: Sequence[Sequence[float]]):
 
 
 def interpret(value: float, kind: str) -> str:
-    """Rough Cohen-style verbal label. kind in {'d', 'r', 'eta2', 'f'}."""
+    """Rough Cohen-style verbal label for an effect size.
+
+    Parameters
+    ----------
+    value : the effect-size magnitude (sign-insensitive).
+    kind : which scale's benchmarks to use -- ``'d'`` (Cohen's d / Hedges' g / Glass's delta),
+        ``'r'`` (correlation / Cliff's delta), ``'eta2'`` (eta-squared), or ``'f'`` (Cohen's f).
+
+    Returns
+    -------
+    one of ``"negligible"``, ``"small"``, ``"medium"``, ``"large"``.
+    """
     cuts = {
         "d": [(0.2, "negligible"), (0.5, "small"), (0.8, "medium"), (math.inf, "large")],
         "r": [(0.1, "negligible"), (0.3, "small"), (0.5, "medium"), (math.inf, "large")],

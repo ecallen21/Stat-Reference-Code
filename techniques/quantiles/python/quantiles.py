@@ -50,10 +50,15 @@ def quantile(x: Sequence[float], p: float, kind: int = 7) -> float:
 
 
 def quantiles(x: Sequence[float], ps: Sequence[float], kind: int = 7) -> dict:
+    """Multiple quantiles at once. ``ps`` is an iterable of probabilities; returns ``{p: q(p)}``."""
     return {p: quantile(x, p, kind) for p in ps}
 
 
 def five_number_summary(x: Sequence[float], kind: int = 7) -> dict:
+    """Tukey's five-number summary: min, Q1, median, Q3, max.
+
+    ``x`` is the sample; ``kind`` is the Hyndman-Fan quantile type (default 7).
+    """
     return {
         "min": min(x),
         "Q1": quantile(x, 0.25, kind),
@@ -64,7 +69,11 @@ def five_number_summary(x: Sequence[float], kind: int = 7) -> dict:
 
 
 def percentile_rank(x: Sequence[float], value: float) -> float:
-    """Percentage of observations strictly below ``value`` plus half of those equal (%)."""
+    """Percentile rank of ``value`` within sample ``x`` (%).
+
+    Defined as 100 * (#{x_i < value} + 0.5 * #{x_i == value}) / n -- the "mean" rule
+    that handles ties symmetrically (matches ``scipy.stats.percentileofscore(kind='mean')``).
+    """
     s = list(x)
     n = len(s)
     below = sum(1 for v in s if v < value)
@@ -73,7 +82,13 @@ def percentile_rank(x: Sequence[float], value: float) -> float:
 
 
 def ecdf(x: Sequence[float]):
-    """Return (sorted_unique_values, cumulative_probabilities)."""
+    """Empirical CDF as two parallel arrays.
+
+    Returns
+    -------
+    (xs, ys) -- ``xs`` are the sorted *unique* values; ``ys[i]`` is the cumulative
+    probability F_n(xs[i]) (jumps where there are ties).
+    """
     s = sorted(x)
     n = len(s)
     xs, ys = [], []

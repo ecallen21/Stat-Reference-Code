@@ -1,6 +1,14 @@
 # Measures of dispersion / spread (Reference §1.2)
 # From-scratch base-R implementations plus the idiomatic base/stats calls.
 # Run with:  Rscript dispersion.R
+#
+# Inputs used below:
+#   x      : numeric vector (the sample)
+#   ddof   : "delta degrees of freedom" -- divisor is n - ddof
+#            (ddof = 1 for the sample variance, the default; ddof = 0 for the population)
+#   p      : probability in [0, 1] (for quantile_type7)
+#   center : "mean" or "median" (which center to use for mean_abs_deviation)
+#   scale  : MAD multiplier; 1.4826 gives a consistent estimate of sigma at the normal
 
 value_range <- function(x) max(x) - min(x)
 

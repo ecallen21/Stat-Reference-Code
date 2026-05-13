@@ -1,6 +1,14 @@
 # Effect size measures (Reference §1.6 and §1.25)
 # From-scratch base-R plus package calls (effectsize, effsize, rstatix).
 # Run with:  Rscript effect_sizes.R
+#
+# Inputs used below:
+#   x1, x2             : numeric vectors -- the two independent samples (group 1, group 2)
+#   treatment, control : two-sample inputs for Glass's delta (control SD is the scale)
+#   groups             : list of group vectors (one entry per group) for one-way ANOVA effect sizes
+#   u1                 : Mann-Whitney U for group 1 (count of (x1 > x2) pairs, ties contribute 0.5)
+#   value, kind        : magnitude and effect-size family for the verbal interpret() label
+#                        kind in {"d", "r", "eta2", "f"}
 
 mean_ <- function(x) sum(x) / length(x)
 var_  <- function(x) { m <- mean_(x); sum((x - m)^2) / (length(x) - 1) }

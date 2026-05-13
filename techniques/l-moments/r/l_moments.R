@@ -1,5 +1,10 @@
 # L-moments and probability-weighted moments (Reference §1.24)
 # From-scratch base-R plus package calls (lmom, lmomco, Lmoments). Run:  Rscript l_moments.R
+#
+# Inputs used below:
+#   x         : numeric vector (the sample; needs n > max_order observations)
+#   max_order : highest PWM order to compute (default 3 -> returns b0..b3,
+#               which gives L1..L4 and the L-CV / L-skewness / L-kurtosis ratios)
 
 # Unbiased sample probability-weighted moments b0..b_maxorder (Landwehr et al.)
 pwm_scratch <- function(x, max_order = 3) {

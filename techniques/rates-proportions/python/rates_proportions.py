@@ -27,27 +27,39 @@ from scipy import stats
 # Point estimates
 # --------------------------------------------------------------------------
 def prevalence(cases: int, population: int) -> float:
+    """Point prevalence = cases / population (cross-sectional)."""
     return cases / population
 
 
 def incidence_proportion(new_cases: int, at_risk_at_start: int) -> float:
-    """Cumulative incidence ("risk") over the follow-up period."""
+    """Cumulative incidence ("risk") = new_cases / at_risk_at_start over the follow-up period."""
     return new_cases / at_risk_at_start
 
 
 def person_time(follow_up_times: Sequence[float]) -> float:
+    """Total person-time = sum of individual at-risk follow-up durations.
+
+    ``follow_up_times`` is a sequence with one entry per subject (e.g. years observed).
+    """
     return float(sum(follow_up_times))
 
 
 def incidence_rate(events: int, person_time_total: float) -> float:
-    """Events per unit person-time (e.g. per person-year)."""
+    """Incidence rate = events / total person-time (e.g. per person-year)."""
     return events / person_time_total
 
 
 # --------------------------------------------------------------------------
 # Confidence intervals for a proportion
 # --------------------------------------------------------------------------
+# Conventions for the CI functions below:
+#   x    -- number of successes (count of the event of interest)
+#   n    -- sample size (total trials)
+#   conf -- confidence level (e.g. 0.95 for a 95% CI)
+# All return a (lower, upper) tuple clipped to [0, 1].
+
 def ci_wald(x: int, n: int, conf: float = 0.95):
+    """Wald (normal-approximation) CI for a proportion. Poor near 0/1 and for small n."""
     p = x / n
     z = stats.norm.ppf(0.5 + conf / 2)
     half = z * math.sqrt(p * (1 - p) / n)
@@ -55,6 +67,7 @@ def ci_wald(x: int, n: int, conf: float = 0.95):
 
 
 def ci_wilson(x: int, n: int, conf: float = 0.95):
+    """Wilson score CI for a proportion -- the recommended general-purpose default."""
     p = x / n
     z = stats.norm.ppf(0.5 + conf / 2)
     z2 = z * z
@@ -65,7 +78,7 @@ def ci_wilson(x: int, n: int, conf: float = 0.95):
 
 
 def ci_clopper_pearson(x: int, n: int, conf: float = 0.95):
-    """Exact (Clopper-Pearson) interval via the Beta distribution."""
+    """Exact (Clopper-Pearson) CI via Beta-distribution quantiles. Conservative but guaranteed coverage."""
     alpha = 1 - conf
     lower = 0.0 if x == 0 else stats.beta.ppf(alpha / 2, x, n - x + 1)
     upper = 1.0 if x == n else stats.beta.ppf(1 - alpha / 2, x + 1, n - x)
@@ -76,7 +89,16 @@ def ci_clopper_pearson(x: int, n: int, conf: float = 0.95):
 # Confidence interval for a rate (exact Poisson)
 # --------------------------------------------------------------------------
 def ci_poisson_rate(events: int, person_time_total: float, conf: float = 0.95):
-    """Exact Poisson CI for an incidence rate (Garwood method via the chi-squared dist)."""
+    """Exact Poisson (Garwood) CI for an incidence rate.
+
+    Parameters
+    ----------
+    events : observed event count.
+    person_time_total : denominator (sum of at-risk follow-up).
+    conf : confidence level.
+
+    Returns ``(lower, upper)`` -- bounds on the underlying rate ``lambda``.
+    """
     alpha = 1 - conf
     lo_count = 0.0 if events == 0 else stats.chi2.ppf(alpha / 2, 2 * events) / 2
     hi_count = stats.chi2.ppf(1 - alpha / 2, 2 * events + 2) / 2

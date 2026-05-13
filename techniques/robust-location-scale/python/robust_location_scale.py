@@ -33,16 +33,26 @@ def _median(x):
 
 
 def median(x: Sequence[float]) -> float:
+    """Sample median. ``x`` is a numeric sample."""
     return _median(list(x))
 
 
 def mad(x: Sequence[float], scale: float = 1.4826) -> float:
+    """Median absolute deviation about the median.
+
+    Parameters
+    ----------
+    x : sample.
+    scale : multiplier (``1.4826`` -> consistent estimator of sigma at the normal;
+        pass ``1.0`` for the raw MAD).
+    """
     x = list(x)
     m = _median(x)
     return _median([abs(v - m) for v in x]) * scale
 
 
 def _winsorize(x: Sequence[float], proportion: float):
+    """Internal: return (Winsorized-sorted-sample, k_per_tail). ``proportion`` in [0, 0.5)."""
     if not 0 <= proportion < 0.5:
         raise ValueError("proportion must be in [0, 0.5)")
     s = sorted(x)
@@ -55,6 +65,7 @@ def _winsorize(x: Sequence[float], proportion: float):
 
 
 def trimmed_mean(x: Sequence[float], proportion: float = 0.2) -> float:
+    """Mean after dropping ``proportion`` from each tail of ``x``. See top-level README."""
     s = sorted(x)
     n = len(s)
     k = int(math.floor(n * proportion))
@@ -63,11 +74,20 @@ def trimmed_mean(x: Sequence[float], proportion: float = 0.2) -> float:
 
 
 def winsorized_mean(x: Sequence[float], proportion: float = 0.2) -> float:
+    """Mean of the Winsorized sample (tails clamped to their boundary values)."""
     s, _ = _winsorize(x, proportion)
     return sum(s) / len(s)
 
 
 def winsorized_variance(x: Sequence[float], proportion: float = 0.2, ddof: int = 1) -> float:
+    """Variance of the Winsorized sample. Pairs with the trimmed mean in Yuen's test.
+
+    Parameters
+    ----------
+    x : sample.
+    proportion : Winsorizing fraction per tail.
+    ddof : divisor is ``n - ddof`` (``1`` for the unbiased sample variance).
+    """
     s, _ = _winsorize(x, proportion)
     n = len(s)
     m = sum(s) / n
@@ -75,7 +95,16 @@ def winsorized_variance(x: Sequence[float], proportion: float = 0.2, ddof: int =
 
 
 def huber_location(x: Sequence[float], k: float = 1.345, tol: float = 1e-8, max_iter: int = 100) -> float:
-    """Huber M-estimator of location via iteratively reweighted least squares."""
+    """Huber M-estimator of location via iteratively reweighted least squares.
+
+    Parameters
+    ----------
+    x : sample.
+    k : Huber tuning constant in standardized residual units. ``1.345`` gives ~95%
+        efficiency at the normal distribution; smaller ``k`` -> more robust, less efficient.
+    tol : relative-change convergence tolerance.
+    max_iter : safety cap on the IRLS iterations.
+    """
     x = list(x)
     mu = _median(x)
     s = mad(x) or 1.0  # scale; guard against zero MAD
@@ -91,7 +120,18 @@ def huber_location(x: Sequence[float], k: float = 1.345, tol: float = 1e-8, max_
 
 
 def yuen_trimmed_t(x: Sequence[float], y: Sequence[float], proportion: float = 0.2):
-    """Yuen's two-sample trimmed-mean t-test (Welch-style). Returns a dict."""
+    """Yuen's two-sample trimmed-mean t-test (Welch-style).
+
+    Parameters
+    ----------
+    x, y : independent samples for the two groups.
+    proportion : symmetric trimming fraction per tail applied to both groups.
+
+    Returns
+    -------
+    dict with the two trimmed means, their difference, standard error, t-statistic,
+    Welch-style df, and the two-sided p-value.
+    """
     from scipy import stats
 
     def parts(z):

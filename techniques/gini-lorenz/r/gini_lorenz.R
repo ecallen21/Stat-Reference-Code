@@ -1,5 +1,9 @@
 # Gini coefficient and Lorenz curve (Reference §1.23)
 # From-scratch base-R plus package calls (ineq, DescTools). Run:  Rscript gini_lorenz.R
+#
+# Inputs used below:
+#   x              : non-negative numeric vector (income, wealth, etc.)
+#   bias_corrected : if TRUE, multiply Gini by n / (n - 1) for the small-sample correction
 
 lorenz_curve <- function(x) {
   s <- sort(as.numeric(x)); stopifnot(all(s >= 0)); n <- length(s)

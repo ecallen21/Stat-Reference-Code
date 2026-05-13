@@ -1,6 +1,14 @@
 # Summary statistics for rates and proportions (Reference §1.8)
 # From-scratch base-R plus idiomatic calls (binom.test, poisson.test, prop.test).
 # Run with:  Rscript rates_proportions.R
+#
+# Inputs used below:
+#   cases, population        : numerator and denominator for prevalence
+#   new_cases, at_risk_start : for incidence proportion (risk)
+#   follow_up_times          : numeric vector of per-subject follow-up durations
+#   events, person_time_total: event count and total at-risk time, for incidence rate
+#   x, n                     : successes / trials for proportion CIs
+#   conf                     : confidence level (e.g. 0.95 -> 95% CI)
 
 prevalence            <- function(cases, population) cases / population
 incidence_proportion  <- function(new_cases, at_risk_start) new_cases / at_risk_start

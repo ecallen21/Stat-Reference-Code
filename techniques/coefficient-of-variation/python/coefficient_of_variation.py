@@ -38,6 +38,16 @@ def _sd(x, ddof=1):
 
 
 def cv(x: Sequence[float], ddof: int = 1, as_percent: bool = False) -> float:
+    """Coefficient of variation = sd(x) / mean(x).
+
+    Parameters
+    ----------
+    x : sample.
+    ddof : passed to the SD (``1`` -> sample SD).
+    as_percent : if True, return 100 * SD/mean.
+
+    Raises ``ValueError`` if the mean is zero.
+    """
     m = _mean(x)
     if m == 0:
         raise ValueError("CV is undefined when the mean is zero")
@@ -46,7 +56,10 @@ def cv(x: Sequence[float], ddof: int = 1, as_percent: bool = False) -> float:
 
 
 def geometric_cv(x: Sequence[float], ddof: int = 1, as_percent: bool = False) -> float:
-    """Geometric CV for (assumed) log-normal data."""
+    """Geometric CV for (assumed) log-normal data: sqrt(exp(sd(log x)**2) - 1).
+
+    ``x`` must be strictly positive. ``ddof`` is passed to the SD of log(x).
+    """
     if any(v <= 0 for v in x):
         raise ValueError("geometric CV requires strictly positive values")
     s_log = _sd([math.log(v) for v in x], ddof)
@@ -55,7 +68,17 @@ def geometric_cv(x: Sequence[float], ddof: int = 1, as_percent: bool = False) ->
 
 
 def within_subject_cv(subjects: Sequence[Sequence[float]], as_percent: bool = False) -> float:
-    """Within-subject CV from repeated measurements: sqrt(mean within-subject var) / overall mean."""
+    """Within-subject CV from repeated measurements (assay precision / biological variation).
+
+    Parameters
+    ----------
+    subjects : list of per-subject vectors of replicate measurements
+        (e.g. ``[[10.1, 10.3, 9.8], [12.0, 11.7, 12.2], ...]``).
+        Subjects with fewer than 2 measurements are ignored.
+    as_percent : if True, return 100 * CV_w.
+
+    Formula: ``sqrt(mean of within-subject variances) / overall mean``.
+    """
     var_w = [
         sum((v - _mean(s)) ** 2 for v in s) / (len(s) - 1)
         for s in subjects if len(s) >= 2
@@ -66,7 +89,10 @@ def within_subject_cv(subjects: Sequence[Sequence[float]], as_percent: bool = Fa
 
 
 def cv_ci_mckay(x: Sequence[float], conf: float = 0.95):
-    """McKay's approximate CI for the (population) CV. Returns a (lo, hi) tuple."""
+    """McKay's approximate chi-squared CI for the (population) CV.
+
+    Reasonable for CV < ~0.33. Returns a (lower, upper) tuple at confidence level ``conf``.
+    """
     n = len(x)
     v = n - 1
     k = cv(x)  # sample CV (proportion)

@@ -25,11 +25,21 @@ import numpy as np
 
 
 def _central_moment(x, k):
+    """k-th sample central moment: mean((x - mean(x))**k). Internal helper."""
     m = sum(x) / len(x)
     return sum((xi - m) ** k for xi in x) / len(x)
 
 
 def skewness(x: Sequence[float], bias: bool = True) -> float:
+    """Sample skewness.
+
+    Parameters
+    ----------
+    x : sample.
+    bias : ``True`` -> method-of-moments g1 = m3 / m2**1.5 (biased downward in small samples);
+        ``False`` -> bias-corrected Fisher-Pearson G1 = g1 * sqrt(n(n-1)) / (n-2), which is
+        what scipy/SAS/SPSS report by default.
+    """
     x = list(x)
     n = len(x)
     m2 = _central_moment(x, 2)
@@ -41,6 +51,15 @@ def skewness(x: Sequence[float], bias: bool = True) -> float:
 
 
 def kurtosis(x: Sequence[float], bias: bool = True, excess: bool = True) -> float:
+    """Sample kurtosis.
+
+    Parameters
+    ----------
+    x : sample.
+    bias : ``True`` -> raw moment-based g2; ``False`` -> bias-corrected G2.
+    excess : ``True`` -> "excess" kurtosis where a normal distribution = 0;
+        ``False`` -> raw kurtosis where a normal distribution = 3.
+    """
     x = list(x)
     n = len(x)
     m2 = _central_moment(x, 2)
@@ -53,7 +72,7 @@ def kurtosis(x: Sequence[float], bias: bool = True, excess: bool = True) -> floa
 
 
 def pearson_second_skewness(x: Sequence[float]) -> float:
-    """Pearson's second skewness coefficient: 3 (mean - median) / sd."""
+    """Pearson's second skewness coefficient: ``3 * (mean(x) - median(x)) / sd(x)``."""
     arr = list(x)
     n = len(arr)
     mean = sum(arr) / n

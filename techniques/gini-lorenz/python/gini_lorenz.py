@@ -24,9 +24,17 @@ import numpy as np
 
 
 def lorenz_curve(x: Sequence[float]):
-    """Return (p, L): cumulative population shares and cumulative value shares.
+    """Compute the Lorenz curve points.
 
-    Both arrays start with the point (0, 0), so they have length n + 1.
+    Parameters
+    ----------
+    x : a non-negative sample (income, wealth, utilization, etc.).
+
+    Returns
+    -------
+    (p, L) -- ``p[i]`` is the cumulative *population* share (fraction of units),
+    ``L[i]`` is the cumulative *value* share (fraction of the total). Both arrays
+    start at ``(0, 0)`` and end at ``(1, 1)``; length is ``n + 1``.
     """
     arr = np.sort(np.asarray(x, dtype=float))
     if np.any(arr < 0):
@@ -39,7 +47,7 @@ def lorenz_curve(x: Sequence[float]):
 
 
 def gini_trapezoid(x: Sequence[float]) -> float:
-    """Gini from the Lorenz curve via the trapezoidal area rule."""
+    """Gini coefficient from the Lorenz curve via the trapezoidal area rule. ``x`` is a non-negative sample."""
     p, L = lorenz_curve(x)
     # area under the Lorenz curve by the trapezoid rule
     # (np.trapezoid in numpy >= 2.0, np.trapz before that)
@@ -49,7 +57,13 @@ def gini_trapezoid(x: Sequence[float]) -> float:
 
 
 def gini_mean_difference(x: Sequence[float], bias_corrected: bool = False) -> float:
-    """Gini from the mean-absolute-difference definition (an O(n log n) sorted form)."""
+    """Gini from the mean-absolute-difference definition (O(n log n) sorted form).
+
+    Parameters
+    ----------
+    x : non-negative sample.
+    bias_corrected : if True, multiply by ``n/(n-1)`` for the small-sample correction.
+    """
     arr = np.sort(np.asarray(x, dtype=float))
     if np.any(arr < 0):
         raise ValueError("Gini requires non-negative values")

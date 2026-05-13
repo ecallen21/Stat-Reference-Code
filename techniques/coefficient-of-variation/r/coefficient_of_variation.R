@@ -1,6 +1,13 @@
 # Coefficient of variation (Reference §1.22 and §1.33)
 # From-scratch base-R plus package calls (DescTools, raster, rstatix).
 # Run with:  Rscript coefficient_of_variation.R
+#
+# Inputs used below:
+#   x          : numeric vector (the sample)
+#   subjects   : list of per-subject vectors of replicate measurements
+#                (one list entry per subject, for the within-subject CV)
+#   as_percent : if TRUE, multiply the result by 100 (return CV%)
+#   conf       : confidence level for cv_ci_mckay() (e.g. 0.95)
 
 cv_scratch <- function(x, as_percent = FALSE) {
   m <- mean(x); stopifnot(m != 0)

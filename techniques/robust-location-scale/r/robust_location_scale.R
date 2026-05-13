@@ -1,6 +1,14 @@
 # Robust location and scale estimators (Reference §1.3 and §1.26)
 # From-scratch base-R plus idiomatic package calls (MASS, WRS2, DescTools).
 # Run with:  Rscript robust_location_scale.R
+#
+# Inputs used below:
+#   x, y       : numeric vectors (the samples; y is the second group for Yuen's test)
+#   proportion : trimming/Winsorizing fraction per tail, in [0, 0.5) (default 0.2)
+#   k          : Huber tuning constant in standardized residual units
+#                (1.345 -> ~95% efficiency at the normal; smaller -> more robust)
+#   tol, max_iter : convergence settings for Huber's IRLS loop
+#   scale      : MAD multiplier (1.4826 for the consistent normal-sigma estimate)
 
 mad_scratch <- function(x, scale = 1.4826) {
   med <- median(x); median(abs(x - med)) * scale

@@ -1,6 +1,13 @@
 # Frequency distributions and cross-tabulations (Reference §1.7)
 # From-scratch base-R plus idiomatic base/janitor/gmodels calls.
 # Run with:  Rscript frequency_crosstab.R
+#
+# Inputs used below:
+#   x        : vector of categorical (or already-binned) values  -- for frequency_table
+#   row, col : two parallel vectors of categorical values, same length, one obs per (row[i], col[i])
+#   m        : 2D matrix of counts (rows x cols)
+#   kind     : "row" / "col" / "total" -- denominator basis for percentages()
+#   rule     : "FD" / "Sturges" / "Scott" -- bin-width rule for bin_counts()
 
 frequency_table <- function(x) {
   tab <- table(x); n <- sum(tab)

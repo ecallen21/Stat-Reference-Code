@@ -23,7 +23,17 @@ import numpy as np
 
 
 def frequency_table(x: Sequence[Hashable], sort_by: str = "value"):
-    """Return a list of (category, count, relative_freq, cum_count, cum_rel)."""
+    """Build a one-variable frequency distribution.
+
+    Parameters
+    ----------
+    x : a sample of categorical (or already-binned) values.
+    sort_by : ``"value"`` to sort by the category, ``"count"`` to sort by frequency descending.
+
+    Returns
+    -------
+    list of tuples ``(category, count, relative_freq, cum_count, cum_rel)``.
+    """
     counts = Counter(x)
     n = len(x)
     items = sorted(counts.items()) if sort_by == "value" else counts.most_common()
@@ -35,7 +45,18 @@ def frequency_table(x: Sequence[Hashable], sort_by: str = "value"):
 
 
 def crosstab(row: Sequence[Hashable], col: Sequence[Hashable]):
-    """2-way contingency table. Returns (row_labels, col_labels, counts 2D list)."""
+    """Two-way contingency table of joint counts.
+
+    Parameters
+    ----------
+    row, col : two parallel sequences of categorical values (same length).
+        Each (row[i], col[i]) is one observation.
+
+    Returns
+    -------
+    (row_labels, col_labels, counts) -- the labels in sorted order, and the
+    contingency matrix as a list of lists.
+    """
     if len(row) != len(col):
         raise ValueError("row and col must have the same length")
     rlabels = sorted(set(row))
@@ -49,6 +70,10 @@ def crosstab(row: Sequence[Hashable], col: Sequence[Hashable]):
 
 
 def margins(table):
+    """Marginal totals from a 2D count table.
+
+    Returns ``(row_totals, col_totals, grand_total)``.
+    """
     row_tot = [sum(r) for r in table]
     col_tot = [sum(col) for col in zip(*table)]
     grand = sum(row_tot)
@@ -56,7 +81,15 @@ def margins(table):
 
 
 def percentages(table, kind: str = "total"):
-    """Percent table. kind in {'row', 'col', 'total'}."""
+    """Convert a count table to a percent table.
+
+    Parameters
+    ----------
+    table : 2D list of counts (rows x cols).
+    kind : ``"row"`` -- each row sums to 100% (conditional on the row);
+        ``"col"`` -- each column sums to 100% (conditional on the column);
+        ``"total"`` -- the whole table sums to 100%.
+    """
     row_tot, col_tot, grand = margins(table)
     out = []
     for i, r in enumerate(table):
@@ -74,7 +107,20 @@ def percentages(table, kind: str = "total"):
 
 
 def bin_counts(x: Sequence[float], rule: str = "fd"):
-    """Bin a numeric vector and return (edges, counts). rule in {'sturges','scott','fd'}."""
+    """Bin a numeric vector and count observations per bin.
+
+    Parameters
+    ----------
+    x : numeric sample.
+    rule : bin-width selector --
+        ``"sturges"`` (k = ceil(log2 n + 1); fine for near-normal data),
+        ``"scott"`` (3.49 * sd * n**(-1/3); assumes near-normal),
+        ``"fd"`` (Freedman-Diaconis: 2 * IQR * n**(-1/3); robust to outliers, the usual default).
+
+    Returns
+    -------
+    ``(edges, counts)`` -- bin edges (length k+1) and counts (length k).
+    """
     arr = np.asarray(x, dtype=float)
     n = arr.size
     if rule == "sturges":
