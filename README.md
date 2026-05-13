@@ -418,5 +418,22 @@ Building in batches; we walk through each batch together before moving on.
 | 11 | [equivalence-testing-tost](techniques/equivalence-testing-tost) | 3.21 | ✅ | ✅ | N/A |
 | 12 | [outlier-tests](techniques/outlier-tests) (Grubbs, Dixon's Q, Generalized ESD, IQR rule) | 3.25 | ✅ | ✅ | N/A |
 
-Later batches will cover the remaining chapters (Correlation, Regression, GLMs,
-Survival, Time Series, Bayesian, Causal Inference, ML, ...).
+### Batch 3 — Chapter 4: Correlation
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [pearson-correlation](techniques/pearson-correlation) (r + Fisher z CI) | 4.1 | ✅ | ✅ | ✅ |
+| 2 | [spearman-rank-correlation](techniques/spearman-rank-correlation) | 4.2 | ✅ | ✅ | ✅ |
+| 3 | [kendalls-tau](techniques/kendalls-tau) (τ-a, τ-b) | 4.3 | ✅ | ✅ | ✅ |
+| 4 | [point-biserial-correlation](techniques/point-biserial-correlation) | 4.4 | ✅ | ✅ | N/A |
+| 5 | [partial-correlation](techniques/partial-correlation) (partial + semi-partial) | 4.5 | ✅ | ✅ | N/A |
+| 6 | [intraclass-correlation](techniques/intraclass-correlation) (ICC(1/2/3, 1/k)) | 4.6 | ✅ | ✅ | N/A |
+| 7 | [polychoric-correlation](techniques/polychoric-correlation) (tetrachoric + polychoric) | 4.7 | ✅ | ✅ | N/A |
+| 8 | [distance-correlation](techniques/distance-correlation) | 4.8 | ✅ | ✅ | N/A |
+| 9 | [concordance-correlation](techniques/concordance-correlation) (Lin's CCC) | 4.9 | ✅ | ✅ | N/A |
+| 10 | [cramers-v-phi](techniques/cramers-v-phi) (+ Bergsma bias correction) | 4.10 | ✅ | ✅ | N/A |
+| 11 | [goodman-kruskal-somers](techniques/goodman-kruskal-somers) (γ, Somers' D, τ-b on tables) | 4.11, 4.12 | ✅ | ✅ | N/A |
+| 12 | [mutual-information](techniques/mutual-information) (discrete + binned continuous) | 4.14 | ✅ | ✅ | N/A |
+
+Later batches will cover the remaining chapters (Regression, GLMs, Nonparametric
+Methods, Survival, Time Series, Bayesian, Causal Inference, ML, ...).
