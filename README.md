@@ -163,6 +163,182 @@ result = central_tendency(df, col="income")
 - **Large data**: read Parquet, not CSV — typed, columnar, splittable across a Spark cluster. CSV is fine for small files (< ~1 GB) and easy interop.
 - **Bridging Spark ↔ pandas**: small results — `df.toPandas()`; medium — `df.limit(n).toPandas()`; large — keep it in Spark and use the `pyspark/` variant of the technique.
 
+## Language idiosyncrasies & gotchas
+
+Real, repeated time-sinks when working across these three stacks. Skim this once
+before you debug a "weird" result.
+
+### Python / numpy / scipy / pandas
+
+- **`\u` in string literals triggers a Unicode escape.** `"C:\users\file.csv"`
+  is a `SyntaxError` because `\u` starts a `\uXXXX` escape. Fixes:
+  - escape each backslash: `"C:\\users\\file.csv"`
+  - use a raw string: `r"C:\users\file.csv"`
+  - use forward slashes: `"C:/users/file.csv"` (works on Windows too)
+  - or `pathlib.Path(r"C:\users\file.csv")`
+  Same trap with `\n` (newline), `\t` (tab), `\r`, `\b`, `\x`, `\N`, `\0`.
+  Python 3.12 turns most unrecognized `\x` into a `SyntaxWarning` that will
+  become a `SyntaxError` later — fix them now.
+
+- **`np.var` / `np.std` default to `ddof=0`** (population). Most other software
+  (R `var`/`sd`, SAS, SPSS, Stata) defaults to `ddof=1` (sample). We pass
+  `ddof=1` explicitly everywhere in this repo so the from-scratch and library
+  numbers agree.
+
+- **0-based indexing; half-open slices.** `x[0]` is the first element, `x[a:b]`
+  excludes `b`. Coming from R, off-by-one bugs are very easy. Negative indices
+  count from the end (`x[-1]` is the last element — different from R!).
+
+- **`scipy.stats.mode` returns one value** (the smallest among ties); our
+  from-scratch `mode()` returns a *list* of all tied values. Both are
+  defensible; just know which you're calling.
+
+- **`scipy.stats.kurtosis` returns *excess* kurtosis by default**
+  (`fisher=True` → normal = 0). R's `moments::kurtosis` returns *non-excess*
+  (normal = 3). `e1071::kurtosis(x, type = ...)` lets you choose.
+
+- **`np.quantile` API churn.** Default is Hyndman–Fan type 7. In numpy < 1.22
+  the option was `interpolation=`; from 1.22+ it's `method=`. In numpy 2.0
+  `np.trapz` was renamed to `np.trapezoid` (the from-scratch `gini_trapezoid`
+  in this repo `getattr`s its way around that).
+
+- **`scipy.stats.mannwhitneyu` U1 sign convention.** It returns the U for
+  the *first* argument, equal to `#(x1 > x2) + 0.5·#(x1 == x2)`. The
+  rank-biserial conversion is therefore `r = 2·U1/(n1·n2) − 1`, not
+  `1 − 2·U1/(n1·n2)` — the formula has flipped between textbooks depending on
+  which U they used.
+
+- **Floating-point traps.** `0.1 + 0.2 == 0.3` is `False`. Summing a million
+  small floats with `sum()` accumulates rounding error; prefer
+  `math.fsum(x)` or `np.add.reduce(x)`. Test floats with `math.isclose` /
+  `np.isclose`, not `==`.
+
+- **Mutable default arguments are shared across calls.** Never
+  `def f(x=[]): ...` — the same list is reused every call. Default to `None`
+  and create inside the function.
+
+- **`is` vs `==`.** `is` checks object identity, `==` checks value. `[] is []`
+  is `False` even though `[] == []` is `True`. Use `==` for value comparisons.
+
+- **pandas `dropna()` behaviour.** Drops *any* row with a NaN by default; for
+  one column do `df["c"].dropna()` (Series) or `df.dropna(subset=["c"])`
+  (DataFrame). Don't forget — most stats functions silently propagate `nan` to
+  the result, so a single missing value can poison a mean.
+
+### R
+
+- **1-based indexing; ranges `1:n` are inclusive on both ends.** `x[1]` is the
+  first element. Negative indices *exclude* (`x[-1]` is everything but the
+  first — different from Python!).
+
+- **`var()` / `sd()` use the `n − 1` divisor by default**, no `ddof` knob. If
+  you genuinely need the population version, multiply by `(n − 1) / n`.
+
+- **`mad()` is scaled by default.** `mad(x)` uses `constant = 1.4826` so it's
+  a consistent estimator of σ at the normal. Pass `constant = 1` for the
+  raw MAD.
+
+- **`quantile(type = ...)`.** Default is type 7 (numpy/pandas match this).
+  `fivenum()` uses Tukey hinges, which can differ slightly from the
+  type-7 Q1/Q3 — both are "correct," they're just different conventions.
+
+- **Vector recycling silently zips short vectors.** `c(1, 2, 3, 4) + c(10, 20)`
+  produces `c(11, 22, 13, 24)` with only a warning (and only if the long length
+  isn't a multiple of the short). One of R's biggest footguns.
+
+- **`NA` propagates.** `mean(c(1, 2, NA))` is `NA`. Most stat functions take
+  `na.rm = TRUE`; some don't (e.g. `cor()` uses `use = ...` instead). Decide
+  up front whether you want listwise deletion or per-pair.
+
+- **`T` and `F` are *variables* aliased to `TRUE`/`FALSE`** — they can be
+  overwritten (`T <- 0` is valid). Always use `TRUE`/`FALSE` in code that
+  matters.
+
+- **`df[, "col"]` may or may not return a data frame**, depending on
+  `drop`. `df[, "col"]` on a base R `data.frame` returns a vector by default;
+  on a `tibble` it stays a tibble. `df[["col"]]` and `df$col` are
+  unambiguous — prefer them.
+
+- **`<-` vs `=`.** Use `<-` for assignment. Inside a function call, `=` is
+  argument binding, not assignment (`f(x = 5)` passes `5` as `x`;
+  `f(x <- 5)` *assigns* `5` to a global `x` and then passes the value, which
+  is almost never what you want).
+
+- **`stringsAsFactors` history.** Before R 4.0, `data.frame()` and
+  `read.csv()` converted character columns to factors by default. Many old
+  tutorials and packages still assume this. R ≥ 4.0 defaults to `FALSE`.
+
+- **`==` on factors compares levels, not labels** — and silently returns `NA`
+  if the levels differ. Cast with `as.character()` first when in doubt.
+
+### PySpark
+
+- **Lazy evaluation.** `df.filter(...)`, `select(...)`, `withColumn(...)`,
+  `groupBy(...)` build a plan but execute nothing. Computation triggers only
+  on an **action**: `count()`, `collect()`, `show()`, `first()`, `write...`,
+  `toPandas()`, etc. So timing a `filter` says nothing; time the action.
+
+- **`approxQuantile` is approximate.** With `relativeError = 0.01` you might
+  see a quantile off by up to 1% — fine for the median of a billion rows,
+  not fine if you need an exact answer. Set `relativeError = 0` for exact
+  (much more expensive — a full sort).
+
+- **DataFrames are immutable; every operation returns a new one.**
+  `df.withColumn("x", ...)` does *not* mutate `df` in place. Reassign:
+  `df = df.withColumn("x", ...)`.
+
+- **Schema inference on CSV is expensive** (it scans the file twice). For
+  production, pass an explicit `schema=StructType([...])`. Parquet/ORC carry
+  the schema natively — no scan needed.
+
+- **`count()` is a full scan.** Don't sprinkle `df.count()` everywhere — each
+  call re-executes the whole plan unless the DataFrame is cached. For
+  diagnostics during dev, `.cache()` or `.persist()` before repeated actions.
+
+- **Column references: `F.col("c")` vs string `"c"`.** Most functions accept
+  both, but inside arithmetic / boolean expressions you need a `Column`:
+  `df.filter(F.col("c") > 0)`, not `df.filter("c" > 0)` (that compares the
+  *string* `"c"` to `0`).
+
+- **Python UDFs are slow** — they ship rows over a JVM↔Python boundary and
+  serialize each value. Prefer the built-in `pyspark.sql.functions` (`F.mean`,
+  `F.when`, `F.regexp_replace`, ...). If you must write Python, use a
+  **pandas UDF** (vectorized).
+
+- **`null` is not `NaN`.** SQL nulls and floating-point NaN are different
+  things in Spark. Filter nulls with `F.col("c").isNull()` /
+  `.isNotNull()` or `df.na.drop(subset=["c"])`. `isnan()` is a separate
+  function for the float NaN.
+
+- **Window functions need an explicit frame** for `sum`/`avg`/etc. over an
+  ordered window. `Window.orderBy("x")` alone defaults to a *range* frame
+  from `unboundedPreceding` to `currentRow`, which causes subtle bugs with
+  ties. Be explicit: `.rowsBetween(Window.unboundedPreceding, Window.currentRow)`.
+
+- **`groupBy` doesn't preserve order;** add an `orderBy(...)` after.
+
+- **PySpark string indexing.** `substring` is **1-based**, not 0-based —
+  `substring("abc", 1, 2) == "ab"`. Inherited from SQL, surprising in Python.
+
+### Cross-language traps (when porting code between R / Python / PySpark)
+
+- **Indexing**: R is 1-based and inclusive; Python is 0-based and half-open;
+  PySpark `substring` is 1-based.
+- **Sample vs population default**: R `var`/`sd` use `n − 1`; numpy uses `n`;
+  Spark's `var_samp`/`stddev_samp` use `n − 1`, `var_pop`/`stddev_pop` use `n`.
+  When numbers disagree across languages, this is almost always why.
+- **Excess vs non-excess kurtosis**: scipy `kurtosis(fisher=True)` (default)
+  is excess; R `moments::kurtosis` is non-excess; Spark's `kurtosis`
+  aggregation is excess. Subtract/add 3 as needed.
+- **Quantile definitions**: R `quantile(type = 7)`, numpy default, pandas
+  default, and Spark `percentile_approx` all match (linear interp /
+  Hyndman–Fan type 7). SAS, Stata, and SPSS use *different* defaults — if
+  you're reconciling against a SAS report, ask which type they used.
+- **Missing values**: in R, `NA` is its own thing and propagates; in Python,
+  pandas uses `NaN` for numerics (and `pd.NA` for nullable types); in
+  Spark, SQL `NULL` and float `NaN` are different. Each language has its own
+  null-handling idioms — don't mix them in your head.
+
 ## Notation & Conventions
 
 These names mean the same thing in every file unless a function's own docstring overrides them.
