@@ -16,11 +16,11 @@ Gini coefficient
   Range: 0 (perfect equality) .. 1 (one unit holds everything).
   Small-sample bias-corrected version multiplies by n / (n - 1).
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Sequence
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def lorenz_curve(x: Sequence[float]):

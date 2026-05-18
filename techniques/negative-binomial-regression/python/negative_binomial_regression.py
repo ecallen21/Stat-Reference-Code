@@ -10,12 +10,12 @@ theta > 0 is the dispersion; as theta -> infinity, NB collapses to Poisson.
 We do joint MLE on (beta, log_theta) via BFGS for numerical stability -- the
 alternating IRLS scheme is sensitive to the initial theta near the boundary.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
-from scipy import optimize, special, stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import optimize, special, stats    # optimize: solvers; special: gammaln/beta; stats: distributions/tests
 
 
 def _neg_log_lik(params, X, y, offset):

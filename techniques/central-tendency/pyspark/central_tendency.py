@@ -7,10 +7,10 @@ median of a huge column is expensive, so Spark offers an approximate one).
 
 Run:  python central_tendency.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
+from pyspark.sql import SparkSession    # Spark entry point (build / get a SparkSession)
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
 
 
 def central_tendency(df, col: str, weight_col: str | None = None, relative_error: float = 0.001):

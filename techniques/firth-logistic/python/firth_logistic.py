@@ -16,12 +16,12 @@ Algorithm: modified score equations. For logistic with weight w_i = pi_i(1 - pi_
 and hat values h_i = diag(X (X'WX)^{-1} X'W), the Firth correction adds
 (h_i / 2) * (1 - 2 * pi_i) to the working response of standard IRLS.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def _logistic(eta):

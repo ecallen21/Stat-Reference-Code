@@ -18,12 +18,12 @@ Assumes Var(Y_i) = mu_i. If actual variance > mean (OVERDISPERSION), the
 standard errors are too small. Remedies (next techniques): negative binomial,
 quasi-Poisson, modified Poisson (sandwich SEs), or zero-inflated models.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def fit(X, y, offset=None, max_iter: int = 50, tol: float = 1e-8) -> dict:

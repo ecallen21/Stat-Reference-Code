@@ -21,13 +21,13 @@ R^2 and friends
 For numerical stability we solve via ``numpy.linalg.lstsq`` rather than inverting
 X'X directly.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def fit(X, y, names: Sequence[str] | None = None) -> dict:

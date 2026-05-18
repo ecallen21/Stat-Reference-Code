@@ -24,13 +24,13 @@ The studentized range distribution is in scipy.stats as ``studentized_range``
 ``scipy.stats.dunnett`` (scipy >= 1.11); we use it for p-values when present,
 otherwise fall back to a Bonferroni-corrected t for Dunnett.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from itertools import combinations
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from itertools import combinations    # stdlib: iterator over all C(n, k) size-k subsets
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def _stats(g):

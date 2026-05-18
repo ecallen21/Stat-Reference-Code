@@ -19,12 +19,12 @@ Fit by MLE / IRLS. Compared to logistic regression:
 We implement IRLS with the same working-response structure as logistic, but
 weights and the working response use the normal PDF instead of pi(1-pi).
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def fit(X, y, max_iter: int = 50, tol: float = 1e-8) -> dict:

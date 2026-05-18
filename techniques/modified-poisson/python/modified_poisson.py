@@ -18,12 +18,12 @@ Why use this:
     fails to converge.
   - Modified Poisson is the standard workaround in epidemiology.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def modified_poisson(X, y) -> dict:

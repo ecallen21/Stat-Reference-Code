@@ -20,13 +20,13 @@ The "shared slope" is restrictive. Test it via the Score Test for Proportional
 Odds (Brant test). The partial-proportional-odds model (§7.3, not implemented)
 relaxes it per predictor.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
-from scipy import optimize, stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import optimize, stats    # optimize: BFGS / Brent solvers;  stats: distributions / tests
 
 
 def _build_params(theta, K, p):

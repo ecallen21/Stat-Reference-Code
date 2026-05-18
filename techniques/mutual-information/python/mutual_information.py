@@ -30,13 +30,13 @@ MIC searches over many grids and returns the maximum normalized mutual
 information, rescaled to [0, 1]. Not implemented here -- use the ``minepy``
 package for it; we note it in the README.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from collections import Counter
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from collections import Counter    # stdlib: dict subclass that counts occurrences (Counter([1,1,2]) -> {1:2, 2:1})
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def entropy_discrete(x: Sequence, base: float = 2.0) -> float:

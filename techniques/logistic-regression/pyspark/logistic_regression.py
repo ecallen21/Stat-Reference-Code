@@ -6,12 +6,12 @@ former is the conventional choice for pure classification.
 
 Run:  python logistic_regression.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
-from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.classification import LogisticRegression
+from pyspark.sql import SparkSession    # Spark entry point (build / get a SparkSession)
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
+from pyspark.ml.feature import VectorAssembler    # combine multiple columns into a single 'features' vector for MLlib
+from pyspark.ml.classification import LogisticRegression    # MLlib logistic regression (binary + multinomial)
 
 
 def fit_logistic(df, feature_cols, label_col: str) -> dict:

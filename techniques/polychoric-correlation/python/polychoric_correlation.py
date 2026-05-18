@@ -23,13 +23,13 @@ This implementation
   derivatives; we do not estimate them here -- use R's polycor::polychor or
   Python's semopy for SEs.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
-from scipy import optimize, stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import optimize, stats    # optimize: BFGS / Brent solvers;  stats: distributions / tests
 
 
 def _thresholds_from_marginals(margins: Sequence[float]) -> np.ndarray:

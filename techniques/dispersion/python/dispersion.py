@@ -12,11 +12,11 @@ Estimators
 - mean abs deviation : mean(|x - center|)     (center = mean or median)
 - median abs dev MAD : median(|x - median|)   (robust; *1.4826 to estimate sigma under normality)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Sequence
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def value_range(x: Sequence[float]) -> float:

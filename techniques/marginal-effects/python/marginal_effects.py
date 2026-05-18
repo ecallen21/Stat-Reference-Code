@@ -25,12 +25,12 @@ Derivatives of the link function
   probit  : d_pi / d_x_j = phi(eta) * beta_j
   log     : d_mu / d_x_j = mu * beta_j        (Poisson, Gamma w/ log)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Callable
+from typing import Callable    # stdlib: type hint meaning 'a function'
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def ame_logit(X, beta) -> np.ndarray:

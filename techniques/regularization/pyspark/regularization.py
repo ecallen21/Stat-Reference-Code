@@ -13,12 +13,12 @@ standard idiom. We show all three fits below.
 
 Run:  python regularization.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
-from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.regression import LinearRegression
+from pyspark.sql import SparkSession    # Spark entry point (build / get a SparkSession)
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
+from pyspark.ml.feature import VectorAssembler    # combine multiple columns into a single 'features' vector for MLlib
+from pyspark.ml.regression import LinearRegression    # MLlib linear regression (supports ridge/lasso/elastic-net via params)
 
 
 def fit_regularized(df, feature_cols, label_col,

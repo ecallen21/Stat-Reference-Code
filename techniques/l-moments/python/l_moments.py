@@ -20,10 +20,10 @@ L-moment ratios:
   L-skewness tau3 = L3 / L2         in (-1, 1)
   L-kurtosis tau4 = L4 / L2         in (-1/4, 1) roughly
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
 
 def _comb(n: int, k: int) -> float:

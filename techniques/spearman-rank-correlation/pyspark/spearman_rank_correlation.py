@@ -7,13 +7,13 @@ two rank columns. Single shuffle for each ``orderBy``; cheap.
 
 Run:  python spearman_rank_correlation.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-from pyspark.sql import SparkSession, Window
-from pyspark.sql import functions as F
-from scipy import stats
+from pyspark.sql import SparkSession, Window    # SparkSession: entry point;  Window: window-function specifications
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def spearman_test_spark(df, col1: str, col2: str, conf: float = 0.95) -> dict:

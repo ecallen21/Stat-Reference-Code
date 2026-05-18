@@ -20,12 +20,12 @@ This file
 For multivariate KDE see ``scipy.stats.gaussian_kde``; here we focus on the
 univariate case.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Callable, Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Callable, Sequence    # stdlib: type hints (Callable = function; Sequence = indexable iterable)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def _gauss(u): return np.exp(-0.5 * u ** 2) / math.sqrt(2 * math.pi)

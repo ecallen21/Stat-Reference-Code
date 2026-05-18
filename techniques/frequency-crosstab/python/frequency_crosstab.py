@@ -13,13 +13,13 @@ The numeric-binning helper (`bin_counts`) uses the Sturges / Scott /
 Freedman-Diaconis rules to choose the number of bins -- the same rules a
 histogram uses (see Reference §1.9).
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from collections import Counter
-from typing import Hashable, Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from collections import Counter    # stdlib: dict subclass that counts occurrences (Counter([1,1,2]) -> {1:2, 2:1})
+from typing import Hashable, Sequence    # stdlib: type hints (Hashable = dict-key; Sequence = indexable iterable)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def frequency_table(x: Sequence[Hashable], sort_by: str = "value"):

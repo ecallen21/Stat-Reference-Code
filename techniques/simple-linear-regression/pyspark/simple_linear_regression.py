@@ -10,13 +10,13 @@ cost of building a fitted MLlib model when all you want is the slope.
 
 Run:  python simple_linear_regression.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
-from scipy import stats
+from pyspark.sql import SparkSession    # Spark entry point (build / get a SparkSession)
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def fit_spark(df, x_col: str, y_col: str) -> dict:

@@ -17,14 +17,14 @@ We expose:
   - ``theil_sen_slope`` : point estimate
   - ``theil_sen_ci``    : CI via the Kendall-tau-based formula (Sen 1968)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from itertools import combinations
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from itertools import combinations    # stdlib: iterator over all C(n, k) size-k subsets
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def theil_sen_slope(x: Sequence[float], y: Sequence[float]) -> dict:

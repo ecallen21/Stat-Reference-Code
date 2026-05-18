@@ -23,12 +23,12 @@ Three complementary diagnostics for Poisson / binomial GLMs:
    boundary of the parameter space (so the standard chi^2_1 p-value is conservative
    by a factor of 2).
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
-from scipy import stats, special
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats, special    # stats: distributions/tests;  special: gammaln/beta
 
 
 def _poisson_fit_irls(X, y, max_iter=50, tol=1e-8):

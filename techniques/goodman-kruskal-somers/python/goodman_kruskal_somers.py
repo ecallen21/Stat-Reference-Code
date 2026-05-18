@@ -25,9 +25,9 @@ Counting C, D, T from a contingency table is O((rc)^2). Closed form:
   T_r = sum_{i, j} n_{ij} * (sum_{r > i, s = j} n_{rs}) # same column, lower row
   T_c = sum_{i, j} n_{ij} * (sum_{r = i, s > j} n_{rs}) # same row, later column
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def _ordinal_pair_counts(table):

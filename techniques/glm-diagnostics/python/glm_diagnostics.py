@@ -20,13 +20,13 @@ Three complementary residual / fit-checking tools for GLMs:
    specification, RQRs are standard normal -- ANY pattern in their Q-Q plot
    or residuals-vs-fitted plot signals model misfit.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Callable
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Callable    # stdlib: type hint meaning 'a function'
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def pearson_residuals(y, mu, variance_fn: Callable[[np.ndarray], np.ndarray]):

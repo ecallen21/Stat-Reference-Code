@@ -35,12 +35,12 @@ the metric).
 The TWO methods can disagree: a predictor with high beta-weight might have low
 dominance if much of its apparent effect is shared with correlated predictors.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from itertools import combinations
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from itertools import combinations    # stdlib: iterator over all C(n, k) size-k subsets
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def _ols_r2(X, y):

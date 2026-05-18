@@ -7,16 +7,16 @@ the normal equations, which we solve on the driver.
 
 Run:  python multiple_linear_regression.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
-from pyspark.ml.feature import VectorAssembler
-from pyspark.ml.regression import LinearRegression
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from pyspark.sql import SparkSession    # Spark entry point (build / get a SparkSession)
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
+from pyspark.ml.feature import VectorAssembler    # combine multiple columns into a single 'features' vector for MLlib
+from pyspark.ml.regression import LinearRegression    # MLlib linear regression (supports ridge/lasso/elastic-net via params)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def fit_sufficient_stats(df, feature_cols, label_col):

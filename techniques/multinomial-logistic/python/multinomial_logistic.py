@@ -15,13 +15,13 @@ For ORDERED outcomes, prefer ``techniques/ordinal-logistic`` -- the proportional
 odds model uses K - 1 + p parameters; multinomial uses (K - 1) * p (no shared
 slope structure).
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
-from scipy import optimize, stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import optimize, stats    # optimize: BFGS / Brent solvers;  stats: distributions / tests
 
 
 def _softmax(logits):

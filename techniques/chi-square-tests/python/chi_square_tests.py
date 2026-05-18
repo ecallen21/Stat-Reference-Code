@@ -20,12 +20,12 @@ Standardized (Pearson) residuals: r_ij = (O_ij - E_ij) / sqrt(E_ij);
 Rule of thumb: chi-square is approximate -- want E_ij >= 5 for most cells.
 Below that, prefer Fisher's exact test (``techniques/fisher-exact``).
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def goodness_of_fit(observed: Sequence[int], expected_probs: Sequence[float] | None = None,

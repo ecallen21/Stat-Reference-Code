@@ -28,13 +28,13 @@ This file provides:
   - ``delta_ci(g, theta, V, conf=0.95)``   the corresponding 95% CI
   - worked example: log-OR CI from a 2x2 table (closed form vs. delta method)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Callable, Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Callable, Sequence    # stdlib: type hints (Callable = function; Sequence = indexable iterable)
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def numerical_gradient(g: Callable, theta: Sequence[float], step: float = 1e-5):

@@ -25,12 +25,12 @@ A CRITICAL CAVEAT (§5.36): stepwise methods are PROBLEMATIC.
 We implement these for completeness / understanding, with the caveat front and
 center in the README.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from itertools import combinations
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from itertools import combinations    # stdlib: iterator over all C(n, k) size-k subsets
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def _fit_rss(X, y):
