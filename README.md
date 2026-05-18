@@ -463,5 +463,12 @@ Building in batches; we walk through each batch together before moving on.
 | 11 | [robust-regression](techniques/robust-regression) (Huber M via IRLS) | 5.11 | ✅ | ✅ | N/A |
 | 12 | [splines-segmented](techniques/splines-segmented) (piecewise linear, natural cubic, breakpoint search) | 5.4, 5.22, 5.26, 5.34 | ✅ | ✅ | N/A |
 
+### Cleanup pass (Batch 4.5) — backfills for Batch 4
+
+| Addition | Where | Ref §|
+|----------|-------|------|
+| [categorical-variable-coding](techniques/categorical-variable-coding) (Dummy, Effect, Helmert, Deviation) | new | 5.32 |
+| [standardized-coefficients](techniques/standardized-coefficients) (beta weights + dominance analysis) | new | 5.38 |
+
 Later batches will cover the remaining chapters (GLMs, Nonparametric Methods,
 Survival, Time Series, Bayesian, Causal Inference, ML, ...).
