@@ -163,6 +163,117 @@ result = central_tendency(df, col="income")
 - **Large data**: read Parquet, not CSV — typed, columnar, splittable across a Spark cluster. CSV is fine for small files (< ~1 GB) and easy interop.
 - **Bridging Spark ↔ pandas**: small results — `df.toPandas()`; medium — `df.limit(n).toPandas()`; large — keep it in Spark and use the `pyspark/` variant of the technique.
 
+## Using a technique on your own data — a walkthrough
+
+If you've never used Python before, you'll bump into three patterns the first time you try to apply a technique from this repo to your own data. This section spells them all out with one worked example.
+
+### The end-to-end recipe
+
+```python
+# --- 1. Imports the technique needs (copy these from the top of the file) ----
+from __future__ import annotations
+import pandas as pd
+import math
+from collections import Counter
+from typing import Hashable, Sequence
+
+# --- 2. Load YOUR data ------------------------------------------------------
+df = pd.read_excel(
+    "path/to/your_file.xlsx",      # ← swap in your file path
+    sheet_name="Sheet1",            # ← swap in your sheet name
+)
+
+# --- 3. Paste the function definition exactly as it is in the repo ----------
+#        (you can also `from frequency_crosstab import frequency_table`
+#         if the file is on your Python path)
+def frequency_table(x: Sequence[Hashable], sort_by: str = "value"):
+    counts = Counter(x)
+    n = len(x)
+    items = sorted(counts.items()) if sort_by == "value" else counts.most_common()
+    out, run = [], 0
+    for cat, c in items:
+        run += c
+        out.append((cat, c, c / n, run, run / n))
+    return out
+
+# --- 4. Create a REAL variable from the column of df you want to analyze ----
+#        Run print(df.columns.tolist()) once if you don't remember the names.
+my_column = df["YOUR_COLUMN_NAME"]   # ← swap in the column you want to count
+
+# --- 5. Call the function and PRINT the result ------------------------------
+result = frequency_table(my_column)
+print(result)
+
+# --- 6. (Optional) Pretty-print row by row instead of as a raw list ---------
+print("\n  category                count   rel    cum   cumrel")
+for cat, c, rel, cum, cumrel in result:
+    print(f"  {str(cat):22s} {c:5d}  {rel:5.3f}  {cum:5d}  {cumrel:6.3f}")
+```
+
+Change two things to make it work on **your** data: the file path on line 9 and the column name on line 29. Nothing else.
+
+### The three traps to watch out for
+
+The recipe above is built specifically to avoid these. They're the most common reasons "I copied the code and nothing happened":
+
+**1. Parameter name ≠ variable name.** Inside a `def` line like
+
+```python
+def frequency_table(x, sort_by="value"):
+```
+
+the `x` is a **local placeholder** — the function's internal label for "whatever you hand in." It does not create a global variable called `x`. So this errors out:
+
+```python
+print(frequency_table(x))           # NameError: name 'x' is not defined
+```
+
+You need to pass *your* variable in. Whatever you named it. The function will internally call it `x` while it works with it; outside the function, `x` doesn't exist.
+
+**2. Functions return values; they don't print them.** When you do:
+
+```python
+frequency_table(my_column)
+```
+
+…the function does compute the table, but the result vanishes into the void unless you capture or print it:
+
+```python
+result = frequency_table(my_column)   # capture it
+print(frequency_table(my_column))      # or print it inline
+```
+
+This is a deliberate Python convention: a function that *computes* should return its result (so you can do more with it — print, plot, save to CSV); a function that *displays* should print. The repo's functions all *compute*, so you always have to print or capture.
+
+**3. A DataFrame is not a column.** When you load Excel / CSV / Parquet, you get a **whole table** in a variable like `df`. Most functions in this repo expect a single 1-D column, not the full table. Pick the column you want with `df["column_name"]`:
+
+```python
+print(frequency_table(df))             # wrong: tries to count column names
+print(frequency_table(df["Status"]))   # right: counts values in the 'Status' column
+```
+
+To see what columns your file has, run once:
+
+```python
+print(df.columns.tolist())
+print(df.head())                       # first 5 rows, gives a sense of the values
+```
+
+### A 30-second template you can adapt to any technique
+
+For any function in `techniques/<name>/python/<name>.py`:
+
+```python
+# 1. Imports (copy from the top of the file)
+# 2. Load your data into a DataFrame `df`
+# 3. Either copy the function in, or `from <name> import <function>`
+# 4. column = df["YOUR_COLUMN_NAME"]      ← extract what you want
+# 5. result = the_function(column)        ← compute
+# 6. print(result)                        ← display
+```
+
+That's the whole pattern. The only file-to-file variation is which imports you need (look at the top of the file), what the function's parameters are (look at its `def` line and docstring), and what shape of input it expects (a 1-D column? two columns? a 2-D table?).
+
 ## Language idiosyncrasies & gotchas
 
 Real, repeated time-sinks when working across these three stacks. Skim this once
