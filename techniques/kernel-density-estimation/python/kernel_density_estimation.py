@@ -23,9 +23,15 @@ univariate case.
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Callable, Sequence    # stdlib: type hints (Callable = function; Sequence = indexable iterable)
+from typing import Callable, NamedTuple, Sequence    # stdlib: type hints (Callable = function; Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+
+
+class KDE(NamedTuple):
+    """Return type of ``kde_evaluate``. Unpacks like a tuple: ``f, h = kde_evaluate(...)``."""
+    density: np.ndarray   # f_hat at each grid point
+    bandwidth: float      # the bandwidth h actually used (rule-of-thumb if not given)
 
 
 def _gauss(u): return np.exp(-0.5 * u ** 2) / math.sqrt(2 * math.pi)
@@ -49,7 +55,12 @@ def scott_h(x):
 
 
 def kde_evaluate(x, grid, h=None, kernel: str = "gaussian"):
-    """Evaluate f_hat at each point in ``grid``."""
+    """Evaluate f_hat at each point in ``grid``.
+
+    Returns a KDE named tuple with fields ``density`` (f_hat at each grid point)
+    and ``bandwidth`` (the h actually used; useful when h was chosen by rule-of-thumb).
+    Unpacks like a tuple: ``f, h = kde_evaluate(x, grid)``.
+    """
     x = np.asarray(x, dtype=float); grid = np.asarray(grid, dtype=float)
     if h is None:
         h = silverman_h(x)
@@ -58,7 +69,7 @@ def kde_evaluate(x, grid, h=None, kernel: str = "gaussian"):
     for xi in x:
         out += K((grid - xi) / h)
     out /= (len(x) * h)
-    return out, h
+    return KDE(density=out, bandwidth=h)
 
 
 def library_versions(x, grid):

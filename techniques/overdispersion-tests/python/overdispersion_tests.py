@@ -26,9 +26,16 @@ Three complementary diagnostics for Poisson / binomial GLMs:
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import NamedTuple    # stdlib: NamedTuple = tuple with named fields (prints as Name(field=...))
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 from scipy import stats, special    # stats: distributions/tests;  special: gammaln/beta
+
+
+class PoissonFit(NamedTuple):
+    """IRLS Poisson fit. Unpacks like a tuple: ``beta, mu = _poisson_fit_irls(X, y)``."""
+    beta: np.ndarray   # coefficient vector
+    mu: np.ndarray     # fitted means = exp(X @ beta)
 
 
 def _poisson_fit_irls(X, y, max_iter=50, tol=1e-8):
@@ -43,7 +50,7 @@ def _poisson_fit_irls(X, y, max_iter=50, tol=1e-8):
         beta_new, *_ = np.linalg.lstsq(Xw, zw, rcond=None)
         if np.max(np.abs(beta_new - beta)) < tol: beta = beta_new; break
         beta = beta_new
-    return beta, mu
+    return PoissonFit(beta=beta, mu=mu)
 
 
 def pearson_dispersion(X, y) -> dict:

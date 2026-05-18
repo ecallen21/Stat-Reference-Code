@@ -13,9 +13,15 @@ empirical CDF helper. (More on the ECDF in techniques/ecdf.)
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+
+
+class ECDFPoints(NamedTuple):
+    """Empirical-CDF coordinates. Unpacks like a tuple: ``xs, Fs = ecdf(x)``."""
+    xs: list       # sorted unique values (the x-axis steps)
+    Fn: list       # cumulative probability F_n(xs[i]) at each step
 
 
 def quantile(x: Sequence[float], p: float, kind: int = 7) -> float:
@@ -86,8 +92,9 @@ def ecdf(x: Sequence[float]):
 
     Returns
     -------
-    (xs, ys) -- ``xs`` are the sorted *unique* values; ``ys[i]`` is the cumulative
-    probability F_n(xs[i]) (jumps where there are ties).
+    ECDFPoints named tuple with fields ``xs`` (sorted unique values) and ``Fn``
+    (cumulative probability F_n at each value, with jumps where there are ties).
+    Unpacks like a tuple: ``xs, Fs = ecdf(x)``.
     """
     s = sorted(x)
     n = len(s)
@@ -98,7 +105,7 @@ def ecdf(x: Sequence[float]):
             ys.append(i / n)
         else:
             ys[-1] = i / n
-    return xs, ys
+    return ECDFPoints(xs=xs, Fn=ys)
 
 
 def library_versions(x: Sequence[float]):

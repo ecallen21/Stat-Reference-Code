@@ -28,15 +28,22 @@ from __future__ import annotations    # stdlib: postpone type-hint evaluation (l
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 from itertools import combinations    # stdlib: iterator over all C(n, k) size-k subsets
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
+
+
+class GroupStats(NamedTuple):
+    """Per-group summary. Unpacks like a tuple: ``n, m, s2 = _stats(g)``."""
+    n: int       # sample size
+    mean: float  # sample mean
+    var: float   # sample variance (ddof=1)
 
 
 def _stats(g):
     n = len(g); m = sum(g) / n
     s2 = sum((v - m) ** 2 for v in g) / (n - 1)
-    return n, m, s2
+    return GroupStats(n=n, mean=m, var=s2)
 
 
 def tukey_hsd(groups: Sequence[Sequence[float]], labels=None, conf: float = 0.95):

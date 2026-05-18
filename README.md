@@ -193,7 +193,8 @@ def frequency_table(x: Sequence[Hashable], sort_by: str = "value"):
     out, run = [], 0
     for cat, c in items:
         run += c
-        out.append((cat, c, c / n, run, run / n))
+        out.append({"category": cat, "count": c, "rel_freq": c / n,
+                    "cum_count": run, "cum_rel": run / n})
     return out
 
 # --- 4. Create a REAL variable from the column of df you want to analyze ----
@@ -201,13 +202,20 @@ def frequency_table(x: Sequence[Hashable], sort_by: str = "value"):
 my_column = df["YOUR_COLUMN_NAME"]   # ← swap in the column you want to count
 
 # --- 5. Call the function and PRINT the result ------------------------------
+#        Each row is a dict, so the field names are right there in the output:
+#        {"category": ..., "count": ..., "rel_freq": ..., "cum_count": ..., "cum_rel": ...}
 result = frequency_table(my_column)
 print(result)
 
-# --- 6. (Optional) Pretty-print row by row instead of as a raw list ---------
-print("\n  category                count   rel    cum   cumrel")
-for cat, c, rel, cum, cumrel in result:
-    print(f"  {str(cat):22s} {c:5d}  {rel:5.3f}  {cum:5d}  {cumrel:6.3f}")
+# --- 6. (Optional) Pretty-print row by row using the dict keys --------------
+print("\n  category                count   rel_freq   cum_count   cum_rel")
+for row in result:
+    print(f"  {str(row['category']):22s} {row['count']:5d}    "
+          f"{row['rel_freq']:5.3f}      {row['cum_count']:5d}     {row['cum_rel']:6.3f}")
+
+# --- 7. (Optional) Drop straight into a pandas DataFrame --------------------
+#        Because the rows are dicts, the column headers come along for free.
+print("\n", pd.DataFrame(result))
 ```
 
 Change two things to make it work on **your** data: the file path on line 9 and the column name on line 29. Nothing else.

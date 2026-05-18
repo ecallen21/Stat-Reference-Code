@@ -27,7 +27,21 @@ Counting C, D, T from a contingency table is O((rc)^2). Closed form:
 """
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
+from typing import NamedTuple    # stdlib: NamedTuple = tuple with named fields (prints as Name(field=...))
+
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+
+
+class PairCounts(NamedTuple):
+    """Pair-count summary used by all ordinal-association measures.
+
+    Unpacks like a 4-tuple, so existing callers (``C, D, _, _ = _ordinal_pair_counts(t)``)
+    keep working.
+    """
+    concordant: int       # C  (both X and Y strictly greater)
+    discordant: int       # D  (X greater, Y smaller)
+    ties_x_only: int      # T_x: same row, different column
+    ties_y_only: int      # T_y: different row, same column
 
 
 def _ordinal_pair_counts(table):
@@ -63,7 +77,7 @@ def _ordinal_pair_counts(table):
         for i in range(r):
             for i2 in range(i + 1, r):
                 Tc += int(obs[i, j]) * int(obs[i2, j])
-    return C, D, Tr, Tc
+    return PairCounts(concordant=C, discordant=D, ties_x_only=Tr, ties_y_only=Tc)
 
 
 def goodman_kruskal_gamma(table) -> float:

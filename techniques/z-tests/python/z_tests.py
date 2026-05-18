@@ -14,9 +14,15 @@ with z compared to the standard normal. Variants below:
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
+
+
+class CI(NamedTuple):
+    """Confidence interval. Unpacks like a tuple: ``lo, hi = _z_ci(...)``."""
+    lower: float
+    upper: float
 
 
 def _mean(x):
@@ -35,7 +41,7 @@ def _z_pvalue(z: float, alternative: str) -> float:
 
 def _z_ci(estimate: float, se: float, conf: float):
     z = stats.norm.ppf(0.5 + conf / 2)
-    return estimate - z * se, estimate + z * se
+    return CI(lower=estimate - z * se, upper=estimate + z * se)
 
 
 def one_sample_mean_z(x: Sequence[float], mu0: float, sigma: float,

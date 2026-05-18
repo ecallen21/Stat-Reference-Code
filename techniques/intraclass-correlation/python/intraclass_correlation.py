@@ -34,14 +34,26 @@ Inputs: ``data`` is a 2D array shape (n subjects, k raters).
 """
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
+class TwoWayMS(NamedTuple):
+    """Mean-square decomposition for a two-way subjects-by-raters ANOVA.
+
+    Unpacks like a 5-tuple, so ``MSr, MSc, MSe, n, k = _two_way_anova_ms(data)`` still works.
+    """
+    MS_rows: float      # mean square between subjects (rows)
+    MS_cols: float      # mean square between raters (cols)
+    MS_error: float     # residual mean square
+    n: int              # number of subjects
+    k: int              # number of raters
+
+
 def _two_way_anova_ms(data: np.ndarray):
-    """Return (MS_R, MS_C, MS_E, n, k) for an n x k subjects-by-raters table."""
+    """Return a TwoWayMS named tuple for an n x k subjects-by-raters table."""
     n, k = data.shape
     grand = data.mean()
     row_means = data.mean(axis=1)
@@ -51,7 +63,8 @@ def _two_way_anova_ms(data: np.ndarray):
     ss_t = np.sum((data - grand) ** 2)
     ss_e = ss_t - ss_r - ss_c
     df_r, df_c, df_e = n - 1, k - 1, (n - 1) * (k - 1)
-    return ss_r / df_r, ss_c / df_c, ss_e / df_e, n, k
+    return TwoWayMS(MS_rows=ss_r / df_r, MS_cols=ss_c / df_c,
+                    MS_error=ss_e / df_e, n=n, k=k)
 
 
 def icc(data, model: str = "two-way", form: str = "absolute",

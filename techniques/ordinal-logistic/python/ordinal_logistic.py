@@ -23,10 +23,16 @@ relaxes it per predictor.
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 from scipy import optimize, stats    # optimize: BFGS / Brent solvers;  stats: distributions / tests
+
+
+class POParams(NamedTuple):
+    """Proportional-odds parameter split. Unpacks like a tuple: ``alpha, beta = _build_params(...)``."""
+    alpha: np.ndarray   # K-1 ordered thresholds (intercepts of each cumulative logit)
+    beta: np.ndarray    # p slope coefficients shared across cumulative logits
 
 
 def _build_params(theta, K, p):
@@ -37,7 +43,7 @@ def _build_params(theta, K, p):
     for k in range(1, K - 1):
         alpha[k] = alpha[k - 1] + math.exp(theta[k])
     beta = theta[K - 1:K - 1 + p]
-    return alpha, beta
+    return POParams(alpha=alpha, beta=beta)
 
 
 def _neg_log_lik(theta, X, y, K):

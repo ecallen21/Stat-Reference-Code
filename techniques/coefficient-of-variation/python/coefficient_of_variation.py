@@ -23,9 +23,15 @@ signs.
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
+
+
+class CI(NamedTuple):
+    """Confidence interval. Unpacks like a tuple: ``lo, hi = cv_ci_mckay(x)``."""
+    lower: float
+    upper: float
 
 
 def _mean(x):
@@ -91,7 +97,8 @@ def within_subject_cv(subjects: Sequence[Sequence[float]], as_percent: bool = Fa
 def cv_ci_mckay(x: Sequence[float], conf: float = 0.95):
     """McKay's approximate chi-squared CI for the (population) CV.
 
-    Reasonable for CV < ~0.33. Returns a (lower, upper) tuple at confidence level ``conf``.
+    Reasonable for CV < ~0.33. Returns a CI named tuple with fields ``lower``
+    and ``upper`` at confidence level ``conf``. Unpacks like a 2-tuple.
     """
     n = len(x)
     v = n - 1
@@ -101,7 +108,7 @@ def cv_ci_mckay(x: Sequence[float], conf: float = 0.95):
     chi_lo = stats.chi2.ppf(a / 2, v) / v
     lo = k / math.sqrt((chi_hi - 1) * k * k + chi_hi)
     hi = k / math.sqrt((chi_lo - 1) * k * k + chi_lo)
-    return lo, hi
+    return CI(lower=lo, upper=hi)
 
 
 def library_versions(x: Sequence[float]):

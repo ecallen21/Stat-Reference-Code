@@ -12,9 +12,16 @@ from __future__ import annotations    # stdlib: postpone type-hint evaluation (l
 
 import bisect    # stdlib: binary search on a sorted list (O(log n) insertion-point)
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+
+
+class DKWBand(NamedTuple):
+    """Return type of ``ECDF.dkw_band``. Unpacks like a tuple: ``xs, lo, hi = band``."""
+    xs: list
+    lower: np.ndarray
+    upper: np.ndarray
 
 
 class ECDF:
@@ -59,16 +66,17 @@ class ECDF:
 
         Returns
         -------
-        (xs, lower, upper) -- xs are the sorted data points; ``lower[i]`` and
-        ``upper[i]`` bracket F at xs[i]. The band covers the *whole* curve at the
-        chosen level (unlike a pointwise CI).
+        DKWBand named tuple with fields ``xs``, ``lower``, ``upper`` -- xs are the
+        sorted data points; ``lower[i]`` and ``upper[i]`` bracket F at xs[i]. The
+        band covers the *whole* curve at the chosen level (unlike a pointwise CI).
+        Unpacks like a tuple: ``xs, lo, hi = F.dkw_band()``.
         """
         eps = math.sqrt(math.log(2.0 / alpha) / (2.0 * self.n))
         xs = self.x
         fhat = np.array([self(v) for v in xs])
         lower = np.clip(fhat - eps, 0.0, 1.0)
         upper = np.clip(fhat + eps, 0.0, 1.0)
-        return xs, lower, upper
+        return DKWBand(xs=xs, lower=lower, upper=upper)
 
 
 def library_versions(data: Sequence[float], grid):
