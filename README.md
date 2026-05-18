@@ -385,24 +385,60 @@ Every Python file in this repo starts with a block of `import` statements that p
 If you ever wonder where something came from, search the file's top imports — there's no implicit "stdlib magic" in Python; everything is named explicitly.
 
 
-These names mean the same thing in every file unless a function's own docstring overrides them.
+These names are the **parameter names** used inside the function definitions throughout the repo. They are *labels* — placeholders the function uses for whatever you hand in. They are **not** variables that exist in your script, and you do **not** rename them to match your data.
 
-### Data inputs
-| Name | Meaning |
-|------|---------|
-| `x`, `x1`, `x2` | A 1-D sample (a Python sequence / numpy array / R numeric vector). `x1` and `x2` are two independent samples (e.g. group 1 and group 2). |
-| `y` | A second variable paired with `x` (same length), for bivariate techniques. Not used in Batch 1. |
+### How to read these function signatures
+
+Take this function from `techniques/frequency-crosstab`:
+
+```python
+def frequency_table(x, sort_by="value"):
+    counts = Counter(x)
+    ...
+```
+
+The `x` inside `(x, sort_by="value")` is the function's **internal label** — it's saying "whatever you pass in, I'll call it `x` while I'm working with it." It does **not** mean "go create a variable called `x`."
+
+When you **call** the function, you pass your own variable (with whatever name you actually gave it):
+
+```python
+my_documents = ["a.pdf", "b.docx", "a.pdf"]
+print(frequency_table(my_documents))         # ← your variable becomes 'x' inside
+```
+
+Inside the function, `x` refers to `my_documents`. Outside the function, `x` doesn't exist at all.
+
+**The single most common mistake** is to read the parameter name as if it were the data itself and try to call the function with that exact name:
+
+```python
+print(frequency_table(x))                # NameError: x is not defined
+print(frequency_table(documents))        # NameError if you never created 'documents'
+```
+
+Always pass *your* variable, with *its* name.
+
+### Parameter names used in the repo
+
+This is the dictionary the function signatures speak. When you see `x` in a `def` line, the function is saying "give me a 1-D sample." When you see `proportion`, the function expects a number between 0 and 0.5. Etc.
+
+| Parameter name in `def` line | What the function expects you to pass in |
+|------------------------------|------------------------------------------|
+| `x`, `x1`, `x2` | A 1-D sample (Python list / numpy array / pandas Series / R numeric vector). `x1` and `x2` are two **independent** samples (e.g. group 1, group 2). |
+| `y` | A second variable paired with `x` (same length), for bivariate techniques (regression, correlation, paired tests). |
 | `w` | Weights, one per observation in `x` (`len(w) == len(x)`). Used by `weighted_mean`. Survey weights, meta-analysis weights, etc. |
-| `df` *(PySpark)* | A Spark `DataFrame`. |
-| `col`, `row_col`, `col_col`, `value_col`, `weight_col`, `group_col` *(PySpark)* | Column **names** (strings) inside `df`. |
-| `groups` | A list/list-of-lists, one sub-sample per group (used by one-way ANOVA effect sizes). |
-| `subjects` | A list of repeated-measurements vectors, one per subject (used by within-subject CV). |
-| `events`, `person_time_total` | Event count and total person-time at risk (for incidence rates). |
-| `x` / `n` *(proportions)* | Number of successes / sample size, in functions that take a count rather than a vector. |
+| `df` *(PySpark only)* | A Spark `DataFrame`. (Not the same `df` as in pandas — the PySpark version.) |
+| `col`, `row_col`, `col_col`, `value_col`, `weight_col`, `group_col` *(PySpark)* | Column **names** (strings) inside the Spark `DataFrame`. |
+| `groups` | A list of per-group samples — i.e. a list of lists / list of arrays, one entry per group (used by ANOVA, Kruskal-Wallis, ...). |
+| `subjects` | A list of per-subject repeated-measurement vectors, one entry per subject (used by within-subject CV, Friedman, ...). |
+| `events`, `person_time_total` | Event count and total person-time at risk (for incidence-rate functions). |
+| `x` / `n` *(proportions)* | When a function expects a **count + sample size** rather than a vector (e.g. `binomial_test(x=42, n=100)`), `x` is the number of successes and `n` is the total trials. |
 
-### Parameters & options
-| Name | Meaning |
-|------|---------|
+### Option / tuning parameters
+
+These are the *control knobs* of the functions — they tell the function *how* to compute, not what data to compute on.
+
+| Parameter | Meaning |
+|-----------|---------|
 | `n` | Sample size (`len(x)`). |
 | `proportion` | Fraction trimmed/Winsorized from **each** tail. `0.2` means drop the bottom 20% and the top 20%. Must be in `[0, 0.5)`. |
 | `ddof` | "Delta degrees of freedom" — divisor is `n − ddof`. `ddof=1` is the sample (Bessel-corrected) version; `ddof=0` is the population version. |
