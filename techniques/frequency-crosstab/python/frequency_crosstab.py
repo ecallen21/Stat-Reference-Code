@@ -17,9 +17,32 @@ from __future__ import annotations    # stdlib: postpone type-hint evaluation (l
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 from collections import Counter    # stdlib: dict subclass that counts occurrences (Counter([1,1,2]) -> {1:2, 2:1})
-from typing import Hashable, Sequence    # stdlib: type hints (Hashable = dict-key; Sequence = indexable iterable)
+from typing import Hashable, NamedTuple, Sequence    # stdlib: type hints (Hashable = dict-key; Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+
+
+# Named return types -- each prints as e.g. Crosstab(row_labels=..., col_labels=..., counts=...)
+# so the caller can see what each value is. Tuple unpacking still works:
+#     rl, cl, tbl = crosstab(...)        # by position
+#     result = crosstab(...); result.counts  # by name
+
+
+class Crosstab(NamedTuple):
+    row_labels: list
+    col_labels: list
+    counts: list
+
+
+class Margins(NamedTuple):
+    row_totals: list
+    col_totals: list
+    grand_total: int
+
+
+class BinCounts(NamedTuple):
+    edges: np.ndarray
+    counts: np.ndarray
 
 
 def frequency_table(x: Sequence[Hashable], sort_by: str = "value"):
@@ -63,8 +86,9 @@ def crosstab(row: Sequence[Hashable], col: Sequence[Hashable]):
 
     Returns
     -------
-    (row_labels, col_labels, counts) -- the labels in sorted order, and the
-    contingency matrix as a list of lists.
+    Crosstab named tuple with fields ``row_labels``, ``col_labels``, ``counts``.
+    The labels are in sorted order; ``counts`` is a list of lists (rows x cols).
+    Unpacks like a regular tuple: ``rl, cl, tbl = crosstab(...)``.
     """
     if len(row) != len(col):
         raise ValueError("row and col must have the same length")
@@ -75,18 +99,19 @@ def crosstab(row: Sequence[Hashable], col: Sequence[Hashable]):
     table = [[0] * len(clabels) for _ in rlabels]
     for r, c in zip(row, col):
         table[ridx[r]][cidx[c]] += 1
-    return rlabels, clabels, table
+    return Crosstab(row_labels=rlabels, col_labels=clabels, counts=table)
 
 
 def margins(table):
     """Marginal totals from a 2D count table.
 
-    Returns ``(row_totals, col_totals, grand_total)``.
+    Returns a Margins named tuple with fields ``row_totals``, ``col_totals``,
+    ``grand_total``. Unpacks like a tuple: ``rt, ct, g = margins(table)``.
     """
     row_tot = [sum(r) for r in table]
     col_tot = [sum(col) for col in zip(*table)]
     grand = sum(row_tot)
-    return row_tot, col_tot, grand
+    return Margins(row_totals=row_tot, col_totals=col_tot, grand_total=grand)
 
 
 def percentages(table, kind: str = "total"):
@@ -128,7 +153,8 @@ def bin_counts(x: Sequence[float], rule: str = "fd"):
 
     Returns
     -------
-    ``(edges, counts)`` -- bin edges (length k+1) and counts (length k).
+    BinCounts named tuple with fields ``edges`` (length k+1) and ``counts``
+    (length k). Unpacks like a tuple: ``edges, counts = bin_counts(x)``.
     """
     arr = np.asarray(x, dtype=float)
     n = arr.size
@@ -146,7 +172,7 @@ def bin_counts(x: Sequence[float], rule: str = "fd"):
     else:
         raise ValueError("rule must be 'sturges', 'scott', or 'fd'")
     counts, edges = np.histogram(arr, bins=edges)
-    return edges, counts
+    return BinCounts(edges=edges, counts=counts)
 
 
 def _print_crosstab(rlabels, clabels, table, title):

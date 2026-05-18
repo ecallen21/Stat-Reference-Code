@@ -26,13 +26,26 @@ Why use tau over Spearman?
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
+class KendallCounts(NamedTuple):
+    """Pair-count summary for Kendall tau-* statistics.
+
+    Unpacks as a 6-tuple, so ``C, D, Tx, Ty, Txy, n = _kendall_counts(x, y)`` still works.
+    """
+    concordant: int    # C: pairs where both x and y move in the same direction
+    discordant: int    # D: pairs where x and y move in opposite directions
+    ties_x_only: int   # Tx: tied on x only
+    ties_y_only: int   # Ty: tied on y only
+    ties_both: int     # Txy: tied on both x and y
+    n: int             # sample size
+
+
 def _kendall_counts(x: Sequence[float], y: Sequence[float]):
-    """Return (C, D, T_x_only, T_y_only, T_both, n)."""
+    """Return a KendallCounts named tuple of pair-counts; see class for fields."""
     n = len(x)
     C = D = Tx = Ty = Txy = 0
     for i in range(n - 1):
@@ -49,7 +62,8 @@ def _kendall_counts(x: Sequence[float], y: Sequence[float]):
                 C += 1
             else:
                 D += 1
-    return C, D, Tx, Ty, Txy, n
+    return KendallCounts(concordant=C, discordant=D, ties_x_only=Tx,
+                         ties_y_only=Ty, ties_both=Txy, n=n)
 
 
 def kendall_tau_a(x: Sequence[float], y: Sequence[float]) -> float:

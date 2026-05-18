@@ -21,9 +21,24 @@ Two-sample
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+
+
+class Winsorized(NamedTuple):
+    """Return of ``_winsorize``. Unpacks like a tuple: ``s, k = _winsorize(x, p)``."""
+    sample: list   # the Winsorized sample, sorted
+    k_per_tail: int  # number of observations replaced at each tail
+
+
+class YuenParts(NamedTuple):
+    """Per-group quantities used inside ``yuen_trimmed_t``. Unpacks as a 5-tuple."""
+    n: int                 # sample size
+    g: int                 # trim count per tail
+    h: int                 # effective sample size (n - 2g)
+    trimmed_mean: float    # trimmed-mean estimate
+    winsorized_ssd: float  # Winsorized sum of squared deviations from Winsorized mean
 
 
 def _median(x):
@@ -61,7 +76,7 @@ def _winsorize(x: Sequence[float], proportion: float):
     if k:
         lo, hi = s[k], s[n - k - 1]
         s = [lo] * k + s[k:n - k] + [hi] * k
-    return s, k
+    return Winsorized(sample=s, k_per_tail=k)
 
 
 def trimmed_mean(x: Sequence[float], proportion: float = 0.2) -> float:
@@ -142,7 +157,9 @@ def yuen_trimmed_t(x: Sequence[float], y: Sequence[float], proportion: float = 0
         sw, _ = _winsorize(z, proportion)
         m = sum(sw) / n
         ssd = sum((v - m) ** 2 for v in sw)  # Winsorized sum of squares
-        return n, g, h, trimmed_mean(z, proportion), ssd
+        return YuenParts(n=n, g=g, h=h,
+                         trimmed_mean=trimmed_mean(z, proportion),
+                         winsorized_ssd=ssd)
 
     n1, g1, h1, t1, ss1 = parts(x)
     n2, g2, h2, t2, ss2 = parts(y)

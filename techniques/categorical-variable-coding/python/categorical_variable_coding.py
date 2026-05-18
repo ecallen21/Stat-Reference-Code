@@ -35,9 +35,20 @@ are byte-for-byte identical across the four parameterizations.
 """
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+
+
+# Each coding function returns the design matrix + the column names + a small
+# metadata dict describing what choice was made (which level was the reference, etc.).
+# NamedTuple gives field-named printing AND preserves tuple unpacking:
+#     X, names, meta = dummy_coding(group)        # by position (unchanged)
+#     result = dummy_coding(group); result.design_matrix   # by name
+class Coding(NamedTuple):
+    design_matrix: np.ndarray
+    column_names: list
+    meta: dict
 
 
 def _factor_levels(group):
@@ -55,7 +66,8 @@ def dummy_coding(group, reference=None):
         cols.append(np.array([1.0 if g == lev else 0.0 for g in group]))
     X = np.column_stack(cols) if cols else np.zeros((len(group), 0))
     names = [f"{lev}_vs_{reference}" for lev in others]
-    return X, names, {"reference": reference, "scheme": "dummy"}
+    return Coding(design_matrix=X, column_names=names,
+                  meta={"reference": reference, "scheme": "dummy"})
 
 
 def effect_coding(group, reference=None):
@@ -70,7 +82,8 @@ def effect_coding(group, reference=None):
                               for g in group]))
     X = np.column_stack(cols) if cols else np.zeros((len(group), 0))
     names = [f"{lev}_vs_grandmean" for lev in others]
-    return X, names, {"reference": reference, "scheme": "effect (sum-to-zero)"}
+    return Coding(design_matrix=X, column_names=names,
+                  meta={"reference": reference, "scheme": "effect (sum-to-zero)"})
 
 
 def helmert_coding(group, levels: Sequence | None = None):
@@ -92,7 +105,8 @@ def helmert_coding(group, levels: Sequence | None = None):
         cols.append(col)
         names.append(f"{levels[j]}_vs_avg_of_prev")
     X = np.column_stack(cols) if cols else np.zeros((len(group), 0))
-    return X, names, {"levels_order": levels, "scheme": "Helmert"}
+    return Coding(design_matrix=X, column_names=names,
+                  meta={"levels_order": levels, "scheme": "Helmert"})
 
 
 def deviation_coding(group, omitted=None):
@@ -111,7 +125,8 @@ def deviation_coding(group, omitted=None):
                               for g in group]))
     X = np.column_stack(cols) if cols else np.zeros((len(group), 0))
     names = [f"{lev}_vs_grandmean" for lev in others]
-    return X, names, {"omitted": omitted, "scheme": "deviation"}
+    return Coding(design_matrix=X, column_names=names,
+                  meta={"omitted": omitted, "scheme": "deviation"})
 
 
 def fit_one_factor(group, y, coding_fn):

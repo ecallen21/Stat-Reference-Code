@@ -18,9 +18,15 @@ Confidence intervals:
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
+
+
+class CI(NamedTuple):
+    """Confidence interval. Unpacks like a tuple: ``lo, hi = ci_wilson(x, n)``."""
+    lower: float
+    upper: float
 
 
 # --------------------------------------------------------------------------
@@ -56,14 +62,15 @@ def incidence_rate(events: int, person_time_total: float) -> float:
 #   x    -- number of successes (count of the event of interest)
 #   n    -- sample size (total trials)
 #   conf -- confidence level (e.g. 0.95 for a 95% CI)
-# All return a (lower, upper) tuple clipped to [0, 1].
+# All return a CI named tuple with fields ``lower`` and ``upper``, clipped to
+# [0, 1]. Unpacks like a tuple, so ``lo, hi = ci_wilson(x, n)`` still works.
 
 def ci_wald(x: int, n: int, conf: float = 0.95):
     """Wald (normal-approximation) CI for a proportion. Poor near 0/1 and for small n."""
     p = x / n
     z = stats.norm.ppf(0.5 + conf / 2)
     half = z * math.sqrt(p * (1 - p) / n)
-    return max(0.0, p - half), min(1.0, p + half)
+    return CI(lower=max(0.0, p - half), upper=min(1.0, p + half))
 
 
 def ci_wilson(x: int, n: int, conf: float = 0.95):
@@ -74,7 +81,7 @@ def ci_wilson(x: int, n: int, conf: float = 0.95):
     denom = 1 + z2 / n
     center = (p + z2 / (2 * n)) / denom
     half = (z / denom) * math.sqrt(p * (1 - p) / n + z2 / (4 * n * n))
-    return max(0.0, center - half), min(1.0, center + half)
+    return CI(lower=max(0.0, center - half), upper=min(1.0, center + half))
 
 
 def ci_clopper_pearson(x: int, n: int, conf: float = 0.95):
@@ -82,7 +89,7 @@ def ci_clopper_pearson(x: int, n: int, conf: float = 0.95):
     alpha = 1 - conf
     lower = 0.0 if x == 0 else stats.beta.ppf(alpha / 2, x, n - x + 1)
     upper = 1.0 if x == n else stats.beta.ppf(1 - alpha / 2, x + 1, n - x)
-    return lower, upper
+    return CI(lower=lower, upper=upper)
 
 
 # --------------------------------------------------------------------------
@@ -97,12 +104,14 @@ def ci_poisson_rate(events: int, person_time_total: float, conf: float = 0.95):
     person_time_total : denominator (sum of at-risk follow-up).
     conf : confidence level.
 
-    Returns ``(lower, upper)`` -- bounds on the underlying rate ``lambda``.
+    Returns a CI named tuple with fields ``lower`` and ``upper`` -- bounds on
+    the underlying rate ``lambda``. Unpacks like a tuple.
     """
     alpha = 1 - conf
     lo_count = 0.0 if events == 0 else stats.chi2.ppf(alpha / 2, 2 * events) / 2
     hi_count = stats.chi2.ppf(1 - alpha / 2, 2 * events + 2) / 2
-    return lo_count / person_time_total, hi_count / person_time_total
+    return CI(lower=lo_count / person_time_total,
+              upper=hi_count / person_time_total)
 
 
 def library_versions(x: int, n: int):

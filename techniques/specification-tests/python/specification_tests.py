@@ -24,10 +24,17 @@ helper to evaluate everything in one call.
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
+
+
+class OLSFit(NamedTuple):
+    """Plain OLS fit. Unpacks like a tuple: ``beta, yhat, e = _ols(X, y)``."""
+    beta: np.ndarray       # coefficient vector
+    fitted: np.ndarray     # fitted values y_hat = X @ beta
+    residuals: np.ndarray  # residuals e = y - y_hat
 
 
 def _ols(X, y):
@@ -35,7 +42,7 @@ def _ols(X, y):
     beta, *_ = np.linalg.lstsq(X, y, rcond=None)
     yhat = X @ beta
     e = y - yhat
-    return beta, yhat, e
+    return OLSFit(beta=beta, fitted=yhat, residuals=e)
 
 
 def breusch_pagan(X, y) -> dict:

@@ -18,9 +18,15 @@ Gini coefficient
 """
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+
+
+class LorenzPoints(NamedTuple):
+    """Lorenz curve coordinates. Unpacks like a tuple: ``p, L = lorenz_curve(x)``."""
+    population_share: np.ndarray   # cumulative fraction of units (x-axis), 0 .. 1
+    value_share: np.ndarray        # cumulative fraction of total value (y-axis), 0 .. 1
 
 
 def lorenz_curve(x: Sequence[float]):
@@ -32,9 +38,10 @@ def lorenz_curve(x: Sequence[float]):
 
     Returns
     -------
-    (p, L) -- ``p[i]`` is the cumulative *population* share (fraction of units),
-    ``L[i]`` is the cumulative *value* share (fraction of the total). Both arrays
-    start at ``(0, 0)`` and end at ``(1, 1)``; length is ``n + 1``.
+    LorenzPoints named tuple with fields ``population_share`` (x-axis) and
+    ``value_share`` (y-axis). ``population_share[i] = i / n``; ``value_share[i]``
+    is the share of the total held by the smallest i units. Both arrays start at
+    ``(0, 0)`` and end at ``(1, 1)``; length is ``n + 1``.
     """
     arr = np.sort(np.asarray(x, dtype=float))
     if np.any(arr < 0):
@@ -43,7 +50,7 @@ def lorenz_curve(x: Sequence[float]):
     cum = np.concatenate([[0.0], np.cumsum(arr)])
     L = cum / cum[-1]
     p = np.arange(0, n + 1) / n
-    return p, L
+    return LorenzPoints(population_share=p, value_share=L)
 
 
 def gini_trapezoid(x: Sequence[float]) -> float:

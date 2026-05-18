@@ -26,16 +26,23 @@ Effect sizes (see techniques/effect-sizes):
 """
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
+from typing import NamedTuple, Sequence    # stdlib: type hints (Sequence = indexable iterable; NamedTuple = tuple with named fields)
 
 from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
+
+
+class GroupStats(NamedTuple):
+    """Per-group summary. Unpacks like a tuple: ``n, m, s2 = _stats(g)``."""
+    n: int       # sample size
+    mean: float  # sample mean
+    var: float   # sample variance (ddof=1)
 
 
 def _stats(g):
     n = len(g)
     m = sum(g) / n
     s2 = sum((v - m) ** 2 for v in g) / (n - 1)
-    return n, m, s2
+    return GroupStats(n=n, mean=m, var=s2)
 
 
 def classic_anova(groups: Sequence[Sequence[float]]) -> dict:

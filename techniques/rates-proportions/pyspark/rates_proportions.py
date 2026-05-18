@@ -11,10 +11,17 @@ Run:  python rates_proportions.py
 from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
 import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import NamedTuple    # stdlib: NamedTuple = tuple with named fields (prints as Name(field=...))
 
 from pyspark.sql import SparkSession    # Spark entry point (build / get a SparkSession)
 from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
 from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
+
+
+class CI(NamedTuple):
+    """Confidence interval. Unpacks like a tuple: ``lo, hi = _wilson(x, n)``."""
+    lower: float
+    upper: float
 
 
 def _wilson(x, n, conf=0.95):
@@ -24,14 +31,14 @@ def _wilson(x, n, conf=0.95):
     denom = 1 + z2 / n
     center = (p + z2 / (2 * n)) / denom
     half = (z / denom) * math.sqrt(p * (1 - p) / n + z2 / (4 * n * n))
-    return max(0.0, center - half), min(1.0, center + half)
+    return CI(lower=max(0.0, center - half), upper=min(1.0, center + half))
 
 
 def _poisson_ci(events, pt, conf=0.95):
     a = 1 - conf
     lo = 0.0 if events == 0 else stats.chi2.ppf(a / 2, 2 * events) / 2
     hi = stats.chi2.ppf(1 - a / 2, 2 * events + 2) / 2
-    return lo / pt, hi / pt
+    return CI(lower=lo / pt, upper=hi / pt)
 
 
 def prevalence_by_group(df, case_col: str, group_col: str):
