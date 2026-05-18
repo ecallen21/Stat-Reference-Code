@@ -470,5 +470,22 @@ Building in batches; we walk through each batch together before moving on.
 | [categorical-variable-coding](techniques/categorical-variable-coding) (Dummy, Effect, Helmert, Deviation) | new | 5.32 |
 | [standardized-coefficients](techniques/standardized-coefficients) (beta weights + dominance analysis) | new | 5.38 |
 
-Later batches will cover the remaining chapters (GLMs, Nonparametric Methods,
-Survival, Time Series, Bayesian, Causal Inference, ML, ...).
+### Batch 5 — Chapter 6: Nonparametric Methods
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [sign-test](techniques/sign-test) | 6.1 | ✅ | ✅ | N/A |
+| 2 | [wilcoxon-signed-rank](techniques/wilcoxon-signed-rank) | 6.2 | ✅ | ✅ | N/A |
+| 3 | [mann-whitney](techniques/mann-whitney) | 6.3 | ✅ | ✅ | ✅ |
+| 4 | [kruskal-wallis](techniques/kruskal-wallis) | 6.4 | ✅ | ✅ | N/A |
+| 5 | [friedman-test](techniques/friedman-test) (+ Kendall's W) | 6.5 | ✅ | ✅ | N/A |
+| 6 | [kolmogorov-smirnov](techniques/kolmogorov-smirnov) (1-/2-sample) | 6.7 | ✅ | ✅ | ✅ |
+| 7 | [moods-median](techniques/moods-median) | 6.8 | ✅ | ✅ | N/A |
+| 8 | [jonckheere-terpstra](techniques/jonckheere-terpstra) (ordered alternatives) | 6.10 | ✅ | ✅ | N/A |
+| 9 | [kernel-density-estimation](techniques/kernel-density-estimation) (5 kernels + bandwidth rules) | 6.21 | ✅ | ✅ | ✅ |
+| 10 | [local-regression-loess](techniques/local-regression-loess) | 6.22 | ✅ | ✅ | N/A |
+| 11 | [hodges-lehmann](techniques/hodges-lehmann) (robust location + CI) | 6.29 | ✅ | ✅ | N/A |
+| 12 | [theil-sen-slope](techniques/theil-sen-slope) (robust slope + Sen CI) | 6.32 | ✅ | ✅ | N/A |
+
+Later batches will cover the remaining chapters (GLMs, Survival, Time Series,
+Bayesian, Causal Inference, ML, ...).
