@@ -339,7 +339,51 @@ before you debug a "weird" result.
   Spark, SQL `NULL` and float `NaN` are different. Each language has its own
   null-handling idioms — don't mix them in your head.
 
-## Notation & Conventions
+## Python imports glossary
+
+Every Python file in this repo starts with a block of `import` statements that pull in tools from Python itself plus a few external packages. This glossary explains what each one is and where you'll see it.
+
+### Python standard library (built in — no install needed)
+
+| Import line | What it gives you | Where you see it |
+|-------------|-------------------|------------------|
+| `from __future__ import annotations` | A Python *language flag* that postpones the evaluation of type hints. Lets us write modern hints like `int \| None` and `list[str]` even on slightly older Python. Cosmetic; doesn't change runtime behavior. | Every file (the safe default). |
+| `import math` | Python's basic **math module**. Scalar functions: `math.sqrt`, `math.log`, `math.exp`, `math.pi`, `math.comb(n, k)` (binomial coefficient), `math.floor`, `math.lgamma`. | Most files — anywhere we need a non-vector math operation. |
+| `from collections import Counter` | A dictionary subclass that **counts occurrences**: `Counter([1, 1, 2, 3]) == {1: 2, 2: 1, 3: 1}`. Methods: `.most_common(k)`, `.values()`. | `frequency-crosstab`, `central-tendency`, `wilcoxon-signed-rank` (tie counts), `goodman-kruskal-somers`, `mutual-information`. |
+| `from itertools import combinations` | Iterator over all `C(n, k)` subsets of size `k`. `combinations([1,2,3], 2)` → `(1,2), (1,3), (2,3)`. | `variable-selection` (best-subsets), `theil-sen-slope` (pairwise slopes), `effect-sizes` (Cliff's δ), `kendalls-tau`. |
+| `import bisect` | Binary search on a *sorted* list. `bisect.bisect_right(sorted_x, t)` returns the insertion point — handy for counting `#{xᵢ ≤ t}` in `O(log n)`. | `ecdf`, `kolmogorov-smirnov`. |
+| `from typing import Sequence, Hashable, Callable` | **Type hints** — purely documentation; not enforced at runtime. `Sequence` = "anything you can index and iterate over" (list, tuple, numpy array, pandas Series); `Hashable` = "can be a dict key or set element" (numbers, strings, tuples); `Callable` = "a function". | Most files, in function signatures. |
+
+### Scientific Python (`pip install numpy scipy pandas statsmodels scikit-learn`)
+
+| Import line | What it gives you | Where you see it |
+|-------------|-------------------|------------------|
+| `import numpy as np` | The numerical-array library. `np.array`, `np.mean`, `np.var`, `np.linalg.lstsq` (least squares), `np.linalg.pinv` (pseudo-inverse), `np.random.default_rng(seed)` (modern RNG), array broadcasting. | Anywhere we work with vectors / matrices. |
+| `from scipy import stats` | Probability distributions, statistical tests, related utilities. `stats.norm`, `stats.t`, `stats.chi2`, `stats.f`, `stats.poisson`, `stats.ttest_ind`, `stats.kruskal`, `stats.kendalltau`, `stats.binomtest`, `stats.mannwhitneyu`. | Every file that needs a p-value, CDF, or PPF. |
+| `from scipy import optimize` | Numerical optimizers. `minimize_scalar` (1-D minimization on a bracket), `minimize` (multi-dim BFGS / Nelder-Mead). | `polychoric-correlation`, `negative-binomial-regression`, `ordinal-logistic`, `multinomial-logistic`. |
+| `from scipy import special` | Special functions. `special.gammaln` (log-gamma; numerically stable factorial logs), `special.beta`, `special.digamma`. | `negative-binomial-regression`, `overdispersion-tests`. |
+| `import pandas as pd` | DataFrame library. `pd.read_csv`, `pd.DataFrame`, `df["col"].dropna()`, `pd.crosstab`. | Mainly the library-cross-check sections (e.g. `pd.Series` + `value_counts`). |
+| `import statsmodels.api as sm` | Statistical models with full statistical output (SEs, CIs, p-values, F-tests). `sm.OLS`, `sm.Logit`, `sm.Probit`, `sm.MNLogit`, `sm.GLM`, `sm.NegativeBinomial`, `sm.WLS`, `sm.RLM` (robust). | The library-cross-check block of most regression files. |
+| `import statsmodels.formula.api as smf` | The R-style formula interface to statsmodels (`y ~ x1 + C(group)`). | `categorical-variable-coding`. |
+| `from sklearn... import ...` | scikit-learn for ML utilities. `Ridge`, `Lasso`, `ElasticNet`, `mutual_info_score`, `normalized_mutual_info_score`. | `regularization`, `mutual-information`. |
+
+### Optional packages (only used in some files; install on demand)
+
+| Package | What it adds | Where |
+|---------|-------------|-------|
+| `pingouin` | Pre-baked stats functions for psychologists: `compute_effsize`, `partial_corr`, `intraclass_corr`, `anova`. | `effect-sizes`, `partial-correlation`, `intraclass-correlation`, `eta-correlation-ratio`. |
+| `lmoments3` | L-moment estimators and parameter fitting. | `l-moments`. |
+| `firthlogist` | Firth's penalized logistic regression. | `firth-logistic`. |
+
+### How an import statement reads
+
+- `import X` → load module `X`, refer to its things as `X.foo`.
+- `import X as Y` → same but give it a short alias `Y` (`numpy as np`).
+- `from X import a, b` → only pull names `a` and `b` into this file's namespace (`from math import sqrt` lets you write `sqrt(2)` directly instead of `math.sqrt(2)`).
+- `from X.Y import Z` → reach into a sub-module: `from scipy import stats` then `stats.norm.cdf(0)`.
+
+If you ever wonder where something came from, search the file's top imports — there's no implicit "stdlib magic" in Python; everything is named explicitly.
+
 
 These names mean the same thing in every file unless a function's own docstring overrides them.
 
