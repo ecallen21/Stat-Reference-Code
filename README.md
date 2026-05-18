@@ -487,7 +487,24 @@ Building in batches; we walk through each batch together before moving on.
 | 11 | [hodges-lehmann](techniques/hodges-lehmann) (robust location + CI) | 6.29 | ✅ | ✅ | N/A |
 | 12 | [theil-sen-slope](techniques/theil-sen-slope) (robust slope + Sen CI) | 6.32 | ✅ | ✅ | N/A |
 
-Later batches will cover the remaining chapters (GLMs, Survival, Time Series,
+### Batch 6 — Chapter 7: Generalized Linear Models
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [logistic-regression](techniques/logistic-regression) (binary; IRLS, ORs, deviance, McFadden R²) | 7.1 | ✅ | ✅ | ✅ |
+| 2 | [ordinal-logistic](techniques/ordinal-logistic) (proportional odds) | 7.2 | ✅ | ✅ | N/A |
+| 3 | [multinomial-logistic](techniques/multinomial-logistic) (softmax MLE) | 7.4 | ✅ | ✅ | ✅ |
+| 4 | [probit-regression](techniques/probit-regression) (+ AME) | 7.10 | ✅ | ✅ | N/A |
+| 5 | [poisson-regression](techniques/poisson-regression) (log link, offset for rates, IRR) | 7.12, 7.43 | ✅ | ✅ | ✅ |
+| 6 | [negative-binomial-regression](techniques/negative-binomial-regression) (joint MLE on β, θ) | 7.13 | ✅ | ✅ | N/A |
+| 7 | [modified-poisson](techniques/modified-poisson) (sandwich SEs for risk ratios) | 7.9, 7.53 | ✅ | ✅ | N/A |
+| 8 | [firth-logistic](techniques/firth-logistic) (penalized MLE for separation) | 7.7, 7.51 | ✅ | ✅ | N/A |
+| 9 | [gamma-regression](techniques/gamma-regression) (log link, dispersion) | 7.25 | ✅ | ✅ | ✅ |
+| 10 | [glm-diagnostics](techniques/glm-diagnostics) (Pearson/deviance, Hosmer-Lemeshow, RQR) | 7.40, 7.41, 7.55 | ✅ | ✅ | N/A |
+| 11 | [marginal-effects](techniques/marginal-effects) (AME, MEM, MER, discrete-change) | 7.37, 7.47 | ✅ | ✅ | N/A |
+| 12 | [overdispersion-tests](techniques/overdispersion-tests) (Pearson φ, score, LRT Poisson vs NB) | 7.35, 7.42, 7.54 | ✅ | ✅ | N/A |
+
+Later batches will cover the remaining chapters (Survival, Time Series,
 Bayesian, Causal Inference, ML, ...).
 
 ---
