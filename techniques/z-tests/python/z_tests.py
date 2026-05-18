@@ -11,12 +11,12 @@ with z compared to the standard normal. Variants below:
   - one_proportion_z    : H0: p == p0; SE uses p0 (Wald uses p_hat -- noted)
   - two_proportion_z    : pooled-proportion SE under H0: p1 == p2
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def _mean(x):

@@ -11,12 +11,12 @@ Algorithm
 4. Tie-correct: H_corrected = H / (1 - sum(t^3 - t) / (N^3 - N))
 5. Under H0 (no ties, k >= 3, n_i >= ~5):  H ~ chi^2_{k-1}
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from collections import Counter
-from typing import Sequence
+from collections import Counter    # stdlib: dict subclass that counts occurrences (Counter([1,1,2]) -> {1:2, 2:1})
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def _avg_ranks(values):

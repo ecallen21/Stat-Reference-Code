@@ -22,12 +22,12 @@ The same eta^2 appears as the ANOVA effect size in techniques/effect-sizes (Ch 1
 Significance test: identical to the F-test for one-way ANOVA on Y by X
     F = (eta^2 / (k - 1)) / ((1 - eta^2) / (N - k))   ~  F(k - 1, N - k)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def _mean(x): return sum(x) / len(x)

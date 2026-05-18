@@ -10,12 +10,12 @@ definitions. The two you meet most often:
 We implement those three plus the five-number summary, percentile ranks, and the
 empirical CDF helper. (More on the ECDF in techniques/ecdf.)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def quantile(x: Sequence[float], p: float, kind: int = 7) -> float:

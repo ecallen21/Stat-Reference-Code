@@ -8,13 +8,13 @@ plots, and bootstrap resampling.
 We also include the Dvoretzky-Kiefer-Wolfowitz (DKW) simultaneous confidence
 band:  F_n(t) +/- eps  with  eps = sqrt(ln(2/alpha) / (2n)), clipped to [0, 1].
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import bisect
-import math
-from typing import Sequence
+import bisect    # stdlib: binary search on a sorted list (O(log n) insertion-point)
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 class ECDF:

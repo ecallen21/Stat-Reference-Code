@@ -22,13 +22,13 @@ If F_0 has parameters estimated from the data (e.g. normal with sample mean
 and SD), the standard K-S p-value is INVALID -- it's too conservative.
 Use Lilliefors (`techniques/normality-tests`) for that case.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import bisect
-import math
-from typing import Callable, Sequence
+import bisect    # stdlib: binary search on a sorted list (O(log n) insertion-point)
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Callable, Sequence    # stdlib: type hints (Callable = function; Sequence = indexable iterable)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def one_sample_ks(x: Sequence[float], cdf: Callable[[float], float]) -> dict:

@@ -25,10 +25,10 @@ When to pick which
   -> Benjamini-Hochberg.
 - Tests that may be negatively correlated -> Benjamini-Yekutieli.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
 
 def bonferroni(p: Sequence[float]) -> list:

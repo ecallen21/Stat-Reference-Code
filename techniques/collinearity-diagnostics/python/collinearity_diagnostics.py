@@ -28,12 +28,12 @@ Remedies (see §5.29 of the reference):
   - use regularization (techniques/regularization -- ridge / elastic net)
   - PCR / PLS (future batch)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def pairwise_correlations(X, names: Sequence[str] | None = None) -> dict:

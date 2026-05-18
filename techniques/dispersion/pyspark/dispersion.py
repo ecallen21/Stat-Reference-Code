@@ -6,10 +6,10 @@ absolute deviations -- two passes of ``approxQuantile``.
 
 Run:  python dispersion.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
+from pyspark.sql import SparkSession    # Spark entry point (build / get a SparkSession)
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
 
 
 def dispersion(df, col: str, relative_error: float = 0.001):

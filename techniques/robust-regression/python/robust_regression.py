@@ -27,11 +27,11 @@ Both are available in R's ``robustbase`` (``lmrob``, ``ltsReg``) and Python's
 ``statsmodels.robust.robust_linear_model``. We implement Huber from scratch and
 mention the others.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def _mad_scale(x):

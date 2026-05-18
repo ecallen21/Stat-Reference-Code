@@ -33,11 +33,11 @@ The intercept's meaning also changes:
 This file builds each design and fits a one-factor ANOVA; the fitted values
 are byte-for-byte identical across the four parameterizations.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Sequence
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def _factor_levels(group):

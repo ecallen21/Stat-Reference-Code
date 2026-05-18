@@ -8,10 +8,10 @@ sketch. ``relativeError = 0`` gives exact (expensive) results;
 
 Run:  python quantiles.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
+from pyspark.sql import SparkSession    # Spark entry point (build / get a SparkSession)
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
 
 
 def quantiles(df, col: str, probs=(0.25, 0.5, 0.75), relative_error: float = 0.01):

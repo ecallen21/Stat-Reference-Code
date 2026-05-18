@@ -17,11 +17,11 @@ Sample estimators
 L-moment ratios (robust, see techniques/l-moments) are preferable for small or
 heavy-tailed samples; we expose L-skewness / L-kurtosis there.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Sequence
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def _central_moment(x, k):

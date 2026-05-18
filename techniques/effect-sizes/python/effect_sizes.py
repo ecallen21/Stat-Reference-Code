@@ -20,12 +20,12 @@ ANOVA / variance-explained (k groups)
 Conventional benchmarks (Cohen 1988; context always trumps these):
   d:  0.2 / 0.5 / 0.8   |  r: 0.1 / 0.3 / 0.5  |  eta^2: 0.01 / 0.06 / 0.14  |  f: 0.1 / 0.25 / 0.4
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def _mean(x):

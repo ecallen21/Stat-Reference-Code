@@ -24,11 +24,11 @@ Effect sizes (see techniques/effect-sizes):
   eta^2     = SS_between / SS_total
   omega^2   = (SS_b - (k-1) MS_w) / (SS_total + MS_w)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from typing import Sequence
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def _stats(g):

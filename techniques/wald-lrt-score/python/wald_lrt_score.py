@@ -34,12 +34,12 @@ Demo: binomial(n, p) with n trials, x successes, H0: p = p_0.
   ell'(p)  = x/p - (n - x)/(1 - p)             [score U(p)]
   ell''(p) = -x/p^2 - (n - x)/(1 - p)^2        [-information I(p)]
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Callable
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Callable    # stdlib: type hint meaning 'a function'
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 # ---------- Generic 1-D implementations -----------------------------------

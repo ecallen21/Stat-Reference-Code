@@ -18,11 +18,11 @@ Variants implemented
 Two-sided p-value (the "method of small p-values") matches scipy.stats.binomtest:
 sum the PMF over all k with P(K = k) <= P(K = x), for K ~ Binomial(n, p0).
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def _pmf(n: int, k: int, p: float) -> float:

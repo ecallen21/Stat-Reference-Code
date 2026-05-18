@@ -8,10 +8,10 @@ ordered rows. Both are computed without collecting the data to the driver
 
 Run:  python gini_lorenz.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-from pyspark.sql import SparkSession, Window
-from pyspark.sql import functions as F
+from pyspark.sql import SparkSession, Window    # SparkSession: entry point;  Window: window-function specifications
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
 
 
 def gini(df, col: str, bias_corrected: bool = False) -> float:

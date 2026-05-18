@@ -17,12 +17,12 @@ Choosing the weights
   - Two-stage / iteratively re-weighted: fit OLS, regress |e_i| or e_i^2 on the
     predictors, derive weights from that fit, re-fit WLS. (We show this loop.)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def wls_fit(X, y, weights) -> dict:

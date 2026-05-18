@@ -23,9 +23,9 @@ A common CI for log(OR) is the Wald interval based on
 exact" CI inverts Fisher's test on OR and is available via
 ``scipy.stats.fisher_exact`` returning a confidence interval (1.11+).
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
 
 def _hypergeom_pmf(a: int, n1: int, n2: int, k: int) -> float:

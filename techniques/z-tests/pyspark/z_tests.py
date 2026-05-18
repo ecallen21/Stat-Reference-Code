@@ -7,13 +7,13 @@ right pattern for A/B tests with very large datasets.
 
 Run:  python z_tests.py
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
-from scipy import stats
+from pyspark.sql import SparkSession    # Spark entry point (build / get a SparkSession)
+from pyspark.sql import functions as F    # Spark DataFrame column functions (F.col, F.mean, F.sum, F.when, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def two_proportion_z_spark(df, outcome_col: str, group_col: str,

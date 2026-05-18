@@ -21,11 +21,11 @@ Conventional benchmarks (small/medium/large), df = min(r-1, c-1):
     df = 2: 0.07 / 0.21 / 0.35
     df = 3: 0.06 / 0.17 / 0.29
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def chi_square(table) -> float:

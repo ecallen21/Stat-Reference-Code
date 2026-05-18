@@ -22,12 +22,12 @@ Intervals at a new x0
     SE_mean(y | x0) = sigma_hat * sqrt(1/n + (x0 - x_bar)^2 / Sxx)
     SE_pred(y | x0) = sigma_hat * sqrt(1 + 1/n + (x0 - x_bar)^2 / Sxx)
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def _mean(x): return sum(x) / len(x)

@@ -24,9 +24,9 @@ Significance: permutation test (shuffle y and recompute dCor). The asymptotic
 distribution of n * dCov^2 under independence has a known form but is awkward
 to invert; permutation is the standard.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import numpy as np
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
 
 
 def _double_centered(M: np.ndarray) -> np.ndarray:

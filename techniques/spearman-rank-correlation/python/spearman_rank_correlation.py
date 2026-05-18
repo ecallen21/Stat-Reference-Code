@@ -15,12 +15,12 @@ CI: Fisher z on the rank correlation, with a slight variance correction
 (SE(z) approx 1.03 / sqrt(n-3); we use the plain 1/sqrt(n-3) as a simple default
 matching most software).
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
-from typing import Sequence
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
+from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
 
-from scipy import stats
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def _rank_average(x: Sequence[float]):

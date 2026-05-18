@@ -23,12 +23,12 @@ Rules of thumb (Belsley/Kuh/Welsch 1980):
 A point can be high-leverage (extreme x) without being influential (if its
 residual is small), and vice-versa. Cook's D combines the two.
 """
-from __future__ import annotations
+from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
 
-import math
+import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
 
-import numpy as np
-from scipy import stats
+import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
+from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
 
 
 def fit_ols(X, y):
