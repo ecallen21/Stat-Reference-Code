@@ -42,3 +42,22 @@ Rscript techniques/multiple-comparisons/r/multiple_comparisons.R
 ```
 
 **Refs:** Holm, "A Simple Sequentially Rejective Multiple Test Procedure," *Scandinavian J. Statistics* 6, 65–70, 1979; Hochberg, "A Sharper Bonferroni Procedure for Multiple Tests of Significance," *Biometrika* 75, 800–802, 1988; Benjamini & Hochberg, "Controlling the False Discovery Rate," *JRSS-B* 57(1), 289–300, 1995; Benjamini & Yekutieli, "The Control of the False Discovery Rate in Multiple Testing Under Dependency," *Ann. Statistics* 29(4), 1165–1188, 2001.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

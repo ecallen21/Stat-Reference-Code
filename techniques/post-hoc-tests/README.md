@@ -54,3 +54,22 @@ Rscript techniques/post-hoc-tests/r/post_hoc_tests.R
 ```
 
 **Refs:** Tukey, "The Problem of Multiple Comparisons," 1953 (unpublished); Kramer, "Extension of Multiple Range Tests to Group Means with Unequal Numbers of Replications," *Biometrics* 12, 307–310, 1956; Dunnett, "A Multiple Comparison Procedure for Comparing Several Treatments with a Control," *JASA* 50, 1096–1121, 1955; Games & Howell, "Pairwise Multiple Comparison Procedures with Unequal N's and/or Variances: A Monte Carlo Study," *J. Educational Statistics* 1, 113–125, 1976.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

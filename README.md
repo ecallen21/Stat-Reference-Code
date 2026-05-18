@@ -489,3 +489,26 @@ Building in batches; we walk through each batch together before moving on.
 
 Later batches will cover the remaining chapters (GLMs, Survival, Time Series,
 Bayesian, Causal Inference, ML, ...).
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+For methodological background see related publications: [link to ORCID or selected DOIs].
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data — every example in this repository uses small inline or programmatically generated synthetic samples.
+
+**References.** Each technique's README cites the original methodological references for its specific algorithm. General references underpinning the reference guide (`stat_techniques_reference_v124.docx`): Casella & Berger, *Statistical Inference*, 2nd ed.; Hastie, Tibshirani & Friedman, *The Elements of Statistical Learning*, 2nd ed.; Wackerly, Mendenhall & Scheaffer, *Mathematical Statistics with Applications*, 7th ed.; Harrell, *Regression Modeling Strategies*, 2nd ed.
+
+## License
+
+[MIT](LICENSE)

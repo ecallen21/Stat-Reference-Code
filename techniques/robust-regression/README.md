@@ -55,3 +55,22 @@ Rscript techniques/robust-regression/r/robust_regression.R
 ```
 
 **Refs:** Huber, "Robust Estimation of a Location Parameter," *Ann. Math. Stat.* 35(1), 73–101, 1964; Yohai, "High Breakdown-Point and High Efficiency Robust Estimates for Regression," *Ann. Stat.* 15(2), 642–656, 1987; Rousseeuw & Leroy, *Robust Regression and Outlier Detection*, Wiley, 1987.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

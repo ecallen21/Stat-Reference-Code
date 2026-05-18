@@ -40,3 +40,22 @@ Rscript techniques/equivalence-testing-tost/r/tost.R
 ```
 
 **Refs:** Schuirmann, "A Comparison of the Two One-Sided Tests Procedure and the Power Approach for Assessing the Equivalence of Average Bioavailability," *J. Pharmacokinetics and Biopharmaceutics* 15(6), 657–680, 1987; Lakens, "Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses," *Social Psychological and Personality Science* 8(4), 355–362, 2017.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

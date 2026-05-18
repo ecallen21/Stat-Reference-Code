@@ -50,3 +50,22 @@ Rscript techniques/intraclass-correlation/r/intraclass_correlation.R
 ```
 
 **Refs:** Shrout & Fleiss, "Intraclass Correlations: Uses in Assessing Rater Reliability," *Psychological Bulletin* 86(2), 420–428, 1979; McGraw & Wong, "Forming Inferences About Some Intraclass Correlation Coefficients," *Psychological Methods* 1(1), 30–46, 1996; Koo & Li, "A Guideline of Selecting and Reporting Intraclass Correlation Coefficients for Reliability Research," *J. Chiropr. Med.* 15(2), 155–163, 2016.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

@@ -45,3 +45,22 @@ Rscript techniques/wald-lrt-score/r/wald_lrt_score.R
 ```
 
 **Refs:** Wald, "Tests of Statistical Hypotheses Concerning Several Parameters When the Number of Observations is Large," *Trans. AMS* 54(3), 426–482, 1943; Neyman & Pearson, "On the Use and Interpretation of Certain Test Criteria for Purposes of Statistical Inference," *Biometrika* 20A, 175–240 & 263–294, 1928; Rao, "Large-Sample Tests of Statistical Hypotheses Concerning Several Parameters with Applications to Problems of Estimation," *Math. Proc. Cambridge Philos. Soc.* 44(1), 50–57, 1948.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

@@ -49,3 +49,22 @@ Rscript techniques/splines-segmented/r/splines_segmented.R
 ```
 
 **Refs:** de Boor, *A Practical Guide to Splines*, Springer, 1978; Hastie, Tibshirani & Friedman, *The Elements of Statistical Learning*, 2nd ed., Springer, 2009 (Ch. 5); Harrell, *Regression Modeling Strategies*, 2nd ed., 2015 (Ch. 2 — restricted cubic splines); Muggeo, "Estimating Regression Models with Unknown Break-Points," *Stat. in Medicine* 22, 3055–3071, 2003.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

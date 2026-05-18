@@ -51,3 +51,22 @@ Rscript techniques/standardized-coefficients/r/standardized_coefficients.R
 ```
 
 **Refs:** Budescu, "Dominance Analysis: A New Approach to the Problem of Relative Importance of Predictors in Multiple Regression," *Psychological Bulletin* 114(3), 542–551, 1993; Azen & Budescu, "The Dominance Analysis Approach for Comparing Predictors in Multiple Regression," *Psychological Methods* 8(2), 129–148, 2003; Lindeman, Merenda & Gold, *Introduction to Bivariate and Multivariate Analysis*, Scott Foresman, 1980.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

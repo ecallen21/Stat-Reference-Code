@@ -48,3 +48,22 @@ Rscript techniques/variable-selection/r/variable_selection.R
 ```
 
 **Refs:** Akaike, "A New Look at the Statistical Model Identification," *IEEE TAC* 19(6), 716–723, 1974; Schwarz, "Estimating the Dimension of a Model," *Ann. Stat.* 6(2), 461–464, 1978; Harrell, *Regression Modeling Strategies*, 2nd ed., 2015 (Ch. 4–5 — the most prominent critique of stepwise); Berk, Brown, Buja, Zhang & Zhao, "Valid Post-Selection Inference," *Ann. Stat.* 41(2), 802–837, 2013.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

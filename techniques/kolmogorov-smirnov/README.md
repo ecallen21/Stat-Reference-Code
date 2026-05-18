@@ -42,3 +42,22 @@ python techniques/kolmogorov-smirnov/pyspark/kolmogorov_smirnov.py
 ```
 
 **Refs:** Kolmogorov, "Sulla determinazione empirica di una legge di distribuzione," *Giorn. Inst. Ital. Attuari* 4, 83–91, 1933; Smirnov, "Table for Estimating the Goodness of Fit of Empirical Distributions," *Ann. Math. Stat.* 19(2), 279–281, 1948.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

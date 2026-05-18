@@ -35,3 +35,22 @@ Rscript techniques/concordance-correlation/r/concordance_correlation.R
 ```
 
 **Refs:** Lin, "A Concordance Correlation Coefficient to Evaluate Reproducibility," *Biometrics* 45, 255–268, 1989; Lin, "Total Deviation Index for Measuring Individual Agreement With Applications in Laboratory Performance and Bioequivalence," *Statistics in Medicine* 19, 255–270, 2000.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

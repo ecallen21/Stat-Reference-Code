@@ -40,3 +40,22 @@ Rscript techniques/normality-tests/r/normality_tests.R
 ```
 
 **Refs:** Shapiro & Wilk, "An Analysis of Variance Test for Normality (Complete Samples)," *Biometrika* 52, 591–611, 1965; D'Agostino & Pearson, "Tests for Departure from Normality," *Biometrika* 60, 613–622, 1973; Lilliefors, "On the Kolmogorov–Smirnov Test for Normality with Mean and Variance Unknown," *JASA* 62, 399–402, 1967.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

@@ -48,3 +48,22 @@ python techniques/regularization/pyspark/regularization.py
 ```
 
 **Refs:** Hoerl & Kennard, "Ridge Regression: Biased Estimation for Nonorthogonal Problems," *Technometrics* 12(1), 55–67, 1970; Tibshirani, "Regression Shrinkage and Selection via the Lasso," *JRSS-B* 58(1), 267–288, 1996; Zou & Hastie, "Regularization and Variable Selection via the Elastic Net," *JRSS-B* 67(2), 301–320, 2005; Friedman, Hastie & Tibshirani, "Regularization Paths for Generalized Linear Models via Coordinate Descent," *J. Stat. Software* 33(1), 2010 (the `glmnet` paper).
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)

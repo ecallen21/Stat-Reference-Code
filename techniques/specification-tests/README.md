@@ -39,3 +39,22 @@ Rscript techniques/specification-tests/r/specification_tests.R
 ```
 
 **Refs:** Breusch & Pagan, "A Simple Test for Heteroscedasticity and Random Coefficient Variation," *Econometrica* 47(5), 1287–1294, 1979; White, "A Heteroskedasticity-Consistent Covariance Matrix Estimator and a Direct Test for Heteroskedasticity," *Econometrica* 48(4), 817–838, 1980; Durbin & Watson, "Testing for Serial Correlation in Least Squares Regression," *Biometrika* 37–38, 1950–1951; Ramsey, "Tests for Specification Errors in Classical Linear Least-Squares Regression Analysis," *JRSS-B* 31(2), 350–371, 1969.
+
+---
+
+## Author
+
+Elisabeth F. Callen, Ph.D., PStat®
+Biostatistician and applied health data researcher
+
+[LinkedIn](https://www.linkedin.com/in/your-profile) · [ORCID](https://orcid.org/your-id) · elisabeth.f.callen@gmail.com
+
+## Acknowledgments
+
+**AI tooling.** This codebase was developed with the support of AI coding assistants (Claude Code). Methodology, statistical approach, validation logic, and interpretation of results are my own. AI tooling was used to accelerate code drafting, refactor for readability, and assist with documentation. All code was reviewed, tested, and validated against expected outputs before committing.
+
+No protected health information was ever provided to AI coding assistants. All development and testing was conducted against synthetic data.
+
+## License
+
+[MIT](../../LICENSE)
