@@ -32,7 +32,15 @@ def frequency_table(x: Sequence[Hashable], sort_by: str = "value"):
 
     Returns
     -------
-    list of tuples ``(category, count, relative_freq, cum_count, cum_rel)``.
+    list of dicts, one per category, with keys:
+        ``"category"``  -- the category label
+        ``"count"``     -- number of observations in this category
+        ``"rel_freq"``  -- relative frequency (count / n), i.e. the proportion
+        ``"cum_count"`` -- cumulative count up to and including this category
+        ``"cum_rel"``   -- cumulative relative frequency (cum_count / n)
+
+    Because each row is a dict, the output is self-describing: ``print(table)``
+    shows the field names, and ``pandas.DataFrame(table)`` auto-names the columns.
     """
     counts = Counter(x)
     n = len(x)
@@ -40,7 +48,8 @@ def frequency_table(x: Sequence[Hashable], sort_by: str = "value"):
     out, run = [], 0
     for cat, c in items:
         run += c
-        out.append((cat, c, c / n, run, run / n))
+        out.append({"category": cat, "count": c, "rel_freq": c / n,
+                    "cum_count": run, "cum_rel": run / n})
     return out
 
 
@@ -173,8 +182,10 @@ if __name__ == "__main__":
     outcome = rng.choice(["Yes", "No"], size=60, p=[0.4, 0.6]).tolist()
 
     print("=== frequency table: region ===")
-    for cat, c, rf, cc, cr in frequency_table(region):
-        print(f"{cat:8s} count={c:3d}  rel={rf:.3f}  cum={cc:3d}  cumrel={cr:.3f}")
+    for row in frequency_table(region):
+        print(f"{row['category']:8s} count={row['count']:3d}  "
+              f"rel={row['rel_freq']:.3f}  "
+              f"cum={row['cum_count']:3d}  cumrel={row['cum_rel']:.3f}")
 
     rl, cl, tbl = crosstab(region, outcome)
     print()
