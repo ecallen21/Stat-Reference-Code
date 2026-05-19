@@ -16,22 +16,24 @@ person_time           <- function(follow_up_times) sum(follow_up_times)
 incidence_rate        <- function(events, person_time_total) events / person_time_total
 
 # --- CIs for a proportion p = x / n -------------------------------------
+# Each returns a named numeric vector  c(lower = ..., upper = ...)  so
+# print()ing the result shows the labels and it indexes as ci["lower"].
 ci_wald <- function(x, n, conf = 0.95) {
   p <- x / n; z <- qnorm(0.5 + conf / 2); h <- z * sqrt(p * (1 - p) / n)
-  c(max(0, p - h), min(1, p + h))
+  c(lower = max(0, p - h), upper = min(1, p + h))
 }
 ci_wilson <- function(x, n, conf = 0.95) {
   p <- x / n; z <- qnorm(0.5 + conf / 2); z2 <- z^2
   denom <- 1 + z2 / n
   center <- (p + z2 / (2 * n)) / denom
   half <- (z / denom) * sqrt(p * (1 - p) / n + z2 / (4 * n^2))
-  c(max(0, center - half), min(1, center + half))
+  c(lower = max(0, center - half), upper = min(1, center + half))
 }
 ci_clopper_pearson <- function(x, n, conf = 0.95) {
   a <- 1 - conf
   lo <- if (x == 0) 0 else qbeta(a / 2, x, n - x + 1)
   hi <- if (x == n) 1 else qbeta(1 - a / 2, x + 1, n - x)
-  c(lo, hi)
+  c(lower = lo, upper = hi)
 }
 
 # --- exact Poisson CI for a rate ----------------------------------------
@@ -39,7 +41,7 @@ ci_poisson_rate <- function(events, person_time_total, conf = 0.95) {
   a <- 1 - conf
   lo_count <- if (events == 0) 0 else qchisq(a / 2, 2 * events) / 2
   hi_count <- qchisq(1 - a / 2, 2 * events + 2) / 2
-  c(lo_count, hi_count) / person_time_total
+  c(lower = lo_count, upper = hi_count) / person_time_total
 }
 
 # Library: stats::binom.test (Clopper-Pearson), stats::prop.test (Wilson),

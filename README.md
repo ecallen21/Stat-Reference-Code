@@ -572,6 +572,41 @@ These are the *control knobs* of the functions — they tell the function *how* 
 | `max_iter`, `tol` *(Huber)* | IRLS stopping criteria. |
 | `k` *(Huber)* | Tuning constant for the Huber loss; `1.345` gives ~95% efficiency at the normal. |
 
+### Return values: what each function gives you back
+
+Every function in this repo returns something **self-describing** — when you `print()` the result you can see what each value means without consulting the docstring. Three shapes show up:
+
+**1. A dict** — used when the return is "one row of a table" with several columns, *or* when the return is a bag of named scalars (estimate, SE, p-value, CI, …).
+```python
+result = pearson_correlation(x, y)
+# {'r': 0.78, 't': 6.4, 'df': 28, 'p_value': 1.3e-06, ...}
+result["r"]            # access by key
+```
+List-of-dicts is used when the return is *several rows of a table* — e.g. `frequency_table(region)` returns one dict per category. You can drop that straight into pandas: `pd.DataFrame(result)` and the column headers come along for free.
+
+**2. A `NamedTuple`** — used when the return is "a small fixed set of distinct things" (e.g. a CI's lower and upper, or a Lorenz curve's two parallel arrays).
+```python
+ci = ci_wilson(8, 100)
+# CI(lower=0.041, upper=0.150)        ← prints with field names
+ci.lower, ci.upper                     # access by name
+lo, hi = ci_wilson(8, 100)             # still unpacks like a regular tuple
+```
+NamedTuples are the right tool here because they preserve the tuple-unpacking idiom (`lo, hi = func(...)`) *and* add field names — no caller code has to change.
+
+**3. R named vector / named list** — R's equivalents. A function that would return a NamedTuple in Python returns `c(lower = ..., upper = ...)` in R; a function that would return a dict in Python returns `list(...)` in R. Both print with their labels and are indexed by name:
+```r
+ci <- ci_wilson(8, 100)            # c(lower = 0.041, upper = 0.150)
+ci[["lower"]]                       # 0.041
+```
+
+Quick reference:
+
+| Return shape | Python | R | When |
+|---|---|---|---|
+| One row of a table | `dict` | `list(...)` | Single record with several labeled fields |
+| Several rows of a table | `list[dict]` | `data.frame(...)` | One dict per row; pandas-ready |
+| Small fixed set of distinct things | `NamedTuple` | `c(name = value, ...)` | CI's `(lower, upper)`, fit's `(beta, mu)`, etc. |
+
 ### Conventions in the code
 - Python's from-scratch functions default to **`ddof = 1`** (sample variance / SD). numpy defaults to `ddof = 0`, so we pass `ddof=1` explicitly when comparing.
 - R's `var()` / `sd()` use `n − 1` by default; both languages therefore agree on the from-scratch defaults.
