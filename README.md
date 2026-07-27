@@ -776,8 +776,25 @@ Building in batches; we walk through each batch together before moving on.
 - **§9.28** Hotelling's T² — same technique as §9.1; both listed in [`hotellings-t2`](techniques/hotellings-t2).
 - **§9.31** Correspondence Analysis / MCA — built in Batch 7 as [`correspondence-analysis`](techniques/correspondence-analysis) (§8.5).
 
-Later batches will cover the remaining chapters (Resampling, Survival, Time
-Series, Bayesian, Causal Inference, ML, ...).
+### Batch 9 — Chapter 10: Resampling and Computationally Intensive Methods
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [nonparametric-bootstrap](techniques/nonparametric-bootstrap) (case resampling; percentile/basic/normal CIs) | 10.1 | ✅ | ✅ | ✅ |
+| 2 | [parametric-bootstrap](techniques/parametric-bootstrap) (fit model then simulate) | 10.2 | ✅ | ✅ | N/A |
+| 3 | [bca-bootstrap](techniques/bca-bootstrap) (BCa + comparison of all four CI methods) | 10.3, 10.14 | ✅ | ✅ | N/A |
+| 4 | [block-bootstrap](techniques/block-bootstrap) (moving + circular blocks for dependent data) | 10.4 | ✅ | ✅ | N/A |
+| 5 | [wild-bootstrap](techniques/wild-bootstrap) (Rademacher / Mammen weights for heteroscedasticity) | 10.5 | ✅ | ✅ | N/A |
+| 6 | [jackknife](techniques/jackknife) (LOO SEs + bias correction + jackknife-after-bootstrap) | 10.6, 10.17 | ✅ | ✅ | N/A |
+| 7 | [permutation-tests](techniques/permutation-tests) (two-sample + correlation + regression) | 10.7, 10.16 | ✅ | ✅ | ✅ |
+| 8 | [cross-validation](techniques/cross-validation) (K-fold + stratified + LOOCV) | 10.8, 10.12 | ✅ | ✅ | ✅ |
+| 9 | [monte-carlo-simulation](techniques/monte-carlo-simulation) (power + CI coverage) | 10.9 | ✅ | ✅ | N/A |
+| 10 | [subsampling](techniques/subsampling) (Politis-Romano-Wolf + m-out-of-n bootstrap) | 10.10, 10.15 | ✅ | ✅ | N/A |
+| 11 | [double-bootstrap](techniques/double-bootstrap) (one-step Beran calibration) | 10.11 | ✅ | ✅ | N/A |
+| 12 | [nested-cv](techniques/nested-cv) (K_outer × K_inner + stratified repeated CV) | 10.13 | ✅ | ✅ | N/A |
+
+Later batches will cover the remaining chapters (Survival, Time Series,
+Bayesian, Causal Inference, ML, ...).
 
 ---
 
