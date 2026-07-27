@@ -755,7 +755,24 @@ Building in batches; we walk through each batch together before moving on.
 | 11 | [continuation-ratio](techniques/continuation-ratio) (K-1 binomial GLMs + proportional variant) | 8.9 | ✅ | ✅ | N/A |
 | 12 | [adjacent-category-logit](techniques/adjacent-category-logit) (common β via BFGS + pairwise) | 8.10 | ✅ | ✅ | N/A |
 
-Later batches will cover the remaining chapters (Multivariate, Survival, Time
+### Batch 8 — Chapter 9: Multivariate Methods
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [hotellings-t2](techniques/hotellings-t2) (one- and two-sample; F-approx) | 9.1, 9.28 | ✅ | ✅ | N/A |
+| 2 | [manova](techniques/manova) (Wilks / Pillai / Hotelling-Lawley / Roy) | 9.2 | ✅ | ✅ | N/A |
+| 3 | [pca](techniques/pca) (SVD-based; loadings + scores + explained var) | 9.3 | ✅ | ✅ | ✅ |
+| 4 | [exploratory-factor-analysis](techniques/exploratory-factor-analysis) (PAF + varimax + promax) | 9.4 | ✅ | ✅ | N/A |
+| 5 | [hierarchical-clustering](techniques/hierarchical-clustering) (single/complete/average/Ward + cophenetic) | 9.8 | ✅ | ✅ | N/A |
+| 6 | [k-means](techniques/k-means) (Lloyd + k-means++ + multi-restart) | 9.9 | ✅ | ✅ | ✅ |
+| 7 | [dbscan](techniques/dbscan) (density clustering + k-distance heuristic) | 9.11 | ✅ | ✅ | N/A |
+| 8 | [gaussian-mixture-models](techniques/gaussian-mixture-models) (EM + BIC/AIC selection) | 9.12 | ✅ | ✅ | ✅ |
+| 9 | [cluster-validation](techniques/cluster-validation) (silhouette, CH, DB, elbow, gap statistic) | 9.14 | ✅ | ✅ | N/A |
+| 10 | [lda-qda](techniques/lda-qda) (pooled and per-class Σ; Bayes-optimal classifier) | 9.30 | ✅ | ✅ | N/A |
+| 11 | [canonical-correlation](techniques/canonical-correlation) (generalized eigen + Bartlett) | 9.29 | ✅ | ✅ | N/A |
+| 12 | [multidimensional-scaling](techniques/multidimensional-scaling) (classical + non-metric with PAV isotonic) | 9.32 | ✅ | ✅ | N/A |
+
+Later batches will cover the remaining chapters (Resampling, Survival, Time
 Series, Bayesian, Causal Inference, ML, ...).
 
 ---
