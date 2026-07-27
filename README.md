@@ -738,8 +738,25 @@ Building in batches; we walk through each batch together before moving on.
 | 11 | [marginal-effects](techniques/marginal-effects) (AME, MEM, MER, discrete-change) | 7.37, 7.47 | ✅ | ✅ | N/A |
 | 12 | [overdispersion-tests](techniques/overdispersion-tests) (Pearson φ, score, LRT Poisson vs NB) | 7.35, 7.42, 7.54 | ✅ | ✅ | N/A |
 
-Later batches will cover the remaining chapters (Survival, Time Series,
-Bayesian, Causal Inference, ML, ...).
+### Batch 7 — Chapter 8: Categorical Data Analysis (Beyond GLMs)
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [mcnemar-test](techniques/mcnemar-test) (asymptotic, continuity, exact, mid-p, Newcombe CI) | 8.2, 8.18 | ✅ | ✅ | ✅ |
+| 2 | [cochran-mantel-haenszel](techniques/cochran-mantel-haenszel) (CMH stat + MH common OR w/ RBG SE + Woolf) | 8.3, 8.16 | ✅ | ✅ | ✅ |
+| 3 | [cohens-kappa](techniques/cohens-kappa) (two-rater κ + Fleiss ASE + PABAK) | 8.4 | ✅ | ✅ | ✅ |
+| 4 | [fleiss-kappa](techniques/fleiss-kappa) (≥3 raters + per-category κ) | 8.4 | ✅ | ✅ | N/A |
+| 5 | [weighted-kappa](techniques/weighted-kappa) (linear + quadratic; bootstrap SE) | 8.4 | ✅ | ✅ | N/A |
+| 6 | [breslow-day](techniques/breslow-day) (OR homogeneity + Tarone correction) | 8.6 | ✅ | ✅ | N/A |
+| 7 | [bowker-stuart-maxwell](techniques/bowker-stuart-maxwell) (symmetry + marginal homogeneity on k×k) | 8.7, 8.15 | ✅ | ✅ | N/A |
+| 8 | [log-linear-models](techniques/log-linear-models) (Poisson GLM on multi-way tables + agreement models) | 8.1, 8.14 | ✅ | ✅ | N/A |
+| 9 | [correspondence-analysis](techniques/correspondence-analysis) (CA via SVD + MCA via Burt) | 8.5 | ✅ | ✅ | N/A |
+| 10 | [bradley-terry](techniques/bradley-terry) (MLE via MM algorithm; Wald SEs) | 8.8 | ✅ | ✅ | N/A |
+| 11 | [continuation-ratio](techniques/continuation-ratio) (K-1 binomial GLMs + proportional variant) | 8.9 | ✅ | ✅ | N/A |
+| 12 | [adjacent-category-logit](techniques/adjacent-category-logit) (common β via BFGS + pairwise) | 8.10 | ✅ | ✅ | N/A |
+
+Later batches will cover the remaining chapters (Multivariate, Survival, Time
+Series, Bayesian, Causal Inference, ML, ...).
 
 ---
 
