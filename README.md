@@ -770,7 +770,11 @@ Building in batches; we walk through each batch together before moving on.
 | 9 | [cluster-validation](techniques/cluster-validation) (silhouette, CH, DB, elbow, gap statistic) | 9.14 | ✅ | ✅ | N/A |
 | 10 | [lda-qda](techniques/lda-qda) (pooled and per-class Σ; Bayes-optimal classifier) | 9.30 | ✅ | ✅ | N/A |
 | 11 | [canonical-correlation](techniques/canonical-correlation) (generalized eigen + Bartlett) | 9.29 | ✅ | ✅ | N/A |
-| 12 | [multidimensional-scaling](techniques/multidimensional-scaling) (classical + non-metric with PAV isotonic) | 9.32 | ✅ | ✅ | N/A |
+| 12 | [multidimensional-scaling](techniques/multidimensional-scaling) (classical + non-metric with PAV isotonic) | 9.32, 9.25 | ✅ | ✅ | N/A |
+
+**Chapter 9 subsections also covered by earlier batches** (no separate implementation needed):
+- **§9.28** Hotelling's T² — same technique as §9.1; both listed in [`hotellings-t2`](techniques/hotellings-t2).
+- **§9.31** Correspondence Analysis / MCA — built in Batch 7 as [`correspondence-analysis`](techniques/correspondence-analysis) (§8.5).
 
 Later batches will cover the remaining chapters (Resampling, Survival, Time
 Series, Bayesian, Causal Inference, ML, ...).

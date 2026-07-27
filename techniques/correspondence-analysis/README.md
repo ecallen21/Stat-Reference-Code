@@ -1,6 +1,8 @@
-# Correspondence Analysis (Reference §8.5)
+# Correspondence Analysis (Reference §8.5; also covers §9.31 CA and MCA)
 
 The categorical-data analogue of PCA: an SVD-based decomposition of the χ² association in a two-way contingency table that lets you plot row and column categories in a shared low-dimensional space. Rows/columns that co-occur *more than expected under independence* land close together; those that co-occur *less* than expected land far apart.
+
+> **Also covers Reference §9.31** — the reference guide's multivariate chapter lists CA and Multiple CA again under §9.31. The `correspondence_analysis()` and `mca_burt()` functions here are the same computation; no separate implementation is needed.
 
 ## The algorithm (compact)
 

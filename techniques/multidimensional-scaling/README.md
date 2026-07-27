@@ -1,6 +1,8 @@
-# Multidimensional Scaling — Classical and Non-Metric (Reference §9.32)
+# Multidimensional Scaling — Classical and Non-Metric (Reference §9.32; also covers §9.25 PCoA / Classical MDS)
 
 Given a pairwise **distance matrix** `D` between `n` objects (from any dissimilarity — Euclidean, Jaccard, subjective ratings, edit distance, …), MDS finds coordinates in a low-dimensional space (typically 2 or 3) such that the pairwise distances approximate `D` as closely as possible.
+
+> **Also covers Reference §9.25** — *Principal Coordinate Analysis (PCoA)* is another name for classical (metric) MDS. The `classical_mds()` function in the Python/R files is the same computation.
 
 ## Two variants
 
