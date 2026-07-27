@@ -18,9 +18,11 @@ t_pvalue <- function(t, df, alternative) {
     stop("alternative must be 'two.sided', 'less', or 'greater'"))
 }
 
+# Returns a named numeric vector  c(lower = ..., upper = ...)  so the result
+# prints with labels and the caller can read ci["lower"] / ci["upper"].
 t_ci <- function(diff, se, df, conf) {
   tcrit <- qt(0.5 + conf / 2, df)
-  c(diff - tcrit * se, diff + tcrit * se)
+  c(lower = diff - tcrit * se, upper = diff + tcrit * se)
 }
 
 one_sample_t_scratch <- function(x, mu0 = 0, alternative = "two.sided", conf = 0.95) {
@@ -28,7 +30,8 @@ one_sample_t_scratch <- function(x, mu0 = 0, alternative = "two.sided", conf = 0
   t <- (m - mu0) / se; df <- n - 1
   ci <- t_ci(m, se, df, conf)
   list(mean = m, se = se, t = t, df = df,
-       p_value = t_pvalue(t, df, alternative), ci_lower = ci[1], ci_upper = ci[2])
+       p_value = t_pvalue(t, df, alternative),
+       ci_lower = ci[["lower"]], ci_upper = ci[["upper"]])
 }
 
 two_sample_t_scratch <- function(x1, x2, equal_var = FALSE,
@@ -49,7 +52,7 @@ two_sample_t_scratch <- function(x1, x2, equal_var = FALSE,
   t <- diff / se; ci <- t_ci(diff, se, df, conf)
   list(mean_diff = diff, se = se, t = t, df = df,
        p_value = t_pvalue(t, df, alternative),
-       ci_lower = ci[1], ci_upper = ci[2], cohens_d = d,
+       ci_lower = ci[["lower"]], ci_upper = ci[["upper"]], cohens_d = d,
        method = if (equal_var) "Student" else "Welch")
 }
 

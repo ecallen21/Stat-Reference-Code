@@ -572,6 +572,41 @@ These are the *control knobs* of the functions — they tell the function *how* 
 | `max_iter`, `tol` *(Huber)* | IRLS stopping criteria. |
 | `k` *(Huber)* | Tuning constant for the Huber loss; `1.345` gives ~95% efficiency at the normal. |
 
+### Return values: what each function gives you back
+
+Every function in this repo returns something **self-describing** — when you `print()` the result you can see what each value means without consulting the docstring. Three shapes show up:
+
+**1. A dict** — used when the return is "one row of a table" with several columns, *or* when the return is a bag of named scalars (estimate, SE, p-value, CI, …).
+```python
+result = pearson_correlation(x, y)
+# {'r': 0.78, 't': 6.4, 'df': 28, 'p_value': 1.3e-06, ...}
+result["r"]            # access by key
+```
+List-of-dicts is used when the return is *several rows of a table* — e.g. `frequency_table(region)` returns one dict per category. You can drop that straight into pandas: `pd.DataFrame(result)` and the column headers come along for free.
+
+**2. A `NamedTuple`** — used when the return is "a small fixed set of distinct things" (e.g. a CI's lower and upper, or a Lorenz curve's two parallel arrays).
+```python
+ci = ci_wilson(8, 100)
+# CI(lower=0.041, upper=0.150)        ← prints with field names
+ci.lower, ci.upper                     # access by name
+lo, hi = ci_wilson(8, 100)             # still unpacks like a regular tuple
+```
+NamedTuples are the right tool here because they preserve the tuple-unpacking idiom (`lo, hi = func(...)`) *and* add field names — no caller code has to change.
+
+**3. R named vector / named list** — R's equivalents. A function that would return a NamedTuple in Python returns `c(lower = ..., upper = ...)` in R; a function that would return a dict in Python returns `list(...)` in R. Both print with their labels and are indexed by name:
+```r
+ci <- ci_wilson(8, 100)            # c(lower = 0.041, upper = 0.150)
+ci[["lower"]]                       # 0.041
+```
+
+Quick reference:
+
+| Return shape | Python | R | When |
+|---|---|---|---|
+| One row of a table | `dict` | `list(...)` | Single record with several labeled fields |
+| Several rows of a table | `list[dict]` | `data.frame(...)` | One dict per row; pandas-ready |
+| Small fixed set of distinct things | `NamedTuple` | `c(name = value, ...)` | CI's `(lower, upper)`, fit's `(beta, mu)`, etc. |
+
 ### Conventions in the code
 - Python's from-scratch functions default to **`ddof = 1`** (sample variance / SD). numpy defaults to `ddof = 0`, so we pass `ddof=1` explicitly when comparing.
 - R's `var()` / `sd()` use `n − 1` by default; both languages therefore agree on the from-scratch defaults.
@@ -703,7 +738,84 @@ Building in batches; we walk through each batch together before moving on.
 | 11 | [marginal-effects](techniques/marginal-effects) (AME, MEM, MER, discrete-change) | 7.37, 7.47 | ✅ | ✅ | N/A |
 | 12 | [overdispersion-tests](techniques/overdispersion-tests) (Pearson φ, score, LRT Poisson vs NB) | 7.35, 7.42, 7.54 | ✅ | ✅ | N/A |
 
-Later batches will cover the remaining chapters (Survival, Time Series,
+### Batch 7 — Chapter 8: Categorical Data Analysis (Beyond GLMs)
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [mcnemar-test](techniques/mcnemar-test) (asymptotic, continuity, exact, mid-p, Newcombe CI) | 8.2, 8.18 | ✅ | ✅ | ✅ |
+| 2 | [cochran-mantel-haenszel](techniques/cochran-mantel-haenszel) (CMH stat + MH common OR w/ RBG SE + Woolf) | 8.3, 8.16 | ✅ | ✅ | ✅ |
+| 3 | [cohens-kappa](techniques/cohens-kappa) (two-rater κ + Fleiss ASE + PABAK) | 8.4 | ✅ | ✅ | ✅ |
+| 4 | [fleiss-kappa](techniques/fleiss-kappa) (≥3 raters + per-category κ) | 8.4 | ✅ | ✅ | N/A |
+| 5 | [weighted-kappa](techniques/weighted-kappa) (linear + quadratic; bootstrap SE) | 8.4 | ✅ | ✅ | N/A |
+| 6 | [breslow-day](techniques/breslow-day) (OR homogeneity + Tarone correction) | 8.6 | ✅ | ✅ | N/A |
+| 7 | [bowker-stuart-maxwell](techniques/bowker-stuart-maxwell) (symmetry + marginal homogeneity on k×k) | 8.7, 8.15 | ✅ | ✅ | N/A |
+| 8 | [log-linear-models](techniques/log-linear-models) (Poisson GLM on multi-way tables + agreement models) | 8.1, 8.14 | ✅ | ✅ | N/A |
+| 9 | [correspondence-analysis](techniques/correspondence-analysis) (CA via SVD + MCA via Burt) | 8.5 | ✅ | ✅ | N/A |
+| 10 | [bradley-terry](techniques/bradley-terry) (MLE via MM algorithm; Wald SEs) | 8.8 | ✅ | ✅ | N/A |
+| 11 | [continuation-ratio](techniques/continuation-ratio) (K-1 binomial GLMs + proportional variant) | 8.9 | ✅ | ✅ | N/A |
+| 12 | [adjacent-category-logit](techniques/adjacent-category-logit) (common β via BFGS + pairwise) | 8.10 | ✅ | ✅ | N/A |
+
+### Batch 8 — Chapter 9: Multivariate Methods
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [hotellings-t2](techniques/hotellings-t2) (one- and two-sample; F-approx) | 9.1, 9.28 | ✅ | ✅ | N/A |
+| 2 | [manova](techniques/manova) (Wilks / Pillai / Hotelling-Lawley / Roy) | 9.2 | ✅ | ✅ | N/A |
+| 3 | [pca](techniques/pca) (SVD-based; loadings + scores + explained var) | 9.3 | ✅ | ✅ | ✅ |
+| 4 | [exploratory-factor-analysis](techniques/exploratory-factor-analysis) (PAF + varimax + promax) | 9.4 | ✅ | ✅ | N/A |
+| 5 | [hierarchical-clustering](techniques/hierarchical-clustering) (single/complete/average/Ward + cophenetic) | 9.8 | ✅ | ✅ | N/A |
+| 6 | [k-means](techniques/k-means) (Lloyd + k-means++ + multi-restart) | 9.9 | ✅ | ✅ | ✅ |
+| 7 | [dbscan](techniques/dbscan) (density clustering + k-distance heuristic) | 9.11 | ✅ | ✅ | N/A |
+| 8 | [gaussian-mixture-models](techniques/gaussian-mixture-models) (EM + BIC/AIC selection) | 9.12 | ✅ | ✅ | ✅ |
+| 9 | [cluster-validation](techniques/cluster-validation) (silhouette, CH, DB, elbow, gap statistic) | 9.14 | ✅ | ✅ | N/A |
+| 10 | [lda-qda](techniques/lda-qda) (pooled and per-class Σ; Bayes-optimal classifier) | 9.30 | ✅ | ✅ | N/A |
+| 11 | [canonical-correlation](techniques/canonical-correlation) (generalized eigen + Bartlett) | 9.29 | ✅ | ✅ | N/A |
+| 12 | [multidimensional-scaling](techniques/multidimensional-scaling) (classical + non-metric with PAV isotonic) | 9.32, 9.25 | ✅ | ✅ | N/A |
+
+**Chapter 9 subsections also covered by earlier batches** (no separate implementation needed):
+- **§9.28** Hotelling's T² — same technique as §9.1; both listed in [`hotellings-t2`](techniques/hotellings-t2).
+- **§9.31** Correspondence Analysis / MCA — built in Batch 7 as [`correspondence-analysis`](techniques/correspondence-analysis) (§8.5).
+
+### Batch 9 — Chapter 10: Resampling and Computationally Intensive Methods
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [nonparametric-bootstrap](techniques/nonparametric-bootstrap) (case resampling; percentile/basic/normal CIs) | 10.1 | ✅ | ✅ | ✅ |
+| 2 | [parametric-bootstrap](techniques/parametric-bootstrap) (fit model then simulate) | 10.2 | ✅ | ✅ | N/A |
+| 3 | [bca-bootstrap](techniques/bca-bootstrap) (BCa + comparison of all four CI methods) | 10.3, 10.14 | ✅ | ✅ | N/A |
+| 4 | [block-bootstrap](techniques/block-bootstrap) (moving + circular blocks for dependent data) | 10.4 | ✅ | ✅ | N/A |
+| 5 | [wild-bootstrap](techniques/wild-bootstrap) (Rademacher / Mammen weights for heteroscedasticity) | 10.5 | ✅ | ✅ | N/A |
+| 6 | [jackknife](techniques/jackknife) (LOO SEs + bias correction + jackknife-after-bootstrap) | 10.6, 10.17 | ✅ | ✅ | N/A |
+| 7 | [permutation-tests](techniques/permutation-tests) (two-sample + correlation + regression) | 10.7, 10.16 | ✅ | ✅ | ✅ |
+| 8 | [cross-validation](techniques/cross-validation) (K-fold + stratified + LOOCV) | 10.8, 10.12 | ✅ | ✅ | ✅ |
+| 9 | [monte-carlo-simulation](techniques/monte-carlo-simulation) (power + CI coverage) | 10.9 | ✅ | ✅ | N/A |
+| 10 | [subsampling](techniques/subsampling) (Politis-Romano-Wolf + m-out-of-n bootstrap) | 10.10, 10.15 | ✅ | ✅ | N/A |
+| 11 | [double-bootstrap](techniques/double-bootstrap) (one-step Beran calibration) | 10.11 | ✅ | ✅ | N/A |
+| 12 | [nested-cv](techniques/nested-cv) (K_outer × K_inner + stratified repeated CV) | 10.13 | ✅ | ✅ | N/A |
+
+### Batch 10 — Chapter 11: Survival Analysis
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [kaplan-meier](techniques/kaplan-meier) (KM + Greenwood + log-log CI + median + risk table) | 11.2, 11.1, 11.45, 11.46, 11.61, 11.68 | ✅ | ✅ | N/A |
+| 2 | [nelson-aalen](techniques/nelson-aalen) (cumulative hazard + kernel-smoothed rate) | 11.3, 11.65 | ✅ | ✅ | N/A |
+| 3 | [log-rank-test](techniques/log-rank-test) (weighted family + stratified) | 11.4, 11.5, 11.6, 11.7, 11.47, 11.62 | ✅ | ✅ | N/A |
+| 4 | [cox-ph](techniques/cox-ph) (partial-likelihood; Efron+Breslow ties; counting-process input) | 11.8, 11.16, 11.42, 11.54, 11.59, 11.63, 11.64, 11.66 | ✅ | ✅ | N/A |
+| 5 | [cox-diagnostics](techniques/cox-diagnostics) (Grambsch-Therneau + 4 residual types) | 11.33, 11.53 | ✅ | ✅ | N/A |
+| 6 | [parametric-survival](techniques/parametric-survival) (exp / Weibull / lognormal / loglogistic AFT + piecewise-exp) | 11.10–11.15, 11.44, 11.58 | ✅ | ✅ | N/A |
+| 7 | [competing-risks](techniques/competing-risks) (Aalen-Johansen + cause-specific Cox + Fine-Gray + Gray) | 11.22, 11.23, 11.24, 11.25 | ✅ | ✅ | N/A |
+| 8 | [recurrent-events](techniques/recurrent-events) (Andersen-Gill + PWP + WLW + gap-time) | 11.17, 11.18, 11.19, 11.41, 11.51 | ✅ | ✅ | N/A |
+| 9 | [frailty-models](techniques/frailty-models) (shared gamma frailty via moment estimator) | 11.26 | ✅ | ✅ | N/A |
+| 10 | [multi-state-models](techniques/multi-state-models) (illness-death + state occupation) | 11.27, 11.52 | ✅ | ✅ | N/A |
+| 11 | [rmst](techniques/rmst) (restricted mean survival time + difference test) | 11.29, 11.67 | ✅ | ✅ | N/A |
+| 12 | [penalized-cox](techniques/penalized-cox) (elastic-net Cox via coordinate descent) | 11.21 | ✅ | ✅ | N/A |
+
+**Chapter 11 subsections deferred** (specialized; will be picked up in later batches):
+§11.9 Aalen additive · §11.20 Royston-Parmar splines · §11.28/40/56 cure models · §11.30 landmark analysis · §11.31 random survival forests (→ ML) · §11.32/57 joint longitudinal-survival · §11.34/60/69 interval-censored · §11.35/50 pseudo-observations · §11.36 IPCW · §11.37 win ratio · §11.38 time-dependent ROC · §11.39 dynamic prediction · §11.43 relative survival · §11.48 doubly-truncated · §11.49 conditional survival · §11.55 linear transformation · §11.70–72 (methodological discussions, not techniques).
+
+**PySpark N/A across Batch 10** — MLlib does not ship survival models, and distributed survival is a research topic. For very large data, aggregate risk sets on Spark and run the fitter on the driver.
+
+Later batches will cover the remaining chapters (Longitudinal, Time Series,
 Bayesian, Causal Inference, ML, ...).
 
 ---
