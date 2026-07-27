@@ -1,9 +1,33 @@
 # Python dependencies for the reference implementations.
 # Install with:  pip install -r requirements.txt
+
+# --- Core -----------------------------------------------------------------
+# Required for the from-scratch code in every techniques/*/python/*.py to run.
 numpy
 scipy
 pandas
 statsmodels
 scikit-learn
-# PySpark is only needed to run the techniques/*/pyspark/*.py examples.
+
+# --- PySpark --------------------------------------------------------------
+# Needed only to run the techniques/*/pyspark/*.py examples.
 pyspark
+
+# --- Optional library cross-checks ----------------------------------------
+# Each of these is used only inside the ``library_versions()`` helper of one
+# specific technique to compare the from-scratch numbers against a canonical
+# implementation. Each helper is wrapped in try/except, so the from-scratch
+# demo runs fine without any of these installed -- install only the ones you
+# want the cross-check for.
+#
+# arch              # techniques/block-bootstrap
+# choix             # techniques/bradley-terry
+# dcor              # techniques/distance-correlation
+# factor_analyzer   # techniques/exploratory-factor-analysis
+# firthlogist       # techniques/firth-logistic
+# lifelines         # techniques/kaplan-meier, cox-ph, cox-diagnostics, parametric-survival, competing-risks, etc.
+# lmoments3         # techniques/l-moments
+# patsy             # techniques/splines-segmented
+# pingouin          # techniques/concordance-correlation, partial-correlation
+# prince            # techniques/correspondence-analysis
+# semopy            # techniques/polychoric-correlation

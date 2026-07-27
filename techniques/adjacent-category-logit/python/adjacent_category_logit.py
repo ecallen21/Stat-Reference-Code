@@ -82,16 +82,6 @@ def fit_adjacent_category_common(X, y, K: int | None = None) -> dict:
             "method": "adjacent-category logit (common beta, joint MLE)"}
 
 
-def fit_adjacent_category_specific(X, y, K: int | None = None) -> dict:
-    """Category-specific AC model: K-1 binary logistics on adjacent pairs {k, k+1}.
-
-    For each pair k vs k+1, restrict to those with Y in {k, k+1} and fit
-    logit P(Y = k+1) = -(alpha_k - X * beta_k) so beta_k is on X's scale.
-    """
-    from techniques_logistic_helpers import _logistic  # not present; inline below
-    raise NotImplementedError("inlined below via _logistic helper")
-
-
 def _logistic_irls(X, y, max_iter=100, tol=1e-10):
     X = np.asarray(X, dtype=float); y = np.asarray(y, dtype=float)
     n, p = X.shape
