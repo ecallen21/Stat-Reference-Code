@@ -793,7 +793,29 @@ Building in batches; we walk through each batch together before moving on.
 | 11 | [double-bootstrap](techniques/double-bootstrap) (one-step Beran calibration) | 10.11 | ✅ | ✅ | N/A |
 | 12 | [nested-cv](techniques/nested-cv) (K_outer × K_inner + stratified repeated CV) | 10.13 | ✅ | ✅ | N/A |
 
-Later batches will cover the remaining chapters (Survival, Time Series,
+### Batch 10 — Chapter 11: Survival Analysis
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [kaplan-meier](techniques/kaplan-meier) (KM + Greenwood + log-log CI + median + risk table) | 11.2, 11.1, 11.45, 11.46, 11.61, 11.68 | ✅ | ✅ | N/A |
+| 2 | [nelson-aalen](techniques/nelson-aalen) (cumulative hazard + kernel-smoothed rate) | 11.3, 11.65 | ✅ | ✅ | N/A |
+| 3 | [log-rank-test](techniques/log-rank-test) (weighted family + stratified) | 11.4, 11.5, 11.6, 11.7, 11.47, 11.62 | ✅ | ✅ | N/A |
+| 4 | [cox-ph](techniques/cox-ph) (partial-likelihood; Efron+Breslow ties; counting-process input) | 11.8, 11.16, 11.42, 11.54, 11.59, 11.63, 11.64, 11.66 | ✅ | ✅ | N/A |
+| 5 | [cox-diagnostics](techniques/cox-diagnostics) (Grambsch-Therneau + 4 residual types) | 11.33, 11.53 | ✅ | ✅ | N/A |
+| 6 | [parametric-survival](techniques/parametric-survival) (exp / Weibull / lognormal / loglogistic AFT + piecewise-exp) | 11.10–11.15, 11.44, 11.58 | ✅ | ✅ | N/A |
+| 7 | [competing-risks](techniques/competing-risks) (Aalen-Johansen + cause-specific Cox + Fine-Gray + Gray) | 11.22, 11.23, 11.24, 11.25 | ✅ | ✅ | N/A |
+| 8 | [recurrent-events](techniques/recurrent-events) (Andersen-Gill + PWP + WLW + gap-time) | 11.17, 11.18, 11.19, 11.41, 11.51 | ✅ | ✅ | N/A |
+| 9 | [frailty-models](techniques/frailty-models) (shared gamma frailty via moment estimator) | 11.26 | ✅ | ✅ | N/A |
+| 10 | [multi-state-models](techniques/multi-state-models) (illness-death + state occupation) | 11.27, 11.52 | ✅ | ✅ | N/A |
+| 11 | [rmst](techniques/rmst) (restricted mean survival time + difference test) | 11.29, 11.67 | ✅ | ✅ | N/A |
+| 12 | [penalized-cox](techniques/penalized-cox) (elastic-net Cox via coordinate descent) | 11.21 | ✅ | ✅ | N/A |
+
+**Chapter 11 subsections deferred** (specialized; will be picked up in later batches):
+§11.9 Aalen additive · §11.20 Royston-Parmar splines · §11.28/40/56 cure models · §11.30 landmark analysis · §11.31 random survival forests (→ ML) · §11.32/57 joint longitudinal-survival · §11.34/60/69 interval-censored · §11.35/50 pseudo-observations · §11.36 IPCW · §11.37 win ratio · §11.38 time-dependent ROC · §11.39 dynamic prediction · §11.43 relative survival · §11.48 doubly-truncated · §11.49 conditional survival · §11.55 linear transformation · §11.70–72 (methodological discussions, not techniques).
+
+**PySpark N/A across Batch 10** — MLlib does not ship survival models, and distributed survival is a research topic. For very large data, aggregate risk sets on Spark and run the fitter on the driver.
+
+Later batches will cover the remaining chapters (Longitudinal, Time Series,
 Bayesian, Causal Inference, ML, ...).
 
 ---
