@@ -815,8 +815,72 @@ Building in batches; we walk through each batch together before moving on.
 
 **PySpark N/A across Batch 10** — MLlib does not ship survival models, and distributed survival is a research topic. For very large data, aggregate risk sets on Spark and run the fitter on the driver.
 
-Later batches will cover the remaining chapters (Longitudinal, Time Series,
-Bayesian, Causal Inference, ML, ...).
+### Batch 11 — Chapter 12: Longitudinal and Repeated Measures
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [repeated-measures-anova](techniques/repeated-measures-anova) (SS decomposition + GG / HF corrections) | 12.1 | ✅ | ✅ | N/A |
+| 2 | [linear-mixed-models](techniques/linear-mixed-models) (REML profile likelihood + BLUPs + ICC) | 12.2, 12.13, 12.16, 12.20, 12.25, 12.26, 12.27, 12.29, 12.30, 12.32, 12.33 | ✅ | ✅ | N/A |
+| 3 | [generalized-linear-mixed-models](techniques/generalized-linear-mixed-models) (Gauss-Hermite MLE) | 12.3, 12.23 | ✅ | ✅ | N/A |
+| 4 | [gee](techniques/gee) (IRWLS + sandwich SE; independence / exch / AR(1)) | 12.8, 12.24, 12.31 | ✅ | ✅ | N/A |
+| 5 | [growth-curve-models](techniques/growth-curve-models) (random int + slope; quadratic) | 12.4 | ✅ | ✅ | N/A |
+| 6 | [group-based-trajectory](techniques/group-based-trajectory) (EM K-class polynomial mixture + BIC) | 12.5, 12.6, 12.7 | ✅ | ✅ | N/A |
+| 7 | [markov-transition-models](techniques/markov-transition-models) (MLE transition matrix + stationary + order test) | 12.9 | ✅ | ✅ | N/A |
+| 8 | [cross-lagged-panel](techniques/cross-lagged-panel) (2-wave CLPM + person-centered RI-CLPM) | 12.10, 12.18 | ✅ | ✅ | N/A |
+| 9 | [nonlinear-mixed-effects](techniques/nonlinear-mixed-effects) (two-stage NLME) | 12.12 | ✅ | ✅ | N/A |
+| 10 | [kenward-roger](techniques/kenward-roger) (Satterthwaite-style contrast test) | 12.17 | ✅ | ✅ | N/A |
+| 11 | [multilevel-mediation](techniques/multilevel-mediation) (within/between decomposition + MC CI) | 12.22 | ✅ | ✅ | N/A |
+| 12 | [mixed-effects-location-scale](techniques/mixed-effects-location-scale) (two-stage MELS) | 12.21 | ✅ | ✅ | N/A |
+
+**Chapter 12 subsections deferred** to later batches: §12.11 intensive longitudinal / EMA · §12.14 multivariate longitudinal · §12.15 measurement invariance (→ SEM Ch 19) · §12.19 doubly-robust (→ causal Ch 15) · §12.28 spaghetti plots (viz) · §12.34 pitfalls (discussion).
+
+**PySpark N/A across Batch 11** — MLlib has no mixed-model support.
+
+### Batch 12 — Chapter 13: Time Series Analysis
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [acf-pacf](techniques/acf-pacf) (ACF + PACF + Ljung-Box + CCF + Mann-Kendall) | 13.1, 13.9, 13.42, 13.48 | ✅ | ✅ | N/A |
+| 2 | [stationarity-tests](techniques/stationarity-tests) (ADF + KPSS + Phillips-Perron + reconciliation) | 13.2, 13.8, 13.53 | ✅ | ✅ | N/A |
+| 3 | [arima](techniques/arima) (from-scratch ARMA MLE + AIC order + LB residuals) | 13.4, 13.5, 13.52 | ✅ | ✅ | N/A |
+| 4 | [sarima-arimax](techniques/sarima-arimax) (SARIMA + ARIMAX / regression w/ ARIMA errors) | 13.6, 13.25 | ✅ | ✅ | N/A |
+| 5 | [exponential-smoothing](techniques/exponential-smoothing) (SES + Holt + Holt-Winters + ETS/TBATS notes) | 13.3, 13.43, 13.56 | ✅ | ✅ | N/A |
+| 6 | [seasonal-decomposition](techniques/seasonal-decomposition) (classical + STL + X-13 note) | 13.24, 13.47, 13.54 | ✅ | ✅ | N/A |
+| 7 | [var-cointegration](techniques/var-cointegration) (VAR + Engle-Granger + ECM + Johansen note) | 13.12, 13.13, 13.44 | ✅ | ✅ | N/A |
+| 8 | [granger-causality](techniques/granger-causality) (F-test on nested regressions + caveats) | 13.50 | ✅ | ✅ | N/A |
+| 9 | [garch](techniques/garch) (GARCH(1,1) MLE + notes on DCC/BEKK/CCC) | 13.11, 13.33 | ✅ | ✅ | N/A |
+| 10 | [state-space-kalman](techniques/state-space-kalman) (Kalman filter + local level + local trend + forecast intervals) | 13.17, 13.20, 13.55 | ✅ | ✅ | N/A |
+| 11 | [structural-breaks-its](techniques/structural-breaks-its) (Chow + Bai-Perron scan + ITS regression) | 13.7, 13.10 | ✅ | ✅ | N/A |
+| 12 | [forecast-evaluation-cv](techniques/forecast-evaluation-cv) (expanding-window CV + MAE/MAPE/MASE + bottom-up reconciliation) | 13.23, 13.31, 13.35, 13.36, 13.45, 13.51 | ✅ | ✅ | N/A |
+
+**Chapter 13 subsections deferred** (specialized / ML / frequency-domain, will be picked up in later batches):
+§13.14 HMM · §13.15/26/46 regime switching / TAR / SETAR / TVAR · §13.16 ARFIMA · §13.18/19/58/59 spectral / wavelet / EMD / locally-stationary · §13.21/27/28 Prophet / BSTS / NN forecasting · §13.22/29/39/41/57 DTW / anomaly / features / classification / similarity · §13.30 forecast combination · §13.32 count TS · §13.34 functional-coefficient · §13.37 hierarchical TS · §13.40 stochastic volatility · §13.49 functional TS.
+
+**PySpark N/A across Batch 12** — MLlib has no classical time-series support.
+
+### Batch 13 — Catch-up: subsections deferred from earlier chapters
+
+Twelve techniques deferred from Batches 7–12 (Chapters 8, 9, 11, 13), grouped for coverage across topics.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [k-medoids](techniques/k-medoids) (PAM: BUILD + SWAP) | 9.11 | ✅ | ✅ | N/A |
+| 2 | [procrustes-analysis](techniques/procrustes-analysis) (SVD-based orthogonal alignment + optional scale) | 9.16 | ✅ | ✅ | N/A |
+| 3 | [permanova](techniques/permanova) (pseudo-F on a distance matrix + label permutation) | 9.17 | ✅ | ✅ | N/A |
+| 4 | [mantel-test](techniques/mantel-test) (correlation of two distance matrices + partial Mantel) | 9.18 | ✅ | ✅ | N/A |
+| 5 | [box-m-mauchly](techniques/box-m-mauchly) (equality of covariances + sphericity + GG/HF ε) | 9.3, 12.2 | ✅ | ✅ | N/A |
+| 6 | [multivariate-outlier-detection](techniques/multivariate-outlier-detection) (classical Mahalanobis + Fast-MCD) | 9.6, 9.7 | ✅ | ✅ | N/A |
+| 7 | [anosim](techniques/anosim) (rank-based analog of PERMANOVA) | 9.19 | ✅ | ✅ | N/A |
+| 8 | [generalized-ordered-logit](techniques/generalized-ordered-logit) (partial PO + Brant test) | 8.35 | ✅ | ✅ | N/A |
+| 9 | [landmark-analysis](techniques/landmark-analysis) (immortal-time-bias-safe survival with time-varying exposure + super-landmark) | 11.24 | ✅ | ✅ | N/A |
+| 10 | [interval-censored-survival](techniques/interval-censored-survival) (Turnbull NPMLE via EM + parametric Weibull MLE) | 11.20 | ✅ | ✅ | N/A |
+| 11 | [regime-switching-markov](techniques/regime-switching-markov) (Hamilton 1989: forward-backward EM on Gaussian HMM) | 13.14, 13.15 | ✅ | ✅ | N/A |
+| 12 | [spectral-analysis](techniques/spectral-analysis) (raw + Daniell + Welch periodograms) | 13.18 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 13** — all techniques are single-node inferential procedures on covariance / distance / hidden-state structures that need the full sample on one driver; aggregate in Spark then fit on the driver.
+
+Later batches will cover the remaining chapters (Bayesian, Causal
+Inference, ML, ...).
 
 ---
 
