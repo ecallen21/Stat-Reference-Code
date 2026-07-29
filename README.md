@@ -836,8 +836,30 @@ Building in batches; we walk through each batch together before moving on.
 
 **PySpark N/A across Batch 11** — MLlib has no mixed-model support.
 
-Later batches will cover the remaining chapters (Time Series, Bayesian,
-Causal Inference, ML, ...).
+### Batch 12 — Chapter 13: Time Series Analysis
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [acf-pacf](techniques/acf-pacf) (ACF + PACF + Ljung-Box + CCF + Mann-Kendall) | 13.1, 13.9, 13.42, 13.48 | ✅ | ✅ | N/A |
+| 2 | [stationarity-tests](techniques/stationarity-tests) (ADF + KPSS + Phillips-Perron + reconciliation) | 13.2, 13.8, 13.53 | ✅ | ✅ | N/A |
+| 3 | [arima](techniques/arima) (from-scratch ARMA MLE + AIC order + LB residuals) | 13.4, 13.5, 13.52 | ✅ | ✅ | N/A |
+| 4 | [sarima-arimax](techniques/sarima-arimax) (SARIMA + ARIMAX / regression w/ ARIMA errors) | 13.6, 13.25 | ✅ | ✅ | N/A |
+| 5 | [exponential-smoothing](techniques/exponential-smoothing) (SES + Holt + Holt-Winters + ETS/TBATS notes) | 13.3, 13.43, 13.56 | ✅ | ✅ | N/A |
+| 6 | [seasonal-decomposition](techniques/seasonal-decomposition) (classical + STL + X-13 note) | 13.24, 13.47, 13.54 | ✅ | ✅ | N/A |
+| 7 | [var-cointegration](techniques/var-cointegration) (VAR + Engle-Granger + ECM + Johansen note) | 13.12, 13.13, 13.44 | ✅ | ✅ | N/A |
+| 8 | [granger-causality](techniques/granger-causality) (F-test on nested regressions + caveats) | 13.50 | ✅ | ✅ | N/A |
+| 9 | [garch](techniques/garch) (GARCH(1,1) MLE + notes on DCC/BEKK/CCC) | 13.11, 13.33 | ✅ | ✅ | N/A |
+| 10 | [state-space-kalman](techniques/state-space-kalman) (Kalman filter + local level + local trend + forecast intervals) | 13.17, 13.20, 13.55 | ✅ | ✅ | N/A |
+| 11 | [structural-breaks-its](techniques/structural-breaks-its) (Chow + Bai-Perron scan + ITS regression) | 13.7, 13.10 | ✅ | ✅ | N/A |
+| 12 | [forecast-evaluation-cv](techniques/forecast-evaluation-cv) (expanding-window CV + MAE/MAPE/MASE + bottom-up reconciliation) | 13.23, 13.31, 13.35, 13.36, 13.45, 13.51 | ✅ | ✅ | N/A |
+
+**Chapter 13 subsections deferred** (specialized / ML / frequency-domain, will be picked up in later batches):
+§13.14 HMM · §13.15/26/46 regime switching / TAR / SETAR / TVAR · §13.16 ARFIMA · §13.18/19/58/59 spectral / wavelet / EMD / locally-stationary · §13.21/27/28 Prophet / BSTS / NN forecasting · §13.22/29/39/41/57 DTW / anomaly / features / classification / similarity · §13.30 forecast combination · §13.32 count TS · §13.34 functional-coefficient · §13.37 hierarchical TS · §13.40 stochastic volatility · §13.49 functional TS.
+
+**PySpark N/A across Batch 12** — MLlib has no classical time-series support.
+
+Later batches will cover the remaining chapters (Bayesian, Causal
+Inference, ML, ...).
 
 ---
 
