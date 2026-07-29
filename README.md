@@ -815,8 +815,29 @@ Building in batches; we walk through each batch together before moving on.
 
 **PySpark N/A across Batch 10** — MLlib does not ship survival models, and distributed survival is a research topic. For very large data, aggregate risk sets on Spark and run the fitter on the driver.
 
-Later batches will cover the remaining chapters (Longitudinal, Time Series,
-Bayesian, Causal Inference, ML, ...).
+### Batch 11 — Chapter 12: Longitudinal and Repeated Measures
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [repeated-measures-anova](techniques/repeated-measures-anova) (SS decomposition + GG / HF corrections) | 12.1 | ✅ | ✅ | N/A |
+| 2 | [linear-mixed-models](techniques/linear-mixed-models) (REML profile likelihood + BLUPs + ICC) | 12.2, 12.13, 12.16, 12.20, 12.25, 12.26, 12.27, 12.29, 12.30, 12.32, 12.33 | ✅ | ✅ | N/A |
+| 3 | [generalized-linear-mixed-models](techniques/generalized-linear-mixed-models) (Gauss-Hermite MLE) | 12.3, 12.23 | ✅ | ✅ | N/A |
+| 4 | [gee](techniques/gee) (IRWLS + sandwich SE; independence / exch / AR(1)) | 12.8, 12.24, 12.31 | ✅ | ✅ | N/A |
+| 5 | [growth-curve-models](techniques/growth-curve-models) (random int + slope; quadratic) | 12.4 | ✅ | ✅ | N/A |
+| 6 | [group-based-trajectory](techniques/group-based-trajectory) (EM K-class polynomial mixture + BIC) | 12.5, 12.6, 12.7 | ✅ | ✅ | N/A |
+| 7 | [markov-transition-models](techniques/markov-transition-models) (MLE transition matrix + stationary + order test) | 12.9 | ✅ | ✅ | N/A |
+| 8 | [cross-lagged-panel](techniques/cross-lagged-panel) (2-wave CLPM + person-centered RI-CLPM) | 12.10, 12.18 | ✅ | ✅ | N/A |
+| 9 | [nonlinear-mixed-effects](techniques/nonlinear-mixed-effects) (two-stage NLME) | 12.12 | ✅ | ✅ | N/A |
+| 10 | [kenward-roger](techniques/kenward-roger) (Satterthwaite-style contrast test) | 12.17 | ✅ | ✅ | N/A |
+| 11 | [multilevel-mediation](techniques/multilevel-mediation) (within/between decomposition + MC CI) | 12.22 | ✅ | ✅ | N/A |
+| 12 | [mixed-effects-location-scale](techniques/mixed-effects-location-scale) (two-stage MELS) | 12.21 | ✅ | ✅ | N/A |
+
+**Chapter 12 subsections deferred** to later batches: §12.11 intensive longitudinal / EMA · §12.14 multivariate longitudinal · §12.15 measurement invariance (→ SEM Ch 19) · §12.19 doubly-robust (→ causal Ch 15) · §12.28 spaghetti plots (viz) · §12.34 pitfalls (discussion).
+
+**PySpark N/A across Batch 11** — MLlib has no mixed-model support.
+
+Later batches will cover the remaining chapters (Time Series, Bayesian,
+Causal Inference, ML, ...).
 
 ---
 
