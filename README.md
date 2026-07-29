@@ -858,6 +858,27 @@ Building in batches; we walk through each batch together before moving on.
 
 **PySpark N/A across Batch 12** — MLlib has no classical time-series support.
 
+### Batch 13 — Catch-up: subsections deferred from earlier chapters
+
+Twelve techniques deferred from Batches 7–12 (Chapters 8, 9, 11, 13), grouped for coverage across topics.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [k-medoids](techniques/k-medoids) (PAM: BUILD + SWAP) | 9.11 | ✅ | ✅ | N/A |
+| 2 | [procrustes-analysis](techniques/procrustes-analysis) (SVD-based orthogonal alignment + optional scale) | 9.16 | ✅ | ✅ | N/A |
+| 3 | [permanova](techniques/permanova) (pseudo-F on a distance matrix + label permutation) | 9.17 | ✅ | ✅ | N/A |
+| 4 | [mantel-test](techniques/mantel-test) (correlation of two distance matrices + partial Mantel) | 9.18 | ✅ | ✅ | N/A |
+| 5 | [box-m-mauchly](techniques/box-m-mauchly) (equality of covariances + sphericity + GG/HF ε) | 9.3, 12.2 | ✅ | ✅ | N/A |
+| 6 | [multivariate-outlier-detection](techniques/multivariate-outlier-detection) (classical Mahalanobis + Fast-MCD) | 9.6, 9.7 | ✅ | ✅ | N/A |
+| 7 | [anosim](techniques/anosim) (rank-based analog of PERMANOVA) | 9.19 | ✅ | ✅ | N/A |
+| 8 | [generalized-ordered-logit](techniques/generalized-ordered-logit) (partial PO + Brant test) | 8.35 | ✅ | ✅ | N/A |
+| 9 | [landmark-analysis](techniques/landmark-analysis) (immortal-time-bias-safe survival with time-varying exposure + super-landmark) | 11.24 | ✅ | ✅ | N/A |
+| 10 | [interval-censored-survival](techniques/interval-censored-survival) (Turnbull NPMLE via EM + parametric Weibull MLE) | 11.20 | ✅ | ✅ | N/A |
+| 11 | [regime-switching-markov](techniques/regime-switching-markov) (Hamilton 1989: forward-backward EM on Gaussian HMM) | 13.14, 13.15 | ✅ | ✅ | N/A |
+| 12 | [spectral-analysis](techniques/spectral-analysis) (raw + Daniell + Welch periodograms) | 13.18 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 13** — all techniques are single-node inferential procedures on covariance / distance / hidden-state structures that need the full sample on one driver; aggregate in Spark then fit on the driver.
+
 Later batches will cover the remaining chapters (Bayesian, Causal
 Inference, ML, ...).
 
