@@ -961,7 +961,28 @@ Twelve more catch-ups. Focus on regression flavors that were missing (nonlinear,
 
 **PySpark N/A across Batch 17** — all are single-node inferential procedures. Distribute by key when needed.
 
-Later batches will cover the remaining chapters (Causal Inference, ML, ...).
+### Batch 18 — Catch-up: another 12 across Chapters 3/5/10/11/12/14/15/16/18
+
+Twelve more spread across inference, regression, resampling, survival, panel/DiD, Bayesian, and design of experiments.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [multiple-testing-corrections](techniques/multiple-testing-corrections) (Bonferroni + Holm + Hochberg + BH + BY + Storey q) | 3.30, 4.24 | ✅ | ✅ | N/A |
+| 2 | [truncated-regression](techniques/truncated-regression) (truncated-normal MLE for selected samples) | 5.18 | ✅ | ✅ | N/A |
+| 3 | [fixed-effects-panel](techniques/fixed-effects-panel) (within + between + RE + Hausman FE-vs-RE test) | 12.31, 12.32 | ✅ | ✅ | N/A |
+| 4 | [diff-in-diff](techniques/diff-in-diff) (2x2 DID + two-way FE + staggered-adoption caveats) | 15.4 | ✅ | ✅ | N/A |
+| 5 | [conformal-prediction](techniques/conformal-prediction) (split-conformal intervals with any base learner) | 10.19 | ✅ | ✅ | N/A |
+| 6 | [harrell-c-index](techniques/harrell-c-index) (Harrell C + Uno IPCW C-index for survival discrimination) | 11.6 | ✅ | ✅ | N/A |
+| 7 | [multiple-imputation](techniques/multiple-imputation) (MICE chained equations + Rubin combining rules) | 18.6 | ✅ | ✅ | N/A |
+| 8 | [dirichlet-process-mixture](techniques/dirichlet-process-mixture) (CRP Gibbs on DP Gaussian mixture) | 14.31 | ✅ | ✅ | N/A |
+| 9 | [gaussian-process-regression](techniques/gaussian-process-regression) (RBF GP + marginal-likelihood hyperparameters) | 14.32 | ✅ | ✅ | N/A |
+| 10 | [response-surface](techniques/response-surface) (CCD + BBD + quadratic fit + stationary-point analysis) | 16.11 | ✅ | ✅ | N/A |
+| 11 | [latin-square-design](techniques/latin-square-design) (Latin-square randomization + row/col-blocked ANOVA) | 16.6 | ✅ | ✅ | N/A |
+| 12 | [mars](techniques/mars) (Multivariate Adaptive Regression Splines: hinge functions + GCV pruning) | 5.28 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 18** — all single-node inferential procedures. Distribute by key when needed.
+
+Later batches will cover the remaining chapters (Causal Inference beyond DiD, ML, SEM, missing-data extensions, ...).
 
 ---
 
