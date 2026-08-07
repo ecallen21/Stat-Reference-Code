@@ -879,8 +879,26 @@ Twelve techniques deferred from Batches 7–12 (Chapters 8, 9, 11, 13), grouped 
 
 **PySpark N/A across Batch 13** — all techniques are single-node inferential procedures on covariance / distance / hidden-state structures that need the full sample on one driver; aggregate in Spark then fit on the driver.
 
-Later batches will cover the remaining chapters (Bayesian, Causal
-Inference, ML, ...).
+### Batch 14 — Chapter 14: Bayesian Inference
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [conjugate-priors](techniques/conjugate-priors) (Beta-Binomial + Gamma-Poisson + Normal-Normal) | 14.1, 14.2, 14.3 | ✅ | ✅ | N/A |
+| 2 | [mcmc-metropolis-hastings](techniques/mcmc-metropolis-hastings) (random-walk MH + Haario adaptation + ESS + R-hat) | 14.6 | ✅ | ✅ | N/A |
+| 3 | [gibbs-sampler](techniques/gibbs-sampler) (Normal-InvGamma + 8-schools hierarchical) | 14.7 | ✅ | ✅ | N/A |
+| 4 | [hamiltonian-mc](techniques/hamiltonian-mc) (leapfrog HMC + NUTS notes) | 14.8 | ✅ | ✅ | N/A |
+| 5 | [bayesian-linear-regression](techniques/bayesian-linear-regression) (Normal-InvGamma conjugate + Zellner g-prior + posterior predictive) | 14.10, 14.11 | ✅ | ✅ | N/A |
+| 6 | [bayesian-hierarchical-models](techniques/bayesian-hierarchical-models) (partial pooling + 8-schools Gibbs) | 14.15, 14.16 | ✅ | ✅ | N/A |
+| 7 | [bayesian-glms](techniques/bayesian-glms) (logistic + Poisson via MH + Laplace-approx proposal) | 14.12, 14.13 | ✅ | ✅ | N/A |
+| 8 | [bayesian-model-comparison](techniques/bayesian-model-comparison) (WAIC + PSIS-LOO + DIC + Bayes-factor caveats) | 14.20, 14.21, 14.22 | ✅ | ✅ | N/A |
+| 9 | [posterior-predictive-checks](techniques/posterior-predictive-checks) (Bayesian p-values + test-statistic overlay) | 14.19 | ✅ | ✅ | N/A |
+| 10 | [variational-inference](techniques/variational-inference) (mean-field Gaussian VI with reparameterization gradient + CAVI) | 14.24, 14.25 | ✅ | ✅ | N/A |
+| 11 | [empirical-bayes](techniques/empirical-bayes) (Beta-Binomial EB + James-Stein estimator) | 14.17, 14.18 | ✅ | ✅ | N/A |
+| 12 | [credible-intervals-hpd](techniques/credible-intervals-hpd) (ETI + HPD + Kruschke ROPE decision) | 14.9, 14.23 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 14** — Bayesian inference is inherently sequential (sampling chains, ELBO ascent); Spark is used for pre-aggregation, not the fitter itself.
+
+Later batches will cover the remaining chapters (Causal Inference, ML, ...).
 
 ---
 
