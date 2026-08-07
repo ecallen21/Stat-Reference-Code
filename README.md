@@ -919,6 +919,27 @@ Twelve techniques deferred from Batches 11-12 (Chapters 12-13). Time-series-heav
 
 **PySpark N/A across Batch 15** — all techniques are single-series / single-node procedures; distribute over series (per-key groupby) then fit on each executor.
 
+### Batch 16 — Catch-up: missed subsections across Chapters 5 / 8 / 10 / 11 / 12 / 14
+
+Twelve techniques spread across earlier chapters. Fills common regression flavors (Tobit, quantile, beta, penalized), exact 2×2 tests, refined bootstrap, joint longitudinal-survival, additive-hazards and cure survival, and two more Bayesian tools (ABC, BMA).
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [fisher-exact-barnard](techniques/fisher-exact-barnard) (Fisher's conditional + Barnard's unconditional exact 2x2 tests) | 8.4 | ✅ | ✅ | N/A |
+| 2 | [zero-inflated-regression](techniques/zero-inflated-regression) (ZIP + hurdle Poisson via mixture likelihood) | 5.24 | ✅ | ✅ | N/A |
+| 3 | [tobit-regression](techniques/tobit-regression) (left / right / two-sided Tobit MLE for censored outcomes) | 5.19 | ✅ | ✅ | N/A |
+| 4 | [quantile-regression](techniques/quantile-regression) (Koenker-Bassett pinball loss + smoothed BFGS + LP) | 5.15 | ✅ | ✅ | N/A |
+| 5 | [beta-regression](techniques/beta-regression) (Ferrari-Cribari-Neto Beta(mu, phi) MLE + variable-precision) | 5.20 | ✅ | ✅ | N/A |
+| 6 | [ridge-lasso-elasticnet](techniques/ridge-lasso-elasticnet) (closed-form ridge + coord-descent LASSO/EN + reg path) | 5.9, 5.10 | ✅ | ✅ | N/A |
+| 7 | [studentized-bootstrap](techniques/studentized-bootstrap) (bootstrap-t + nested inner-boot variance) | 10.4 | ✅ | ✅ | N/A |
+| 8 | [joint-longitudinal-survival](techniques/joint-longitudinal-survival) (two-stage LME BLUPs + time-varying Cox) | 12.10 | ✅ | ✅ | N/A |
+| 9 | [additive-aalen](techniques/additive-aalen) (Aalen additive-hazards least-squares increments + sup test) | 11.14 | ✅ | ✅ | N/A |
+| 10 | [cure-models](techniques/cure-models) (Berkson-Gage mixture cure with logistic pi + Weibull latency MLE) | 11.22 | ✅ | ✅ | N/A |
+| 11 | [abc-approximate-bayesian](techniques/abc-approximate-bayesian) (rejection ABC + Beaumont local-regression adjust) | 14.27 | ✅ | ✅ | N/A |
+| 12 | [bayesian-model-averaging](techniques/bayesian-model-averaging) (BIC-approx BMA + PIP over all 2^p subsets) | 14.26 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 16** — all techniques are single-node inferential procedures. For scale, split by group (`groupBy(...).applyInPandas(...)`) and fit on each executor.
+
 Later batches will cover the remaining chapters (Causal Inference, ML, ...).
 
 ---
