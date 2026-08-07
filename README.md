@@ -898,6 +898,27 @@ Twelve techniques deferred from Batches 7–12 (Chapters 8, 9, 11, 13), grouped 
 
 **PySpark N/A across Batch 14** — Bayesian inference is inherently sequential (sampling chains, ELBO ascent); Spark is used for pre-aggregation, not the fitter itself.
 
+### Batch 15 — Catch-up: missed subsections from earlier batches
+
+Twelve techniques deferred from Batches 11-12 (Chapters 12-13). Time-series-heavy: HMM, long-memory, wavelets, DTW, TS anomaly detection, forecast combination, hierarchical forecasting, stochastic volatility, decomposable / Prophet-like forecasting, count TS, TS features + classification, plus multivariate longitudinal.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [hmm](techniques/hmm) (categorical HMM: forward-backward + Viterbi + Baum-Welch EM) | 13.14 | ✅ | ✅ | N/A |
+| 2 | [arfima](techniques/arfima) (fractional differencing + GPH log-periodogram estimator) | 13.16 | ✅ | ✅ | N/A |
+| 3 | [wavelet-analysis](techniques/wavelet-analysis) (Haar + Daubechies-4 DWT + universal-threshold denoising) | 13.19 | ✅ | ✅ | N/A |
+| 4 | [dynamic-time-warping](techniques/dynamic-time-warping) (DTW distance + Sakoe-Chiba band + alignment path) | 13.22 | ✅ | ✅ | N/A |
+| 5 | [ts-anomaly-detection](techniques/ts-anomaly-detection) (Hampel + STL-residual + predictive-residual approaches) | 13.29 | ✅ | ✅ | N/A |
+| 6 | [forecast-combination](techniques/forecast-combination) (simple + trimmed mean + Bates-Granger + Granger-Ramanathan) | 13.30 | ✅ | ✅ | N/A |
+| 7 | [hierarchical-forecasting](techniques/hierarchical-forecasting) (bottom-up + top-down + MinT reconciliation) | 13.37 | ✅ | ✅ | N/A |
+| 8 | [stochastic-volatility](techniques/stochastic-volatility) (SV model: particle filter + Kalman-QMLE) | 13.40 | ✅ | ✅ | N/A |
+| 9 | [decomposable-forecasting](techniques/decomposable-forecasting) (Prophet-style trend + Fourier + holidays) | 13.21 | ✅ | ✅ | N/A |
+| 10 | [count-time-series](techniques/count-time-series) (Poisson-INAR(1) MoM + Poisson-INGARCH conditional MLE) | 13.32 | ✅ | ✅ | N/A |
+| 11 | [multivariate-longitudinal](techniques/multivariate-longitudinal) (two-stage bivariate random-intercept LMM) | 12.14 | ✅ | ✅ | N/A |
+| 12 | [ts-features-classification](techniques/ts-features-classification) (14 features + 1-NN DTW + 1-NN feature classifiers) | 13.39, 13.41 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 15** — all techniques are single-series / single-node procedures; distribute over series (per-key groupby) then fit on each executor.
+
 Later batches will cover the remaining chapters (Causal Inference, ML, ...).
 
 ---
