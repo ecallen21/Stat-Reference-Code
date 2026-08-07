@@ -879,8 +879,131 @@ Twelve techniques deferred from Batches 7–12 (Chapters 8, 9, 11, 13), grouped 
 
 **PySpark N/A across Batch 13** — all techniques are single-node inferential procedures on covariance / distance / hidden-state structures that need the full sample on one driver; aggregate in Spark then fit on the driver.
 
-Later batches will cover the remaining chapters (Bayesian, Causal
-Inference, ML, ...).
+### Batch 14 — Chapter 14: Bayesian Inference
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [conjugate-priors](techniques/conjugate-priors) (Beta-Binomial + Gamma-Poisson + Normal-Normal) | 14.1, 14.2, 14.3 | ✅ | ✅ | N/A |
+| 2 | [mcmc-metropolis-hastings](techniques/mcmc-metropolis-hastings) (random-walk MH + Haario adaptation + ESS + R-hat) | 14.6 | ✅ | ✅ | N/A |
+| 3 | [gibbs-sampler](techniques/gibbs-sampler) (Normal-InvGamma + 8-schools hierarchical) | 14.7 | ✅ | ✅ | N/A |
+| 4 | [hamiltonian-mc](techniques/hamiltonian-mc) (leapfrog HMC + NUTS notes) | 14.8 | ✅ | ✅ | N/A |
+| 5 | [bayesian-linear-regression](techniques/bayesian-linear-regression) (Normal-InvGamma conjugate + Zellner g-prior + posterior predictive) | 14.10, 14.11 | ✅ | ✅ | N/A |
+| 6 | [bayesian-hierarchical-models](techniques/bayesian-hierarchical-models) (partial pooling + 8-schools Gibbs) | 14.15, 14.16 | ✅ | ✅ | N/A |
+| 7 | [bayesian-glms](techniques/bayesian-glms) (logistic + Poisson via MH + Laplace-approx proposal) | 14.12, 14.13 | ✅ | ✅ | N/A |
+| 8 | [bayesian-model-comparison](techniques/bayesian-model-comparison) (WAIC + PSIS-LOO + DIC + Bayes-factor caveats) | 14.20, 14.21, 14.22 | ✅ | ✅ | N/A |
+| 9 | [posterior-predictive-checks](techniques/posterior-predictive-checks) (Bayesian p-values + test-statistic overlay) | 14.19 | ✅ | ✅ | N/A |
+| 10 | [variational-inference](techniques/variational-inference) (mean-field Gaussian VI with reparameterization gradient + CAVI) | 14.24, 14.25 | ✅ | ✅ | N/A |
+| 11 | [empirical-bayes](techniques/empirical-bayes) (Beta-Binomial EB + James-Stein estimator) | 14.17, 14.18 | ✅ | ✅ | N/A |
+| 12 | [credible-intervals-hpd](techniques/credible-intervals-hpd) (ETI + HPD + Kruschke ROPE decision) | 14.9, 14.23 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 14** — Bayesian inference is inherently sequential (sampling chains, ELBO ascent); Spark is used for pre-aggregation, not the fitter itself.
+
+### Batch 15 — Catch-up: missed subsections from earlier batches
+
+Twelve techniques deferred from Batches 11-12 (Chapters 12-13). Time-series-heavy: HMM, long-memory, wavelets, DTW, TS anomaly detection, forecast combination, hierarchical forecasting, stochastic volatility, decomposable / Prophet-like forecasting, count TS, TS features + classification, plus multivariate longitudinal.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [hmm](techniques/hmm) (categorical HMM: forward-backward + Viterbi + Baum-Welch EM) | 13.14 | ✅ | ✅ | N/A |
+| 2 | [arfima](techniques/arfima) (fractional differencing + GPH log-periodogram estimator) | 13.16 | ✅ | ✅ | N/A |
+| 3 | [wavelet-analysis](techniques/wavelet-analysis) (Haar + Daubechies-4 DWT + universal-threshold denoising) | 13.19 | ✅ | ✅ | N/A |
+| 4 | [dynamic-time-warping](techniques/dynamic-time-warping) (DTW distance + Sakoe-Chiba band + alignment path) | 13.22 | ✅ | ✅ | N/A |
+| 5 | [ts-anomaly-detection](techniques/ts-anomaly-detection) (Hampel + STL-residual + predictive-residual approaches) | 13.29 | ✅ | ✅ | N/A |
+| 6 | [forecast-combination](techniques/forecast-combination) (simple + trimmed mean + Bates-Granger + Granger-Ramanathan) | 13.30 | ✅ | ✅ | N/A |
+| 7 | [hierarchical-forecasting](techniques/hierarchical-forecasting) (bottom-up + top-down + MinT reconciliation) | 13.37 | ✅ | ✅ | N/A |
+| 8 | [stochastic-volatility](techniques/stochastic-volatility) (SV model: particle filter + Kalman-QMLE) | 13.40 | ✅ | ✅ | N/A |
+| 9 | [decomposable-forecasting](techniques/decomposable-forecasting) (Prophet-style trend + Fourier + holidays) | 13.21 | ✅ | ✅ | N/A |
+| 10 | [count-time-series](techniques/count-time-series) (Poisson-INAR(1) MoM + Poisson-INGARCH conditional MLE) | 13.32 | ✅ | ✅ | N/A |
+| 11 | [multivariate-longitudinal](techniques/multivariate-longitudinal) (two-stage bivariate random-intercept LMM) | 12.14 | ✅ | ✅ | N/A |
+| 12 | [ts-features-classification](techniques/ts-features-classification) (14 features + 1-NN DTW + 1-NN feature classifiers) | 13.39, 13.41 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 15** — all techniques are single-series / single-node procedures; distribute over series (per-key groupby) then fit on each executor.
+
+### Batch 16 — Catch-up: missed subsections across Chapters 5 / 8 / 10 / 11 / 12 / 14
+
+Twelve techniques spread across earlier chapters. Fills common regression flavors (Tobit, quantile, beta, penalized), exact 2×2 tests, refined bootstrap, joint longitudinal-survival, additive-hazards and cure survival, and two more Bayesian tools (ABC, BMA).
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [fisher-exact-barnard](techniques/fisher-exact-barnard) (Fisher's conditional + Barnard's unconditional exact 2x2 tests) | 8.4 | ✅ | ✅ | N/A |
+| 2 | [zero-inflated-regression](techniques/zero-inflated-regression) (ZIP + hurdle Poisson via mixture likelihood) | 5.24 | ✅ | ✅ | N/A |
+| 3 | [tobit-regression](techniques/tobit-regression) (left / right / two-sided Tobit MLE for censored outcomes) | 5.19 | ✅ | ✅ | N/A |
+| 4 | [quantile-regression](techniques/quantile-regression) (Koenker-Bassett pinball loss + smoothed BFGS + LP) | 5.15 | ✅ | ✅ | N/A |
+| 5 | [beta-regression](techniques/beta-regression) (Ferrari-Cribari-Neto Beta(mu, phi) MLE + variable-precision) | 5.20 | ✅ | ✅ | N/A |
+| 6 | [ridge-lasso-elasticnet](techniques/ridge-lasso-elasticnet) (closed-form ridge + coord-descent LASSO/EN + reg path) | 5.9, 5.10 | ✅ | ✅ | N/A |
+| 7 | [studentized-bootstrap](techniques/studentized-bootstrap) (bootstrap-t + nested inner-boot variance) | 10.4 | ✅ | ✅ | N/A |
+| 8 | [joint-longitudinal-survival](techniques/joint-longitudinal-survival) (two-stage LME BLUPs + time-varying Cox) | 12.10 | ✅ | ✅ | N/A |
+| 9 | [additive-aalen](techniques/additive-aalen) (Aalen additive-hazards least-squares increments + sup test) | 11.14 | ✅ | ✅ | N/A |
+| 10 | [cure-models](techniques/cure-models) (Berkson-Gage mixture cure with logistic pi + Weibull latency MLE) | 11.22 | ✅ | ✅ | N/A |
+| 11 | [abc-approximate-bayesian](techniques/abc-approximate-bayesian) (rejection ABC + Beaumont local-regression adjust) | 14.27 | ✅ | ✅ | N/A |
+| 12 | [bayesian-model-averaging](techniques/bayesian-model-averaging) (BIC-approx BMA + PIP over all 2^p subsets) | 14.26 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 16** — all techniques are single-node inferential procedures. For scale, split by group (`groupBy(...).applyInPandas(...)`) and fit on each executor.
+
+### Batch 17 — Catch-up: another 12 across Chapters 5 / 9 / 11 / 12 / 14
+
+Twelve more catch-ups. Focus on regression flavors that were missing (nonlinear, IV, Heckman, GAM, splines, sandwich SE), multivariate manifold and blind-source methods, competing-risks and trajectory-mixture models, plus two lighter Bayesian tools (Bayesian optimization + Laplace approximation).
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [nonlinear-regression](techniques/nonlinear-regression) (Levenberg-Marquardt NLS with numerical Jacobian) | 5.13 | ✅ | ✅ | N/A |
+| 2 | [iv-2sls](techniques/iv-2sls) (two-stage least squares + weak-instrument F) | 5.22 | ✅ | ✅ | N/A |
+| 3 | [heckman-selection](techniques/heckman-selection) (two-step probit + Mills-ratio-corrected outcome eq) | 5.21 | ✅ | ✅ | N/A |
+| 4 | [gam](techniques/gam) (penalized cubic-spline GAM with GCV smoothing) | 5.14 | ✅ | ✅ | N/A |
+| 5 | [splines-regression](techniques/splines-regression) (cubic + natural + B-spline basis regression) | 5.12 | ✅ | ✅ | N/A |
+| 6 | [bayesian-optimization](techniques/bayesian-optimization) (GP surrogate + Expected-Improvement acquisition) | 14.28 | ✅ | ✅ | N/A |
+| 7 | [kernel-pca](techniques/kernel-pca) (centered kernel-matrix eigendecomposition for nonlinear DR) | 9.10 | ✅ | ✅ | N/A |
+| 8 | [independent-components](techniques/independent-components) (FastICA blind-source separation) | 9.9 | ✅ | ✅ | N/A |
+| 9 | [sandwich-robust-se](techniques/sandwich-robust-se) (HC0/HC1/HC3 + cluster-robust SEs) | 5.7, 5.8 | ✅ | ✅ | N/A |
+| 10 | [fine-gray](techniques/fine-gray) (subdistribution hazards for competing risks) | 11.9 | ✅ | ✅ | N/A |
+| 11 | [latent-growth-mixture](techniques/latent-growth-mixture) (EM over K linear latent trajectories) | 12.13 | ✅ | ✅ | N/A |
+| 12 | [laplace-approximation](techniques/laplace-approximation) (Gaussian Laplace posterior + INLA notes) | 14.29 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 17** — all are single-node inferential procedures. Distribute by key when needed.
+
+### Batch 18 — Catch-up: another 12 across Chapters 3/5/10/11/12/14/15/16/18
+
+Twelve more spread across inference, regression, resampling, survival, panel/DiD, Bayesian, and design of experiments.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [multiple-testing-corrections](techniques/multiple-testing-corrections) (Bonferroni + Holm + Hochberg + BH + BY + Storey q) | 3.30, 4.24 | ✅ | ✅ | N/A |
+| 2 | [truncated-regression](techniques/truncated-regression) (truncated-normal MLE for selected samples) | 5.18 | ✅ | ✅ | N/A |
+| 3 | [fixed-effects-panel](techniques/fixed-effects-panel) (within + between + RE + Hausman FE-vs-RE test) | 12.31, 12.32 | ✅ | ✅ | N/A |
+| 4 | [diff-in-diff](techniques/diff-in-diff) (2x2 DID + two-way FE + staggered-adoption caveats) | 15.4 | ✅ | ✅ | N/A |
+| 5 | [conformal-prediction](techniques/conformal-prediction) (split-conformal intervals with any base learner) | 10.19 | ✅ | ✅ | N/A |
+| 6 | [harrell-c-index](techniques/harrell-c-index) (Harrell C + Uno IPCW C-index for survival discrimination) | 11.6 | ✅ | ✅ | N/A |
+| 7 | [multiple-imputation](techniques/multiple-imputation) (MICE chained equations + Rubin combining rules) | 18.6 | ✅ | ✅ | N/A |
+| 8 | [dirichlet-process-mixture](techniques/dirichlet-process-mixture) (CRP Gibbs on DP Gaussian mixture) | 14.31 | ✅ | ✅ | N/A |
+| 9 | [gaussian-process-regression](techniques/gaussian-process-regression) (RBF GP + marginal-likelihood hyperparameters) | 14.32 | ✅ | ✅ | N/A |
+| 10 | [response-surface](techniques/response-surface) (CCD + BBD + quadratic fit + stationary-point analysis) | 16.11 | ✅ | ✅ | N/A |
+| 11 | [latin-square-design](techniques/latin-square-design) (Latin-square randomization + row/col-blocked ANOVA) | 16.6 | ✅ | ✅ | N/A |
+| 12 | [mars](techniques/mars) (Multivariate Adaptive Regression Splines: hinge functions + GCV pruning) | 5.28 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 18** — all single-node inferential procedures. Distribute by key when needed.
+
+### Batch 19 — Catch-up: heavy on causal inference (Ch 15) plus post-hoc / non-parametric picks
+
+Twelve more, this one weighted toward Chapter 15 (Causal Inference) which had been untouched before Batch 18's diff-in-diff.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [tukey-hsd](techniques/tukey-hsd) (Tukey HSD + Dunnett + Scheffé post-hoc contrasts) | 6.9 | ✅ | ✅ | N/A |
+| 2 | [non-inferiority-test](techniques/non-inferiority-test) (means + Farrington-Manning proportions) | 17.7 | ✅ | ✅ | N/A |
+| 3 | [propensity-score-matching](techniques/propensity-score-matching) (1:1 NN PSM + ATT + SMD balance) | 15.6 | ✅ | ✅ | N/A |
+| 4 | [inverse-probability-weighting](techniques/inverse-probability-weighting) (IPTW + Hajek + AIPW) | 15.7 | ✅ | ✅ | N/A |
+| 5 | [regression-discontinuity](techniques/regression-discontinuity) (sharp + fuzzy local-linear RDD) | 15.9 | ✅ | ✅ | N/A |
+| 6 | [mediation-analysis](techniques/mediation-analysis) (Baron-Kenny + natural direct/indirect + bootstrap) | 15.15 | ✅ | ✅ | N/A |
+| 7 | [synthetic-control](techniques/synthetic-control) (Abadie-Diamond-Hainmueller simplex-weighted counterfactual) | 15.10 | ✅ | ✅ | N/A |
+| 8 | [isotonic-regression](techniques/isotonic-regression) (Pool-Adjacent-Violators monotone regression) | 5.29 | ✅ | ✅ | N/A |
+| 9 | [cochran-q](techniques/cochran-q) (Cochran's Q for repeated binary + post-hoc McNemar) | 8.10 | ✅ | ✅ | N/A |
+| 10 | [meta-analysis](techniques/meta-analysis) (fixed + DerSimonian-Laird random effects + I²) | 20.1 | ✅ | ✅ | N/A |
+| 11 | [runs-test](techniques/runs-test) (Wald-Wolfowitz + continuous-median dichotomization) | 7.15 | ✅ | ✅ | N/A |
+| 12 | [tmle-doubly-robust](techniques/tmle-doubly-robust) (TMLE + AIPW ATE + IC-based SE) | 15.11 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 19** — all single-node inferential procedures. Distribute by key when needed.
+
+Later batches can pick up the remaining chapters (SEM, IRT, spatial, network, text, ML, deep learning, ...).
 
 ---
 
