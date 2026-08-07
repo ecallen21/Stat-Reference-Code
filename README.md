@@ -940,6 +940,27 @@ Twelve techniques spread across earlier chapters. Fills common regression flavor
 
 **PySpark N/A across Batch 16** — all techniques are single-node inferential procedures. For scale, split by group (`groupBy(...).applyInPandas(...)`) and fit on each executor.
 
+### Batch 17 — Catch-up: another 12 across Chapters 5 / 9 / 11 / 12 / 14
+
+Twelve more catch-ups. Focus on regression flavors that were missing (nonlinear, IV, Heckman, GAM, splines, sandwich SE), multivariate manifold and blind-source methods, competing-risks and trajectory-mixture models, plus two lighter Bayesian tools (Bayesian optimization + Laplace approximation).
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [nonlinear-regression](techniques/nonlinear-regression) (Levenberg-Marquardt NLS with numerical Jacobian) | 5.13 | ✅ | ✅ | N/A |
+| 2 | [iv-2sls](techniques/iv-2sls) (two-stage least squares + weak-instrument F) | 5.22 | ✅ | ✅ | N/A |
+| 3 | [heckman-selection](techniques/heckman-selection) (two-step probit + Mills-ratio-corrected outcome eq) | 5.21 | ✅ | ✅ | N/A |
+| 4 | [gam](techniques/gam) (penalized cubic-spline GAM with GCV smoothing) | 5.14 | ✅ | ✅ | N/A |
+| 5 | [splines-regression](techniques/splines-regression) (cubic + natural + B-spline basis regression) | 5.12 | ✅ | ✅ | N/A |
+| 6 | [bayesian-optimization](techniques/bayesian-optimization) (GP surrogate + Expected-Improvement acquisition) | 14.28 | ✅ | ✅ | N/A |
+| 7 | [kernel-pca](techniques/kernel-pca) (centered kernel-matrix eigendecomposition for nonlinear DR) | 9.10 | ✅ | ✅ | N/A |
+| 8 | [independent-components](techniques/independent-components) (FastICA blind-source separation) | 9.9 | ✅ | ✅ | N/A |
+| 9 | [sandwich-robust-se](techniques/sandwich-robust-se) (HC0/HC1/HC3 + cluster-robust SEs) | 5.7, 5.8 | ✅ | ✅ | N/A |
+| 10 | [fine-gray](techniques/fine-gray) (subdistribution hazards for competing risks) | 11.9 | ✅ | ✅ | N/A |
+| 11 | [latent-growth-mixture](techniques/latent-growth-mixture) (EM over K linear latent trajectories) | 12.13 | ✅ | ✅ | N/A |
+| 12 | [laplace-approximation](techniques/laplace-approximation) (Gaussian Laplace posterior + INLA notes) | 14.29 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 17** — all are single-node inferential procedures. Distribute by key when needed.
+
 Later batches will cover the remaining chapters (Causal Inference, ML, ...).
 
 ---
