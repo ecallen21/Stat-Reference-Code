@@ -982,7 +982,28 @@ Twelve more spread across inference, regression, resampling, survival, panel/DiD
 
 **PySpark N/A across Batch 18** — all single-node inferential procedures. Distribute by key when needed.
 
-Later batches will cover the remaining chapters (Causal Inference beyond DiD, ML, SEM, missing-data extensions, ...).
+### Batch 19 — Catch-up: heavy on causal inference (Ch 15) plus post-hoc / non-parametric picks
+
+Twelve more, this one weighted toward Chapter 15 (Causal Inference) which had been untouched before Batch 18's diff-in-diff.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [tukey-hsd](techniques/tukey-hsd) (Tukey HSD + Dunnett + Scheffé post-hoc contrasts) | 6.9 | ✅ | ✅ | N/A |
+| 2 | [non-inferiority-test](techniques/non-inferiority-test) (means + Farrington-Manning proportions) | 17.7 | ✅ | ✅ | N/A |
+| 3 | [propensity-score-matching](techniques/propensity-score-matching) (1:1 NN PSM + ATT + SMD balance) | 15.6 | ✅ | ✅ | N/A |
+| 4 | [inverse-probability-weighting](techniques/inverse-probability-weighting) (IPTW + Hajek + AIPW) | 15.7 | ✅ | ✅ | N/A |
+| 5 | [regression-discontinuity](techniques/regression-discontinuity) (sharp + fuzzy local-linear RDD) | 15.9 | ✅ | ✅ | N/A |
+| 6 | [mediation-analysis](techniques/mediation-analysis) (Baron-Kenny + natural direct/indirect + bootstrap) | 15.15 | ✅ | ✅ | N/A |
+| 7 | [synthetic-control](techniques/synthetic-control) (Abadie-Diamond-Hainmueller simplex-weighted counterfactual) | 15.10 | ✅ | ✅ | N/A |
+| 8 | [isotonic-regression](techniques/isotonic-regression) (Pool-Adjacent-Violators monotone regression) | 5.29 | ✅ | ✅ | N/A |
+| 9 | [cochran-q](techniques/cochran-q) (Cochran's Q for repeated binary + post-hoc McNemar) | 8.10 | ✅ | ✅ | N/A |
+| 10 | [meta-analysis](techniques/meta-analysis) (fixed + DerSimonian-Laird random effects + I²) | 20.1 | ✅ | ✅ | N/A |
+| 11 | [runs-test](techniques/runs-test) (Wald-Wolfowitz + continuous-median dichotomization) | 7.15 | ✅ | ✅ | N/A |
+| 12 | [tmle-doubly-robust](techniques/tmle-doubly-robust) (TMLE + AIPW ATE + IC-based SE) | 15.11 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 19** — all single-node inferential procedures. Distribute by key when needed.
+
+Later batches can pick up the remaining chapters (SEM, IRT, spatial, network, text, ML, deep learning, ...).
 
 ---
 
