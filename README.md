@@ -1003,7 +1003,28 @@ Twelve more, this one weighted toward Chapter 15 (Causal Inference) which had be
 
 **PySpark N/A across Batch 19** — all single-node inferential procedures. Distribute by key when needed.
 
-Later batches can pick up the remaining chapters (SEM, IRT, spatial, network, text, ML, deep learning, ...).
+### Batch 20 — Catch-up: SEM starters + ROC + sensitivity + factorial + more
+
+Twelve techniques spanning SEM (CFA, path), diagnostic tests (ROC), causal sensitivity (E-value), experimental design (fractional factorial), ordinal effect size (Cliff's delta), high-p regression (PLS), covariate-adjusted ANOVA, embeddings (t-SNE/UMAP), fractional response, multivariate multiple regression, and Bayesian A/B.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [cfa-confirmatory-factor](techniques/cfa-confirmatory-factor) (ML CFA + chi2 + CFI + RMSEA + SRMR) | 19.5 | ✅ | ✅ | N/A |
+| 2 | [path-analysis](techniques/path-analysis) (observed-variable SEM + total-effect calculator) | 19.4 | ✅ | ✅ | N/A |
+| 3 | [roc-auc-analysis](techniques/roc-auc-analysis) (ROC + Mann-Whitney AUC + Hanley-McNeil CI + Youden J + partial AUC) | 21.5 | ✅ | ✅ | N/A |
+| 4 | [sensitivity-e-value](techniques/sensitivity-e-value) (VanderWeele-Ding E-value + Rosenbaum bounds notes) | 15.14 | ✅ | ✅ | N/A |
+| 5 | [fractional-factorial](techniques/fractional-factorial) (2^(k-p) generators + alias structure + resolution) | 16.4 | ✅ | ✅ | N/A |
+| 6 | [cliff-delta](techniques/cliff-delta) (nonparametric ordinal effect size + Cliff 1993 CI) | 7.16 | ✅ | ✅ | N/A |
+| 7 | [partial-least-squares](techniques/partial-least-squares) (NIPALS PLS1 + CV component selection) | 5.31 | ✅ | ✅ | N/A |
+| 8 | [ancova](techniques/ancova) (ANCOVA + parallel-slopes test + adjusted means) | 6.16 | ✅ | ✅ | N/A |
+| 9 | [tsne-umap](techniques/tsne-umap) (nonlinear DR for visualization) | 26.5 | ✅ | ✅ | N/A |
+| 10 | [fractional-logit](techniques/fractional-logit) (Papke-Wooldridge quasi-MLE + HC0 SEs) | 5.26 | ✅ | ✅ | N/A |
+| 11 | [multivariate-multiple-regression](techniques/multivariate-multiple-regression) (joint OLS + Wilks Λ) | 9.20 | ✅ | ✅ | N/A |
+| 12 | [bayesian-ab-testing](techniques/bayesian-ab-testing) (Beta-Binomial + P(B>A) + expected loss) | 14.33 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 20** — all single-node inferential procedures. Distribute by key when needed.
+
+Later batches can pick up the remaining chapters (IRT, spatial, network, text, ML, deep learning, ...).
 
 ---
 
