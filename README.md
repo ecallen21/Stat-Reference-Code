@@ -1024,7 +1024,28 @@ Twelve techniques spanning SEM (CFA, path), diagnostic tests (ROC), causal sensi
 
 **PySpark N/A across Batch 20** — all single-node inferential procedures. Distribute by key when needed.
 
-Later batches can pick up the remaining chapters (IRT, spatial, network, text, ML, deep learning, ...).
+### Batch 21 — Chapter 26: Machine Learning basics
+
+Twelve foundational ML techniques.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [decision-tree](techniques/decision-tree) (CART regression + classification) | 26.6 | ✅ | ✅ | N/A |
+| 2 | [random-forest](techniques/random-forest) (bagged trees + OOB) | 26.7 | ✅ | ✅ | N/A |
+| 3 | [gradient-boosting](techniques/gradient-boosting) (L2 GBM + shrinkage) | 26.8 | ✅ | ✅ | N/A |
+| 4 | [svm-classifier](techniques/svm-classifier) (linear Pegasos + RBF via sklearn) | 26.9 | ✅ | ✅ | N/A |
+| 5 | [naive-bayes](techniques/naive-bayes) (Gaussian + Multinomial + Laplace) | 26.10 | ✅ | ✅ | N/A |
+| 6 | [knn-classifier](techniques/knn-classifier) (kNN with CV k selection) | 26.11 | ✅ | ✅ | N/A |
+| 7 | [neural-network-mlp](techniques/neural-network-mlp) (MLP + backprop from scratch) | 27.1 | ✅ | ✅ | N/A |
+| 8 | [model-stacking](techniques/model-stacking) (K-fold OOF + meta learner) | 26.14 | ✅ | ✅ | N/A |
+| 9 | [calibration-scaling](techniques/calibration-scaling) (reliability + Platt + isotonic + Brier / ECE) | 26.15 | ✅ | ✅ | N/A |
+| 10 | [feature-importance](techniques/feature-importance) (permutation + PDP + ICE) | 26.16 | ✅ | ✅ | N/A |
+| 11 | [class-imbalance](techniques/class-imbalance) (SMOTE + class weighting + threshold tuning) | 26.17 | ✅ | ✅ | N/A |
+| 12 | [isolation-forest-anomaly](techniques/isolation-forest-anomaly) (Isolation Forest + OC-SVM + Elliptic Envelope) | 26.18 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 21** — single-node from-scratch. MLlib has distributed versions of decision-tree / RF / GBM / kNN / logistic / NB — swap in `pyspark.ml` for scale.
+
+Later batches: IRT, spatial, network, text analytics, deep-learning specialty models.
 
 ---
 
