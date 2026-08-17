@@ -1045,7 +1045,28 @@ Twelve foundational ML techniques.
 
 **PySpark N/A across Batch 21** — single-node from-scratch. MLlib has distributed versions of decision-tree / RF / GBM / kNN / logistic / NB — swap in `pyspark.ml` for scale.
 
-Later batches: IRT, spatial, network, text analytics, deep-learning specialty models.
+### Batch 22 — Chapter 22: IRT / Psychometrics
+
+Twelve psychometric techniques.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [rasch-model](techniques/rasch-model) (1PL joint MLE) | 22.5 | ✅ | ✅ | N/A |
+| 2 | [two-three-pl-irt](techniques/two-three-pl-irt) (2PL / 3PL Marginal MLE + Gauss-Hermite + EAP theta) | 22.6 | ✅ | ✅ | N/A |
+| 3 | [graded-response-model](techniques/graded-response-model) (Samejima GRM MML) | 22.7 | ✅ | ✅ | N/A |
+| 4 | [partial-credit-model](techniques/partial-credit-model) (Masters PCM + Muraki GPCM) | 22.8 | ✅ | ✅ | N/A |
+| 5 | [cronbach-alpha](techniques/cronbach-alpha) (alpha + standardized alpha + omega + alpha-if-deleted) | 22.3 | ✅ | ✅ | N/A |
+| 6 | [spearman-brown](techniques/spearman-brown) (split-half + Spearman-Brown prophecy) | 22.4 | ✅ | ✅ | N/A |
+| 7 | [generalizability-theory](techniques/generalizability-theory) (G-study + D-study + G/Phi coefficients) | 22.10 | ✅ | ✅ | N/A |
+| 8 | [item-analysis](techniques/item-analysis) (difficulty + discrimination + point-biserial) | 22.2 | ✅ | ✅ | N/A |
+| 9 | [dif-mantel-haenszel](techniques/dif-mantel-haenszel) (MH + logistic uniform / non-uniform DIF) | 22.11 | ✅ | ✅ | N/A |
+| 10 | [test-equating](techniques/test-equating) (mean + linear + equipercentile) | 22.12 | ✅ | ✅ | N/A |
+| 11 | [person-fit-statistics](techniques/person-fit-statistics) (l_z aberrant-pattern detection) | 22.13 | ✅ | ✅ | N/A |
+| 12 | [item-response-info](techniques/item-response-info) (item + test information + adaptive next-item) | 22.14 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 22** — psychometric fits are single-node maximum-likelihood; use Spark to distribute simulation studies or cross-fold validation.
+
+Later batches: spatial statistics, network analysis, text analytics, deep-learning specialty models.
 
 ---
 
