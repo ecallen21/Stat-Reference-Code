@@ -1066,7 +1066,28 @@ Twelve psychometric techniques.
 
 **PySpark N/A across Batch 22** — psychometric fits are single-node maximum-likelihood; use Spark to distribute simulation studies or cross-fold validation.
 
-Later batches: spatial statistics, network analysis, text analytics, deep-learning specialty models.
+### Batch 23 — Chapter 23: Spatial Statistics
+
+Twelve spatial-statistics techniques covering areal, geostatistical, and point-pattern methods.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [spatial-weights-matrix](techniques/spatial-weights-matrix) (contiguity + distance-band + kNN + kernel W; row-standardization) | 23.1 | ✅ | ✅ | N/A |
+| 2 | [morans-i-gearys-c](techniques/morans-i-gearys-c) (global Moran's I + Geary's C + permutation p) | 23.2, 23.3 | ✅ | ✅ | N/A |
+| 3 | [local-moran-lisa](techniques/local-moran-lisa) (Anselin LISA + HH/LL/HL/LH typology + permutation p) | 23.4 | ✅ | ✅ | N/A |
+| 4 | [variogram-modeling](techniques/variogram-modeling) (empirical semivariogram + spherical / exp / Gaussian fits) | 23.5, 23.6 | ✅ | ✅ | N/A |
+| 5 | [ordinary-kriging](techniques/ordinary-kriging) (BLUP via kriging system with variogram model) | 23.7 | ✅ | ✅ | N/A |
+| 6 | [inverse-distance-weighting](techniques/inverse-distance-weighting) (Shepard IDW + power/k options) | 23.8 | ✅ | ✅ | N/A |
+| 7 | [spatial-autoregressive-sar](techniques/spatial-autoregressive-sar) (SAR lag + SAR error MLE via concentrated log-lik) | 23.9 | ✅ | ✅ | N/A |
+| 8 | [conditional-autoregressive-car](techniques/conditional-autoregressive-car) (CAR precision matrix + ICAR penalty; BYM notes) | 23.10 | ✅ | ✅ | N/A |
+| 9 | [geographically-weighted-regression](techniques/geographically-weighted-regression) (GWR Gaussian kernel + LOO CV bandwidth) | 23.11 | ✅ | ✅ | N/A |
+| 10 | [ripleys-k-point-pattern](techniques/ripleys-k-point-pattern) (K̂ / L̂ with border edge correction + CSR envelope) | 23.12 | ✅ | ✅ | N/A |
+| 11 | [spatial-scan-cluster](techniques/spatial-scan-cluster) (Kulldorff Poisson scan + MC p-value) | 23.13 | ✅ | ✅ | N/A |
+| 12 | [kernel-intensity-2d](techniques/kernel-intensity-2d) (2D Gaussian intensity + Diggle edge correction) | 23.14 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 23** — spatial estimators need pairwise distance / neighbour structure that isn't well served by row-parallel MLlib operators; use Spark to distribute per-region fits (GWR one-per-location) but keep the estimator on the driver.
+
+Later batches: network analysis, text analytics, deep-learning specialty models.
 
 ---
 
