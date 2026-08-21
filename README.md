@@ -1003,7 +1003,242 @@ Twelve more, this one weighted toward Chapter 15 (Causal Inference) which had be
 
 **PySpark N/A across Batch 19** — all single-node inferential procedures. Distribute by key when needed.
 
-Later batches can pick up the remaining chapters (SEM, IRT, spatial, network, text, ML, deep learning, ...).
+### Batch 20 — Catch-up: SEM starters + ROC + sensitivity + factorial + more
+
+Twelve techniques spanning SEM (CFA, path), diagnostic tests (ROC), causal sensitivity (E-value), experimental design (fractional factorial), ordinal effect size (Cliff's delta), high-p regression (PLS), covariate-adjusted ANOVA, embeddings (t-SNE/UMAP), fractional response, multivariate multiple regression, and Bayesian A/B.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [cfa-confirmatory-factor](techniques/cfa-confirmatory-factor) (ML CFA + chi2 + CFI + RMSEA + SRMR) | 19.5 | ✅ | ✅ | N/A |
+| 2 | [path-analysis](techniques/path-analysis) (observed-variable SEM + total-effect calculator) | 19.4 | ✅ | ✅ | N/A |
+| 3 | [roc-auc-analysis](techniques/roc-auc-analysis) (ROC + Mann-Whitney AUC + Hanley-McNeil CI + Youden J + partial AUC) | 21.5 | ✅ | ✅ | N/A |
+| 4 | [sensitivity-e-value](techniques/sensitivity-e-value) (VanderWeele-Ding E-value + Rosenbaum bounds notes) | 15.14 | ✅ | ✅ | N/A |
+| 5 | [fractional-factorial](techniques/fractional-factorial) (2^(k-p) generators + alias structure + resolution) | 16.4 | ✅ | ✅ | N/A |
+| 6 | [cliff-delta](techniques/cliff-delta) (nonparametric ordinal effect size + Cliff 1993 CI) | 7.16 | ✅ | ✅ | N/A |
+| 7 | [partial-least-squares](techniques/partial-least-squares) (NIPALS PLS1 + CV component selection) | 5.31 | ✅ | ✅ | N/A |
+| 8 | [ancova](techniques/ancova) (ANCOVA + parallel-slopes test + adjusted means) | 6.16 | ✅ | ✅ | N/A |
+| 9 | [tsne-umap](techniques/tsne-umap) (nonlinear DR for visualization) | 26.5 | ✅ | ✅ | N/A |
+| 10 | [fractional-logit](techniques/fractional-logit) (Papke-Wooldridge quasi-MLE + HC0 SEs) | 5.26 | ✅ | ✅ | N/A |
+| 11 | [multivariate-multiple-regression](techniques/multivariate-multiple-regression) (joint OLS + Wilks Λ) | 9.20 | ✅ | ✅ | N/A |
+| 12 | [bayesian-ab-testing](techniques/bayesian-ab-testing) (Beta-Binomial + P(B>A) + expected loss) | 14.33 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 20** — all single-node inferential procedures. Distribute by key when needed.
+
+### Batch 21 — Chapter 26: Machine Learning basics
+
+Twelve foundational ML techniques.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [decision-tree](techniques/decision-tree) (CART regression + classification) | 26.6 | ✅ | ✅ | N/A |
+| 2 | [random-forest](techniques/random-forest) (bagged trees + OOB) | 26.7 | ✅ | ✅ | N/A |
+| 3 | [gradient-boosting](techniques/gradient-boosting) (L2 GBM + shrinkage) | 26.8 | ✅ | ✅ | N/A |
+| 4 | [svm-classifier](techniques/svm-classifier) (linear Pegasos + RBF via sklearn) | 26.9 | ✅ | ✅ | N/A |
+| 5 | [naive-bayes](techniques/naive-bayes) (Gaussian + Multinomial + Laplace) | 26.10 | ✅ | ✅ | N/A |
+| 6 | [knn-classifier](techniques/knn-classifier) (kNN with CV k selection) | 26.11 | ✅ | ✅ | N/A |
+| 7 | [neural-network-mlp](techniques/neural-network-mlp) (MLP + backprop from scratch) | 27.1 | ✅ | ✅ | N/A |
+| 8 | [model-stacking](techniques/model-stacking) (K-fold OOF + meta learner) | 26.14 | ✅ | ✅ | N/A |
+| 9 | [calibration-scaling](techniques/calibration-scaling) (reliability + Platt + isotonic + Brier / ECE) | 26.15 | ✅ | ✅ | N/A |
+| 10 | [feature-importance](techniques/feature-importance) (permutation + PDP + ICE) | 26.16 | ✅ | ✅ | N/A |
+| 11 | [class-imbalance](techniques/class-imbalance) (SMOTE + class weighting + threshold tuning) | 26.17 | ✅ | ✅ | N/A |
+| 12 | [isolation-forest-anomaly](techniques/isolation-forest-anomaly) (Isolation Forest + OC-SVM + Elliptic Envelope) | 26.18 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 21** — single-node from-scratch. MLlib has distributed versions of decision-tree / RF / GBM / kNN / logistic / NB — swap in `pyspark.ml` for scale.
+
+### Batch 22 — Chapter 22: IRT / Psychometrics
+
+Twelve psychometric techniques.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [rasch-model](techniques/rasch-model) (1PL joint MLE) | 22.5 | ✅ | ✅ | N/A |
+| 2 | [two-three-pl-irt](techniques/two-three-pl-irt) (2PL / 3PL Marginal MLE + Gauss-Hermite + EAP theta) | 22.6 | ✅ | ✅ | N/A |
+| 3 | [graded-response-model](techniques/graded-response-model) (Samejima GRM MML) | 22.7 | ✅ | ✅ | N/A |
+| 4 | [partial-credit-model](techniques/partial-credit-model) (Masters PCM + Muraki GPCM) | 22.8 | ✅ | ✅ | N/A |
+| 5 | [cronbach-alpha](techniques/cronbach-alpha) (alpha + standardized alpha + omega + alpha-if-deleted) | 22.3 | ✅ | ✅ | N/A |
+| 6 | [spearman-brown](techniques/spearman-brown) (split-half + Spearman-Brown prophecy) | 22.4 | ✅ | ✅ | N/A |
+| 7 | [generalizability-theory](techniques/generalizability-theory) (G-study + D-study + G/Phi coefficients) | 22.10 | ✅ | ✅ | N/A |
+| 8 | [item-analysis](techniques/item-analysis) (difficulty + discrimination + point-biserial) | 22.2 | ✅ | ✅ | N/A |
+| 9 | [dif-mantel-haenszel](techniques/dif-mantel-haenszel) (MH + logistic uniform / non-uniform DIF) | 22.11 | ✅ | ✅ | N/A |
+| 10 | [test-equating](techniques/test-equating) (mean + linear + equipercentile) | 22.12 | ✅ | ✅ | N/A |
+| 11 | [person-fit-statistics](techniques/person-fit-statistics) (l_z aberrant-pattern detection) | 22.13 | ✅ | ✅ | N/A |
+| 12 | [item-response-info](techniques/item-response-info) (item + test information + adaptive next-item) | 22.14 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 22** — psychometric fits are single-node maximum-likelihood; use Spark to distribute simulation studies or cross-fold validation.
+
+### Batch 23 — Chapter 23: Spatial Statistics
+
+Twelve spatial-statistics techniques covering areal, geostatistical, and point-pattern methods.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [spatial-weights-matrix](techniques/spatial-weights-matrix) (contiguity + distance-band + kNN + kernel W; row-standardization) | 23.1 | ✅ | ✅ | N/A |
+| 2 | [morans-i-gearys-c](techniques/morans-i-gearys-c) (global Moran's I + Geary's C + permutation p) | 23.2, 23.3 | ✅ | ✅ | N/A |
+| 3 | [local-moran-lisa](techniques/local-moran-lisa) (Anselin LISA + HH/LL/HL/LH typology + permutation p) | 23.4 | ✅ | ✅ | N/A |
+| 4 | [variogram-modeling](techniques/variogram-modeling) (empirical semivariogram + spherical / exp / Gaussian fits) | 23.5, 23.6 | ✅ | ✅ | N/A |
+| 5 | [ordinary-kriging](techniques/ordinary-kriging) (BLUP via kriging system with variogram model) | 23.7 | ✅ | ✅ | N/A |
+| 6 | [inverse-distance-weighting](techniques/inverse-distance-weighting) (Shepard IDW + power/k options) | 23.8 | ✅ | ✅ | N/A |
+| 7 | [spatial-autoregressive-sar](techniques/spatial-autoregressive-sar) (SAR lag + SAR error MLE via concentrated log-lik) | 23.9 | ✅ | ✅ | N/A |
+| 8 | [conditional-autoregressive-car](techniques/conditional-autoregressive-car) (CAR precision matrix + ICAR penalty; BYM notes) | 23.10 | ✅ | ✅ | N/A |
+| 9 | [geographically-weighted-regression](techniques/geographically-weighted-regression) (GWR Gaussian kernel + LOO CV bandwidth) | 23.11 | ✅ | ✅ | N/A |
+| 10 | [ripleys-k-point-pattern](techniques/ripleys-k-point-pattern) (K̂ / L̂ with border edge correction + CSR envelope) | 23.12 | ✅ | ✅ | N/A |
+| 11 | [spatial-scan-cluster](techniques/spatial-scan-cluster) (Kulldorff Poisson scan + MC p-value) | 23.13 | ✅ | ✅ | N/A |
+| 12 | [kernel-intensity-2d](techniques/kernel-intensity-2d) (2D Gaussian intensity + Diggle edge correction) | 23.14 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 23** — spatial estimators need pairwise distance / neighbour structure that isn't well served by row-parallel MLlib operators; use Spark to distribute per-region fits (GWR one-per-location) but keep the estimator on the driver.
+
+### Batch 24 — Chapter 24: Network / Graph Analysis
+
+Twelve techniques covering descriptive, generative, and inferential graph methods.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [graph-descriptives](techniques/graph-descriptives) (density, degree, clustering, transitivity, assortativity, path length, components) | 24.1 | ✅ | ✅ | N/A |
+| 2 | [centrality-measures](techniques/centrality-measures) (degree, closeness, betweenness (Brandes), eigenvector, Katz, PageRank) | 24.2 | ✅ | ✅ | N/A |
+| 3 | [community-detection](techniques/community-detection) (modularity + greedy agglomerative + spectral 2-way) | 24.3 | ✅ | ✅ | N/A |
+| 4 | [random-graph-models](techniques/random-graph-models) (Erdős-Rényi + Watts-Strogatz + Barabási-Albert) | 24.4 | ✅ | ✅ | N/A |
+| 5 | [ergm-exponential-random-graph](techniques/ergm-exponential-random-graph) (pseudo-likelihood MLE for edges + triangles) | 24.5 | ✅ | ✅ | N/A |
+| 6 | [stochastic-block-model](techniques/stochastic-block-model) (SBM hard EM + spectral warm start; block recovery) | 24.6 | ✅ | ✅ | N/A |
+| 7 | [link-prediction](techniques/link-prediction) (common / Jaccard / Adamic-Adar / RA / preferential + AUC eval) | 24.7 | ✅ | ✅ | N/A |
+| 8 | [network-diffusion](techniques/network-diffusion) (SI / SIR / independent cascade / linear threshold) | 24.8 | ✅ | ✅ | N/A |
+| 9 | [graph-embedding-spectral](techniques/graph-embedding-spectral) (Laplacian eigenmaps + adjacency spectral embedding) | 24.9 | ✅ | ✅ | N/A |
+| 10 | [bipartite-projection](techniques/bipartite-projection) (weighted + Newman projections + Barber bipartite modularity) | 24.10 | ✅ | ✅ | N/A |
+| 11 | [network-motifs](techniques/network-motifs) (3-node census + Z-scores vs degree-preserving null) | 24.11 | ✅ | ✅ | N/A |
+| 12 | [graph-comparison](techniques/graph-comparison) (spectral distance + feature signature + DeltaCon) | 24.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 24** — graph analytics on Spark uses GraphFrames / GraphX, a separate API optimised for pregel-style aggregations. For classical descriptive / inferential graph tasks the single-node NetworkX / igraph implementations are the right tool; use Spark to distribute per-graph fits across many small graphs, not per-node aggregations on a single large graph.
+
+### Batch 25 — Cross-chapter cleanup (Chs 21–24)
+
+Twelve subsections that Batches 21–24 skipped — three per chapter.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [one-class-svm](techniques/one-class-svm) (Schölkopf ν-OC-SVM + KDE-baseline anomaly detector) | 21 | ✅ | ✅ | N/A |
+| 2 | [shap-values](techniques/shap-values) (exact Shapley enumeration + linear-model analytical check) | 21 | ✅ | ✅ | N/A |
+| 3 | [online-learning-sgd](techniques/online-learning-sgd) (squared / log / hinge / passive-aggressive streaming) | 21 | ✅ | ✅ | N/A |
+| 4 | [mirt-multidimensional-irt](techniques/mirt-multidimensional-irt) (compensatory M2PL via PCA warm-start + EAP quadrature) | 22 | ✅ | ✅ | N/A |
+| 5 | [bayesian-irt](techniques/bayesian-irt) (2PL MAP with priors, coordinate-ascent Newton) | 22 | ✅ | ✅ | N/A |
+| 6 | [nominal-response-model](techniques/nominal-response-model) (Bock NRM for unordered polytomous items via MML + quadrature) | 22 | ✅ | ✅ | N/A |
+| 7 | [universal-kriging](techniques/universal-kriging) (drift kriging with trend covariates; augmented kriging system) | 23 | ✅ | ✅ | N/A |
+| 8 | [getis-ord-g-statistic](techniques/getis-ord-g-statistic) (Gi* hot-spot statistic + asymptotic z + permutation p) | 23 | ✅ | ✅ | N/A |
+| 9 | [spatial-glm](techniques/spatial-glm) (Poisson-CAR with PIRLS + CAR quadratic penalty) | 23 | ✅ | ✅ | N/A |
+| 10 | [hits-authority-hub](techniques/hits-authority-hub) (Kleinberg HITS via power iteration) | 24 | ✅ | ✅ | N/A |
+| 11 | [k-core-decomposition](techniques/k-core-decomposition) (Batagelj-Zaversnik coreness + k-truss) | 24 | ✅ | ✅ | N/A |
+| 12 | [temporal-networks](techniques/temporal-networks) (snapshots + earliest-arrival BFS + temporal reachability) | 24 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 25** — mirrors the parents (single-node inferential procedures or specialised graph algorithms).
+
+### Batch 26 — Cross-chapter cleanup (Chs 3, 13, 15, 16, 17, 18, 19, 20)
+
+Twelve techniques closing the substantive gaps in causal inference,
+SEM, diagnostic modelling, missing-data sensitivity, robust regression,
+experimental design, sampling, and functional TS.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [mendelian-randomization](techniques/mendelian-randomization) (IVW + MR-Egger + weighted median) | 15 | ✅ | ✅ | N/A |
+| 2 | [front-door-criterion](techniques/front-door-criterion) (Pearl front-door adjustment for unmeasured confounding via a mediator) | 15 | ✅ | ✅ | N/A |
+| 3 | [pattern-mixture-model](techniques/pattern-mixture-model) (MNAR delta-adjustment MI for tipping-point sensitivity) | 16 | ✅ | ✅ | N/A |
+| 4 | [mm-estimators-robust](techniques/mm-estimators-robust) (Yohai MM via FAST-S subset init + biweight M-step) | 17 | ✅ | ✅ | N/A |
+| 5 | [split-plot-design](techniques/split-plot-design) (balanced split-plot ANOVA with two error strata) | 18 | ✅ | ✅ | N/A |
+| 6 | [crossover-design](techniques/crossover-design) (Grizzle 2×2 crossover: treatment / period / carryover) | 18 | ✅ | ✅ | N/A |
+| 7 | [measurement-invariance](techniques/measurement-invariance) (configural vs strict CFA across groups; nested LR test) | 19 | ✅ | ✅ | N/A |
+| 8 | [latent-class-analysis](techniques/latent-class-analysis) (LCA EM + BIC / AIC selection of K) | 19 | ✅ | ✅ | N/A |
+| 9 | [nri-idi](techniques/nri-idi) (Net Reclassification + Integrated Discrimination Improvement) | 20 | ✅ | ✅ | N/A |
+| 10 | [decision-curve-analysis](techniques/decision-curve-analysis) (Vickers-Elkin net-benefit across thresholds) | 20 | ✅ | ✅ | N/A |
+| 11 | [two-stage-cluster-sampling](techniques/two-stage-cluster-sampling) (two-stage SRS mean + variance decomposition + DEFF) | 3 | ✅ | ✅ | N/A |
+| 12 | [functional-time-series](techniques/functional-time-series) (FPCA + AR on scores; Hyndman-Ullah 2007) | 13 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 26** — mirrors the parent chapters.
+
+### Batch 27 — Chapter 25: Text Analytics / NLP
+
+Twelve classical text-analytics techniques covering preprocessing,
+representation, modelling, and evaluation.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [text-preprocessing](techniques/text-preprocessing) (tokenise + stopwords + stem + lemma) | 25.1 | ✅ | ✅ | N/A |
+| 2 | [tfidf-bm25](techniques/tfidf-bm25) (TF-IDF vectoriser + Okapi BM25 ranking) | 25.2 | ✅ | ✅ | N/A |
+| 3 | [word-embeddings](techniques/word-embeddings) (Skip-Gram with Negative Sampling from scratch) | 25.3 | ✅ | ✅ | N/A |
+| 4 | [topic-modeling-lda](techniques/topic-modeling-lda) (LDA via collapsed Gibbs sampling) | 25.4 | ✅ | ✅ | N/A |
+| 5 | [document-clustering](techniques/document-clustering) (spherical k-means on TF-IDF + purity / NMI / ARI) | 25.5 | ✅ | ✅ | N/A |
+| 6 | [text-classification](techniques/text-classification) (multinomial NB + softmax logistic on TF-IDF) | 25.6 | ✅ | ✅ | N/A |
+| 7 | [sentiment-analysis](techniques/sentiment-analysis) (VADER-style lexicon + supervised LR) | 25.7 | ✅ | ✅ | N/A |
+| 8 | [named-entity-recognition](techniques/named-entity-recognition) (HMM NER with Viterbi + entity-span F1) | 25.8 | ✅ | ✅ | N/A |
+| 9 | [string-similarity](techniques/string-similarity) (Levenshtein / Damerau / Jaro / JW / Jaccard / cosine) | 25.9 | ✅ | ✅ | N/A |
+| 10 | [language-detection](techniques/language-detection) (Cavnar-Trenkle char-n-gram out-of-place) | 25.10 | ✅ | ✅ | N/A |
+| 11 | [topic-coherence-eval](techniques/topic-coherence-eval) (UMass + UCI-PMI + perplexity) | 25.11 | ✅ | ✅ | N/A |
+| 12 | [textrank-summarization](techniques/textrank-summarization) (PageRank on sentence-similarity graph) | 25.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 27** — text analytics on Spark uses MLlib's `Tokenizer`, `StopWordsRemover`, `HashingTF / IDF`, `Word2Vec`, `LDA`, `NaiveBayes`, and `CountVectorizer`; swap those in for corpus-scale pipelines. This batch's from-scratch demos live on the driver and are algorithmically identical.
+
+### Batch 28 — Chapter 27: Deep Learning
+
+Twelve neural-network architectures and training techniques, implemented
+from scratch in numpy for pedagogy.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [deep-mlp-backprop](techniques/deep-mlp-backprop) (deep ReLU MLP + softmax-CE + manual backprop) | 27.1 | ✅ | ✅ | N/A |
+| 2 | [convolutional-nn](techniques/convolutional-nn) (2-D Conv + max-pool + backward pass) | 27.2 | ✅ | ✅ | N/A |
+| 3 | [recurrent-nn](techniques/recurrent-nn) (Elman RNN + BPTT + gradient clipping) | 27.3 | ✅ | ✅ | N/A |
+| 4 | [lstm-gru](techniques/lstm-gru) (LSTM + GRU forward; contrast with RNN vanishing) | 27.4 | ✅ | ✅ | N/A |
+| 5 | [attention-mechanism](techniques/attention-mechanism) (scaled dot-product + multi-head + causal mask) | 27.5 | ✅ | ✅ | N/A |
+| 6 | [transformer-encoder](techniques/transformer-encoder) (pre-norm block + sinusoidal PE + FFN) | 27.6 | ✅ | ✅ | N/A |
+| 7 | [autoencoder](techniques/autoencoder) (vanilla + denoising AE with manual backprop) | 27.7 | ✅ | ✅ | N/A |
+| 8 | [variational-autoencoder](techniques/variational-autoencoder) (Kingma-Welling VAE + reparameterisation) | 27.8 | ✅ | ✅ | N/A |
+| 9 | [gan-training](techniques/gan-training) (Goodfellow GAN on 2-D data) | 27.9 | ✅ | ✅ | N/A |
+| 10 | [dropout-batchnorm](techniques/dropout-batchnorm) (inverted-dropout + BN with train/eval semantics) | 27.10 | ✅ | ✅ | N/A |
+| 11 | [adam-optimizer](techniques/adam-optimizer) (SGD / Momentum / RMSProp / Adam / AdamW) | 27.11 | ✅ | ✅ | N/A |
+| 12 | [embedding-layers](techniques/embedding-layers) (entity embeddings for categorical inputs) | 27.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 28** — neural-net training in production uses PyTorch / TensorFlow / JAX on GPU; MLlib has no full deep-learning stack. For very large-scale distributed training use Ray Train, TorchElastic, or Horovod (all outside Spark). This batch's numpy demos live on a single CPU for pedagogy.
+
+### Batch 29 — Cross-chapter cleanup (Chs 25 + 27)
+
+Twelve techniques closing gaps in Text Analytics and Deep Learning.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [pos-tagging](techniques/pos-tagging) (HMM POS tagger with Viterbi decoding) | 25 | ✅ | ✅ | N/A |
+| 2 | [ngram-language-model](techniques/ngram-language-model) (Laplace + Kneser-Ney n-gram LM with perplexity) | 25 | ✅ | ✅ | N/A |
+| 3 | [bleu-rouge-eval](techniques/bleu-rouge-eval) (BLEU-n + ROUGE-L for generation evaluation) | 25 | ✅ | ✅ | N/A |
+| 4 | [sentence-similarity](techniques/sentence-similarity) (bag-of-embeddings + cosine STS baseline) | 25 | ✅ | ✅ | N/A |
+| 5 | [word-alignment](techniques/word-alignment) (IBM Model 1 EM for parallel corpora) | 25 | ✅ | ✅ | N/A |
+| 6 | [syntactic-parsing-cky](techniques/syntactic-parsing-cky) (Viterbi CKY chart parser for PCFG) | 25 | ✅ | ✅ | N/A |
+| 7 | [residual-connections](techniques/residual-connections) (ResNet-style skip; gradient-flow demo) | 27 | ✅ | ✅ | N/A |
+| 8 | [lr-schedules](techniques/lr-schedules) (constant / step / cosine / warmup+cosine / one-cycle) | 27 | ✅ | ✅ | N/A |
+| 9 | [transfer-learning](techniques/transfer-learning) (feature extraction vs fine-tuning) | 27 | ✅ | ✅ | N/A |
+| 10 | [graph-neural-network](techniques/graph-neural-network) (2-layer GCN; semi-supervised node classification) | 27 | ✅ | ✅ | N/A |
+| 11 | [contrastive-learning](techniques/contrastive-learning) (SimCLR-style NT-Xent) | 27 | ✅ | ✅ | N/A |
+| 12 | [diffusion-model](techniques/diffusion-model) (DDPM forward + reverse denoising) | 27 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 29** — mirrors the parents.
+
+### Batch 30 — Cross-chapter cleanup (Chs 25 + 27)
+
+Twelve more techniques closing remaining gaps.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [masked-language-modeling](techniques/masked-language-modeling) (BERT-style MLM objective) | 25 | ✅ | ✅ | N/A |
+| 2 | [text-generation-decoding](techniques/text-generation-decoding) (greedy / beam / top-k / nucleus / temperature) | 25 | ✅ | ✅ | N/A |
+| 3 | [word-sense-disambiguation](techniques/word-sense-disambiguation) (Lesk + embedding-based WSD) | 25 | ✅ | ✅ | N/A |
+| 4 | [transformer-decoder](techniques/transformer-decoder) (causal + cross-attention decoder block) | 25 | ✅ | ✅ | N/A |
+| 5 | [coreference-resolution](techniques/coreference-resolution) (mention-pair scoring; greedy clustering) | 25 | ✅ | ✅ | N/A |
+| 6 | [bertscore-chrf-metrics](techniques/bertscore-chrf-metrics) (chrF + BERTScore surrogate) | 25 | ✅ | ✅ | N/A |
+| 7 | [reinforcement-learning-basics](techniques/reinforcement-learning-basics) (tabular Q-learning + REINFORCE) | 27 | ✅ | ✅ | N/A |
+| 8 | [normalizing-flows](techniques/normalizing-flows) (RealNVP; bijection + change-of-variables) | 27 | ✅ | ✅ | N/A |
+| 9 | [knowledge-distillation](techniques/knowledge-distillation) (temperature-softened KL teacher → student) | 27 | ✅ | ✅ | N/A |
+| 10 | [mixture-of-experts](techniques/mixture-of-experts) (sparse top-k gating + load-balance loss) | 27 | ✅ | ✅ | N/A |
+| 11 | [quantization-pruning](techniques/quantization-pruning) (int8 quantise + magnitude / structured prune) | 27 | ✅ | ✅ | N/A |
+| 12 | [vision-transformer](techniques/vision-transformer) (patch tokenise + [CLS] + transformer encoder) | 27 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 30** — mirrors the parents.
+
+Later batches: causal deep learning, meta-learning, uncertainty quantification, robustness.
 
 ---
 
