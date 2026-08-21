@@ -1129,6 +1129,29 @@ Twelve subsections that Batches 21–24 skipped — three per chapter.
 
 **PySpark N/A across Batch 25** — mirrors the parents (single-node inferential procedures or specialised graph algorithms).
 
+### Batch 26 — Cross-chapter cleanup (Chs 3, 13, 15, 16, 17, 18, 19, 20)
+
+Twelve techniques closing the substantive gaps in causal inference,
+SEM, diagnostic modelling, missing-data sensitivity, robust regression,
+experimental design, sampling, and functional TS.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [mendelian-randomization](techniques/mendelian-randomization) (IVW + MR-Egger + weighted median) | 15 | ✅ | ✅ | N/A |
+| 2 | [front-door-criterion](techniques/front-door-criterion) (Pearl front-door adjustment for unmeasured confounding via a mediator) | 15 | ✅ | ✅ | N/A |
+| 3 | [pattern-mixture-model](techniques/pattern-mixture-model) (MNAR delta-adjustment MI for tipping-point sensitivity) | 16 | ✅ | ✅ | N/A |
+| 4 | [mm-estimators-robust](techniques/mm-estimators-robust) (Yohai MM via FAST-S subset init + biweight M-step) | 17 | ✅ | ✅ | N/A |
+| 5 | [split-plot-design](techniques/split-plot-design) (balanced split-plot ANOVA with two error strata) | 18 | ✅ | ✅ | N/A |
+| 6 | [crossover-design](techniques/crossover-design) (Grizzle 2×2 crossover: treatment / period / carryover) | 18 | ✅ | ✅ | N/A |
+| 7 | [measurement-invariance](techniques/measurement-invariance) (configural vs strict CFA across groups; nested LR test) | 19 | ✅ | ✅ | N/A |
+| 8 | [latent-class-analysis](techniques/latent-class-analysis) (LCA EM + BIC / AIC selection of K) | 19 | ✅ | ✅ | N/A |
+| 9 | [nri-idi](techniques/nri-idi) (Net Reclassification + Integrated Discrimination Improvement) | 20 | ✅ | ✅ | N/A |
+| 10 | [decision-curve-analysis](techniques/decision-curve-analysis) (Vickers-Elkin net-benefit across thresholds) | 20 | ✅ | ✅ | N/A |
+| 11 | [two-stage-cluster-sampling](techniques/two-stage-cluster-sampling) (two-stage SRS mean + variance decomposition + DEFF) | 3 | ✅ | ✅ | N/A |
+| 12 | [functional-time-series](techniques/functional-time-series) (FPCA + AR on scores; Hyndman-Ullah 2007) | 13 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 26** — mirrors the parent chapters.
+
 Later batches: text analytics, deep-learning specialty models.
 
 ---
