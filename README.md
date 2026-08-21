@@ -1087,7 +1087,28 @@ Twelve spatial-statistics techniques covering areal, geostatistical, and point-p
 
 **PySpark N/A across Batch 23** — spatial estimators need pairwise distance / neighbour structure that isn't well served by row-parallel MLlib operators; use Spark to distribute per-region fits (GWR one-per-location) but keep the estimator on the driver.
 
-Later batches: network analysis, text analytics, deep-learning specialty models.
+### Batch 24 — Chapter 24: Network / Graph Analysis
+
+Twelve techniques covering descriptive, generative, and inferential graph methods.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [graph-descriptives](techniques/graph-descriptives) (density, degree, clustering, transitivity, assortativity, path length, components) | 24.1 | ✅ | ✅ | N/A |
+| 2 | [centrality-measures](techniques/centrality-measures) (degree, closeness, betweenness (Brandes), eigenvector, Katz, PageRank) | 24.2 | ✅ | ✅ | N/A |
+| 3 | [community-detection](techniques/community-detection) (modularity + greedy agglomerative + spectral 2-way) | 24.3 | ✅ | ✅ | N/A |
+| 4 | [random-graph-models](techniques/random-graph-models) (Erdős-Rényi + Watts-Strogatz + Barabási-Albert) | 24.4 | ✅ | ✅ | N/A |
+| 5 | [ergm-exponential-random-graph](techniques/ergm-exponential-random-graph) (pseudo-likelihood MLE for edges + triangles) | 24.5 | ✅ | ✅ | N/A |
+| 6 | [stochastic-block-model](techniques/stochastic-block-model) (SBM hard EM + spectral warm start; block recovery) | 24.6 | ✅ | ✅ | N/A |
+| 7 | [link-prediction](techniques/link-prediction) (common / Jaccard / Adamic-Adar / RA / preferential + AUC eval) | 24.7 | ✅ | ✅ | N/A |
+| 8 | [network-diffusion](techniques/network-diffusion) (SI / SIR / independent cascade / linear threshold) | 24.8 | ✅ | ✅ | N/A |
+| 9 | [graph-embedding-spectral](techniques/graph-embedding-spectral) (Laplacian eigenmaps + adjacency spectral embedding) | 24.9 | ✅ | ✅ | N/A |
+| 10 | [bipartite-projection](techniques/bipartite-projection) (weighted + Newman projections + Barber bipartite modularity) | 24.10 | ✅ | ✅ | N/A |
+| 11 | [network-motifs](techniques/network-motifs) (3-node census + Z-scores vs degree-preserving null) | 24.11 | ✅ | ✅ | N/A |
+| 12 | [graph-comparison](techniques/graph-comparison) (spectral distance + feature signature + DeltaCon) | 24.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 24** — graph analytics on Spark uses GraphFrames / GraphX, a separate API optimised for pregel-style aggregations. For classical descriptive / inferential graph tasks the single-node NetworkX / igraph implementations are the right tool; use Spark to distribute per-graph fits across many small graphs, not per-node aggregations on a single large graph.
+
+Later batches: text analytics, deep-learning specialty models.
 
 ---
 
