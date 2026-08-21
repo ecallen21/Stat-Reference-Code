@@ -1152,7 +1152,29 @@ experimental design, sampling, and functional TS.
 
 **PySpark N/A across Batch 26** — mirrors the parent chapters.
 
-Later batches: text analytics, deep-learning specialty models.
+### Batch 27 — Chapter 25: Text Analytics / NLP
+
+Twelve classical text-analytics techniques covering preprocessing,
+representation, modelling, and evaluation.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [text-preprocessing](techniques/text-preprocessing) (tokenise + stopwords + stem + lemma) | 25.1 | ✅ | ✅ | N/A |
+| 2 | [tfidf-bm25](techniques/tfidf-bm25) (TF-IDF vectoriser + Okapi BM25 ranking) | 25.2 | ✅ | ✅ | N/A |
+| 3 | [word-embeddings](techniques/word-embeddings) (Skip-Gram with Negative Sampling from scratch) | 25.3 | ✅ | ✅ | N/A |
+| 4 | [topic-modeling-lda](techniques/topic-modeling-lda) (LDA via collapsed Gibbs sampling) | 25.4 | ✅ | ✅ | N/A |
+| 5 | [document-clustering](techniques/document-clustering) (spherical k-means on TF-IDF + purity / NMI / ARI) | 25.5 | ✅ | ✅ | N/A |
+| 6 | [text-classification](techniques/text-classification) (multinomial NB + softmax logistic on TF-IDF) | 25.6 | ✅ | ✅ | N/A |
+| 7 | [sentiment-analysis](techniques/sentiment-analysis) (VADER-style lexicon + supervised LR) | 25.7 | ✅ | ✅ | N/A |
+| 8 | [named-entity-recognition](techniques/named-entity-recognition) (HMM NER with Viterbi + entity-span F1) | 25.8 | ✅ | ✅ | N/A |
+| 9 | [string-similarity](techniques/string-similarity) (Levenshtein / Damerau / Jaro / JW / Jaccard / cosine) | 25.9 | ✅ | ✅ | N/A |
+| 10 | [language-detection](techniques/language-detection) (Cavnar-Trenkle char-n-gram out-of-place) | 25.10 | ✅ | ✅ | N/A |
+| 11 | [topic-coherence-eval](techniques/topic-coherence-eval) (UMass + UCI-PMI + perplexity) | 25.11 | ✅ | ✅ | N/A |
+| 12 | [textrank-summarization](techniques/textrank-summarization) (PageRank on sentence-similarity graph) | 25.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 27** — text analytics on Spark uses MLlib's `Tokenizer`, `StopWordsRemover`, `HashingTF / IDF`, `Word2Vec`, `LDA`, `NaiveBayes`, and `CountVectorizer`; swap those in for corpus-scale pipelines. This batch's from-scratch demos live on the driver and are algorithmically identical.
+
+Later batches: deep-learning specialty models.
 
 ---
 
