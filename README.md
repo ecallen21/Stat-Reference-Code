@@ -1108,6 +1108,27 @@ Twelve techniques covering descriptive, generative, and inferential graph method
 
 **PySpark N/A across Batch 24** — graph analytics on Spark uses GraphFrames / GraphX, a separate API optimised for pregel-style aggregations. For classical descriptive / inferential graph tasks the single-node NetworkX / igraph implementations are the right tool; use Spark to distribute per-graph fits across many small graphs, not per-node aggregations on a single large graph.
 
+### Batch 25 — Cross-chapter cleanup (Chs 21–24)
+
+Twelve subsections that Batches 21–24 skipped — three per chapter.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [one-class-svm](techniques/one-class-svm) (Schölkopf ν-OC-SVM + KDE-baseline anomaly detector) | 21 | ✅ | ✅ | N/A |
+| 2 | [shap-values](techniques/shap-values) (exact Shapley enumeration + linear-model analytical check) | 21 | ✅ | ✅ | N/A |
+| 3 | [online-learning-sgd](techniques/online-learning-sgd) (squared / log / hinge / passive-aggressive streaming) | 21 | ✅ | ✅ | N/A |
+| 4 | [mirt-multidimensional-irt](techniques/mirt-multidimensional-irt) (compensatory M2PL via PCA warm-start + EAP quadrature) | 22 | ✅ | ✅ | N/A |
+| 5 | [bayesian-irt](techniques/bayesian-irt) (2PL MAP with priors, coordinate-ascent Newton) | 22 | ✅ | ✅ | N/A |
+| 6 | [nominal-response-model](techniques/nominal-response-model) (Bock NRM for unordered polytomous items via MML + quadrature) | 22 | ✅ | ✅ | N/A |
+| 7 | [universal-kriging](techniques/universal-kriging) (drift kriging with trend covariates; augmented kriging system) | 23 | ✅ | ✅ | N/A |
+| 8 | [getis-ord-g-statistic](techniques/getis-ord-g-statistic) (Gi* hot-spot statistic + asymptotic z + permutation p) | 23 | ✅ | ✅ | N/A |
+| 9 | [spatial-glm](techniques/spatial-glm) (Poisson-CAR with PIRLS + CAR quadratic penalty) | 23 | ✅ | ✅ | N/A |
+| 10 | [hits-authority-hub](techniques/hits-authority-hub) (Kleinberg HITS via power iteration) | 24 | ✅ | ✅ | N/A |
+| 11 | [k-core-decomposition](techniques/k-core-decomposition) (Batagelj-Zaversnik coreness + k-truss) | 24 | ✅ | ✅ | N/A |
+| 12 | [temporal-networks](techniques/temporal-networks) (snapshots + earliest-arrival BFS + temporal reachability) | 24 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 25** — mirrors the parents (single-node inferential procedures or specialised graph algorithms).
+
 Later batches: text analytics, deep-learning specialty models.
 
 ---
