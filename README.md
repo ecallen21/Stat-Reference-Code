@@ -1174,7 +1174,29 @@ representation, modelling, and evaluation.
 
 **PySpark N/A across Batch 27** — text analytics on Spark uses MLlib's `Tokenizer`, `StopWordsRemover`, `HashingTF / IDF`, `Word2Vec`, `LDA`, `NaiveBayes`, and `CountVectorizer`; swap those in for corpus-scale pipelines. This batch's from-scratch demos live on the driver and are algorithmically identical.
 
-Later batches: deep-learning specialty models.
+### Batch 28 — Chapter 27: Deep Learning
+
+Twelve neural-network architectures and training techniques, implemented
+from scratch in numpy for pedagogy.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [deep-mlp-backprop](techniques/deep-mlp-backprop) (deep ReLU MLP + softmax-CE + manual backprop) | 27.1 | ✅ | ✅ | N/A |
+| 2 | [convolutional-nn](techniques/convolutional-nn) (2-D Conv + max-pool + backward pass) | 27.2 | ✅ | ✅ | N/A |
+| 3 | [recurrent-nn](techniques/recurrent-nn) (Elman RNN + BPTT + gradient clipping) | 27.3 | ✅ | ✅ | N/A |
+| 4 | [lstm-gru](techniques/lstm-gru) (LSTM + GRU forward; contrast with RNN vanishing) | 27.4 | ✅ | ✅ | N/A |
+| 5 | [attention-mechanism](techniques/attention-mechanism) (scaled dot-product + multi-head + causal mask) | 27.5 | ✅ | ✅ | N/A |
+| 6 | [transformer-encoder](techniques/transformer-encoder) (pre-norm block + sinusoidal PE + FFN) | 27.6 | ✅ | ✅ | N/A |
+| 7 | [autoencoder](techniques/autoencoder) (vanilla + denoising AE with manual backprop) | 27.7 | ✅ | ✅ | N/A |
+| 8 | [variational-autoencoder](techniques/variational-autoencoder) (Kingma-Welling VAE + reparameterisation) | 27.8 | ✅ | ✅ | N/A |
+| 9 | [gan-training](techniques/gan-training) (Goodfellow GAN on 2-D data) | 27.9 | ✅ | ✅ | N/A |
+| 10 | [dropout-batchnorm](techniques/dropout-batchnorm) (inverted-dropout + BN with train/eval semantics) | 27.10 | ✅ | ✅ | N/A |
+| 11 | [adam-optimizer](techniques/adam-optimizer) (SGD / Momentum / RMSProp / Adam / AdamW) | 27.11 | ✅ | ✅ | N/A |
+| 12 | [embedding-layers](techniques/embedding-layers) (entity embeddings for categorical inputs) | 27.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 28** — neural-net training in production uses PyTorch / TensorFlow / JAX on GPU; MLlib has no full deep-learning stack. For very large-scale distributed training use Ray Train, TorchElastic, or Horovod (all outside Spark). This batch's numpy demos live on a single CPU for pedagogy.
+
+Later batches: reinforcement learning, graph neural networks, diffusion models, causal deep learning.
 
 ---
 
