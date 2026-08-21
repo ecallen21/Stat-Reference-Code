@@ -1217,7 +1217,28 @@ Twelve techniques closing gaps in Text Analytics and Deep Learning.
 
 **PySpark N/A across Batch 29** — mirrors the parents.
 
-Later batches: reinforcement learning, causal deep learning, self-supervised pretraining variants.
+### Batch 30 — Cross-chapter cleanup (Chs 25 + 27)
+
+Twelve more techniques closing remaining gaps.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [masked-language-modeling](techniques/masked-language-modeling) (BERT-style MLM objective) | 25 | ✅ | ✅ | N/A |
+| 2 | [text-generation-decoding](techniques/text-generation-decoding) (greedy / beam / top-k / nucleus / temperature) | 25 | ✅ | ✅ | N/A |
+| 3 | [word-sense-disambiguation](techniques/word-sense-disambiguation) (Lesk + embedding-based WSD) | 25 | ✅ | ✅ | N/A |
+| 4 | [transformer-decoder](techniques/transformer-decoder) (causal + cross-attention decoder block) | 25 | ✅ | ✅ | N/A |
+| 5 | [coreference-resolution](techniques/coreference-resolution) (mention-pair scoring; greedy clustering) | 25 | ✅ | ✅ | N/A |
+| 6 | [bertscore-chrf-metrics](techniques/bertscore-chrf-metrics) (chrF + BERTScore surrogate) | 25 | ✅ | ✅ | N/A |
+| 7 | [reinforcement-learning-basics](techniques/reinforcement-learning-basics) (tabular Q-learning + REINFORCE) | 27 | ✅ | ✅ | N/A |
+| 8 | [normalizing-flows](techniques/normalizing-flows) (RealNVP; bijection + change-of-variables) | 27 | ✅ | ✅ | N/A |
+| 9 | [knowledge-distillation](techniques/knowledge-distillation) (temperature-softened KL teacher → student) | 27 | ✅ | ✅ | N/A |
+| 10 | [mixture-of-experts](techniques/mixture-of-experts) (sparse top-k gating + load-balance loss) | 27 | ✅ | ✅ | N/A |
+| 11 | [quantization-pruning](techniques/quantization-pruning) (int8 quantise + magnitude / structured prune) | 27 | ✅ | ✅ | N/A |
+| 12 | [vision-transformer](techniques/vision-transformer) (patch tokenise + [CLS] + transformer encoder) | 27 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 30** — mirrors the parents.
+
+Later batches: causal deep learning, meta-learning, uncertainty quantification, robustness.
 
 ---
 
