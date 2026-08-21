@@ -1196,7 +1196,28 @@ from scratch in numpy for pedagogy.
 
 **PySpark N/A across Batch 28** — neural-net training in production uses PyTorch / TensorFlow / JAX on GPU; MLlib has no full deep-learning stack. For very large-scale distributed training use Ray Train, TorchElastic, or Horovod (all outside Spark). This batch's numpy demos live on a single CPU for pedagogy.
 
-Later batches: reinforcement learning, graph neural networks, diffusion models, causal deep learning.
+### Batch 29 — Cross-chapter cleanup (Chs 25 + 27)
+
+Twelve techniques closing gaps in Text Analytics and Deep Learning.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [pos-tagging](techniques/pos-tagging) (HMM POS tagger with Viterbi decoding) | 25 | ✅ | ✅ | N/A |
+| 2 | [ngram-language-model](techniques/ngram-language-model) (Laplace + Kneser-Ney n-gram LM with perplexity) | 25 | ✅ | ✅ | N/A |
+| 3 | [bleu-rouge-eval](techniques/bleu-rouge-eval) (BLEU-n + ROUGE-L for generation evaluation) | 25 | ✅ | ✅ | N/A |
+| 4 | [sentence-similarity](techniques/sentence-similarity) (bag-of-embeddings + cosine STS baseline) | 25 | ✅ | ✅ | N/A |
+| 5 | [word-alignment](techniques/word-alignment) (IBM Model 1 EM for parallel corpora) | 25 | ✅ | ✅ | N/A |
+| 6 | [syntactic-parsing-cky](techniques/syntactic-parsing-cky) (Viterbi CKY chart parser for PCFG) | 25 | ✅ | ✅ | N/A |
+| 7 | [residual-connections](techniques/residual-connections) (ResNet-style skip; gradient-flow demo) | 27 | ✅ | ✅ | N/A |
+| 8 | [lr-schedules](techniques/lr-schedules) (constant / step / cosine / warmup+cosine / one-cycle) | 27 | ✅ | ✅ | N/A |
+| 9 | [transfer-learning](techniques/transfer-learning) (feature extraction vs fine-tuning) | 27 | ✅ | ✅ | N/A |
+| 10 | [graph-neural-network](techniques/graph-neural-network) (2-layer GCN; semi-supervised node classification) | 27 | ✅ | ✅ | N/A |
+| 11 | [contrastive-learning](techniques/contrastive-learning) (SimCLR-style NT-Xent) | 27 | ✅ | ✅ | N/A |
+| 12 | [diffusion-model](techniques/diffusion-model) (DDPM forward + reverse denoising) | 27 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 29** — mirrors the parents.
+
+Later batches: reinforcement learning, causal deep learning, self-supervised pretraining variants.
 
 ---
 
