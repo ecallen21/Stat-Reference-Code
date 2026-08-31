@@ -1408,6 +1408,29 @@ smooth / shape-constrained models.
 
 **PySpark N/A across Batch 37** — semiparametric estimators run in R (`quantreg`, `gamlss`, `mgcv`, `expectreg`, `emplik`, `tmle`) or Python (`statsmodels`, `pyGAM`, `ngboost`, `econml`); Spark ML has no first-class semiparametric-QR / EIF support.
 
+### Batch 38 — Cross-chapter cleanup (Ch 25 Dim-Reduction + Ch 32 High-Dim / Sparse)
+
+Twelve techniques filling gaps in previously-covered chapters: six
+dimension-reduction methods that go beyond PCA, and six
+high-dimensional / sparse-regression tools around the LASSO family.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [ica](techniques/ica) (Hyvarinen FastICA on mixed sinusoid + square) | 25.1 | ✅ | ✅ | N/A |
+| 2 | [nmf](techniques/nmf) (Lee-Seung multiplicative updates; topic-word demo) | 25.2 | ✅ | ✅ | N/A |
+| 3 | [sir-sufficient-dim-reduction](techniques/sir-sufficient-dim-reduction) (Li 1991 SIR + SAVE) | 25.3 | ✅ | ✅ | N/A |
+| 4 | [sparse-pca](techniques/sparse-pca) (Zou-Hastie-Tibshirani 2006 alternating soft-threshold + SVD) | 25.8 | ✅ | ✅ | N/A |
+| 5 | [isomap](techniques/isomap) (Tenenbaum 2000 geodesic MDS; Swiss roll) | 25.14 | ✅ | ✅ | N/A |
+| 6 | [lle-locally-linear-embedding](techniques/lle-locally-linear-embedding) (Roweis-Saul 2000) | 25.15 | ✅ | ✅ | N/A |
+| 7 | [scad-mcp-penalties](techniques/scad-mcp-penalties) (Fan-Li 2001 + Zhang 2010 nonconvex + LLA) | 32.2 | ✅ | ✅ | N/A |
+| 8 | [debiased-lasso](techniques/debiased-lasso) (Zhang-Zhang 2014 / van de Geer 2014 CIs via node-wise LASSO) | 32.4 | ✅ | ✅ | N/A |
+| 9 | [model-x-knockoffs](techniques/model-x-knockoffs) (Candes-Fan-Janson-Lv 2018 FDR-controlled selection) | 32.5 | ✅ | ✅ | N/A |
+| 10 | [stability-selection](techniques/stability-selection) (Meinshausen-Buhlmann 2010 subsample-frequency) | 32.6 | ✅ | ✅ | N/A |
+| 11 | [adaptive-lasso](techniques/adaptive-lasso) (Zou 2006 weighted-LASSO with oracle property) | 32.12 | ✅ | ✅ | N/A |
+| 12 | [fused-lasso](techniques/fused-lasso) (Tibshirani 2005 / Chambolle 2004 TV denoising) | 32.13 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 38** — advanced dim-reduction + high-dim inference are R (`fastICA`, `NMF`, `dr`, `elasticnet`, `RDRToolbox`, `lle`, `ncvreg`, `hdi`, `knockoff`, `stabs`, `glmnet`, `genlasso`) or Python (`sklearn.decomposition`, `sklearn.manifold`, `celer`, `knockpy`, `skimage.restoration`); Spark ML has no first-class debiased-LASSO / knockoff support.
+
 Later batches: any remaining chapters.
 
 ---
