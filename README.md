@@ -1305,7 +1305,33 @@ epistemic-vs-aleatoric decomposition.
 
 **PySpark N/A across Batch 33** — modern UQ pipelines run in PyTorch / JAX / TensorFlow with `uncertainty-toolbox`, `laplace-torch`, `mapie`, `pytorch-ood`; Spark ML has no first-class Bayesian / conformal support.
 
-Later batches: robustness, fairness / bias, MLOps.
+### Batch 34 — Robustness (Ch 30, ML side)
+
+Twelve techniques covering modern ML robustness — adversarial attacks
+and defences, smoothness regularisation, distributionally robust
+optimisation. Complements the classical robust-statistics techniques
+already covered (`mm-estimators-robust`, `robust-regression`,
+`sandwich-robust-se`, `multivariate-outlier-detection`, `outlier-tests`,
+`robust-location-scale`, `tmle-doubly-robust`).
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [fgsm-adversarial](techniques/fgsm-adversarial) (Goodfellow 2014 single-step L_∞ attack) | 30 | ✅ | ✅ | N/A |
+| 2 | [pgd-adversarial-training](techniques/pgd-adversarial-training) (Madry 2018 saddle-point objective) | 30 | ✅ | ✅ | N/A |
+| 3 | [trades-adversarial](techniques/trades-adversarial) (Zhang 2019 KL-based clean/robust trade-off) | 30 | ✅ | ✅ | N/A |
+| 4 | [randomized-smoothing](techniques/randomized-smoothing) (Cohen 2019 certified L2 radius) | 30 | ✅ | ✅ | N/A |
+| 5 | [label-smoothing](techniques/label-smoothing) (Szegedy 2016 soft-target CE) | 30 | ✅ | ✅ | N/A |
+| 6 | [mixup](techniques/mixup) (Zhang 2018 Beta-convex-combination) | 30 | ✅ | ✅ | N/A |
+| 7 | [cutmix](techniques/cutmix) (Yun 2019 rectangular patch-swap augmentation) | 30 | ✅ | ✅ | N/A |
+| 8 | [distributionally-robust-optimization](techniques/distributionally-robust-optimization) (Group-DRO, Sagawa 2020) | 30 | ✅ | ✅ | N/A |
+| 9 | [spectral-normalization](techniques/spectral-normalization) (Miyato 2018 per-layer Lipschitz cap) | 30 | ✅ | ✅ | N/A |
+| 10 | [jacobian-regularization](techniques/jacobian-regularization) (Hoffman 2019 Frobenius Jacobian penalty) | 30 | ✅ | ✅ | N/A |
+| 11 | [gradient-clipping](techniques/gradient-clipping) (Pascanu 2013 norm / value clipping) | 30 | ✅ | ✅ | N/A |
+| 12 | [feature-squeezing](techniques/feature-squeezing) (Xu 2018 bit-depth + median-filter defence) | 30 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 34** — adversarial attacks and defences run in PyTorch / TensorFlow / JAX (`foolbox`, `cleverhans`, `advertorch`, `torchattacks`, `robustness`); Spark ML has no first-class adversarial-robustness support.
+
+Later batches: fairness / bias, MLOps.
 
 ---
 
