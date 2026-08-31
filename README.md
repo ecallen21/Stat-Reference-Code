@@ -1238,6 +1238,28 @@ Twelve more techniques closing remaining gaps.
 
 **PySpark N/A across Batch 30** — mirrors the parents.
 
+### Batch 31 — Chapter 28: Reinforcement Learning
+
+Twelve RL techniques deepening beyond the single one in Batch 30, from
+tabular exact planning to modern policy-gradient and offline RL.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [multi-armed-bandits](techniques/multi-armed-bandits) (ε-greedy + UCB1 + Thompson sampling) | 28.1 | ✅ | ✅ | N/A |
+| 2 | [mdp-value-iteration](techniques/mdp-value-iteration) (VI + PI on finite MDPs) | 28.2 | ✅ | ✅ | N/A |
+| 3 | [dqn-deep-q-network](techniques/dqn-deep-q-network) (NN approximator + replay + target network) | 28.3 | ✅ | ✅ | N/A |
+| 4 | [actor-critic-a2c](techniques/actor-critic-a2c) (TD advantage + softmax policy) | 28.4 | ✅ | ✅ | N/A |
+| 5 | [ppo-clipped](techniques/ppo-clipped) (clipped-surrogate policy update) | 28.5 | ✅ | ✅ | N/A |
+| 6 | [monte-carlo-tree-search](techniques/monte-carlo-tree-search) (MCTS-UCT) | 28.6 | ✅ | ✅ | N/A |
+| 7 | [model-based-rl](techniques/model-based-rl) (Dyna-Q + deep-MBRL notes) | 28.7 | ✅ | ✅ | N/A |
+| 8 | [imitation-learning](techniques/imitation-learning) (behavioural cloning + DAgger) | 28.8 | ✅ | ✅ | N/A |
+| 9 | [offline-rl](techniques/offline-rl) (CQL-style pessimism penalty) | 28.9 | ✅ | ✅ | N/A |
+| 10 | [rlhf-preferences](techniques/rlhf-preferences) (Bradley-Terry reward model + DPO) | 28.10 | ✅ | ✅ | N/A |
+| 11 | [exploration-strategies](techniques/exploration-strategies) (ε-greedy / Boltzmann / UCB / count-based intrinsic) | 28.11 | ✅ | ✅ | N/A |
+| 12 | [gae-advantage-estimation](techniques/gae-advantage-estimation) (GAE(λ) for policy-gradient variance reduction) | 28.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 31** — RL training uses PyTorch / JAX + gymnasium; distributed RL uses Ray RLlib / Acme rather than Spark.
+
 Later batches: causal deep learning, meta-learning, uncertainty quantification, robustness.
 
 ---
