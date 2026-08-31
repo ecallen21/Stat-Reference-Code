@@ -1281,7 +1281,31 @@ Twelve techniques closing remaining gaps: 4 RL, 4 deep learning, 4 text.
 
 **PySpark N/A across Batch 32** — mirrors the parents.
 
-Later batches: uncertainty quantification, robustness, fairness / bias, MLOps.
+### Batch 33 — Uncertainty Quantification (Ch 29)
+
+Twelve techniques covering the modern UQ toolbox: ensembles, Bayesian
+neural nets, conformal prediction, evidential heads, OOD detection,
+selective prediction, covariate-shift adaptation, and the
+epistemic-vs-aleatoric decomposition.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [deep-ensembles](techniques/deep-ensembles) (K MLPs + Gaussian-NLL head; aleatoric + epistemic split) | 29 | ✅ | ✅ | N/A |
+| 2 | [mc-dropout](techniques/mc-dropout) (Gal-Ghahramani 2016: dropout stays on at inference for MC posterior samples) | 29 | ✅ | ✅ | N/A |
+| 3 | [bayesian-neural-network](techniques/bayesian-neural-network) (mean-field VI + Bayes-by-Backprop) | 29 | ✅ | ✅ | N/A |
+| 4 | [swag](techniques/swag) (SWA-Gaussian: low-rank + diagonal posterior from SGD iterates) | 29 | ✅ | ✅ | N/A |
+| 5 | [last-layer-bayesian](techniques/last-layer-bayesian) (exact Bayesian LR on frozen penultimate features) | 29 | ✅ | ✅ | N/A |
+| 6 | [conformal-classification](techniques/conformal-classification) (APS / RAPS: coverage-guaranteed prediction sets) | 29 | ✅ | ✅ | N/A |
+| 7 | [jackknife-plus](techniques/jackknife-plus) (Barber 2021: LOO prediction intervals with 1−2α guarantee) | 29 | ✅ | ✅ | N/A |
+| 8 | [evidential-deep-learning](techniques/evidential-deep-learning) (Dirichlet head + Sensoy loss; NIG for regression) | 29 | ✅ | ✅ | N/A |
+| 9 | [ood-detection](techniques/ood-detection) (MSP + Energy + Mahalanobis; AUROC / FPR@95%TPR) | 29 | ✅ | ✅ | N/A |
+| 10 | [selective-prediction](techniques/selective-prediction) (risk-coverage curve + AURC + coverage-at-risk) | 29 | ✅ | ✅ | N/A |
+| 11 | [covariate-shift-adaptation](techniques/covariate-shift-adaptation) (density-ratio importance weighting; Shimodaira) | 29 | ✅ | ✅ | N/A |
+| 12 | [epistemic-aleatoric](techniques/epistemic-aleatoric) (variance and entropy decompositions; BALD) | 29 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 33** — modern UQ pipelines run in PyTorch / JAX / TensorFlow with `uncertainty-toolbox`, `laplace-torch`, `mapie`, `pytorch-ood`; Spark ML has no first-class Bayesian / conformal support.
+
+Later batches: robustness, fairness / bias, MLOps.
 
 ---
 
