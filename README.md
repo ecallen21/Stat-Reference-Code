@@ -1331,7 +1331,33 @@ already covered (`mm-estimators-robust`, `robust-regression`,
 
 **PySpark N/A across Batch 34** — adversarial attacks and defences run in PyTorch / TensorFlow / JAX (`foolbox`, `cleverhans`, `advertorch`, `torchattacks`, `robustness`); Spark ML has no first-class adversarial-robustness support.
 
-Later batches: fairness / bias, MLOps.
+### Batch 35 — Fairness / Bias (Ch 31)
+
+Twelve techniques covering the modern algorithmic-fairness toolbox:
+four metrics (DP, EO, EOpp, calibration parity + the DI legal test),
+three pre-processing / in-training / post-processing families
+(reweighing, adversarial debiasing, EO postprocessing), plus fair
+representations, counterfactual fairness, the fairlearn reduction
+approach, and Dwork's individual fairness.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [demographic-parity](techniques/demographic-parity) (statistical parity + four-fifths rule) | 31 | ✅ | ✅ | N/A |
+| 2 | [equalized-odds](techniques/equalized-odds) (Hardt 2016 equal TPR + FPR) | 31 | ✅ | ✅ | N/A |
+| 3 | [equal-opportunity](techniques/equal-opportunity) (Hardt 2016 equal TPR only) | 31 | ✅ | ✅ | N/A |
+| 4 | [calibration-parity](techniques/calibration-parity) (Chouldechova 2017 PPV / calibration by group) | 31 | ✅ | ✅ | N/A |
+| 5 | [disparate-impact](techniques/disparate-impact) (EEOC 80 % rule + two-proportion CI) | 31 | ✅ | ✅ | N/A |
+| 6 | [reweighing-preprocessing](techniques/reweighing-preprocessing) (Kamiran-Calders 2012 sample weights) | 31 | ✅ | ✅ | N/A |
+| 7 | [adversarial-debiasing](techniques/adversarial-debiasing) (Zhang 2018 predictor vs adversary game) | 31 | ✅ | ✅ | N/A |
+| 8 | [equalized-odds-postprocessing](techniques/equalized-odds-postprocessing) (Hardt 2016 group ROC hulls + randomised decision) | 31 | ✅ | ✅ | N/A |
+| 9 | [fair-representations-lfr](techniques/fair-representations-lfr) (Zemel 2013 + Ravfogel 2020 INLP projection) | 31 | ✅ | ✅ | N/A |
+| 10 | [counterfactual-fairness](techniques/counterfactual-fairness) (Kusner 2017 SCM-based Level-2 predictor) | 31 | ✅ | ✅ | N/A |
+| 11 | [exponentiated-gradient-reduction](techniques/exponentiated-gradient-reduction) (Agarwal 2018 fairlearn reduction) | 31 | ✅ | ✅ | N/A |
+| 12 | [individual-fairness](techniques/individual-fairness) (Dwork 2012 Lipschitz criterion + IF-loss) | 31 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 35** — fairness auditing and mitigation runs in Python (`fairlearn`, `aif360`, `fairtorch`, `concept-erasure`) or R (`fairness`, `fairml`, `fairmodels`, `mlr3fairness`); Spark ML has no first-class fairness constraints or metrics.
+
+Later batches: MLOps.
 
 ---
 
