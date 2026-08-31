@@ -1382,6 +1382,32 @@ DAG, and model cards.
 
 **PySpark N/A across Batch 36** — MLOps tooling lives in Python (`mlflow`, `evidently`, `alibi-detect`, `whylogs`, `feast`, `openlineage`, `torch.profiler`, `argo-rollouts`) or Kubernetes (`seldon-core`, `kserve`); Spark ML has no first-class registry / monitoring / lineage support.
 
+### Batch 37 — Semiparametric & Distribution-Free Methods (Ch 33)
+
+Twelve techniques covering Chapter 33 subsections beyond the already-
+covered `quantile-regression`, `isotonic-regression`, and
+`sandwich-robust-se`: three quantile-regression extensions, two
+distributional-regression families, three semiparametric estimator
+theory pieces (efficiency, EIF, empirical likelihood), and three
+smooth / shape-constrained models.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [bayesian-quantile-regression](techniques/bayesian-quantile-regression) (Yu-Moyeed 2001, asymmetric Laplace + Metropolis) | 33.2 | ✅ | ✅ | N/A |
+| 2 | [censored-quantile-regression](techniques/censored-quantile-regression) (Powell 1986 subgradient solver) | 33.3 | ✅ | ✅ | N/A |
+| 3 | [semiparametric-efficiency](techniques/semiparametric-efficiency) (Bickel-Klaassen bound; IPW vs AIPW 500-trial demo) | 33.4 | ✅ | ✅ | N/A |
+| 4 | [empirical-likelihood](techniques/empirical-likelihood) (Owen 1988, Newton on Lagrangian + bisection CI) | 33.5 | ✅ | ✅ | N/A |
+| 5 | [gamlss](techniques/gamlss) (Rigby-Stasinopoulos 2005, mean + log-sd both regressed) | 33.6 | ✅ | ✅ | N/A |
+| 6 | [single-index-model](techniques/single-index-model) (Ichimura 1993, Nadaraya-Watson link inside SLS) | 33.8 | ✅ | ✅ | N/A |
+| 7 | [varying-coefficient-model](techniques/varying-coefficient-model) (Hastie-Tibshirani 1993, local kernel WLS) | 33.9 | ✅ | ✅ | N/A |
+| 8 | [influence-functions-eif](techniques/influence-functions-eif) (mean/median/variance IFs + SE derivation + outlier demo) | 33.11 | ✅ | ✅ | N/A |
+| 9 | [distributional-regression](techniques/distributional-regression) (multinomial-bin CDF model + per-x quantile band) | 33.12 | ✅ | ✅ | N/A |
+| 10 | [additive-quantile-regression](techniques/additive-quantile-regression) (B-spline basis + subgradient descent, three τ) | 33.13 | ✅ | ✅ | N/A |
+| 11 | [shape-constrained-regression](techniques/shape-constrained-regression) (PAV monotone + SLSQP convex QP) | 33.14 | ✅ | ✅ | N/A |
+| 12 | [expectile-regression](techniques/expectile-regression) (Newey-Powell 1987, IRLS asymmetric squared loss) | 33 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 37** — semiparametric estimators run in R (`quantreg`, `gamlss`, `mgcv`, `expectreg`, `emplik`, `tmle`) or Python (`statsmodels`, `pyGAM`, `ngboost`, `econml`); Spark ML has no first-class semiparametric-QR / EIF support.
+
 Later batches: any remaining chapters.
 
 ---
