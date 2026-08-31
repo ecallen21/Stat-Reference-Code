@@ -1238,7 +1238,249 @@ Twelve more techniques closing remaining gaps.
 
 **PySpark N/A across Batch 30** — mirrors the parents.
 
-Later batches: causal deep learning, meta-learning, uncertainty quantification, robustness.
+### Batch 31 — Chapter 28: Reinforcement Learning
+
+Twelve RL techniques deepening beyond the single one in Batch 30, from
+tabular exact planning to modern policy-gradient and offline RL.
+
+| # | Technique | Ref §| R | Python | PySpark |
+|---|-----------|------|---|--------|---------|
+| 1 | [multi-armed-bandits](techniques/multi-armed-bandits) (ε-greedy + UCB1 + Thompson sampling) | 28.1 | ✅ | ✅ | N/A |
+| 2 | [mdp-value-iteration](techniques/mdp-value-iteration) (VI + PI on finite MDPs) | 28.2 | ✅ | ✅ | N/A |
+| 3 | [dqn-deep-q-network](techniques/dqn-deep-q-network) (NN approximator + replay + target network) | 28.3 | ✅ | ✅ | N/A |
+| 4 | [actor-critic-a2c](techniques/actor-critic-a2c) (TD advantage + softmax policy) | 28.4 | ✅ | ✅ | N/A |
+| 5 | [ppo-clipped](techniques/ppo-clipped) (clipped-surrogate policy update) | 28.5 | ✅ | ✅ | N/A |
+| 6 | [monte-carlo-tree-search](techniques/monte-carlo-tree-search) (MCTS-UCT) | 28.6 | ✅ | ✅ | N/A |
+| 7 | [model-based-rl](techniques/model-based-rl) (Dyna-Q + deep-MBRL notes) | 28.7 | ✅ | ✅ | N/A |
+| 8 | [imitation-learning](techniques/imitation-learning) (behavioural cloning + DAgger) | 28.8 | ✅ | ✅ | N/A |
+| 9 | [offline-rl](techniques/offline-rl) (CQL-style pessimism penalty) | 28.9 | ✅ | ✅ | N/A |
+| 10 | [rlhf-preferences](techniques/rlhf-preferences) (Bradley-Terry reward model + DPO) | 28.10 | ✅ | ✅ | N/A |
+| 11 | [exploration-strategies](techniques/exploration-strategies) (ε-greedy / Boltzmann / UCB / count-based intrinsic) | 28.11 | ✅ | ✅ | N/A |
+| 12 | [gae-advantage-estimation](techniques/gae-advantage-estimation) (GAE(λ) for policy-gradient variance reduction) | 28.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 31** — RL training uses PyTorch / JAX + gymnasium; distributed RL uses Ray RLlib / Acme rather than Spark.
+
+### Batch 32 — Cross-chapter cleanup (Chs 25, 27, 28)
+
+Twelve techniques closing remaining gaps: 4 RL, 4 deep learning, 4 text.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [sac-soft-actor-critic](techniques/sac-soft-actor-critic) (soft policy iteration; entropy-regularised RL) | 28 | ✅ | ✅ | N/A |
+| 2 | [ddpg-td3](techniques/ddpg-td3) (deterministic policy gradient + twin-Q + delayed updates) | 28 | ✅ | ✅ | N/A |
+| 3 | [prioritized-experience-replay](techniques/prioritized-experience-replay) (TD-weighted sampling + IS correction) | 28 | ✅ | ✅ | N/A |
+| 4 | [hierarchical-rl-options](techniques/hierarchical-rl-options) (SMDP-Q-learning over temporally-extended options) | 28 | ✅ | ✅ | N/A |
+| 5 | [state-space-models](techniques/state-space-models) (S4 / Mamba scan + convolution kernel) | 27 | ✅ | ✅ | N/A |
+| 6 | [neural-ode](techniques/neural-ode) (continuous-depth NN via Euler / RK4 solvers) | 27 | ✅ | ✅ | N/A |
+| 7 | [energy-based-models](techniques/energy-based-models) (contrastive divergence + Langevin sampling) | 27 | ✅ | ✅ | N/A |
+| 8 | [meta-learning-maml](techniques/meta-learning-maml) (first-order MAML for few-shot regression) | 27 | ✅ | ✅ | N/A |
+| 9 | [question-answering](techniques/question-answering) (IDF-weighted sentence-retrieval baseline) | 25 | ✅ | ✅ | N/A |
+| 10 | [abstractive-summarization](techniques/abstractive-summarization) (extract-then-simplify TextRank baseline) | 25 | ✅ | ✅ | N/A |
+| 11 | [relation-extraction](techniques/relation-extraction) (regex patterns for `founder_of`, `ceo_of`, `born_in`, …) | 25 | ✅ | ✅ | N/A |
+| 12 | [entity-linking](techniques/entity-linking) (alias-index + context-cosine disambiguation) | 25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 32** — mirrors the parents.
+
+### Batch 33 — Uncertainty Quantification (Ch 29)
+
+Twelve techniques covering the modern UQ toolbox: ensembles, Bayesian
+neural nets, conformal prediction, evidential heads, OOD detection,
+selective prediction, covariate-shift adaptation, and the
+epistemic-vs-aleatoric decomposition.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [deep-ensembles](techniques/deep-ensembles) (K MLPs + Gaussian-NLL head; aleatoric + epistemic split) | 29 | ✅ | ✅ | N/A |
+| 2 | [mc-dropout](techniques/mc-dropout) (Gal-Ghahramani 2016: dropout stays on at inference for MC posterior samples) | 29 | ✅ | ✅ | N/A |
+| 3 | [bayesian-neural-network](techniques/bayesian-neural-network) (mean-field VI + Bayes-by-Backprop) | 29 | ✅ | ✅ | N/A |
+| 4 | [swag](techniques/swag) (SWA-Gaussian: low-rank + diagonal posterior from SGD iterates) | 29 | ✅ | ✅ | N/A |
+| 5 | [last-layer-bayesian](techniques/last-layer-bayesian) (exact Bayesian LR on frozen penultimate features) | 29 | ✅ | ✅ | N/A |
+| 6 | [conformal-classification](techniques/conformal-classification) (APS / RAPS: coverage-guaranteed prediction sets) | 29 | ✅ | ✅ | N/A |
+| 7 | [jackknife-plus](techniques/jackknife-plus) (Barber 2021: LOO prediction intervals with 1−2α guarantee) | 29 | ✅ | ✅ | N/A |
+| 8 | [evidential-deep-learning](techniques/evidential-deep-learning) (Dirichlet head + Sensoy loss; NIG for regression) | 29 | ✅ | ✅ | N/A |
+| 9 | [ood-detection](techniques/ood-detection) (MSP + Energy + Mahalanobis; AUROC / FPR@95%TPR) | 29 | ✅ | ✅ | N/A |
+| 10 | [selective-prediction](techniques/selective-prediction) (risk-coverage curve + AURC + coverage-at-risk) | 29 | ✅ | ✅ | N/A |
+| 11 | [covariate-shift-adaptation](techniques/covariate-shift-adaptation) (density-ratio importance weighting; Shimodaira) | 29 | ✅ | ✅ | N/A |
+| 12 | [epistemic-aleatoric](techniques/epistemic-aleatoric) (variance and entropy decompositions; BALD) | 29 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 33** — modern UQ pipelines run in PyTorch / JAX / TensorFlow with `uncertainty-toolbox`, `laplace-torch`, `mapie`, `pytorch-ood`; Spark ML has no first-class Bayesian / conformal support.
+
+### Batch 34 — Robustness (Ch 30, ML side)
+
+Twelve techniques covering modern ML robustness — adversarial attacks
+and defences, smoothness regularisation, distributionally robust
+optimisation. Complements the classical robust-statistics techniques
+already covered (`mm-estimators-robust`, `robust-regression`,
+`sandwich-robust-se`, `multivariate-outlier-detection`, `outlier-tests`,
+`robust-location-scale`, `tmle-doubly-robust`).
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [fgsm-adversarial](techniques/fgsm-adversarial) (Goodfellow 2014 single-step L_∞ attack) | 30 | ✅ | ✅ | N/A |
+| 2 | [pgd-adversarial-training](techniques/pgd-adversarial-training) (Madry 2018 saddle-point objective) | 30 | ✅ | ✅ | N/A |
+| 3 | [trades-adversarial](techniques/trades-adversarial) (Zhang 2019 KL-based clean/robust trade-off) | 30 | ✅ | ✅ | N/A |
+| 4 | [randomized-smoothing](techniques/randomized-smoothing) (Cohen 2019 certified L2 radius) | 30 | ✅ | ✅ | N/A |
+| 5 | [label-smoothing](techniques/label-smoothing) (Szegedy 2016 soft-target CE) | 30 | ✅ | ✅ | N/A |
+| 6 | [mixup](techniques/mixup) (Zhang 2018 Beta-convex-combination) | 30 | ✅ | ✅ | N/A |
+| 7 | [cutmix](techniques/cutmix) (Yun 2019 rectangular patch-swap augmentation) | 30 | ✅ | ✅ | N/A |
+| 8 | [distributionally-robust-optimization](techniques/distributionally-robust-optimization) (Group-DRO, Sagawa 2020) | 30 | ✅ | ✅ | N/A |
+| 9 | [spectral-normalization](techniques/spectral-normalization) (Miyato 2018 per-layer Lipschitz cap) | 30 | ✅ | ✅ | N/A |
+| 10 | [jacobian-regularization](techniques/jacobian-regularization) (Hoffman 2019 Frobenius Jacobian penalty) | 30 | ✅ | ✅ | N/A |
+| 11 | [gradient-clipping](techniques/gradient-clipping) (Pascanu 2013 norm / value clipping) | 30 | ✅ | ✅ | N/A |
+| 12 | [feature-squeezing](techniques/feature-squeezing) (Xu 2018 bit-depth + median-filter defence) | 30 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 34** — adversarial attacks and defences run in PyTorch / TensorFlow / JAX (`foolbox`, `cleverhans`, `advertorch`, `torchattacks`, `robustness`); Spark ML has no first-class adversarial-robustness support.
+
+### Batch 35 — Fairness / Bias (Ch 31)
+
+Twelve techniques covering the modern algorithmic-fairness toolbox:
+four metrics (DP, EO, EOpp, calibration parity + the DI legal test),
+three pre-processing / in-training / post-processing families
+(reweighing, adversarial debiasing, EO postprocessing), plus fair
+representations, counterfactual fairness, the fairlearn reduction
+approach, and Dwork's individual fairness.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [demographic-parity](techniques/demographic-parity) (statistical parity + four-fifths rule) | 31 | ✅ | ✅ | N/A |
+| 2 | [equalized-odds](techniques/equalized-odds) (Hardt 2016 equal TPR + FPR) | 31 | ✅ | ✅ | N/A |
+| 3 | [equal-opportunity](techniques/equal-opportunity) (Hardt 2016 equal TPR only) | 31 | ✅ | ✅ | N/A |
+| 4 | [calibration-parity](techniques/calibration-parity) (Chouldechova 2017 PPV / calibration by group) | 31 | ✅ | ✅ | N/A |
+| 5 | [disparate-impact](techniques/disparate-impact) (EEOC 80 % rule + two-proportion CI) | 31 | ✅ | ✅ | N/A |
+| 6 | [reweighing-preprocessing](techniques/reweighing-preprocessing) (Kamiran-Calders 2012 sample weights) | 31 | ✅ | ✅ | N/A |
+| 7 | [adversarial-debiasing](techniques/adversarial-debiasing) (Zhang 2018 predictor vs adversary game) | 31 | ✅ | ✅ | N/A |
+| 8 | [equalized-odds-postprocessing](techniques/equalized-odds-postprocessing) (Hardt 2016 group ROC hulls + randomised decision) | 31 | ✅ | ✅ | N/A |
+| 9 | [fair-representations-lfr](techniques/fair-representations-lfr) (Zemel 2013 + Ravfogel 2020 INLP projection) | 31 | ✅ | ✅ | N/A |
+| 10 | [counterfactual-fairness](techniques/counterfactual-fairness) (Kusner 2017 SCM-based Level-2 predictor) | 31 | ✅ | ✅ | N/A |
+| 11 | [exponentiated-gradient-reduction](techniques/exponentiated-gradient-reduction) (Agarwal 2018 fairlearn reduction) | 31 | ✅ | ✅ | N/A |
+| 12 | [individual-fairness](techniques/individual-fairness) (Dwork 2012 Lipschitz criterion + IF-loss) | 31 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 35** — fairness auditing and mitigation runs in Python (`fairlearn`, `aif360`, `fairtorch`, `concept-erasure`) or R (`fairness`, `fairml`, `fairmodels`, `mlr3fairness`); Spark ML has no first-class fairness constraints or metrics.
+
+### Batch 36 — MLOps (Ch 32)
+
+Twelve techniques covering the production ML lifecycle: drift
+detection (data + concept), monitoring + alerts, shadow + canary
+deployment, feature store with point-in-time joins, experiment
+tracking + model registry, reproducibility, latency profiling, lineage
+DAG, and model cards.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [data-drift-detection](techniques/data-drift-detection) (PSI + KS + Wasserstein per feature) | 32 | ✅ | ✅ | N/A |
+| 2 | [concept-drift-adwin](techniques/concept-drift-adwin) (Bifet 2007 ADWIN + Gama 2004 DDM online) | 32 | ✅ | ✅ | N/A |
+| 3 | [model-monitoring-metrics](techniques/model-monitoring-metrics) (rolling metrics + EWMA baseline + alerts) | 32 | ✅ | ✅ | N/A |
+| 4 | [shadow-deployment](techniques/shadow-deployment) (dual-scoring log-only comparison) | 32 | ✅ | ✅ | N/A |
+| 5 | [canary-deployment](techniques/canary-deployment) (progressive rollout + SLO rollback) | 32 | ✅ | ✅ | N/A |
+| 6 | [feature-store](techniques/feature-store) (point-in-time join + train/serve skew detection) | 32 | ✅ | ✅ | N/A |
+| 7 | [experiment-tracking](techniques/experiment-tracking) (params / metrics / SHA-256 content-addressed artifacts) | 32 | ✅ | ✅ | N/A |
+| 8 | [model-registry-versioning](techniques/model-registry-versioning) (semver + staging + rollback) | 32 | ✅ | ✅ | N/A |
+| 9 | [reproducibility-seeds](techniques/reproducibility-seeds) (seed_everything + provenance manifest + hashes) | 32 | ✅ | ✅ | N/A |
+| 10 | [inference-latency-profiling](techniques/inference-latency-profiling) (p50/p95/p99 + batch throughput sweep) | 32 | ✅ | ✅ | N/A |
+| 11 | [model-lineage-provenance](techniques/model-lineage-provenance) (data→model→prediction DAG + up/downstream queries) | 32 | ✅ | ✅ | N/A |
+| 12 | [model-cards](techniques/model-cards) (Mitchell 2019 9-section template + validator + markdown export) | 32 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 36** — MLOps tooling lives in Python (`mlflow`, `evidently`, `alibi-detect`, `whylogs`, `feast`, `openlineage`, `torch.profiler`, `argo-rollouts`) or Kubernetes (`seldon-core`, `kserve`); Spark ML has no first-class registry / monitoring / lineage support.
+
+### Batch 37 — Semiparametric & Distribution-Free Methods (Ch 33)
+
+Twelve techniques covering Chapter 33 subsections beyond the already-
+covered `quantile-regression`, `isotonic-regression`, and
+`sandwich-robust-se`: three quantile-regression extensions, two
+distributional-regression families, three semiparametric estimator
+theory pieces (efficiency, EIF, empirical likelihood), and three
+smooth / shape-constrained models.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [bayesian-quantile-regression](techniques/bayesian-quantile-regression) (Yu-Moyeed 2001, asymmetric Laplace + Metropolis) | 33.2 | ✅ | ✅ | N/A |
+| 2 | [censored-quantile-regression](techniques/censored-quantile-regression) (Powell 1986 subgradient solver) | 33.3 | ✅ | ✅ | N/A |
+| 3 | [semiparametric-efficiency](techniques/semiparametric-efficiency) (Bickel-Klaassen bound; IPW vs AIPW 500-trial demo) | 33.4 | ✅ | ✅ | N/A |
+| 4 | [empirical-likelihood](techniques/empirical-likelihood) (Owen 1988, Newton on Lagrangian + bisection CI) | 33.5 | ✅ | ✅ | N/A |
+| 5 | [gamlss](techniques/gamlss) (Rigby-Stasinopoulos 2005, mean + log-sd both regressed) | 33.6 | ✅ | ✅ | N/A |
+| 6 | [single-index-model](techniques/single-index-model) (Ichimura 1993, Nadaraya-Watson link inside SLS) | 33.8 | ✅ | ✅ | N/A |
+| 7 | [varying-coefficient-model](techniques/varying-coefficient-model) (Hastie-Tibshirani 1993, local kernel WLS) | 33.9 | ✅ | ✅ | N/A |
+| 8 | [influence-functions-eif](techniques/influence-functions-eif) (mean/median/variance IFs + SE derivation + outlier demo) | 33.11 | ✅ | ✅ | N/A |
+| 9 | [distributional-regression](techniques/distributional-regression) (multinomial-bin CDF model + per-x quantile band) | 33.12 | ✅ | ✅ | N/A |
+| 10 | [additive-quantile-regression](techniques/additive-quantile-regression) (B-spline basis + subgradient descent, three τ) | 33.13 | ✅ | ✅ | N/A |
+| 11 | [shape-constrained-regression](techniques/shape-constrained-regression) (PAV monotone + SLSQP convex QP) | 33.14 | ✅ | ✅ | N/A |
+| 12 | [expectile-regression](techniques/expectile-regression) (Newey-Powell 1987, IRLS asymmetric squared loss) | 33 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 37** — semiparametric estimators run in R (`quantreg`, `gamlss`, `mgcv`, `expectreg`, `emplik`, `tmle`) or Python (`statsmodels`, `pyGAM`, `ngboost`, `econml`); Spark ML has no first-class semiparametric-QR / EIF support.
+
+### Batch 38 — Cross-chapter cleanup (Ch 25 Dim-Reduction + Ch 32 High-Dim / Sparse)
+
+Twelve techniques filling gaps in previously-covered chapters: six
+dimension-reduction methods that go beyond PCA, and six
+high-dimensional / sparse-regression tools around the LASSO family.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [ica](techniques/ica) (Hyvarinen FastICA on mixed sinusoid + square) | 25.1 | ✅ | ✅ | N/A |
+| 2 | [nmf](techniques/nmf) (Lee-Seung multiplicative updates; topic-word demo) | 25.2 | ✅ | ✅ | N/A |
+| 3 | [sir-sufficient-dim-reduction](techniques/sir-sufficient-dim-reduction) (Li 1991 SIR + SAVE) | 25.3 | ✅ | ✅ | N/A |
+| 4 | [sparse-pca](techniques/sparse-pca) (Zou-Hastie-Tibshirani 2006 alternating soft-threshold + SVD) | 25.8 | ✅ | ✅ | N/A |
+| 5 | [isomap](techniques/isomap) (Tenenbaum 2000 geodesic MDS; Swiss roll) | 25.14 | ✅ | ✅ | N/A |
+| 6 | [lle-locally-linear-embedding](techniques/lle-locally-linear-embedding) (Roweis-Saul 2000) | 25.15 | ✅ | ✅ | N/A |
+| 7 | [scad-mcp-penalties](techniques/scad-mcp-penalties) (Fan-Li 2001 + Zhang 2010 nonconvex + LLA) | 32.2 | ✅ | ✅ | N/A |
+| 8 | [debiased-lasso](techniques/debiased-lasso) (Zhang-Zhang 2014 / van de Geer 2014 CIs via node-wise LASSO) | 32.4 | ✅ | ✅ | N/A |
+| 9 | [model-x-knockoffs](techniques/model-x-knockoffs) (Candes-Fan-Janson-Lv 2018 FDR-controlled selection) | 32.5 | ✅ | ✅ | N/A |
+| 10 | [stability-selection](techniques/stability-selection) (Meinshausen-Buhlmann 2010 subsample-frequency) | 32.6 | ✅ | ✅ | N/A |
+| 11 | [adaptive-lasso](techniques/adaptive-lasso) (Zou 2006 weighted-LASSO with oracle property) | 32.12 | ✅ | ✅ | N/A |
+| 12 | [fused-lasso](techniques/fused-lasso) (Tibshirani 2005 / Chambolle 2004 TV denoising) | 32.13 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 38** — advanced dim-reduction + high-dim inference are R (`fastICA`, `NMF`, `dr`, `elasticnet`, `RDRToolbox`, `lle`, `ncvreg`, `hdi`, `knockoff`, `stabs`, `glmnet`, `genlasso`) or Python (`sklearn.decomposition`, `sklearn.manifold`, `celer`, `knockpy`, `skimage.restoration`); Spark ML has no first-class debiased-LASSO / knockoff support.
+
+### Batch 39 — Cross-chapter cleanup (Ch 31 FDA + Ch 30 Networks)
+
+Twelve techniques bringing Chapter 31 (Functional Data Analysis) from
+one covered subsection to seven, and filling six substantial gaps in
+Chapter 30 (Network Analysis) including generative models,
+network-regression inference, precision-matrix networks, and healthcare
+subtyping.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [functional-pca](techniques/functional-pca) (SVD-based; recovers amplitude + phase modes) | 31.2 | ✅ | ✅ | N/A |
+| 2 | [functional-regression](techniques/functional-regression) (scalar-on-function via FPC scores; corr β̂,β=1.000) | 31.3 | ✅ | ✅ | N/A |
+| 3 | [functional-anova](techniques/functional-anova) (pointwise F + permutation p; sup F 160 vs 6.7) | 31.4 | ✅ | ✅ | N/A |
+| 4 | [functional-clustering](techniques/functional-clustering) (FPC scores + k-means; purity 1.00) | 31.6 | ✅ | ✅ | N/A |
+| 5 | [curve-registration](techniques/curve-registration) (landmark PL-warp; 93.5% variance reduction) | 31.11 | ✅ | ✅ | N/A |
+| 6 | [functional-depth](techniques/functional-depth) (Lopez-Pintado MBD + functional boxplot) | 31.9 | ✅ | ✅ | N/A |
+| 7 | [stochastic-block-model](techniques/stochastic-block-model) (Nowicki-Snijders variational EM + spectral warm start; 1.00 accuracy) | 30.4 | ✅ | ✅ | N/A |
+| 8 | [latent-space-network](techniques/latent-space-network) (Hoff-Raftery-Handcock 2002 MLE + Procrustes) | 30.5 | ✅ | ✅ | N/A |
+| 9 | [qap-network-regression](techniques/qap-network-regression) (Krackhardt 1988 permutation; friendship p=0.000) | 30.6 | ✅ | ✅ | N/A |
+| 10 | [gaussian-graphical-model](techniques/gaussian-graphical-model) (Friedman-Hastie-Tibshirani glasso; TP 4/4 FP 0) | 30.8 | ✅ | ✅ | N/A |
+| 11 | [node2vec-deepwalk](techniques/node2vec-deepwalk) (Skip-gram / shifted-PMI equivalence; 1.92× cluster separation) | 30.19 | ✅ | ✅ | N/A |
+| 12 | [patient-similarity-network](techniques/patient-similarity-network) (Gaussian similarity + k-NN + label propagation; purity 0.967) | 30.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 39** — FDA runs in R (`fda`, `fda.usc`, `refund`, `funHDDC`, `roahd`) or Python (`scikit-fda`, `fdasrsf`); network methods run in R (`sbm`, `latentnet`, `sna`, `glasso`, `qgraph`, `SNFtool`) or Python (`graspologic`, `graph-tool`, `sklearn.covariance`, `node2vec`, `snfpy`); Spark ML has no first-class FDA / latent-space / GGM support.
+
+### Batch 40 — Cross-chapter cleanup (Ch 25/30/31/32)
+
+Twelve techniques spread across the four largest cleanup targets:
+four dim-reduction gaps (Ch 25), four high-dim / sparse gaps (Ch 32),
+two more network sub-sections (Ch 30), and two more FDA sub-sections
+(Ch 31).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [probabilistic-pca](techniques/probabilistic-pca) (Tipping-Bishop 1999 closed-form MLE + EM for missing data) | 25.10 | ✅ | ✅ | N/A |
+| 2 | [random-projections](techniques/random-projections) (Johnson-Lindenstrauss Gaussian + Achlioptas; distortion 12→4% at k=20→200) | 25.12 | ✅ | ✅ | N/A |
+| 3 | [robust-pca](techniques/robust-pca) (Candes-Li-Ma-Wright PCP via ADMM; perfect low-rank + sparse recovery) | 25.13 | ✅ | ✅ | N/A |
+| 4 | [diffusion-maps](techniques/diffusion-maps) (Coifman-Lafon 2006 Markov spectral embedding) | 25.16 | ✅ | ✅ | N/A |
+| 5 | [sure-independence-screening](techniques/sure-independence-screening) (Fan-Lv 2008 marginal-correlation screening; 104× speedup) | 32.7 | ✅ | ✅ | N/A |
+| 6 | [post-selection-inference](techniques/post-selection-inference) (data-split PoSI vs naive; coverage 0.95 vs 0.86) | 32.8 | ✅ | ✅ | N/A |
+| 7 | [group-lasso](techniques/group-lasso) (Yuan-Lin 2006 block-coordinate descent; exact group support) | 32.9 | ✅ | ✅ | N/A |
+| 8 | [covariance-estimation-highdim](techniques/covariance-estimation-highdim) (Ledoit-Wolf shrinkage + banded; both beat sample cov) | 32.11 | ✅ | ✅ | N/A |
+| 9 | [small-world-scale-free](techniques/small-world-scale-free) (Watts-Strogatz + Barabasi-Albert generators + signatures) | 30.12 | ✅ | ✅ | N/A |
+| 10 | [homophily-assortativity](techniques/homophily-assortativity) (Newman 2003 attribute + degree assortativity coefficients) | 30.17 | ✅ | ✅ | N/A |
+| 11 | [functional-basis-smoothing](techniques/functional-basis-smoothing) (P-spline penalised least squares + LOO-CV; 93% MSE reduction) | 31.1 | ✅ | ✅ | N/A |
+| 12 | [functional-linear-model](techniques/functional-linear-model) (function-on-scalar with P-spline coefficient smoothing) | 31.7 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 40** — high-dim + FDA + network methods run in R (`pcaMethods`, `rpca`, `RandPro`, `SIS`, `selectiveInference`, `grplasso`, `corpcor`, `igraph`, `poweRlaw`, `fda`, `refund`) or Python (`sklearn.covariance`, `sklearn.random_projection`, `celer`, `networkx`, `powerlaw`, `scikit-fda`, `pyDiffMap`); Spark ML has no first-class support for any of these.
+
+Later batches: any remaining chapters.
 
 ---
 

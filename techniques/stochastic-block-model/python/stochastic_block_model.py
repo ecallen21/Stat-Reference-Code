@@ -1,133 +1,97 @@
-"""Stochastic Block Model — SBM (Reference §24.6).
+"""Stochastic Block Model — SBM (Reference Sec 30.4).
 
-Generative model for graphs with community structure:
+Nowicki & Snijders (2001), Snijders & Nowicki (1997).
 
-    z_i ~ Categorical(pi)              (block label of node i)
-    A_ij | z_i, z_j ~ Bernoulli(B[z_i, z_j])
+Nodes belong to one of K latent BLOCKS. Edge probability depends only
+on block membership:
 
-We fit by:
+  P(A_ij = 1 | z_i, z_j)  =  B[z_i, z_j].
 
-  * SIMULATION: draw an SBM with known blocks (planted-partition).
-  * ESTIMATION: hard EM (label switching) — given labels, MLE for B is
-    the empirical within/between edge density; given B, reassign each
-    node to the block maximising its complete-data likelihood contribution.
-    Iterate.
+Maximum-likelihood estimation of (Z, B) via EM (or variational EM, or
+belief propagation) recovers the block structure.
+
+Here we implement a compact variational-EM SBM: soft block assignments
+via posterior probabilities, then M-step for the block-probability
+matrix B. Test on a synthetic graph with planted 3-block structure.
 """
-from __future__ import annotations    # stdlib: postpone type-hint evaluation
+from __future__ import annotations    # stdlib
 
-import numpy as np    # numerical arrays + linear algebra
-
-
-def simulate_sbm(sizes, B, seed: int = 0):
-    rng = np.random.default_rng(seed)
-    n = sum(sizes); z = np.repeat(range(len(sizes)), sizes)
-    A = np.zeros((n, n), dtype=int)
-    for i in range(n):
-        for j in range(i + 1, n):
-            if rng.uniform() < B[z[i], z[j]]:
-                A[i, j] = A[j, i] = 1
-    return A, z
+import numpy as np    # numerical arrays
 
 
-def _mle_B(A, z, K):
-    """MLE of block probabilities given labels."""
-    B = np.zeros((K, K)); counts = np.zeros((K, K))
-    for r in range(K):
-        for s in range(K):
-            idx_r = np.where(z == r)[0]; idx_s = np.where(z == s)[0]
-            if r == s:
-                if len(idx_r) < 2:
-                    B[r, s] = 0.0; continue
-                sub = A[np.ix_(idx_r, idx_r)]
-                total_pairs = len(idx_r) * (len(idx_r) - 1) / 2
-                B[r, s] = float(sub.sum()) / (2 * total_pairs) if total_pairs > 0 else 0.0
-            else:
-                sub = A[np.ix_(idx_r, idx_s)]
-                total_pairs = len(idx_r) * len(idx_s)
-                B[r, s] = float(sub.sum()) / total_pairs if total_pairs > 0 else 0.0
-    return B
-
-
-def _reassign(A, z, K, B):
-    """Reassign each node greedily to the block maximising its log-lik contribution."""
-    n = A.shape[0]; z_new = z.copy()
-    Bc = np.clip(B, 1e-6, 1 - 1e-6)
-    logB = np.log(Bc); log1B = np.log(1 - Bc)
-    for i in range(n):
-        best = -np.inf; best_k = z[i]
-        for k in range(K):
-            ll = 0.0
-            for j in range(n):
-                if i == j:
-                    continue
-                ll += A[i, j] * logB[k, z_new[j]] + (1 - A[i, j]) * log1B[k, z_new[j]]
-            if ll > best:
-                best = ll; best_k = k
-        z_new[i] = best_k
-    return z_new
-
-
-def fit_sbm(A, K: int, n_iter: int = 20, seed: int = 0) -> dict:
-    """Hard EM starting from spectral (leading Laplacian eigenvectors) init."""
+def sbm_em(A, K, max_iter=50, seed=0):
+    """Variational EM for undirected Bernoulli SBM."""
     rng = np.random.default_rng(seed)
     n = A.shape[0]
-    # spectral warm start: k-means on top-K eigenvectors of A
-    w, V = np.linalg.eigh(A.astype(float))
-    U = V[:, -K:]
-    # k-means (simple)
-    idx = rng.choice(n, K, replace=False); centres = U[idx]
-    z = np.zeros(n, dtype=int)
-    for _ in range(30):
-        d2 = ((U[:, None, :] - centres[None, :, :]) ** 2).sum(-1)
-        z_new = d2.argmin(axis=1)
-        if (z_new == z).all():
-            break
-        z = z_new
+    # Warm-start with spectral clustering on the adjacency matrix.
+    U, s, _ = np.linalg.svd(A + 1e-3 * np.eye(n), full_matrices=False)
+    features = U[:, :K] * s[:K]
+    # Simple k-means init on features.
+    centres = features[rng.choice(n, K, replace=False)]
+    for _ in range(20):
+        d = np.sum((features[:, None] - centres[None]) ** 2, axis=2)
+        labels_init = d.argmin(axis=1)
+        centres = np.array([features[labels_init == k].mean(axis=0) if (labels_init == k).any() else centres[k] for k in range(K)])
+    q = np.full((n, K), 0.05)
+    q[np.arange(n), labels_init] = 0.90
+    q = q / q.sum(axis=1, keepdims=True)
+    for _ in range(max_iter):
+        # M-step: block probabilities B and prior alpha
+        alpha = q.mean(axis=0) + 1e-6
+        alpha = alpha / alpha.sum()
+        M = q.T @ A @ q                        # K x K expected edges
+        D = q.T @ (np.ones_like(A) - np.eye(n)) @ q
+        B = M / (D + 1e-6)
+        B = np.clip(B, 1e-6, 1 - 1e-6)
+        # E-step: log q_ik proportional to log alpha_k + sum_j q_jl [A_ij log B_kl + (1-A_ij) log(1-B_kl)]
+        log_q = np.log(alpha)[None, :] + np.zeros((n, K))
         for k in range(K):
-            if (z == k).any():
-                centres[k] = U[z == k].mean(axis=0)
-    # EM
-    for it in range(n_iter):
-        B = _mle_B(A, z, K)
-        z_new = _reassign(A, z, K, B)
-        if (z_new == z).all():
-            break
-        z = z_new
-    B = _mle_B(A, z, K)
-    return {"labels": z, "B": B, "K": K, "n_iter": it + 1,
-            "method": "SBM hard EM (spectral warm start)"}
+            for l in range(K):
+                log_q[:, k] += (A @ q[:, l]) * np.log(B[k, l]) \
+                                + ((1 - A) @ q[:, l]) * np.log(1 - B[k, l])
+        log_q -= log_q.max(axis=1, keepdims=True)
+        q_new = np.exp(log_q)
+        q_new = q_new / q_new.sum(axis=1, keepdims=True)
+        if np.max(np.abs(q_new - q)) < 1e-4:
+            q = q_new; break
+        q = q_new
+    return q, B, alpha
 
 
-def match_labels(z_true, z_hat):
-    """Best permutation of z_hat to match z_true (via majority vote per detected block)."""
-    K = int(max(z_true.max(), z_hat.max())) + 1
-    from collections import Counter
-    remap = {}
-    for k in range(K):
-        mask = z_hat == k
-        if mask.any():
-            remap[k] = Counter(z_true[mask]).most_common(1)[0][0]
-    return np.array([remap.get(zi, zi) for zi in z_hat])
+def cluster_accuracy(pred, truth):
+    """Best permutation match between two labelings."""
+    from itertools import permutations
+    Ks = max(pred.max(), truth.max()) + 1
+    best = 0
+    for perm in permutations(range(Ks)):
+        remap = np.array(perm)
+        m = (remap[pred] == truth).mean()
+        if m > best: best = m
+    return best
 
 
 if __name__ == "__main__":
-    sizes = [15, 15, 15]; K = len(sizes)
-    B_true = np.array([[0.8, 0.05, 0.05],
-                       [0.05, 0.7, 0.05],
-                       [0.05, 0.05, 0.9]])
-    A, z_true = simulate_sbm(sizes, B_true, seed=0)
+    print("=== SBM variational EM on a planted 3-block graph ===\n")
+    rng = np.random.default_rng(0)
+    n_per = 20
+    K = 3
+    n = n_per * K
+    labels = np.repeat(np.arange(K), n_per)
+    B_true = np.array([[0.6, 0.05, 0.05],
+                        [0.05, 0.6, 0.05],
+                        [0.05, 0.05, 0.6]])
+    A = np.zeros((n, n))
+    for i in range(n):
+        for j in range(i + 1, n):
+            if rng.random() < B_true[labels[i], labels[j]]:
+                A[i, j] = A[j, i] = 1
+    print(f"  planted 3-block graph:   n = {n}   edge budget within-block ~0.6, cross-block ~0.05")
 
-    print(f"=== SBM fit (n=45, K=3, planted within-p 0.7-0.9, between-p 0.05) ===")
-    fit = fit_sbm(A, K, n_iter=20, seed=1)
-    print(f"  iterations = {fit['n_iter']}")
-    z_matched = match_labels(z_true, fit["labels"])
-    acc = float((z_matched == z_true).mean())
-    print(f"  block-recovery accuracy = {acc:.3f}")
-    print(f"  estimated B (rows/cols in original label order):")
-    for r in range(K):
-        print("   " + "  ".join(f"{fit['B'][r, s]:6.3f}" for s in range(K)))
-    print(f"  true B:")
-    for r in range(K):
-        print("   " + "  ".join(f"{B_true[r, s]:6.3f}" for s in range(K)))
+    q, B_hat, alpha = sbm_em(A, K=3, max_iter=50, seed=1)
+    pred = q.argmax(axis=1)
+    acc = cluster_accuracy(pred, labels)
+    print(f"  recovered cluster accuracy (best-permutation): {acc:.3f}")
+    print(f"  estimated B_hat:\n{B_hat.round(3)}")
+    print(f"  estimated block prior alpha: {alpha.round(3).tolist()}   truth = [{1/3:.3f}]*3\n")
 
-    print("\n--- library cross-check (R blockmodels; Python graph-tool) ---")
+    print("--- library cross-check (R sbm; graph-tool for SBM; Python graspologic) ---")
