@@ -1357,7 +1357,32 @@ approach, and Dwork's individual fairness.
 
 **PySpark N/A across Batch 35** — fairness auditing and mitigation runs in Python (`fairlearn`, `aif360`, `fairtorch`, `concept-erasure`) or R (`fairness`, `fairml`, `fairmodels`, `mlr3fairness`); Spark ML has no first-class fairness constraints or metrics.
 
-Later batches: MLOps.
+### Batch 36 — MLOps (Ch 32)
+
+Twelve techniques covering the production ML lifecycle: drift
+detection (data + concept), monitoring + alerts, shadow + canary
+deployment, feature store with point-in-time joins, experiment
+tracking + model registry, reproducibility, latency profiling, lineage
+DAG, and model cards.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [data-drift-detection](techniques/data-drift-detection) (PSI + KS + Wasserstein per feature) | 32 | ✅ | ✅ | N/A |
+| 2 | [concept-drift-adwin](techniques/concept-drift-adwin) (Bifet 2007 ADWIN + Gama 2004 DDM online) | 32 | ✅ | ✅ | N/A |
+| 3 | [model-monitoring-metrics](techniques/model-monitoring-metrics) (rolling metrics + EWMA baseline + alerts) | 32 | ✅ | ✅ | N/A |
+| 4 | [shadow-deployment](techniques/shadow-deployment) (dual-scoring log-only comparison) | 32 | ✅ | ✅ | N/A |
+| 5 | [canary-deployment](techniques/canary-deployment) (progressive rollout + SLO rollback) | 32 | ✅ | ✅ | N/A |
+| 6 | [feature-store](techniques/feature-store) (point-in-time join + train/serve skew detection) | 32 | ✅ | ✅ | N/A |
+| 7 | [experiment-tracking](techniques/experiment-tracking) (params / metrics / SHA-256 content-addressed artifacts) | 32 | ✅ | ✅ | N/A |
+| 8 | [model-registry-versioning](techniques/model-registry-versioning) (semver + staging + rollback) | 32 | ✅ | ✅ | N/A |
+| 9 | [reproducibility-seeds](techniques/reproducibility-seeds) (seed_everything + provenance manifest + hashes) | 32 | ✅ | ✅ | N/A |
+| 10 | [inference-latency-profiling](techniques/inference-latency-profiling) (p50/p95/p99 + batch throughput sweep) | 32 | ✅ | ✅ | N/A |
+| 11 | [model-lineage-provenance](techniques/model-lineage-provenance) (data→model→prediction DAG + up/downstream queries) | 32 | ✅ | ✅ | N/A |
+| 12 | [model-cards](techniques/model-cards) (Mitchell 2019 9-section template + validator + markdown export) | 32 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 36** — MLOps tooling lives in Python (`mlflow`, `evidently`, `alibi-detect`, `whylogs`, `feast`, `openlineage`, `torch.profiler`, `argo-rollouts`) or Kubernetes (`seldon-core`, `kserve`); Spark ML has no first-class registry / monitoring / lineage support.
+
+Later batches: any remaining chapters.
 
 ---
 
