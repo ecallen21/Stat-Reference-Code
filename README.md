@@ -1456,6 +1456,30 @@ subtyping.
 
 **PySpark N/A across Batch 39** — FDA runs in R (`fda`, `fda.usc`, `refund`, `funHDDC`, `roahd`) or Python (`scikit-fda`, `fdasrsf`); network methods run in R (`sbm`, `latentnet`, `sna`, `glasso`, `qgraph`, `SNFtool`) or Python (`graspologic`, `graph-tool`, `sklearn.covariance`, `node2vec`, `snfpy`); Spark ML has no first-class FDA / latent-space / GGM support.
 
+### Batch 40 — Cross-chapter cleanup (Ch 25/30/31/32)
+
+Twelve techniques spread across the four largest cleanup targets:
+four dim-reduction gaps (Ch 25), four high-dim / sparse gaps (Ch 32),
+two more network sub-sections (Ch 30), and two more FDA sub-sections
+(Ch 31).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [probabilistic-pca](techniques/probabilistic-pca) (Tipping-Bishop 1999 closed-form MLE + EM for missing data) | 25.10 | ✅ | ✅ | N/A |
+| 2 | [random-projections](techniques/random-projections) (Johnson-Lindenstrauss Gaussian + Achlioptas; distortion 12→4% at k=20→200) | 25.12 | ✅ | ✅ | N/A |
+| 3 | [robust-pca](techniques/robust-pca) (Candes-Li-Ma-Wright PCP via ADMM; perfect low-rank + sparse recovery) | 25.13 | ✅ | ✅ | N/A |
+| 4 | [diffusion-maps](techniques/diffusion-maps) (Coifman-Lafon 2006 Markov spectral embedding) | 25.16 | ✅ | ✅ | N/A |
+| 5 | [sure-independence-screening](techniques/sure-independence-screening) (Fan-Lv 2008 marginal-correlation screening; 104× speedup) | 32.7 | ✅ | ✅ | N/A |
+| 6 | [post-selection-inference](techniques/post-selection-inference) (data-split PoSI vs naive; coverage 0.95 vs 0.86) | 32.8 | ✅ | ✅ | N/A |
+| 7 | [group-lasso](techniques/group-lasso) (Yuan-Lin 2006 block-coordinate descent; exact group support) | 32.9 | ✅ | ✅ | N/A |
+| 8 | [covariance-estimation-highdim](techniques/covariance-estimation-highdim) (Ledoit-Wolf shrinkage + banded; both beat sample cov) | 32.11 | ✅ | ✅ | N/A |
+| 9 | [small-world-scale-free](techniques/small-world-scale-free) (Watts-Strogatz + Barabasi-Albert generators + signatures) | 30.12 | ✅ | ✅ | N/A |
+| 10 | [homophily-assortativity](techniques/homophily-assortativity) (Newman 2003 attribute + degree assortativity coefficients) | 30.17 | ✅ | ✅ | N/A |
+| 11 | [functional-basis-smoothing](techniques/functional-basis-smoothing) (P-spline penalised least squares + LOO-CV; 93% MSE reduction) | 31.1 | ✅ | ✅ | N/A |
+| 12 | [functional-linear-model](techniques/functional-linear-model) (function-on-scalar with P-spline coefficient smoothing) | 31.7 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 40** — high-dim + FDA + network methods run in R (`pcaMethods`, `rpca`, `RandPro`, `SIS`, `selectiveInference`, `grplasso`, `corpcor`, `igraph`, `poweRlaw`, `fda`, `refund`) or Python (`sklearn.covariance`, `sklearn.random_projection`, `celer`, `networkx`, `powerlaw`, `scikit-fda`, `pyDiffMap`); Spark ML has no first-class support for any of these.
+
 Later batches: any remaining chapters.
 
 ---
