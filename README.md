@@ -1260,7 +1260,28 @@ tabular exact planning to modern policy-gradient and offline RL.
 
 **PySpark N/A across Batch 31** — RL training uses PyTorch / JAX + gymnasium; distributed RL uses Ray RLlib / Acme rather than Spark.
 
-Later batches: causal deep learning, meta-learning, uncertainty quantification, robustness.
+### Batch 32 — Cross-chapter cleanup (Chs 25, 27, 28)
+
+Twelve techniques closing remaining gaps: 4 RL, 4 deep learning, 4 text.
+
+| # | Technique | Chapter | R | Python | PySpark |
+|---|-----------|---------|---|--------|---------|
+| 1 | [sac-soft-actor-critic](techniques/sac-soft-actor-critic) (soft policy iteration; entropy-regularised RL) | 28 | ✅ | ✅ | N/A |
+| 2 | [ddpg-td3](techniques/ddpg-td3) (deterministic policy gradient + twin-Q + delayed updates) | 28 | ✅ | ✅ | N/A |
+| 3 | [prioritized-experience-replay](techniques/prioritized-experience-replay) (TD-weighted sampling + IS correction) | 28 | ✅ | ✅ | N/A |
+| 4 | [hierarchical-rl-options](techniques/hierarchical-rl-options) (SMDP-Q-learning over temporally-extended options) | 28 | ✅ | ✅ | N/A |
+| 5 | [state-space-models](techniques/state-space-models) (S4 / Mamba scan + convolution kernel) | 27 | ✅ | ✅ | N/A |
+| 6 | [neural-ode](techniques/neural-ode) (continuous-depth NN via Euler / RK4 solvers) | 27 | ✅ | ✅ | N/A |
+| 7 | [energy-based-models](techniques/energy-based-models) (contrastive divergence + Langevin sampling) | 27 | ✅ | ✅ | N/A |
+| 8 | [meta-learning-maml](techniques/meta-learning-maml) (first-order MAML for few-shot regression) | 27 | ✅ | ✅ | N/A |
+| 9 | [question-answering](techniques/question-answering) (IDF-weighted sentence-retrieval baseline) | 25 | ✅ | ✅ | N/A |
+| 10 | [abstractive-summarization](techniques/abstractive-summarization) (extract-then-simplify TextRank baseline) | 25 | ✅ | ✅ | N/A |
+| 11 | [relation-extraction](techniques/relation-extraction) (regex patterns for `founder_of`, `ceo_of`, `born_in`, …) | 25 | ✅ | ✅ | N/A |
+| 12 | [entity-linking](techniques/entity-linking) (alias-index + context-cosine disambiguation) | 25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 32** — mirrors the parents.
+
+Later batches: uncertainty quantification, robustness, fairness / bias, MLOps.
 
 ---
 
