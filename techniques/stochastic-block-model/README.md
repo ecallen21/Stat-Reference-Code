@@ -1,51 +1,76 @@
-# Stochastic Block Model — SBM (Reference §24.6)
+# Stochastic Block Model (Reference §30.4)
 
-Generative model for graphs with community / role structure:
+**Nodes belong to one of K latent blocks; edge probability depends
+only on the block pair.** Nowicki & Snijders (2001).
+
+## Model
 
 ```
-z_i ~ Categorical(π)                    (block label of node i)
-A_ij | z_i, z_j ~ Bernoulli(B[z_i, z_j])   (edge probability by block pair)
+P(A_ij = 1 | z_i, z_j)  =  B[z_i, z_j].
 ```
 
-Special cases:
+- **Assortative** structure: `B` is diagonally dominant → clusters.
+- **Disassortative** structure: `B` has small diagonal → bipartite-like.
+- **Core-periphery** structure: one block connects densely to all
+  others.
 
-- **Assortative** — `B_kk > B_kl` (diagonal-heavy): communities.
-- **Disassortative** — `B_kl > B_kk` off-diagonal-heavy: bipartite / core-periphery.
-- **Degree-corrected SBM** — adds per-node degree parameters θ_i so that hubs don't hijack the block assignment.
+## Estimation
 
-## Fitting
-
-Full likelihood involves summing over all label configurations; three practical routes:
-
-1. **Hard EM / classification EM** (implemented here): given labels, MLE of B is empirical density within each block pair; given B, reassign each node to the block maximising its log-likelihood; iterate.
-2. **Variational EM** (`blockmodels::BM_bernoulli`) — soft assignments, more principled inference on π and B.
-3. **MCMC + MDL** (`graph_tool.minimize_blockmodel_dl`) — Bayesian, selects K automatically via Minimum Description Length; handles nested / hierarchical SBM.
+- **Variational EM** (Daudin-Picard-Robin 2008): E-step for the
+  posterior `q(z)` factorises; M-step updates block probabilities `B`
+  and priors `α`.
+- **Belief propagation** (Decelle 2011) is faster on sparse graphs.
+- **Bayesian nested SBM** (Peixoto 2014) infers `K` automatically.
 
 ## When to use
 
-- **Generative community detection** with proper block probabilities (not just a partition).
-- **Bipartite / directed / disassortative structure** — modularity misses these; SBM detects them.
-- **Model selection** — likelihood-based comparison of K.
-- **Missing-edge / link-prediction** with a plug-in block posterior.
+- **Community detection** with a generative model — enables model
+  comparison and hypothesis testing.
+- **Weighted / covariate-adjusted SBM** — modular extensions cover
+  edge counts, edge covariates, dynamic networks.
+- **Bipartite / directed / degree-corrected** variants exist.
+
+## When NOT to use
+
+- **Heterogeneous degree within blocks** — plain SBM confounds blocks
+  with degree. Use degree-corrected SBM (Karrer-Newman 2011).
+- **Very sparse graphs** — likelihood becomes flat; regularise or
+  Bayesian nested SBM.
+- **Small K unknown** — Bayesian nested SBM or hierarchical model
+  selection required.
 
 ## Files
 
-- `python/stochastic_block_model.py` — from-scratch simulator + hard-EM fitter with spectral warm start. Demo (n=45, K=3, planted diagonal 0.7–0.9, off-diagonal 0.05): converges in 1 iteration, 100% block-recovery accuracy; estimated diagonal 0.71 / 0.69 / 0.92 vs true 0.80 / 0.70 / 0.90, off-diagonal ≈ 0.05.
-- `r/stochastic_block_model.R` — `blockmodels::BM_bernoulli`, `sbm::estimateSimpleSBM`, `greed::greed`.
-
-## Contrast with modularity
-
-- **Modularity** — heuristic score for an *assortative* partition. Cannot detect disassortative structure. See `community-detection`.
-- **SBM** — full generative model; detects both assortative and disassortative blocks; enables likelihood-based K selection and Bayesian uncertainty.
-- **Degree-corrected SBM** (Karrer-Newman 2011) — the go-to for real assortative networks with heavy-tailed degrees.
+- `python/stochastic_block_model.py` — from-scratch variational EM
+  with **spectral warm start** (k-means on top-K singular vectors of
+  the adjacency) to escape symmetric local optima. Demo: n = 60,
+  planted 3-block graph, within-block edge prob 0.6, cross-block 0.05.
+  **Recovered cluster accuracy = 1.000**; estimated diagonal `B̂ ≈
+  0.61`, off-diagonal `≈ 0.05`; block priors `[0.33, 0.33, 0.33]`.
+- `r/stochastic_block_model.R` — `sbm`, `blockmodels`, `latentnet`
+  (R); `graspologic`, `graph-tool` (Python).
 
 ## Assumptions & caveats
 
-- **K unknown** in practice — use MDL / ICL / cross-validation; `greed`/`graph_tool` automate this.
-- **Hard EM has local optima** — restart from multiple random / spectral seeds.
-- **Label switching** — cluster identity is arbitrary; align via majority vote before reporting recovery accuracy.
-- **Heavy-tailed degree** distorts vanilla SBM — use the degree-corrected variant.
-- **Time complexity** of the reassignment step: `O(n · K · avg_degree)` per pass.
+- **Symmetric local minima** — plain random init often collapses to
+  the all-equal block; spectral / k-means warm start avoids that.
+- **K choice** — ICL / BIC / cross-validation; Bayesian nested SBM
+  learns K.
+- **Edge independence** given z — violated in real networks with
+  degree heterogeneity → degree-corrected SBM.
+- **Directed / bipartite / weighted** extensions require different
+  likelihoods.
+- **Identifiability** — labels are only recovered up to permutation.
+
+## Related in this repo
+
+- `community-detection` — classical modularity-based alternative.
+- `ergm-exponential-random-graph` — likelihood-based alternative with
+  local statistics.
+- `latent-space-network`, `gaussian-graphical-model`, `qap-network-
+  regression`, `node2vec-deepwalk`, `patient-similarity-network` —
+  network family (this batch).
+- `random-graph-models` — the null-model catalogue.
 
 ## Run
 
@@ -54,7 +79,7 @@ python techniques/stochastic-block-model/python/stochastic_block_model.py
 Rscript techniques/stochastic-block-model/r/stochastic_block_model.R
 ```
 
-**Refs:** Holland, P.W., Laskey, K.B. & Leinhardt, S. "Stochastic blockmodels: first steps." *Social Networks* 5(2), 109–137, 1983; Karrer, B. & Newman, M.E.J. "Stochastic blockmodels and community structure in networks." *Phys. Rev. E* 83, 016107, 2011; Peixoto, T.P. "Bayesian stochastic blockmodeling." In *Advances in Network Clustering*, Wiley, 2019.
+**Refs:** Nowicki, K. & Snijders, T.A.B. "Estimation and prediction for stochastic blockstructures." *JASA*, 2001; Daudin, J.-J., Picard, F. & Robin, S. "A mixture model for random graphs." *Statistics and Computing*, 2008; Peixoto, T.P. "Hierarchical block structures and high-resolution model selection in large networks." *Physical Review X*, 2014.
 
 ---
 

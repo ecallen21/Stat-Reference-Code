@@ -1431,6 +1431,31 @@ high-dimensional / sparse-regression tools around the LASSO family.
 
 **PySpark N/A across Batch 38** — advanced dim-reduction + high-dim inference are R (`fastICA`, `NMF`, `dr`, `elasticnet`, `RDRToolbox`, `lle`, `ncvreg`, `hdi`, `knockoff`, `stabs`, `glmnet`, `genlasso`) or Python (`sklearn.decomposition`, `sklearn.manifold`, `celer`, `knockpy`, `skimage.restoration`); Spark ML has no first-class debiased-LASSO / knockoff support.
 
+### Batch 39 — Cross-chapter cleanup (Ch 31 FDA + Ch 30 Networks)
+
+Twelve techniques bringing Chapter 31 (Functional Data Analysis) from
+one covered subsection to seven, and filling six substantial gaps in
+Chapter 30 (Network Analysis) including generative models,
+network-regression inference, precision-matrix networks, and healthcare
+subtyping.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [functional-pca](techniques/functional-pca) (SVD-based; recovers amplitude + phase modes) | 31.2 | ✅ | ✅ | N/A |
+| 2 | [functional-regression](techniques/functional-regression) (scalar-on-function via FPC scores; corr β̂,β=1.000) | 31.3 | ✅ | ✅ | N/A |
+| 3 | [functional-anova](techniques/functional-anova) (pointwise F + permutation p; sup F 160 vs 6.7) | 31.4 | ✅ | ✅ | N/A |
+| 4 | [functional-clustering](techniques/functional-clustering) (FPC scores + k-means; purity 1.00) | 31.6 | ✅ | ✅ | N/A |
+| 5 | [curve-registration](techniques/curve-registration) (landmark PL-warp; 93.5% variance reduction) | 31.11 | ✅ | ✅ | N/A |
+| 6 | [functional-depth](techniques/functional-depth) (Lopez-Pintado MBD + functional boxplot) | 31.9 | ✅ | ✅ | N/A |
+| 7 | [stochastic-block-model](techniques/stochastic-block-model) (Nowicki-Snijders variational EM + spectral warm start; 1.00 accuracy) | 30.4 | ✅ | ✅ | N/A |
+| 8 | [latent-space-network](techniques/latent-space-network) (Hoff-Raftery-Handcock 2002 MLE + Procrustes) | 30.5 | ✅ | ✅ | N/A |
+| 9 | [qap-network-regression](techniques/qap-network-regression) (Krackhardt 1988 permutation; friendship p=0.000) | 30.6 | ✅ | ✅ | N/A |
+| 10 | [gaussian-graphical-model](techniques/gaussian-graphical-model) (Friedman-Hastie-Tibshirani glasso; TP 4/4 FP 0) | 30.8 | ✅ | ✅ | N/A |
+| 11 | [node2vec-deepwalk](techniques/node2vec-deepwalk) (Skip-gram / shifted-PMI equivalence; 1.92× cluster separation) | 30.19 | ✅ | ✅ | N/A |
+| 12 | [patient-similarity-network](techniques/patient-similarity-network) (Gaussian similarity + k-NN + label propagation; purity 0.967) | 30.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 39** — FDA runs in R (`fda`, `fda.usc`, `refund`, `funHDDC`, `roahd`) or Python (`scikit-fda`, `fdasrsf`); network methods run in R (`sbm`, `latentnet`, `sna`, `glasso`, `qgraph`, `SNFtool`) or Python (`graspologic`, `graph-tool`, `sklearn.covariance`, `node2vec`, `snfpy`); Spark ML has no first-class FDA / latent-space / GGM support.
+
 Later batches: any remaining chapters.
 
 ---
