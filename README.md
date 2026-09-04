@@ -1528,6 +1528,32 @@ and panel cointegration.
 
 **PySpark N/A across Batch 42** — panel econometrics tools live in R (`plm`, `fixest`, `did`, `synthdid`, `systemfit`, `frontier`, `oaxaca`, `sandwich`, `punitroots`) or Python (`linearmodels`, `pyfixest`, `differences`, `statsmodels`, `pysfa`); Spark ML has no first-class panel-econometrics support.
 
+### Batch 43 — Statistical Process Control & Sequential Methods (Ch 37)
+
+Twelve techniques covering the core SPC toolbox: Shewhart charts with
+Western Electric rules, CUSUM, EWMA, multivariate Hotelling T²,
+Wald SPRT, capability indices, acceptance sampling, Six Sigma
+DPMO ↔ σ ↔ yield, risk-adjusted (VLAD + Steiner CUSUM), rare-event
+(G-chart + Bernoulli CUSUM), multi-vari variance decomposition, and
+Pareto charts.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [shewhart-control-charts](techniques/shewhart-control-charts) (X-bar/R + Western Electric run rules; Phase I baseline; flags at subgroup 26) | 37.1 | ✅ | ✅ | N/A |
+| 2 | [cusum-charts](techniques/cusum-charts) (tabular CUSUM k=0.5, h=6; detects 1σ shift at t=100 with delay 16) | 37.2 | ✅ | ✅ | N/A |
+| 3 | [ewma-charts](techniques/ewma-charts) (λ ∈ {0.1, 0.2, 0.4}, L=3.5; λ=0.1/0.2 detect faster than λ=0.4) | 37.3 | ✅ | ✅ | N/A |
+| 4 | [multivariate-control-charts](techniques/multivariate-control-charts) (Hotelling T² with F-UCL(α=0.005)=14.07; 3/10 shifts flagged) | 37.4 | ✅ | ✅ | N/A |
+| 5 | [sequential-analysis](techniques/sequential-analysis) (Wald SPRT Bernoulli 0.5→0.7; avg n=34 vs fixed 63) | 37.5 | ✅ | ✅ | N/A |
+| 6 | [process-capability-indices](techniques/process-capability-indices) (Cp/Cpk/Pp/Ppk/Cpm; A centered Cpk=1.08, B off-centre 0.57) | 37.6 | ✅ | ✅ | N/A |
+| 7 | [acceptance-sampling](techniques/acceptance-sampling) (OC + AOQ + AOQL + ATI; producer's risk α=0.014 at AQL=0.01) | 37.7 | ✅ | ✅ | N/A |
+| 8 | [six-sigma-methods](techniques/six-sigma-methods) (DPMO ↔ σ ↔ yield with 1.5-σ shift + DMAIC checklist) | 37.9 | ✅ | ✅ | N/A |
+| 9 | [risk-adjusted-control-charts](techniques/risk-adjusted-control-charts) (VLAD +2.71→−10.02 + Steiner CUSUM signals at t=169) | 37.10 | ✅ | ✅ | N/A |
+| 10 | [rare-event-control-charts](techniques/rare-event-control-charts) (G-chart + Bernoulli CUSUM; detects 0.005→0.02 at t=1555) | 37.11 | ✅ | ✅ | N/A |
+| 11 | [multi-vari-charts](techniques/multi-vari-charts) (within 7.7% / between-piece 39.1% / between-time 53.2%) | 37.12 | ✅ | ✅ | N/A |
+| 12 | [pareto-charts](techniques/pareto-charts) (10 defect types, N=401; 4 vital-few cover 83%) | 37.14 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 43** — SPC / sequential tools run in R (`qcc`, `qicharts2`, `SixSigma`, `MSQC`, `AcceptanceSampling`, `spc`, `vlad`) or Python (`pyspc`, `scipy.stats`, custom); Spark ML has no first-class SPC / sequential-analysis / acceptance-sampling primitives.
+
 Later batches: any remaining chapters.
 
 ---
