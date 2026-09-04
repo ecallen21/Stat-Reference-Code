@@ -1606,6 +1606,30 @@ penalised regression for low-EPV settings.
 
 **PySpark N/A across Batch 45** — clinical prediction workflow lives in R (`rms`, `caret`, `tidymodels`, `riskRegression`, `predtools`, `CalibrationCurves`, `pmcalibration`, `metamisc`, `glmnet`) or Python (`sklearn.linear_model`, `sklearn.calibration`, `sklearn.metrics`, `statsmodels`, `lifelines`, `mapie`); Spark ML supports elements of the underlying model classes but has no first-class clinical-prediction validation / calibration / nomogram tooling.
 
+### Batch 46 — Genomic and High-Throughput Statistical Methods (Ch 40)
+
+Twelve techniques covering the core statistical genomics toolkit:
+GWAS + PRS, differential expression + GSEA + WGCNA, ComBat batch
+correction, eQTL, LD score regression + heritability, and the
+population-genetics QC quartet (HWE, LD, haplotype phasing, F_ST).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [gwas](techniques/gwas) (per-SNP regression + genomic-inflation λ; SNP 50 p=1e-15) | 40.1/40.23 | ✅ | ✅ | N/A |
+| 2 | [polygenic-risk-scores](techniques/polygenic-risk-scores) (P+T at 5 thresholds; ΔR² peaks at p<0.1) | 40.2/40.15 | ✅ | ✅ | N/A |
+| 3 | [differential-expression](techniques/differential-expression) (limma-style moderated t; 30/30 DE recovered w/ FP=2) | 40.3 | ✅ | ✅ | N/A |
+| 4 | [gsea](techniques/gsea) (KS-style enrichment score + label permutation; top-biased set p=0.006) | 40.4/40.18 | ✅ | ✅ | N/A |
+| 5 | [wgcna-coexpression](techniques/wgcna-coexpression) (soft-threshold + TOM + hclust; 36-gene module corr −0.93 with trait) | 40.6 | ✅ | ✅ | N/A |
+| 6 | [batch-effect-combat](techniques/batch-effect-combat) (EB batch correction; cross-batch var 0.70→0.04) | 40.11/40.14 | ✅ | ✅ | N/A |
+| 7 | [eqtl](techniques/eqtl) (MatrixEQTL-style cis scan; SNP 10→gene 12 p=8e-10) | 40.16 | ✅ | ✅ | N/A |
+| 8 | [ld-score-regression](techniques/ld-score-regression) (LDSC; recovers h²=0.30 exactly) | 40.17 | ✅ | ✅ | N/A |
+| 9 | [hardy-weinberg](techniques/hardy-weinberg) (χ² + Wigginton exact; excess-het p=0.021) | 40.25 | ✅ | ✅ | N/A |
+| 10 | [linkage-disequilibrium](techniques/linkage-disequilibrium) (D, D′, r² + block LD decay) | 40.26 | ✅ | ✅ | N/A |
+| 11 | [haplotype-phasing](techniques/haplotype-phasing) (Excoffier-Slatkin 2-SNP EM; recovers truth to 3%) | 40.27 | ✅ | ✅ | N/A |
+| 12 | [population-genetics-fst](techniques/population-genetics-fst) (Weir-Cockerham F_ST; panmixia 0.001 vs differentiated 0.23) | 40.20 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 46** — genomics workflows live in R (`limma`, `DESeq2`, `edgeR`, `sva`, `MatrixEQTL`, `WGCNA`, `qqman`, `bigsnpr`, `HardyWeinberg`, `hierfstat`, `haplo.stats`) or Python (`scipy`, `pydeseq2`, `scanpy`, `scikit-allel`, `hail`, `tensorqtl`, `pandas-plink`, `neuroCombat`, `PyWGCNA`, `ldsc`); Spark ML has no first-class support for these bioinformatics-specific pipelines. Hail is Spark-native for GWAS/eQTL and is the closest fit.
+
 Later batches: any remaining chapters.
 
 ---
