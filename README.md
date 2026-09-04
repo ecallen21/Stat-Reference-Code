@@ -1681,6 +1681,32 @@ concordances, and collocation statistics.
 
 **PySpark N/A across Batch 48** — NLP techniques live in R (`quanteda`, `tidytext`, `text2vec`, `tm`, `stm`, `clinspacy`, `irr`, `koRpus`, `SnowballC`) or Python (`nltk`, `spacy`, `scispacy`, `medspacy`, `gensim`, `sentence-transformers`, `sklearn.feature_extraction.text`, `textstat`, `krippendorff`, custom); Spark ML has some feature-hashing / word2vec primitives but no first-class NLP corpus-analysis surface.
 
+### Batch 49 — Pharmacoepidemiology & Drug Safety (Ch 43)
+
+Twelve techniques covering the pharmacoepi toolkit: disproportionality
+signal detection, self-controlled case series, high-dimensional
+propensity scores, PSSA, exposure-crossover for DDIs, drug
+utilization / adherence, negative outcome controls, benefit-risk
+MCDA, target-trial emulation, and the confounding / new-user /
+time-window design triad.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [disproportionality-signal-detection](techniques/disproportionality-signal-detection) (PRR/ROR/IC + χ² signal criteria) | 43.1 | ✅ | ✅ | N/A |
+| 2 | [sccs-self-controlled](techniques/sccs-self-controlled) (2-window IRR; recovers 3.0 with CI (2.01, 3.38)) | 43.2 | ✅ | ✅ | N/A |
+| 3 | [hdps-high-dim-propensity](techniques/hdps-high-dim-propensity) (Bross-multiplier ranking + IPTW; 5/5 true confounders in top 10) | 43.4 | ✅ | ✅ | N/A |
+| 4 | [prescription-sequence-symmetry](techniques/prescription-sequence-symmetry) (Hallas 1996 PSSA; SR=2.15, p=2e-13) | 43.5/43.13 | ✅ | ✅ | N/A |
+| 5 | [exposure-crossover](techniques/exposure-crossover) (Rothman RERI for DDI; recovers RR_A=1.45, RR_B=1.33, RERI=0.94) | 43.6 | ✅ | ✅ | N/A |
+| 6 | [drug-utilization-adherence](techniques/drug-utilization-adherence) (MPR/PDC/persistence + DDD) | 43.7 | ✅ | ✅ | N/A |
+| 7 | [negative-outcome-controls](techniques/negative-outcome-controls) (Schuemie empirical calibration; p 8.6e-4 → 0.47) | 43.9 | ✅ | ✅ | N/A |
+| 8 | [benefit-risk-mcda](techniques/benefit-risk-mcda) (weighted-sum MCDA + NNT/NNH/LHH; drug B wins) | 43.10 | ✅ | ✅ | N/A |
+| 9 | [target-trial-emulation](techniques/target-trial-emulation) (Hernán-Robins 7-element emulation; naive 0.42 → IPTW 0.30 vs truth 0.30) | 43.11 | ✅ | ✅ | N/A |
+| 10 | [confounding-by-indication](techniques/confounding-by-indication) (naive +0.76 → adjusted −0.30 vs truth −0.30) | 43.12 | ✅ | ✅ | N/A |
+| 11 | [new-user-active-comparator](techniques/new-user-active-comparator) (ACNU design; washout drops prevalent users) | 43.14 | ✅ | ✅ | N/A |
+| 12 | [time-window-bias](techniques/time-window-bias) (Suissa 2012; naive OR 5.31 → common-window OR 0.91) | 43.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 49** — pharmacoepi tools live in R (`PhViD`, `SCCS`, `MatchIt`, `WeightIt`, `AdhereR`, `EmpiricalCalibration`, `TrialEmulation`, `CohortMethod`/`Cyclops` OHDSI) or Python (`vigipy`, `zepid`, `causalinference`, `dowhy`, `pandas`, `sklearn`, custom); Spark ML has no first-class pharmacoepi surface. OHDSI provides Spark-native OMOP CDM data access but the analytic layer runs in R.
+
 Later batches: any remaining chapters.
 
 ---
