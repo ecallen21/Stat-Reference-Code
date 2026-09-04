@@ -1480,6 +1480,261 @@ two more network sub-sections (Ch 30), and two more FDA sub-sections
 
 **PySpark N/A across Batch 40** — high-dim + FDA + network methods run in R (`pcaMethods`, `rpca`, `RandPro`, `SIS`, `selectiveInference`, `grplasso`, `corpcor`, `igraph`, `poweRlaw`, `fda`, `refund`) or Python (`sklearn.covariance`, `sklearn.random_projection`, `celer`, `networkx`, `powerlaw`, `scikit-fda`, `pyDiffMap`); Spark ML has no first-class support for any of these.
 
+### Batch 41 — Information Theory & Statistics (Ch 34)
+
+Twelve techniques covering the info-theoretic toolbox from entropy and
+KL through model-selection criteria, transfer entropy, information
+bottleneck, conditional-MI CI tests, and Fisher-Rao geometry.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [shannon-entropy](techniques/shannon-entropy) (discrete + histogram + Kozachenko-Leonenko k-NN estimator) | 34.1 | ✅ | ✅ | N/A |
+| 2 | [kl-divergence](techniques/kl-divergence) (discrete + Gaussian closed form + MC + Jensen-Shannon) | 34.3 | ✅ | ✅ | N/A |
+| 3 | [fisher-information](techniques/fisher-information) (analytic + Cramér-Rao vs MLE empirical variance) | 34.4 | ✅ | ✅ | N/A |
+| 4 | [information-criteria](techniques/information-criteria) (AIC / AICc / BIC / DIC / WAIC; polynomial sweep BIC picks true order) | 34.5 | ✅ | ✅ | N/A |
+| 5 | [cross-entropy-log-loss](techniques/cross-entropy-log-loss) (softmax gradient identity + proper-scoring recovery) | 34.6 | ✅ | ✅ | N/A |
+| 6 | [f-divergences](techniques/f-divergences) (KL, χ², Hellinger, TV, Rényi + Pinsker inequality) | 34.7 | ✅ | ✅ | N/A |
+| 7 | [minimum-description-length](techniques/minimum-description-length) (two-part MDL; recovers true polynomial order) | 34.8 | ✅ | ✅ | N/A |
+| 8 | [maximum-entropy](techniques/maximum-entropy) (Jaynes; loaded-die + Gaussian is MaxEnt under (mean, var)) | 34.9 | ✅ | ✅ | N/A |
+| 9 | [transfer-entropy](techniques/transfer-entropy) (Schreiber 2000; X drives Y ⇒ TE(X→Y)=0.50, TE(Y→X)≈0) | 34.11 | ✅ | ✅ | N/A |
+| 10 | [information-bottleneck](techniques/information-bottleneck) (Tishby 1999 Blahut-Arimoto discrete IB) | 34.12 | ✅ | ✅ | N/A |
+| 11 | [conditional-mutual-info](techniques/conditional-mutual-info) (CMI + strata-preserving permutation CI test) | 34.13 | ✅ | ✅ | N/A |
+| 12 | [information-geometry](techniques/information-geometry) (KL≈Fisher-quadratic + natural gradient 4 iters vs vanilla 50) | 34.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 41** — info-theoretic tools run in R (`entropy`, `infotheo`, `FNN`, `philentropy`, `RTransferEntropy`, `bnlearn`) or Python (`scipy`, `NPEET`, `sklearn`, `torch`, `IDTxl`, `PyIF`); Spark ML has no first-class information-theoretic primitives.
+
+### Batch 42 — Panel Data & Econometric Methods (Ch 35)
+
+Twelve techniques rounding out Chapter 35: RE-vs-FE testing, dynamic
+panel GMM, general GMM, nonlinear LS, seemingly-unrelated regression,
+modern staggered / synthetic DiD, event-studies, HAC / cluster-robust
+SEs, Oaxaca-Blinder decomposition, stochastic-frontier efficiency,
+and panel cointegration.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [hausman-test](techniques/hausman-test) (Wooldridge auxiliary-reg form; A p=0.085 accept, B p<0.001 reject) | 35.2 | ✅ | ✅ | N/A |
+| 2 | [arellano-bond-gmm](techniques/arellano-bond-gmm) (difference GMM with lagged-level instruments) | 35.3 | ✅ | ✅ | N/A |
+| 3 | [gmm-general](techniques/gmm-general) (Hansen two-step; Hansen J test on over-identifying moments) | 35.5 | ✅ | ✅ | N/A |
+| 4 | [nonlinear-least-squares](techniques/nonlinear-least-squares) (Levenberg-Marquardt; MM + 4-PL recovered) | 35.6 | ✅ | ✅ | N/A |
+| 5 | [sur-regression](techniques/sur-regression) (Zellner FGLS; Σ̂ close to true 0.8 off-diagonal) | 35.7 | ✅ | ✅ | N/A |
+| 6 | [staggered-did](techniques/staggered-did) (Callaway-Sant'Anna group-time ATTs; event-time recovery) | 35.19 | ✅ | ✅ | N/A |
+| 7 | [synthetic-did](techniques/synthetic-did) (Arkhangelsky 2021; SDID = 2.46 vs plain DiD 1.12 vs truth 2.0) | 35.10 | ✅ | ✅ | N/A |
+| 8 | [event-study](techniques/event-study) (classical + TWFE pathology demo under staggered adoption) | 35.11 | ✅ | ✅ | N/A |
+| 9 | [newey-west-hac](techniques/newey-west-hac) (HAC intercept SE 0.12 vs OLS 0.07 under AR(1)) | 35.15 | ✅ | ✅ | N/A |
+| 10 | [oaxaca-blinder](techniques/oaxaca-blinder) (threefold + twofold gap decomposition; sums exactly to gap) | 35.21 | ✅ | ✅ | N/A |
+| 11 | [stochastic-frontier](techniques/stochastic-frontier) (Aigner-Lovell-Schmidt MLE + Jondrow TE scores) | 35.22 | ✅ | ✅ | N/A |
+| 12 | [panel-cointegration](techniques/panel-cointegration) (Pedroni residual ADF; group-mean t=-8.19 cointegrated vs -1.93 not) | 35.26 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 42** — panel econometrics tools live in R (`plm`, `fixest`, `did`, `synthdid`, `systemfit`, `frontier`, `oaxaca`, `sandwich`, `punitroots`) or Python (`linearmodels`, `pyfixest`, `differences`, `statsmodels`, `pysfa`); Spark ML has no first-class panel-econometrics support.
+
+### Batch 43 — Statistical Process Control & Sequential Methods (Ch 37)
+
+Twelve techniques covering the core SPC toolbox: Shewhart charts with
+Western Electric rules, CUSUM, EWMA, multivariate Hotelling T²,
+Wald SPRT, capability indices, acceptance sampling, Six Sigma
+DPMO ↔ σ ↔ yield, risk-adjusted (VLAD + Steiner CUSUM), rare-event
+(G-chart + Bernoulli CUSUM), multi-vari variance decomposition, and
+Pareto charts.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [shewhart-control-charts](techniques/shewhart-control-charts) (X-bar/R + Western Electric run rules; Phase I baseline; flags at subgroup 26) | 37.1 | ✅ | ✅ | N/A |
+| 2 | [cusum-charts](techniques/cusum-charts) (tabular CUSUM k=0.5, h=6; detects 1σ shift at t=100 with delay 16) | 37.2 | ✅ | ✅ | N/A |
+| 3 | [ewma-charts](techniques/ewma-charts) (λ ∈ {0.1, 0.2, 0.4}, L=3.5; λ=0.1/0.2 detect faster than λ=0.4) | 37.3 | ✅ | ✅ | N/A |
+| 4 | [multivariate-control-charts](techniques/multivariate-control-charts) (Hotelling T² with F-UCL(α=0.005)=14.07; 3/10 shifts flagged) | 37.4 | ✅ | ✅ | N/A |
+| 5 | [sequential-analysis](techniques/sequential-analysis) (Wald SPRT Bernoulli 0.5→0.7; avg n=34 vs fixed 63) | 37.5 | ✅ | ✅ | N/A |
+| 6 | [process-capability-indices](techniques/process-capability-indices) (Cp/Cpk/Pp/Ppk/Cpm; A centered Cpk=1.08, B off-centre 0.57) | 37.6 | ✅ | ✅ | N/A |
+| 7 | [acceptance-sampling](techniques/acceptance-sampling) (OC + AOQ + AOQL + ATI; producer's risk α=0.014 at AQL=0.01) | 37.7 | ✅ | ✅ | N/A |
+| 8 | [six-sigma-methods](techniques/six-sigma-methods) (DPMO ↔ σ ↔ yield with 1.5-σ shift + DMAIC checklist) | 37.9 | ✅ | ✅ | N/A |
+| 9 | [risk-adjusted-control-charts](techniques/risk-adjusted-control-charts) (VLAD +2.71→−10.02 + Steiner CUSUM signals at t=169) | 37.10 | ✅ | ✅ | N/A |
+| 10 | [rare-event-control-charts](techniques/rare-event-control-charts) (G-chart + Bernoulli CUSUM; detects 0.005→0.02 at t=1555) | 37.11 | ✅ | ✅ | N/A |
+| 11 | [multi-vari-charts](techniques/multi-vari-charts) (within 7.7% / between-piece 39.1% / between-time 53.2%) | 37.12 | ✅ | ✅ | N/A |
+| 12 | [pareto-charts](techniques/pareto-charts) (10 defect types, N=401; 4 vital-few cover 83%) | 37.14 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 43** — SPC / sequential tools run in R (`qcc`, `qicharts2`, `SixSigma`, `MSQC`, `AcceptanceSampling`, `spc`, `vlad`) or Python (`pyspc`, `scipy.stats`, custom); Spark ML has no first-class SPC / sequential-analysis / acceptance-sampling primitives.
+
+### Batch 44 — Additional Specialized Topics (Ch 38)
+
+Twelve techniques covering specialised data types (extreme values,
+compositional, circular), record linkage, measurement-error models,
+change-point detection, copulas, capture-recapture, shrinkage /
+tolerance intervals, agreement metrics beyond kappa, and the
+immortal-time bias.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [extreme-value-theory](techniques/extreme-value-theory) (GEV + POT/GPD; 100-yr return level 174 (BM) / 223 (POT)) | 38.1 | ✅ | ✅ | N/A |
+| 2 | [compositional-data](techniques/compositional-data) (Aitchison CLR/ALR/ILR + Aitchison distance; d_A=2.30 vs Euclid 0.39) | 38.2 | ✅ | ✅ | N/A |
+| 3 | [circular-statistics](techniques/circular-statistics) (von Mises κ MLE via Bessel inversion; recovers μ=10.7°, κ=3.95) | 38.3 | ✅ | ✅ | N/A |
+| 4 | [record-linkage](techniques/record-linkage) (Fellegi-Sunter + EM (m, u, π); 99/100 true matches recovered) | 38.6 | ✅ | ✅ | N/A |
+| 5 | [measurement-error-models](techniques/measurement-error-models) (regression calibration β̂ 1.06→1.59 vs truth 1.5 + SIMEX) | 38.7 | ✅ | ✅ | N/A |
+| 6 | [change-point-detection](techniques/change-point-detection) (binary segmentation + PELT; both recover 3/3 breaks in n=300 series) | 38.8 | ✅ | ✅ | N/A |
+| 7 | [copulas](techniques/copulas) (Sklar + Gaussian/Clayton/Gumbel MLE; AIC picks Clayton, θ̂=1.85 vs truth 2.0) | 38.9 | ✅ | ✅ | N/A |
+| 8 | [capture-recapture](techniques/capture-recapture) (Lincoln-Petersen + Chapman + Schnabel; N̂=424.5 vs truth 400) | 38.11 | ✅ | ✅ | N/A |
+| 9 | [james-stein-shrinkage](techniques/james-stein-shrinkage) (dominates MLE for p≥3; JS/MLE ratio drops to 0.47 at p=25) | 38.15 | ✅ | ✅ | N/A |
+| 10 | [tolerance-intervals](techniques/tolerance-intervals) (Howe 1969 normal + Wilks 1941 nonparametric; sim conf 0.946 vs target 0.95) | 38.16 | ✅ | ✅ | N/A |
+| 11 | [agreement-beyond-kappa](techniques/agreement-beyond-kappa) (PABAK + Gwet AC1 + Krippendorff α; κ=−0.03 vs AC1=0.95 on prevalence paradox) | 38.19 | ✅ | ✅ | N/A |
+| 12 | [immortal-time-bias](techniques/immortal-time-bias) (naive HR=0.12 vs time-varying HR=1.13 vs truth 1.0) | 38.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 44** — specialised methods run in R (`extRemes`, `compositions`, `circular`, `fastLink`, `simex`, `changepoint`, `copula`, `Rcapture`, `tolerance`, `irrCAC`, `survival::tmerge`) or Python (`scipy.stats`, `skbio`, `pycircstat`, `recordlinkage`, `scipy.odr`, `ruptures`, `copulas`, `sklearn.covariance`, `krippendorff`, `lifelines`); Spark ML has no first-class support for these specialised data types.
+
+### Batch 45 — Clinical Prediction Modeling & Validation (Ch 39)
+
+Twelve techniques covering the Steyerberg-Harrell workflow for
+clinical prediction: prediction-vs-inference framing, Harrell's
+full-model + shrinkage strategy, nomograms and integer-point risk
+scores, bootstrap optimism correction, external validation,
+recalibration, discrimination + calibration metrics + plots,
+prediction vs confidence intervals, IECV multi-site validation, and
+penalised regression for low-EPV settings.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [prediction-vs-inference](techniques/prediction-vs-inference) (change-in-est vs CV MSE; z-confounder decision agrees) | 39.1 | ✅ | ✅ | N/A |
+| 2 | [multivariable-model-building](techniques/multivariable-model-building) (full vs stepwise vs vH-LC shrinkage; s=0.94) | 39.2 | ✅ | ✅ | N/A |
+| 3 | [nomograms](techniques/nomograms) (points-based scoring from logistic; patient 1 P=0.003, patient 2 P=0.080) | 39.3 | ✅ | ✅ | N/A |
+| 4 | [bootstrap-optimism-correction](techniques/bootstrap-optimism-correction) (apparent AUC 0.752 → corrected 0.651 at EPV=3.8) | 39.4/39.16 | ✅ | ✅ | N/A |
+| 5 | [external-validation](techniques/external-validation) (AUC preserved 0.77 → 0.77; slope drift 1.00 → 0.88) | 39.5 | ✅ | ✅ | N/A |
+| 6 | [model-recalibration](techniques/model-recalibration) (intercept + logistic recalibration; CITL −0.098 → 0.000) | 39.6 | ✅ | ✅ | N/A |
+| 7 | [penalized-clinical-prediction](techniques/penalized-clinical-prediction) (unpenalised vs ridge vs lasso at EPV=5.9; lasso 1 nonzero) | 39.9 | ✅ | ✅ | N/A |
+| 8 | [clinical-risk-scores](techniques/clinical-risk-scores) (Sullivan integer points; patient 20 pts → P=0.67) | 39.12 | ✅ | ✅ | N/A |
+| 9 | [prediction-intervals](techniques/prediction-intervals) (PI ~8× wider than CI; sim coverage 0.947 target 0.95) | 39.14 | ✅ | ✅ | N/A |
+| 10 | [discrimination-calibration](techniques/discrimination-calibration) (same AUC 0.705, ICI 0.040 vs 0.136) | 39.17 | ✅ | ✅ | N/A |
+| 11 | [calibration-plots](techniques/calibration-plots) (decile + LOESS + ICI/E-max/E-90; well-cal 0.015 vs over-conf 0.082) | 39.19 | ✅ | ✅ | N/A |
+| 12 | [iecv-multisite](techniques/iecv-multisite) (leave-one-site-out; K=5 sites, per-site AUC 0.64-0.73) | 39.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 45** — clinical prediction workflow lives in R (`rms`, `caret`, `tidymodels`, `riskRegression`, `predtools`, `CalibrationCurves`, `pmcalibration`, `metamisc`, `glmnet`) or Python (`sklearn.linear_model`, `sklearn.calibration`, `sklearn.metrics`, `statsmodels`, `lifelines`, `mapie`); Spark ML supports elements of the underlying model classes but has no first-class clinical-prediction validation / calibration / nomogram tooling.
+
+### Batch 46 — Genomic and High-Throughput Statistical Methods (Ch 40)
+
+Twelve techniques covering the core statistical genomics toolkit:
+GWAS + PRS, differential expression + GSEA + WGCNA, ComBat batch
+correction, eQTL, LD score regression + heritability, and the
+population-genetics QC quartet (HWE, LD, haplotype phasing, F_ST).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [gwas](techniques/gwas) (per-SNP regression + genomic-inflation λ; SNP 50 p=1e-15) | 40.1/40.23 | ✅ | ✅ | N/A |
+| 2 | [polygenic-risk-scores](techniques/polygenic-risk-scores) (P+T at 5 thresholds; ΔR² peaks at p<0.1) | 40.2/40.15 | ✅ | ✅ | N/A |
+| 3 | [differential-expression](techniques/differential-expression) (limma-style moderated t; 30/30 DE recovered w/ FP=2) | 40.3 | ✅ | ✅ | N/A |
+| 4 | [gsea](techniques/gsea) (KS-style enrichment score + label permutation; top-biased set p=0.006) | 40.4/40.18 | ✅ | ✅ | N/A |
+| 5 | [wgcna-coexpression](techniques/wgcna-coexpression) (soft-threshold + TOM + hclust; 36-gene module corr −0.93 with trait) | 40.6 | ✅ | ✅ | N/A |
+| 6 | [batch-effect-combat](techniques/batch-effect-combat) (EB batch correction; cross-batch var 0.70→0.04) | 40.11/40.14 | ✅ | ✅ | N/A |
+| 7 | [eqtl](techniques/eqtl) (MatrixEQTL-style cis scan; SNP 10→gene 12 p=8e-10) | 40.16 | ✅ | ✅ | N/A |
+| 8 | [ld-score-regression](techniques/ld-score-regression) (LDSC; recovers h²=0.30 exactly) | 40.17 | ✅ | ✅ | N/A |
+| 9 | [hardy-weinberg](techniques/hardy-weinberg) (χ² + Wigginton exact; excess-het p=0.021) | 40.25 | ✅ | ✅ | N/A |
+| 10 | [linkage-disequilibrium](techniques/linkage-disequilibrium) (D, D′, r² + block LD decay) | 40.26 | ✅ | ✅ | N/A |
+| 11 | [haplotype-phasing](techniques/haplotype-phasing) (Excoffier-Slatkin 2-SNP EM; recovers truth to 3%) | 40.27 | ✅ | ✅ | N/A |
+| 12 | [population-genetics-fst](techniques/population-genetics-fst) (Weir-Cockerham F_ST; panmixia 0.001 vs differentiated 0.23) | 40.20 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 46** — genomics workflows live in R (`limma`, `DESeq2`, `edgeR`, `sva`, `MatrixEQTL`, `WGCNA`, `qqman`, `bigsnpr`, `HardyWeinberg`, `hierfstat`, `haplo.stats`) or Python (`scipy`, `pydeseq2`, `scanpy`, `scikit-allel`, `hail`, `tensorqtl`, `pandas-plink`, `neuroCombat`, `PyWGCNA`, `ldsc`); Spark ML has no first-class support for these bioinformatics-specific pipelines. Hail is Spark-native for GWAS/eQTL and is the closest fit.
+
+### Batch 47 — Data Transformations and Preprocessing (Ch 41)
+
+Twelve techniques covering the applied preprocessing toolkit:
+distribution transforms (Box-Cox, Yeo-Johnson, INT), scaling and
+Winsorization, categorical encodings (dummy / contrast, target,
+hashing), binning, multicollinearity diagnostics, the missing-
+indicator method, and tidy long/wide reshaping.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [box-cox-transformation](techniques/box-cox-transformation) (MLE λ; log-normal Shapiro p 3e-20→0.35) | 41.1 | ✅ | ✅ | N/A |
+| 2 | [yeo-johnson-transformation](techniques/yeo-johnson-transformation) (signed-y power transform; skew 3.85→0.34) | 41.2 | ✅ | ✅ | N/A |
+| 3 | [inverse-normal-transformation](techniques/inverse-normal-transformation) (Blom/Tukey/vdW/Rankit; Shapiro p → 1.0) | 41.3 | ✅ | ✅ | N/A |
+| 4 | [standardization-scaling](techniques/standardization-scaling) (z / min-max / robust / Gelman /2SD + group-mean centering) | 41.4 | ✅ | ✅ | N/A |
+| 5 | [winsorization](techniques/winsorization) (Winsor vs trim at 5/10/20%; robust mean recovery) | 41.5 | ✅ | ✅ | N/A |
+| 6 | [dummy-contrast-coding](techniques/dummy-contrast-coding) (dummy + effect + Helmert; same fit, different β) | 41.6 | ✅ | ✅ | N/A |
+| 7 | [discretization-binning](techniques/discretization-binning) (equal-width, equal-freq, Fayyad-Irani entropy; recovers cut 2.50) | 41.7 | ✅ | ✅ | N/A |
+| 8 | [multicollinearity-vif](techniques/multicollinearity-vif) (VIF + cond number; 441→1 after dropping collinear) | 41.8 | ✅ | ✅ | N/A |
+| 9 | [feature-hashing](techniques/feature-hashing) (signed Weinberger hashing; RSS drops 17904→612 as d grows) | 41.10 | ✅ | ✅ | N/A |
+| 10 | [target-encoding](techniques/target-encoding) (Micci-Barreca smoothed + LOO + WOE for binary y) | 41.11 | ✅ | ✅ | N/A |
+| 11 | [missing-indicator-method](techniques/missing-indicator-method) (MNAR demo; RMSE 1.59→1.26 with indicators) | 41.12 | ✅ | ✅ | N/A |
+| 12 | [tidy-data-reshape](techniques/tidy-data-reshape) (wide↔long round-trip on repeated-measures SBP) | 41.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 47** — preprocessing lives in R (`MASS`, `car`, `bestNormalize`, `RNOmni`, `recipes`, `DescTools`, `arules`, `Hmisc`, `car::vif`, `FeatureHashing`, `vtreat`, `tidyr`) or Python (`scipy.stats`, `sklearn.preprocessing`, `category_encoders`, `statsmodels`, `pandas`, custom); Spark ML's `pyspark.ml.feature` has scalers, OHE, VectorAssembler, and hashing but lacks the full preprocessing surface these techniques cover.
+
+### Batch 48 — Text Mining & NLP (Ch 42)
+
+Twelve techniques covering NLP methods not yet in the repo: clinical
+concept + negation extraction, structural topic models with
+covariates, document embedding + BM25, preprocessing pipelines,
+LSA, LIWC-style dictionaries, Dunning keyness, readability indices,
+manual content coding + reliability, Wordfish scaling, KWIC
+concordances, and collocation statistics.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [clinical-nlp](techniques/clinical-nlp) (NegEx-style negation + sentence-restricted context; 4 notes correctly labelled) | 42.5 | ✅ | ✅ | N/A |
+| 2 | [structural-topic-model](techniques/structural-topic-model) (STM with per-group Dirichlet prevalence; recovers 0.84/0.18 vs 0.16/0.82) | 42.7 | ✅ | ✅ | N/A |
+| 3 | [document-embedding-similarity](techniques/document-embedding-similarity) (TF-IDF cosine + BM25; "aspirin chest pain" query ranks correctly) | 42.9 | ✅ | ✅ | N/A |
+| 4 | [text-preprocessing-pipeline](techniques/text-preprocessing-pipeline) (tokenise → stop-words → Porter stem + lemma dict) | 42.11 | ✅ | ✅ | N/A |
+| 5 | [lsa-latent-semantic](techniques/lsa-latent-semantic) (truncated SVD of TDM + query projection; recovers 2 topics from 6 short docs) | 42.13 | ✅ | ✅ | N/A |
+| 6 | [dictionary-methods](techniques/dictionary-methods) (LIWC-style 5-category scoring on 4 clinical/everyday sentences) | 42.14 | ✅ | ✅ | N/A |
+| 7 | [keyness-analysis](techniques/keyness-analysis) (Dunning G² + log-ratio; "pneumonia" G²=8.21) | 42.15 | ✅ | ✅ | N/A |
+| 8 | [readability-measures](techniques/readability-measures) (Flesch/F-K/Fog/SMOG/Coleman-Liau; simple 110 vs complex −121) | 42.16 | ✅ | ✅ | N/A |
+| 9 | [content-analysis-coding](techniques/content-analysis-coding) (κ=0.74, α=0.74 on 12 items × 2-3 raters) | 42.17 | ✅ | ✅ | N/A |
+| 10 | [wordfish-scaling](techniques/wordfish-scaling) (Poisson unsupervised 1-D scaling; recovers left/right/centrist ω) | 42.18 | ✅ | ✅ | N/A |
+| 11 | [kwic-concordance](techniques/kwic-concordance) (regex KWIC with 4-token window; 5 aspirin mentions aligned) | 42.20 | ✅ | ✅ | N/A |
+| 12 | [collocation-pmi](techniques/collocation-pmi) (PMI + Dunning G² over bigrams; "left arm" identified) | 42.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 48** — NLP techniques live in R (`quanteda`, `tidytext`, `text2vec`, `tm`, `stm`, `clinspacy`, `irr`, `koRpus`, `SnowballC`) or Python (`nltk`, `spacy`, `scispacy`, `medspacy`, `gensim`, `sentence-transformers`, `sklearn.feature_extraction.text`, `textstat`, `krippendorff`, custom); Spark ML has some feature-hashing / word2vec primitives but no first-class NLP corpus-analysis surface.
+
+### Batch 49 — Pharmacoepidemiology & Drug Safety (Ch 43)
+
+Twelve techniques covering the pharmacoepi toolkit: disproportionality
+signal detection, self-controlled case series, high-dimensional
+propensity scores, PSSA, exposure-crossover for DDIs, drug
+utilization / adherence, negative outcome controls, benefit-risk
+MCDA, target-trial emulation, and the confounding / new-user /
+time-window design triad.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [disproportionality-signal-detection](techniques/disproportionality-signal-detection) (PRR/ROR/IC + χ² signal criteria) | 43.1 | ✅ | ✅ | N/A |
+| 2 | [sccs-self-controlled](techniques/sccs-self-controlled) (2-window IRR; recovers 3.0 with CI (2.01, 3.38)) | 43.2 | ✅ | ✅ | N/A |
+| 3 | [hdps-high-dim-propensity](techniques/hdps-high-dim-propensity) (Bross-multiplier ranking + IPTW; 5/5 true confounders in top 10) | 43.4 | ✅ | ✅ | N/A |
+| 4 | [prescription-sequence-symmetry](techniques/prescription-sequence-symmetry) (Hallas 1996 PSSA; SR=2.15, p=2e-13) | 43.5/43.13 | ✅ | ✅ | N/A |
+| 5 | [exposure-crossover](techniques/exposure-crossover) (Rothman RERI for DDI; recovers RR_A=1.45, RR_B=1.33, RERI=0.94) | 43.6 | ✅ | ✅ | N/A |
+| 6 | [drug-utilization-adherence](techniques/drug-utilization-adherence) (MPR/PDC/persistence + DDD) | 43.7 | ✅ | ✅ | N/A |
+| 7 | [negative-outcome-controls](techniques/negative-outcome-controls) (Schuemie empirical calibration; p 8.6e-4 → 0.47) | 43.9 | ✅ | ✅ | N/A |
+| 8 | [benefit-risk-mcda](techniques/benefit-risk-mcda) (weighted-sum MCDA + NNT/NNH/LHH; drug B wins) | 43.10 | ✅ | ✅ | N/A |
+| 9 | [target-trial-emulation](techniques/target-trial-emulation) (Hernán-Robins 7-element emulation; naive 0.42 → IPTW 0.30 vs truth 0.30) | 43.11 | ✅ | ✅ | N/A |
+| 10 | [confounding-by-indication](techniques/confounding-by-indication) (naive +0.76 → adjusted −0.30 vs truth −0.30) | 43.12 | ✅ | ✅ | N/A |
+| 11 | [new-user-active-comparator](techniques/new-user-active-comparator) (ACNU design; washout drops prevalent users) | 43.14 | ✅ | ✅ | N/A |
+| 12 | [time-window-bias](techniques/time-window-bias) (Suissa 2012; naive OR 5.31 → common-window OR 0.91) | 43.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 49** — pharmacoepi tools live in R (`PhViD`, `SCCS`, `MatchIt`, `WeightIt`, `AdhereR`, `EmpiricalCalibration`, `TrialEmulation`, `CohortMethod`/`Cyclops` OHDSI) or Python (`vigipy`, `zepid`, `causalinference`, `dowhy`, `pandas`, `sklearn`, custom); Spark ML has no first-class pharmacoepi surface. OHDSI provides Spark-native OMOP CDM data access but the analytic layer runs in R.
+
+### Batch 50 — A/B Testing & Online Experimentation (Ch 44)
+
+Twelve techniques covering the online-experimentation toolkit
+beyond what's already in the repo (bayesian-ab-testing, multi-
+armed-bandits, delta-method, sequential-analysis): fundamentals,
+MDE, CUPED variance reduction, always-valid / anytime-valid
+inference, FDR across metric families, interference / cluster
+randomisation, HTE / uplift, ratio-metric delta method, platform
+primitives, triggered analysis, surrogate index, guardrail
+monitoring.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [ab-test-fundamentals](techniques/ab-test-fundamentals) (two-prop z + Welch t; revenue lift 7% p=1e-6) | 44.1 | ✅ | ✅ | N/A |
+| 2 | [mde-sample-size](techniques/mde-sample-size) (closed-form n + reverse MDE; p=0.05 MDE=0.005 needs n≈31k) | 44.2 | ✅ | ✅ | N/A |
+| 3 | [cuped-variance-reduction](techniques/cuped-variance-reduction) (Deng 2013; 64% variance reduction, 2.75× effective n) | 44.3 | ✅ | ✅ | N/A |
+| 4 | [always-valid-inference](techniques/always-valid-inference) (mSPRT + Howard-Ramdas CS; peek-safe rejection rates) | 44.4/44.12 | ✅ | ✅ | N/A |
+| 5 | [multiple-metrics-fdr](techniques/multiple-metrics-fdr) (BH vs Bonferroni vs hierarchical; 5 true / 15 null) | 44.5 | ✅ | ✅ | N/A |
+| 6 | [interference-cluster](techniques/interference-cluster) (cluster-mean t-test; naive p 3e-27 vs correct 0.08) | 44.6 | ✅ | ✅ | N/A |
+| 7 | [hte-uplift](techniques/hte-uplift) (T- / S-learner + Qini; ρ=0.98, Qini 0.20 vs random 0.05) | 44.7 | ✅ | ✅ | N/A |
+| 8 | [ratio-metrics-abtest](techniques/ratio-metrics-abtest) (delta-method SE for CTR ratios) | 44.10 | ✅ | ✅ | N/A |
+| 9 | [experimentation-platform](techniques/experimentation-platform) (deterministic hash assignment + SRM χ² check) | 44.11 | ✅ | ✅ | N/A |
+| 10 | [triggered-analysis](techniques/triggered-analysis) (ITT 0.14 vs triggered 0.49 vs truth 0.50) | 44.13 | ✅ | ✅ | N/A |
+| 11 | [surrogate-index](techniques/surrogate-index) (Athey-Chetty-Imbens; 3 short-term proxies → long-term index) | 44.14 | ✅ | ✅ | N/A |
+| 12 | [guardrail-monitoring](techniques/guardrail-monitoring) (streaming Wilson-CI alarm; alerts at n=3000 on 4× regression) | 44.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 50** — A/B analytics live in R (`pwr`, `stats`, `gsDesign`, `rpact`, `inferference`, `grf`, `msm`, `bayesAB`) or Python (`scipy.stats`, `statsmodels`, `causalml`, `econml`, `planout`, custom + commercial SDKs like `eppo-sdk` / `statsig` / `growthbook`); Spark provides the scalable metric backend but the statistical layer runs elsewhere.
+
 Later batches: any remaining chapters.
 
 ---
