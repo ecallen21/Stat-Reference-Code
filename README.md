@@ -1480,6 +1480,29 @@ two more network sub-sections (Ch 30), and two more FDA sub-sections
 
 **PySpark N/A across Batch 40** — high-dim + FDA + network methods run in R (`pcaMethods`, `rpca`, `RandPro`, `SIS`, `selectiveInference`, `grplasso`, `corpcor`, `igraph`, `poweRlaw`, `fda`, `refund`) or Python (`sklearn.covariance`, `sklearn.random_projection`, `celer`, `networkx`, `powerlaw`, `scikit-fda`, `pyDiffMap`); Spark ML has no first-class support for any of these.
 
+### Batch 41 — Information Theory & Statistics (Ch 34)
+
+Twelve techniques covering the info-theoretic toolbox from entropy and
+KL through model-selection criteria, transfer entropy, information
+bottleneck, conditional-MI CI tests, and Fisher-Rao geometry.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [shannon-entropy](techniques/shannon-entropy) (discrete + histogram + Kozachenko-Leonenko k-NN estimator) | 34.1 | ✅ | ✅ | N/A |
+| 2 | [kl-divergence](techniques/kl-divergence) (discrete + Gaussian closed form + MC + Jensen-Shannon) | 34.3 | ✅ | ✅ | N/A |
+| 3 | [fisher-information](techniques/fisher-information) (analytic + Cramér-Rao vs MLE empirical variance) | 34.4 | ✅ | ✅ | N/A |
+| 4 | [information-criteria](techniques/information-criteria) (AIC / AICc / BIC / DIC / WAIC; polynomial sweep BIC picks true order) | 34.5 | ✅ | ✅ | N/A |
+| 5 | [cross-entropy-log-loss](techniques/cross-entropy-log-loss) (softmax gradient identity + proper-scoring recovery) | 34.6 | ✅ | ✅ | N/A |
+| 6 | [f-divergences](techniques/f-divergences) (KL, χ², Hellinger, TV, Rényi + Pinsker inequality) | 34.7 | ✅ | ✅ | N/A |
+| 7 | [minimum-description-length](techniques/minimum-description-length) (two-part MDL; recovers true polynomial order) | 34.8 | ✅ | ✅ | N/A |
+| 8 | [maximum-entropy](techniques/maximum-entropy) (Jaynes; loaded-die + Gaussian is MaxEnt under (mean, var)) | 34.9 | ✅ | ✅ | N/A |
+| 9 | [transfer-entropy](techniques/transfer-entropy) (Schreiber 2000; X drives Y ⇒ TE(X→Y)=0.50, TE(Y→X)≈0) | 34.11 | ✅ | ✅ | N/A |
+| 10 | [information-bottleneck](techniques/information-bottleneck) (Tishby 1999 Blahut-Arimoto discrete IB) | 34.12 | ✅ | ✅ | N/A |
+| 11 | [conditional-mutual-info](techniques/conditional-mutual-info) (CMI + strata-preserving permutation CI test) | 34.13 | ✅ | ✅ | N/A |
+| 12 | [information-geometry](techniques/information-geometry) (KL≈Fisher-quadratic + natural gradient 4 iters vs vanilla 50) | 34.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 41** — info-theoretic tools run in R (`entropy`, `infotheo`, `FNN`, `philentropy`, `RTransferEntropy`, `bnlearn`) or Python (`scipy`, `NPEET`, `sklearn`, `torch`, `IDTxl`, `PyIF`); Spark ML has no first-class information-theoretic primitives.
+
 Later batches: any remaining chapters.
 
 ---
