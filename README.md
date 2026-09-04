@@ -1707,6 +1707,34 @@ time-window design triad.
 
 **PySpark N/A across Batch 49** — pharmacoepi tools live in R (`PhViD`, `SCCS`, `MatchIt`, `WeightIt`, `AdhereR`, `EmpiricalCalibration`, `TrialEmulation`, `CohortMethod`/`Cyclops` OHDSI) or Python (`vigipy`, `zepid`, `causalinference`, `dowhy`, `pandas`, `sklearn`, custom); Spark ML has no first-class pharmacoepi surface. OHDSI provides Spark-native OMOP CDM data access but the analytic layer runs in R.
 
+### Batch 50 — A/B Testing & Online Experimentation (Ch 44)
+
+Twelve techniques covering the online-experimentation toolkit
+beyond what's already in the repo (bayesian-ab-testing, multi-
+armed-bandits, delta-method, sequential-analysis): fundamentals,
+MDE, CUPED variance reduction, always-valid / anytime-valid
+inference, FDR across metric families, interference / cluster
+randomisation, HTE / uplift, ratio-metric delta method, platform
+primitives, triggered analysis, surrogate index, guardrail
+monitoring.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [ab-test-fundamentals](techniques/ab-test-fundamentals) (two-prop z + Welch t; revenue lift 7% p=1e-6) | 44.1 | ✅ | ✅ | N/A |
+| 2 | [mde-sample-size](techniques/mde-sample-size) (closed-form n + reverse MDE; p=0.05 MDE=0.005 needs n≈31k) | 44.2 | ✅ | ✅ | N/A |
+| 3 | [cuped-variance-reduction](techniques/cuped-variance-reduction) (Deng 2013; 64% variance reduction, 2.75× effective n) | 44.3 | ✅ | ✅ | N/A |
+| 4 | [always-valid-inference](techniques/always-valid-inference) (mSPRT + Howard-Ramdas CS; peek-safe rejection rates) | 44.4/44.12 | ✅ | ✅ | N/A |
+| 5 | [multiple-metrics-fdr](techniques/multiple-metrics-fdr) (BH vs Bonferroni vs hierarchical; 5 true / 15 null) | 44.5 | ✅ | ✅ | N/A |
+| 6 | [interference-cluster](techniques/interference-cluster) (cluster-mean t-test; naive p 3e-27 vs correct 0.08) | 44.6 | ✅ | ✅ | N/A |
+| 7 | [hte-uplift](techniques/hte-uplift) (T- / S-learner + Qini; ρ=0.98, Qini 0.20 vs random 0.05) | 44.7 | ✅ | ✅ | N/A |
+| 8 | [ratio-metrics-abtest](techniques/ratio-metrics-abtest) (delta-method SE for CTR ratios) | 44.10 | ✅ | ✅ | N/A |
+| 9 | [experimentation-platform](techniques/experimentation-platform) (deterministic hash assignment + SRM χ² check) | 44.11 | ✅ | ✅ | N/A |
+| 10 | [triggered-analysis](techniques/triggered-analysis) (ITT 0.14 vs triggered 0.49 vs truth 0.50) | 44.13 | ✅ | ✅ | N/A |
+| 11 | [surrogate-index](techniques/surrogate-index) (Athey-Chetty-Imbens; 3 short-term proxies → long-term index) | 44.14 | ✅ | ✅ | N/A |
+| 12 | [guardrail-monitoring](techniques/guardrail-monitoring) (streaming Wilson-CI alarm; alerts at n=3000 on 4× regression) | 44.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 50** — A/B analytics live in R (`pwr`, `stats`, `gsDesign`, `rpact`, `inferference`, `grf`, `msm`, `bayesAB`) or Python (`scipy.stats`, `statsmodels`, `causalml`, `econml`, `planout`, custom + commercial SDKs like `eppo-sdk` / `statsig` / `growthbook`); Spark provides the scalable metric backend but the statistical layer runs elsewhere.
+
 Later batches: any remaining chapters.
 
 ---
