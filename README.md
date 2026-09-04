@@ -1655,6 +1655,32 @@ indicator method, and tidy long/wide reshaping.
 
 **PySpark N/A across Batch 47** — preprocessing lives in R (`MASS`, `car`, `bestNormalize`, `RNOmni`, `recipes`, `DescTools`, `arules`, `Hmisc`, `car::vif`, `FeatureHashing`, `vtreat`, `tidyr`) or Python (`scipy.stats`, `sklearn.preprocessing`, `category_encoders`, `statsmodels`, `pandas`, custom); Spark ML's `pyspark.ml.feature` has scalers, OHE, VectorAssembler, and hashing but lacks the full preprocessing surface these techniques cover.
 
+### Batch 48 — Text Mining & NLP (Ch 42)
+
+Twelve techniques covering NLP methods not yet in the repo: clinical
+concept + negation extraction, structural topic models with
+covariates, document embedding + BM25, preprocessing pipelines,
+LSA, LIWC-style dictionaries, Dunning keyness, readability indices,
+manual content coding + reliability, Wordfish scaling, KWIC
+concordances, and collocation statistics.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [clinical-nlp](techniques/clinical-nlp) (NegEx-style negation + sentence-restricted context; 4 notes correctly labelled) | 42.5 | ✅ | ✅ | N/A |
+| 2 | [structural-topic-model](techniques/structural-topic-model) (STM with per-group Dirichlet prevalence; recovers 0.84/0.18 vs 0.16/0.82) | 42.7 | ✅ | ✅ | N/A |
+| 3 | [document-embedding-similarity](techniques/document-embedding-similarity) (TF-IDF cosine + BM25; "aspirin chest pain" query ranks correctly) | 42.9 | ✅ | ✅ | N/A |
+| 4 | [text-preprocessing-pipeline](techniques/text-preprocessing-pipeline) (tokenise → stop-words → Porter stem + lemma dict) | 42.11 | ✅ | ✅ | N/A |
+| 5 | [lsa-latent-semantic](techniques/lsa-latent-semantic) (truncated SVD of TDM + query projection; recovers 2 topics from 6 short docs) | 42.13 | ✅ | ✅ | N/A |
+| 6 | [dictionary-methods](techniques/dictionary-methods) (LIWC-style 5-category scoring on 4 clinical/everyday sentences) | 42.14 | ✅ | ✅ | N/A |
+| 7 | [keyness-analysis](techniques/keyness-analysis) (Dunning G² + log-ratio; "pneumonia" G²=8.21) | 42.15 | ✅ | ✅ | N/A |
+| 8 | [readability-measures](techniques/readability-measures) (Flesch/F-K/Fog/SMOG/Coleman-Liau; simple 110 vs complex −121) | 42.16 | ✅ | ✅ | N/A |
+| 9 | [content-analysis-coding](techniques/content-analysis-coding) (κ=0.74, α=0.74 on 12 items × 2-3 raters) | 42.17 | ✅ | ✅ | N/A |
+| 10 | [wordfish-scaling](techniques/wordfish-scaling) (Poisson unsupervised 1-D scaling; recovers left/right/centrist ω) | 42.18 | ✅ | ✅ | N/A |
+| 11 | [kwic-concordance](techniques/kwic-concordance) (regex KWIC with 4-token window; 5 aspirin mentions aligned) | 42.20 | ✅ | ✅ | N/A |
+| 12 | [collocation-pmi](techniques/collocation-pmi) (PMI + Dunning G² over bigrams; "left arm" identified) | 42.12 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 48** — NLP techniques live in R (`quanteda`, `tidytext`, `text2vec`, `tm`, `stm`, `clinspacy`, `irr`, `koRpus`, `SnowballC`) or Python (`nltk`, `spacy`, `scispacy`, `medspacy`, `gensim`, `sentence-transformers`, `sklearn.feature_extraction.text`, `textstat`, `krippendorff`, custom); Spark ML has some feature-hashing / word2vec primitives but no first-class NLP corpus-analysis surface.
+
 Later batches: any remaining chapters.
 
 ---
