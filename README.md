@@ -1630,6 +1630,31 @@ population-genetics QC quartet (HWE, LD, haplotype phasing, F_ST).
 
 **PySpark N/A across Batch 46** — genomics workflows live in R (`limma`, `DESeq2`, `edgeR`, `sva`, `MatrixEQTL`, `WGCNA`, `qqman`, `bigsnpr`, `HardyWeinberg`, `hierfstat`, `haplo.stats`) or Python (`scipy`, `pydeseq2`, `scanpy`, `scikit-allel`, `hail`, `tensorqtl`, `pandas-plink`, `neuroCombat`, `PyWGCNA`, `ldsc`); Spark ML has no first-class support for these bioinformatics-specific pipelines. Hail is Spark-native for GWAS/eQTL and is the closest fit.
 
+### Batch 47 — Data Transformations and Preprocessing (Ch 41)
+
+Twelve techniques covering the applied preprocessing toolkit:
+distribution transforms (Box-Cox, Yeo-Johnson, INT), scaling and
+Winsorization, categorical encodings (dummy / contrast, target,
+hashing), binning, multicollinearity diagnostics, the missing-
+indicator method, and tidy long/wide reshaping.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [box-cox-transformation](techniques/box-cox-transformation) (MLE λ; log-normal Shapiro p 3e-20→0.35) | 41.1 | ✅ | ✅ | N/A |
+| 2 | [yeo-johnson-transformation](techniques/yeo-johnson-transformation) (signed-y power transform; skew 3.85→0.34) | 41.2 | ✅ | ✅ | N/A |
+| 3 | [inverse-normal-transformation](techniques/inverse-normal-transformation) (Blom/Tukey/vdW/Rankit; Shapiro p → 1.0) | 41.3 | ✅ | ✅ | N/A |
+| 4 | [standardization-scaling](techniques/standardization-scaling) (z / min-max / robust / Gelman /2SD + group-mean centering) | 41.4 | ✅ | ✅ | N/A |
+| 5 | [winsorization](techniques/winsorization) (Winsor vs trim at 5/10/20%; robust mean recovery) | 41.5 | ✅ | ✅ | N/A |
+| 6 | [dummy-contrast-coding](techniques/dummy-contrast-coding) (dummy + effect + Helmert; same fit, different β) | 41.6 | ✅ | ✅ | N/A |
+| 7 | [discretization-binning](techniques/discretization-binning) (equal-width, equal-freq, Fayyad-Irani entropy; recovers cut 2.50) | 41.7 | ✅ | ✅ | N/A |
+| 8 | [multicollinearity-vif](techniques/multicollinearity-vif) (VIF + cond number; 441→1 after dropping collinear) | 41.8 | ✅ | ✅ | N/A |
+| 9 | [feature-hashing](techniques/feature-hashing) (signed Weinberger hashing; RSS drops 17904→612 as d grows) | 41.10 | ✅ | ✅ | N/A |
+| 10 | [target-encoding](techniques/target-encoding) (Micci-Barreca smoothed + LOO + WOE for binary y) | 41.11 | ✅ | ✅ | N/A |
+| 11 | [missing-indicator-method](techniques/missing-indicator-method) (MNAR demo; RMSE 1.59→1.26 with indicators) | 41.12 | ✅ | ✅ | N/A |
+| 12 | [tidy-data-reshape](techniques/tidy-data-reshape) (wide↔long round-trip on repeated-measures SBP) | 41.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 47** — preprocessing lives in R (`MASS`, `car`, `bestNormalize`, `RNOmni`, `recipes`, `DescTools`, `arules`, `Hmisc`, `car::vif`, `FeatureHashing`, `vtreat`, `tidyr`) or Python (`scipy.stats`, `sklearn.preprocessing`, `category_encoders`, `statsmodels`, `pandas`, custom); Spark ML's `pyspark.ml.feature` has scalers, OHE, VectorAssembler, and hashing but lacks the full preprocessing surface these techniques cover.
+
 Later batches: any remaining chapters.
 
 ---
