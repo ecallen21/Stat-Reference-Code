@@ -1554,6 +1554,31 @@ Pareto charts.
 
 **PySpark N/A across Batch 43** — SPC / sequential tools run in R (`qcc`, `qicharts2`, `SixSigma`, `MSQC`, `AcceptanceSampling`, `spc`, `vlad`) or Python (`pyspc`, `scipy.stats`, custom); Spark ML has no first-class SPC / sequential-analysis / acceptance-sampling primitives.
 
+### Batch 44 — Additional Specialized Topics (Ch 38)
+
+Twelve techniques covering specialised data types (extreme values,
+compositional, circular), record linkage, measurement-error models,
+change-point detection, copulas, capture-recapture, shrinkage /
+tolerance intervals, agreement metrics beyond kappa, and the
+immortal-time bias.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [extreme-value-theory](techniques/extreme-value-theory) (GEV + POT/GPD; 100-yr return level 174 (BM) / 223 (POT)) | 38.1 | ✅ | ✅ | N/A |
+| 2 | [compositional-data](techniques/compositional-data) (Aitchison CLR/ALR/ILR + Aitchison distance; d_A=2.30 vs Euclid 0.39) | 38.2 | ✅ | ✅ | N/A |
+| 3 | [circular-statistics](techniques/circular-statistics) (von Mises κ MLE via Bessel inversion; recovers μ=10.7°, κ=3.95) | 38.3 | ✅ | ✅ | N/A |
+| 4 | [record-linkage](techniques/record-linkage) (Fellegi-Sunter + EM (m, u, π); 99/100 true matches recovered) | 38.6 | ✅ | ✅ | N/A |
+| 5 | [measurement-error-models](techniques/measurement-error-models) (regression calibration β̂ 1.06→1.59 vs truth 1.5 + SIMEX) | 38.7 | ✅ | ✅ | N/A |
+| 6 | [change-point-detection](techniques/change-point-detection) (binary segmentation + PELT; both recover 3/3 breaks in n=300 series) | 38.8 | ✅ | ✅ | N/A |
+| 7 | [copulas](techniques/copulas) (Sklar + Gaussian/Clayton/Gumbel MLE; AIC picks Clayton, θ̂=1.85 vs truth 2.0) | 38.9 | ✅ | ✅ | N/A |
+| 8 | [capture-recapture](techniques/capture-recapture) (Lincoln-Petersen + Chapman + Schnabel; N̂=424.5 vs truth 400) | 38.11 | ✅ | ✅ | N/A |
+| 9 | [james-stein-shrinkage](techniques/james-stein-shrinkage) (dominates MLE for p≥3; JS/MLE ratio drops to 0.47 at p=25) | 38.15 | ✅ | ✅ | N/A |
+| 10 | [tolerance-intervals](techniques/tolerance-intervals) (Howe 1969 normal + Wilks 1941 nonparametric; sim conf 0.946 vs target 0.95) | 38.16 | ✅ | ✅ | N/A |
+| 11 | [agreement-beyond-kappa](techniques/agreement-beyond-kappa) (PABAK + Gwet AC1 + Krippendorff α; κ=−0.03 vs AC1=0.95 on prevalence paradox) | 38.19 | ✅ | ✅ | N/A |
+| 12 | [immortal-time-bias](techniques/immortal-time-bias) (naive HR=0.12 vs time-varying HR=1.13 vs truth 1.0) | 38.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 44** — specialised methods run in R (`extRemes`, `compositions`, `circular`, `fastLink`, `simex`, `changepoint`, `copula`, `Rcapture`, `tolerance`, `irrCAC`, `survival::tmerge`) or Python (`scipy.stats`, `skbio`, `pycircstat`, `recordlinkage`, `scipy.odr`, `ruptures`, `copulas`, `sklearn.covariance`, `krippendorff`, `lifelines`); Spark ML has no first-class support for these specialised data types.
+
 Later batches: any remaining chapters.
 
 ---
