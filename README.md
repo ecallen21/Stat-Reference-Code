@@ -1503,6 +1503,31 @@ bottleneck, conditional-MI CI tests, and Fisher-Rao geometry.
 
 **PySpark N/A across Batch 41** — info-theoretic tools run in R (`entropy`, `infotheo`, `FNN`, `philentropy`, `RTransferEntropy`, `bnlearn`) or Python (`scipy`, `NPEET`, `sklearn`, `torch`, `IDTxl`, `PyIF`); Spark ML has no first-class information-theoretic primitives.
 
+### Batch 42 — Panel Data & Econometric Methods (Ch 35)
+
+Twelve techniques rounding out Chapter 35: RE-vs-FE testing, dynamic
+panel GMM, general GMM, nonlinear LS, seemingly-unrelated regression,
+modern staggered / synthetic DiD, event-studies, HAC / cluster-robust
+SEs, Oaxaca-Blinder decomposition, stochastic-frontier efficiency,
+and panel cointegration.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [hausman-test](techniques/hausman-test) (Wooldridge auxiliary-reg form; A p=0.085 accept, B p<0.001 reject) | 35.2 | ✅ | ✅ | N/A |
+| 2 | [arellano-bond-gmm](techniques/arellano-bond-gmm) (difference GMM with lagged-level instruments) | 35.3 | ✅ | ✅ | N/A |
+| 3 | [gmm-general](techniques/gmm-general) (Hansen two-step; Hansen J test on over-identifying moments) | 35.5 | ✅ | ✅ | N/A |
+| 4 | [nonlinear-least-squares](techniques/nonlinear-least-squares) (Levenberg-Marquardt; MM + 4-PL recovered) | 35.6 | ✅ | ✅ | N/A |
+| 5 | [sur-regression](techniques/sur-regression) (Zellner FGLS; Σ̂ close to true 0.8 off-diagonal) | 35.7 | ✅ | ✅ | N/A |
+| 6 | [staggered-did](techniques/staggered-did) (Callaway-Sant'Anna group-time ATTs; event-time recovery) | 35.19 | ✅ | ✅ | N/A |
+| 7 | [synthetic-did](techniques/synthetic-did) (Arkhangelsky 2021; SDID = 2.46 vs plain DiD 1.12 vs truth 2.0) | 35.10 | ✅ | ✅ | N/A |
+| 8 | [event-study](techniques/event-study) (classical + TWFE pathology demo under staggered adoption) | 35.11 | ✅ | ✅ | N/A |
+| 9 | [newey-west-hac](techniques/newey-west-hac) (HAC intercept SE 0.12 vs OLS 0.07 under AR(1)) | 35.15 | ✅ | ✅ | N/A |
+| 10 | [oaxaca-blinder](techniques/oaxaca-blinder) (threefold + twofold gap decomposition; sums exactly to gap) | 35.21 | ✅ | ✅ | N/A |
+| 11 | [stochastic-frontier](techniques/stochastic-frontier) (Aigner-Lovell-Schmidt MLE + Jondrow TE scores) | 35.22 | ✅ | ✅ | N/A |
+| 12 | [panel-cointegration](techniques/panel-cointegration) (Pedroni residual ADF; group-mean t=-8.19 cointegrated vs -1.93 not) | 35.26 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 42** — panel econometrics tools live in R (`plm`, `fixest`, `did`, `synthdid`, `systemfit`, `frontier`, `oaxaca`, `sandwich`, `punitroots`) or Python (`linearmodels`, `pyfixest`, `differences`, `statsmodels`, `pysfa`); Spark ML has no first-class panel-econometrics support.
+
 Later batches: any remaining chapters.
 
 ---
