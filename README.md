@@ -1579,6 +1579,33 @@ immortal-time bias.
 
 **PySpark N/A across Batch 44** — specialised methods run in R (`extRemes`, `compositions`, `circular`, `fastLink`, `simex`, `changepoint`, `copula`, `Rcapture`, `tolerance`, `irrCAC`, `survival::tmerge`) or Python (`scipy.stats`, `skbio`, `pycircstat`, `recordlinkage`, `scipy.odr`, `ruptures`, `copulas`, `sklearn.covariance`, `krippendorff`, `lifelines`); Spark ML has no first-class support for these specialised data types.
 
+### Batch 45 — Clinical Prediction Modeling & Validation (Ch 39)
+
+Twelve techniques covering the Steyerberg-Harrell workflow for
+clinical prediction: prediction-vs-inference framing, Harrell's
+full-model + shrinkage strategy, nomograms and integer-point risk
+scores, bootstrap optimism correction, external validation,
+recalibration, discrimination + calibration metrics + plots,
+prediction vs confidence intervals, IECV multi-site validation, and
+penalised regression for low-EPV settings.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [prediction-vs-inference](techniques/prediction-vs-inference) (change-in-est vs CV MSE; z-confounder decision agrees) | 39.1 | ✅ | ✅ | N/A |
+| 2 | [multivariable-model-building](techniques/multivariable-model-building) (full vs stepwise vs vH-LC shrinkage; s=0.94) | 39.2 | ✅ | ✅ | N/A |
+| 3 | [nomograms](techniques/nomograms) (points-based scoring from logistic; patient 1 P=0.003, patient 2 P=0.080) | 39.3 | ✅ | ✅ | N/A |
+| 4 | [bootstrap-optimism-correction](techniques/bootstrap-optimism-correction) (apparent AUC 0.752 → corrected 0.651 at EPV=3.8) | 39.4/39.16 | ✅ | ✅ | N/A |
+| 5 | [external-validation](techniques/external-validation) (AUC preserved 0.77 → 0.77; slope drift 1.00 → 0.88) | 39.5 | ✅ | ✅ | N/A |
+| 6 | [model-recalibration](techniques/model-recalibration) (intercept + logistic recalibration; CITL −0.098 → 0.000) | 39.6 | ✅ | ✅ | N/A |
+| 7 | [penalized-clinical-prediction](techniques/penalized-clinical-prediction) (unpenalised vs ridge vs lasso at EPV=5.9; lasso 1 nonzero) | 39.9 | ✅ | ✅ | N/A |
+| 8 | [clinical-risk-scores](techniques/clinical-risk-scores) (Sullivan integer points; patient 20 pts → P=0.67) | 39.12 | ✅ | ✅ | N/A |
+| 9 | [prediction-intervals](techniques/prediction-intervals) (PI ~8× wider than CI; sim coverage 0.947 target 0.95) | 39.14 | ✅ | ✅ | N/A |
+| 10 | [discrimination-calibration](techniques/discrimination-calibration) (same AUC 0.705, ICI 0.040 vs 0.136) | 39.17 | ✅ | ✅ | N/A |
+| 11 | [calibration-plots](techniques/calibration-plots) (decile + LOESS + ICI/E-max/E-90; well-cal 0.015 vs over-conf 0.082) | 39.19 | ✅ | ✅ | N/A |
+| 12 | [iecv-multisite](techniques/iecv-multisite) (leave-one-site-out; K=5 sites, per-site AUC 0.64-0.73) | 39.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 45** — clinical prediction workflow lives in R (`rms`, `caret`, `tidymodels`, `riskRegression`, `predtools`, `CalibrationCurves`, `pmcalibration`, `metamisc`, `glmnet`) or Python (`sklearn.linear_model`, `sklearn.calibration`, `sklearn.metrics`, `statsmodels`, `lifelines`, `mapie`); Spark ML supports elements of the underlying model classes but has no first-class clinical-prediction validation / calibration / nomogram tooling.
+
 Later batches: any remaining chapters.
 
 ---
