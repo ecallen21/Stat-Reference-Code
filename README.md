@@ -1834,6 +1834,31 @@ learning, speculative decoding, Mamba SSMs, JEPA).
 
 **PySpark N/A across Batch 54** — R (`ivmodel`, `paths`, `Ustat`, `DCluster`, `SpatialEpi`, `INLA`, `ellmer`, `chattr`) or Python (`linearmodels`, `causal-learn`, `causallib`, `mamba-ssm`, `state-spaces`, LangChain, `pymc`, `transformers`, `vLLM`, custom) — Spark ML has no first-class causal-inference, LM-inference, or learning-theory surface.
 
+### Batch 55 — Cleanup (SMC, small-area, theory, survey, meta / bootstrap gaps)
+
+Twelve more gap fillers: sequential Monte Carlo, small-area
+estimation, composite-likelihood family (Ch 46), simulated-moments
+family (Ch 45), theory bundle (concentration, PAC-Bayes), Fisher /
+Cauchy p-value combiners, wild cluster bootstrap, complex survey
+design, expert prior elicitation, and cross-classified random-effects.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [particle-filter-smc](techniques/particle-filter-smc) (Gordon-Salmond-Smith bootstrap; PF RMSE 0.582 ≈ Kalman 0.583) | 18.10 | ✅ | ✅ | N/A |
+| 2 | [fay-herriot-small-area](techniques/fay-herriot-small-area) (Fay-Herriot 1979 EBLUP; MAE ↓ 61 % vs direct estimator) | 27.6 | ✅ | ✅ | N/A |
+| 3 | [composite-likelihood](techniques/composite-likelihood) (Lindsay / Varin-Reid-Firth; pairwise CL matches full MLE on Gaussian) | 46.13 | ✅ | ✅ | N/A |
+| 4 | [method-of-simulated-moments](techniques/method-of-simulated-moments) (McFadden / Pakes-Pollard; log-normal (μ, σ) 0.295, 0.396 vs truth 0.3, 0.4) | 45.7 | ✅ | ✅ | N/A |
+| 5 | [indirect-inference](techniques/indirect-inference) (Gouriéroux-Monfort-Renault MA(1) via AR(2); θ̂=0.57 vs truth 0.6) | 45.8 | ✅ | ✅ | N/A |
+| 6 | [concentration-inequalities](techniques/concentration-inequalities) (Markov/Chebyshev/Hoeffding/Bernstein; empirical ≤ bound across t) | 46.14 | ✅ | ✅ | N/A |
+| 7 | [pac-bayes-bounds](techniques/pac-bayes-bounds) (McAllester + Catoni; bound tight when KL(Q‖P) small) | 46.15 | ✅ | ✅ | N/A |
+| 8 | [fisher-combine-pvalues](techniques/fisher-combine-pvalues) (Fisher / Stouffer / Cauchy; 10 mildly-sig p → 2.5e−7) | 22.16 | ✅ | ✅ | N/A |
+| 9 | [wild-cluster-bootstrap](techniques/wild-cluster-bootstrap) (Cameron-Gelbach-Miller G=12; 95 % CI [0.461, 0.589] covers truth 0.5) | 12.15 | ✅ | ✅ | N/A |
+| 10 | [complex-survey-design](techniques/complex-survey-design) (Kish-Cochran HT + jackknife; naive 2.96 vs HT 3.94 with unequal weights) | 27.7 | ✅ | ✅ | N/A |
+| 11 | [elicitation-of-priors](techniques/elicitation-of-priors) (Kadane / O'Hagan SHELF; Beta(4.5, 6.6) & N(0.5, 0.24) matched to expert quantiles) | 23.20 | ✅ | ✅ | N/A |
+| 12 | [cross-classified-random-effects](techniques/cross-classified-random-effects) (Raudenbush-Bryk CCREM; σ̂² recovers school + neigh + resid vs mis-spec) | 8.19 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 55** — R (`pomp`, `sae`, `CompRandFld`, `gmm`, `indirectInference`, `metap`, `poolr`, `fwildclusterboot`, `survey`, `SHELF`, `lme4`) or Python (`particles`, `samplics`, `pyblp`, `scipy.stats`, `wildboottest`, `statsmodels.MixedLM`, `pymer4`, custom) — Spark ML has no first-class SMC, small-area, learning-theory, survey-design or mixed-effects surface.
+
 Later batches: any remaining chapters.
 
 ---
