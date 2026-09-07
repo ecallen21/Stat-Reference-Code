@@ -1960,6 +1960,31 @@ log-rank (Fleming-Harrington), and a nonlinear dim-red (GPLVM).
 
 **PySpark N/A across Batch 59** — R (`dartR`, `KFAS`, `mvKf`, `BCEA`, `heemod`, `binom`, `PropCIs`, `mratios`, `actuar`, `lime`, `interpret`, `survival`, `kergp`) or Python (`filterpy`, `dapper`, `scipy.stats`, `statsmodels.stats.proportion`, `chainladder`, `lime`, `captum`, `interpret`, `lifelines`, GPy, gpflow, custom) — Spark ML has no first-class filtering, health-economics, explainability, weighted-survival, or GP-latent-variable surface.
 
+### Batch 60 — Cleanup (XAI II / BART / credibility / LLM architecture / cutpoints / SSL gaps)
+
+Twelve more gap fillers: four XAI methods (anchor, counterfactual,
+PDP+ICE, ALE), BART Bayesian ensemble, Bühlmann-Straub credibility,
+three LLM architecture components (RoPE, GQA, FlashAttention), two
+classifier-cutpoint methods (F1-optimal, Youden J), and semi-
+supervised pseudo-labelling.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [anchor-explanations](techniques/anchor-explanations) (Ribeiro 2018; greedy anchor recovers logical rule with precision 1.00) | 47.32 | ✅ | ✅ | N/A |
+| 2 | [counterfactual-explanations](techniques/counterfactual-explanations) (Wachter 2017; sparse Δincome flips loan-approval prediction) | 47.33 | ✅ | ✅ | N/A |
+| 3 | [pdp-ice-plots](techniques/pdp-ice-plots) (Friedman + Goldstein; ICE fans reveal x0·x1 interaction PDP averages away) | 47.34 | ✅ | ✅ | N/A |
+| 4 | [ale-accumulated-local-effects](techniques/ale-accumulated-local-effects) (Apley 2020; recovers tanh(x0) under ρ=0.9 correlation, PDP would fail) | 47.35 | ✅ | ✅ | N/A |
+| 5 | [bart-bayesian-additive-regression-trees](techniques/bart-bayesian-additive-regression-trees) (Chipman 2010; stumps surrogate R² 0.83 on nonlinear task) | 5.16 | ✅ | ✅ | N/A |
+| 6 | [buhlmann-straub-credibility](techniques/buhlmann-straub-credibility) (per-group exposure; 93 % MSE reduction with variable exposures) | 24.21 | ✅ | ✅ | N/A |
+| 7 | [rope-rotary-position-embedding](techniques/rope-rotary-position-embedding) (Su 2021; shift invariance verified to 10⁻¹⁵) | 47.36 | ✅ | ✅ | N/A |
+| 8 | [grouped-query-attention](techniques/grouped-query-attention) (Ainslie 2023; 4× KV-cache reduction w/ n_kv_heads = n_q_heads/4) | 47.37 | ✅ | ✅ | N/A |
+| 9 | [flash-attention](techniques/flash-attention) (Dao 2022 tiled online softmax; matches naive to machine precision) | 47.38 | ✅ | ✅ | N/A |
+| 10 | [f1-optimal-threshold](techniques/f1-optimal-threshold) (5 % prevalence; t*=0.77 lifts F1 from 0.32 → 0.49 vs t=0.5 baseline) | 26.9 | ✅ | ✅ | N/A |
+| 11 | [youden-optimal-cutpoint](techniques/youden-optimal-cutpoint) (Youden 1950; recovers ROC-optimal cut vs over-sensitive t=0.5) | 26.10 | ✅ | ✅ | N/A |
+| 12 | [semi-supervised-pseudo-labeling](techniques/semi-supervised-pseudo-labeling) (Lee 2013; illustrates the confirmation-bias caveat) | 47.39 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 60** — R (`iml`, `pdp`, `ICEbox`, `ALEPlot`, `BART`, `dbarts`, `actuar`, `cutpointr`, `OptimalCutpoints`, `RSSL`) or Python (`alibi`, `DiCE`, `pymc-bart`, `chainladder`, `rotary-embedding-torch`, `flash-attn`, `sklearn`, custom) — Spark ML has no first-class XAI / BART / credibility / LLM-architecture / cutpoint / SSL surface.
+
 Later batches: any remaining chapters.
 
 ---
