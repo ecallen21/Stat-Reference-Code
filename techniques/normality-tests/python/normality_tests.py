@@ -1,117 +1,65 @@
-"""Formal tests for normality (Reference §3.19, §3.40).
+"""Normality tests (Reference Sec 3.24, 3.25).
 
-Tests included
---------------
-- Shapiro-Wilk           : ratio of two estimators of variance based on order
-                           statistics. Most powerful general-purpose test; default.
-- Jarque-Bera            : (n/6) * (g1^2 + g2^2 / 4); from skewness g1 and excess
-                           kurtosis g2. Asymptotic chi^2_2. Bad for small n.
-- D'Agostino-Pearson K^2 : transforms g1 and g2 to standard normals (omnibus on
-                           skewness AND kurtosis); good for n in [20, 1000+].
-- Lilliefors             : Kolmogorov-Smirnov against N(mean(x), var(x)) with
-                           estimated parameters -- uses Lilliefors' critical values
-                           (the plain K-S is too liberal when you estimate
-                           parameters from the data).
-- Anderson-Darling       : weighted CDF distance, with extra weight in the tails;
-                           especially sensitive to deviations there.
+Four classical omnibus tests of H0: y ~ Normal:
 
-Caveats
--------
-With very large n, every test rejects -- *any* real-world data deviates from
-"exactly normal." Always pair with a Q-Q plot and a skewness/kurtosis check.
-With very small n (< ~20), all of them have low power -- failure to reject is
-not evidence of normality. The reference doc's §1.29 covers Q-Q interpretation.
+  SHAPIRO-WILK       -- most powerful for moderate n; scipy.stats.shapiro.
+  ANDERSON-DARLING   -- weighted tail-sensitive Cramer-von Mises variant.
+  JARQUE-BERA        -- moment-based (skew + excess kurtosis).
+  KOLMOGOROV-SMIRNOV -- distributional distance (conservative with estimated
+                        parameters; use Lilliefors correction).
 
-This file's from-scratch versions cover Jarque-Bera and a simple Lilliefors via
-the K-S statistic with Monte-Carlo p-values; Shapiro-Wilk, D'Agostino-Pearson,
-and Anderson-Darling are deferred to scipy because they need precomputed
-constants / coefficient tables.
+Choose one:
+  * Small n (< 50)   -> Shapiro-Wilk.
+  * Moderate n       -> Shapiro or Anderson-Darling.
+  * Very large n (> 5000) -> tests almost always reject; use QQ-plot instead.
 """
-from __future__ import annotations    # stdlib: postpone type-hint evaluation (lets us write int | None)
+from __future__ import annotations    # stdlib
 
-import math    # stdlib: scalar math (sqrt, log, exp, comb, lgamma, pi, ...)
-from typing import Sequence    # stdlib: type hint meaning 'indexable iterable' (list / tuple / array)
-
-import numpy as np    # numerical arrays + linear algebra (np.mean, np.linalg.lstsq, ...)
-from scipy import stats    # distributions, hypothesis tests, PPFs (norm, t, chi2, ttest_ind, ...)
+import numpy as np    # numerical arrays
+from scipy import stats
 
 
-def _mean(x): return sum(x) / len(x)
+def shapiro(y):
+    W, p = stats.shapiro(y)
+    return {"W": float(W), "p": float(p)}
 
 
-def _central_moment(x, k):
-    m = _mean(x); return sum((v - m) ** k for v in x) / len(x)
+def anderson_darling(y):
+    r = stats.anderson(y, dist="norm")
+    return {"A2": float(r.statistic),
+            "critical_5pct": float(r.critical_values[2]),
+            "reject_at_5pct": bool(r.statistic > r.critical_values[2])}
 
 
-def jarque_bera_scratch(x: Sequence[float]) -> dict:
-    """JB = (n/6)*(g1^2 + g2^2/4), chi^2_2 under H0. Poor for n < ~100."""
-    n = len(x)
-    m2 = _central_moment(x, 2)
-    g1 = _central_moment(x, 3) / m2 ** 1.5             # skewness
-    g2 = _central_moment(x, 4) / m2 ** 2 - 3.0         # excess kurtosis
-    jb = (n / 6.0) * (g1 ** 2 + g2 ** 2 / 4.0)
-    p = float(stats.chi2.sf(jb, df=2))
-    return {"statistic": jb, "df": 2, "p_value": p,
-            "skewness": g1, "excess_kurtosis": g2}
+def jarque_bera(y):
+    JB, p = stats.jarque_bera(y)
+    return {"JB": float(JB), "p": float(p)}
 
 
-def lilliefors_scratch(x: Sequence[float], n_mc: int = 5000, rng=None) -> dict:
-    """Lilliefors test: K-S against fitted normal with parameter Monte-Carlo p-value.
-
-    We use a Monte-Carlo p-value (resample many samples of size n from N(0,1),
-    standardize, and compute the K-S statistic against the fitted normal) so we
-    don't need Lilliefors' tabulated critical values.
-    """
-    rng = rng or np.random.default_rng(0)
-    arr = np.asarray(x, dtype=float)
-    n = arr.size
-    mu = arr.mean(); sigma = arr.std(ddof=1)
-    if sigma == 0:
-        return {"statistic": float("nan"), "p_value": float("nan")}
-    ks_obs = stats.kstest((arr - mu) / sigma, "norm").statistic
-
-    sims = rng.standard_normal((n_mc, n))
-    sims_z = (sims - sims.mean(axis=1, keepdims=True)) / sims.std(axis=1, ddof=1, keepdims=True)
-    sim_stats = np.array([stats.kstest(row, "norm").statistic for row in sims_z])
-    p = float((sim_stats >= ks_obs).mean())
-    return {"statistic": float(ks_obs), "p_value": p,
-            "note": f"Monte-Carlo p ({n_mc} replications)"}
-
-
-def library_versions(x):
-    arr = np.asarray(x, dtype=float)
-    out = {}
-    try:
-        sw = stats.shapiro(arr)
-        out["Shapiro-Wilk (scipy.stats.shapiro)"] = (float(sw.statistic), float(sw.pvalue))
-    except Exception as exc:
-        out["Shapiro-Wilk"] = f"error: {exc}"
-    jb = stats.jarque_bera(arr)
-    out["Jarque-Bera (scipy.stats.jarque_bera)"] = (float(jb.statistic), float(jb.pvalue))
-    dp = stats.normaltest(arr)
-    out["D'Agostino-Pearson K^2 (scipy.stats.normaltest)"] = (float(dp.statistic), float(dp.pvalue))
-    ad = stats.anderson(arr, dist="norm")
-    out["Anderson-Darling A^2 (scipy.stats.anderson)"] = (
-        float(ad.statistic),
-        f"critical values at 15/10/5/2.5/1% = {list(ad.critical_values)}")
-    return out
+def kolmogorov_smirnov(y):
+    # Standardise then compare to N(0, 1)
+    y_z = (y - y.mean()) / y.std(ddof=1)
+    D, p = stats.kstest(y_z, "norm")
+    return {"D": float(D), "p_naive": float(p),
+            "note": "p is anti-conservative when mean/sd estimated; use Lilliefors."}
 
 
 if __name__ == "__main__":
-    rng = np.random.default_rng(11)
+    print("=== Normality tests: Shapiro / Anderson-Darling / Jarque-Bera / KS ===\n")
+    rng = np.random.default_rng(0)
+    n = 200
 
-    print("=== Sample 1: N(0, 1), n = 80 (should NOT be rejected) ===")
-    a = rng.normal(0, 1, 80).tolist()
-    print("Jarque-Bera (scratch):", jarque_bera_scratch(a))
-    print("Lilliefors (scratch) :", lilliefors_scratch(a, n_mc=2000, rng=rng))
-    print("\n--- library ---")
-    for k, v in library_versions(a).items():
-        print(f"  {k}: {v}")
+    for name, y in [("Normal(0, 1)",     rng.normal(0, 1, n)),
+                    ("Uniform(0, 1)",    rng.uniform(0, 1, n)),
+                    ("Exponential(1)",   rng.exponential(1, n)),
+                    ("Student-t(df=3)",  rng.standard_t(3, n))]:
+        print(f"  Sample: {name}")
+        s = shapiro(y); ad = anderson_darling(y); jb = jarque_bera(y); ks = kolmogorov_smirnov(y)
+        print(f"    Shapiro-Wilk  W = {s['W']:.4f}   p = {s['p']:.4f}")
+        print(f"    A-D           A2 = {ad['A2']:.3f}  crit_5% = {ad['critical_5pct']:.3f}"
+              f"   reject5% = {ad['reject_at_5pct']}")
+        print(f"    Jarque-Bera   JB = {jb['JB']:.3f}  p = {jb['p']:.4f}")
+        print(f"    K-S           D = {ks['D']:.4f}   p = {ks['p_naive']:.4f}")
+        print()
 
-    print("\n=== Sample 2: log-normal(0, 0.7), n = 80 (should be rejected) ===")
-    b = rng.lognormal(0, 0.7, 80).tolist()
-    print("Jarque-Bera (scratch):", jarque_bera_scratch(b))
-    print("Lilliefors (scratch) :", lilliefors_scratch(b, n_mc=2000, rng=rng))
-    print("\n--- library ---")
-    for k, v in library_versions(b).items():
-        print(f"  {k}: {v}")
+    print("--- library cross-check (R nortest, stats::shapiro.test; Python scipy.stats) ---")

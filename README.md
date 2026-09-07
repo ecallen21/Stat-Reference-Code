@@ -1735,6 +1735,256 @@ monitoring.
 
 **PySpark N/A across Batch 50** — A/B analytics live in R (`pwr`, `stats`, `gsDesign`, `rpact`, `inferference`, `grf`, `msm`, `bayesAB`) or Python (`scipy.stats`, `statsmodels`, `causalml`, `econml`, `planout`, custom + commercial SDKs like `eppo-sdk` / `statsig` / `growthbook`); Spark provides the scalable metric backend but the statistical layer runs elsewhere.
 
+### Batch 51 — Cleanup (Ch 36 gaps + high-value gaps in earlier chapters)
+
+Twelve targeted gap fillers: 4 remaining Ch 36 mixture / latent methods
+(LPA, mixture regression, conjoint/DCE, factor mixture) plus 8 standout
+gaps identified across Chs 14/17/21/22/45 (DeLong AUC, meta-regression,
+trim-fill, HMC/NUTS, importance sampling, Taguchi, D-optimal, Latin
+hypercube).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [latent-profile-analysis](techniques/latent-profile-analysis) (Gaussian mixture on continuous items; BIC picks K=3) | 36.2 | ✅ | ✅ | N/A |
+| 2 | [mixture-regression](techniques/mixture-regression) (EM for 2-class opposite-slope mixture; 90% label recovery) | 36.3 | ✅ | ✅ | N/A |
+| 3 | [conjoint-choice](techniques/conjoint-choice) (MNL from scratch; McFadden pseudo-R² 0.44) | 36.7 | ✅ | ✅ | N/A |
+| 4 | [factor-mixture-model](techniques/factor-mixture-model) (FMM via GMM + SVD loadings; recovered to 0.05) | 36.10 | ✅ | ✅ | N/A |
+| 5 | [delong-auc-test](techniques/delong-auc-test) (placement values + DeLong SE; diff 0.079 p=0.02) | 21.3 | ✅ | ✅ | N/A |
+| 6 | [meta-regression](techniques/meta-regression) (REML + moderator; 87% heterogeneity explained) | 22.5 | ✅ | ✅ | N/A |
+| 7 | [trim-fill](techniques/trim-fill) (Duval-Tweedie L₀ + mirror imputation; adjusts naive 0.378→0.355) | 22.4 | ✅ | ✅ | N/A |
+| 8 | [hmc-nuts](techniques/hmc-nuts) (leapfrog HMC on 2-D correlated Gaussian; recovers mean and Σ) | 14.4 | ✅ | ✅ | N/A |
+| 9 | [importance-sampling](techniques/importance-sampling) (SNIS + ESS; good vs bad proposal contrast) | 45.6 | ✅ | ✅ | N/A |
+| 10 | [taguchi-methods](techniques/taguchi-methods) (L9 orthogonal array + SNR; per-level SNR ranking) | 17.15 | ✅ | ✅ | N/A |
+| 11 | [d-optimal-design](techniques/d-optimal-design) (Fedorov exchange; 9-run design at 158% D-eff per run) | 17.19 | ✅ | ✅ | N/A |
+| 12 | [latin-hypercube-sampling](techniques/latin-hypercube-sampling) (LHS + Maximin; min dist 0.325 vs random 0.230) | 45.7 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 51** — these are R (`mclust`, `flexmix`, `mlogit`, `OpenMx`, `pROC`, `metafor`, `rstan`, `DoE.base`, `AlgDesign`, `lhs`) or Python (`sklearn.mixture`, `scipy.stats`, `pyDOE2`, `xlogit`, `numpyro`, custom) — Spark ML has no first-class support for these classical / Bayesian / DOE tools.
+
+### Batch 52 — Cleanup (Ch 15 causal-inference workhorses + earlier gaps)
+
+Twelve more gap fillers, primarily filling out Ch 15 causal-inference
+methods (IPTW, AIPW, g-computation, MSM, Rosenbaum bounds, DML,
+entropy balancing, CEM) plus a Cox-with-time-varying-covariates,
+network meta-analysis, 2PL/3PL IRT, and a normality-tests roundup.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [iptw](techniques/iptw) (ATE/ATT/ATC/ATO weighting; recovers true ATE 0.5) | 15.6 | ✅ | ✅ | N/A |
+| 2 | [aipw-doubly-robust](techniques/aipw-doubly-robust) (Robins-Rotnitzky-Zhao; g-formula + IPTW + AIPW side-by-side) | 15.8 | ✅ | ✅ | N/A |
+| 3 | [g-computation](techniques/g-computation) (parametric g-formula + bootstrap SE; recovers ATE 0.5) | 15.20 | ✅ | ✅ | N/A |
+| 4 | [marginal-structural-model](techniques/marginal-structural-model) (stabilised IPTW 2-time-point; recovers period effects) | 15.19 | ✅ | ✅ | N/A |
+| 5 | [rosenbaum-bounds](techniques/rosenbaum-bounds) (matched-pair sensitivity; critical Γ ≈ 1.8 for 45/60 discordant) | 15.23 | ✅ | ✅ | N/A |
+| 6 | [dml-double-ml](techniques/dml-double-ml) (Chernozhukov DML-PLR with GBM nuisances; recovers θ=0.60) | 15.25 | ✅ | ✅ | N/A |
+| 7 | [entropy-balancing](techniques/entropy-balancing) (Hainmueller Newton dual; exact moment matching, ESS 912/2000) | 15.55 | ✅ | ✅ | N/A |
+| 8 | [coarsened-exact-matching](techniques/coarsened-exact-matching) (Iacus-King-Porro CEM; ATT 0.59 vs truth 0.5) | 15.10 | ✅ | ✅ | N/A |
+| 9 | [cox-time-varying](techniques/cox-time-varying) (counting-process partial likelihood; recovers HR=1.7) | 11.10 | ✅ | ✅ | N/A |
+| 10 | [network-meta-analysis](techniques/network-meta-analysis) (contrast-based RE-NMA; recovers ranking B>A>C) | 22.15 | ✅ | ✅ | N/A |
+| 11 | [irt-2pl-3pl](techniques/irt-2pl-3pl) (marginal MLE via GH quadrature; 2PL b recovered to 0.2) | 20.4/20.5 | ✅ | ✅ | N/A |
+| 12 | [normality-tests](techniques/normality-tests) (Shapiro/A-D/JB/KS; correctly reject non-normal cases) | 3.24/3.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 52** — R (`WeightIt`, `AIPW`, `stdReg`, `ipw`, `rbounds`, `DoubleML`, `ebal`, `MatchIt`, `survival`, `netmeta`, `mirt`, `nortest`) or Python (`causalinference`, `zepid`, `DoubleML`, `econml`, `lifelines`, `scipy.stats`, custom) — Spark ML has no first-class causal-inference / IRT / meta-analysis surface.
+
+### Batch 53 — Cleanup (Ch 15 causal-inference frontier + cross-chapter gaps)
+
+Twelve more gap fillers, mostly in Ch 15 (overlap weighting, CACE,
+quantile treatment effects, Manski bounds, PC causal discovery,
+case-crossover, causal forest, natural mediation effects,
+transportability) plus Ch 5 fractional polynomials, Ch 11 random
+survival forest and Ch 11 accelerated failure time.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [overlap-weighting](techniques/overlap-weighting) (Li-Morgan-Zaslavsky ATO; SMD 0.00 vs IPTW-ATE 0.05, weights bounded ≤ 0.5) | 15.31 | ✅ | ✅ | N/A |
+| 2 | [principal-stratification-cace](techniques/principal-stratification-cace) (Wald / 2SLS CACE; recovers 1.91 vs truth 2.00 under 40 % compliance) | 15.32 | ✅ | ✅ | N/A |
+| 3 | [quantile-treatment-effects](techniques/quantile-treatment-effects) (Firpo IPW QTE; recovers rank-shift 0.63→2.31 across τ=0.1→0.9) | 15.33 | ✅ | ✅ | N/A |
+| 4 | [manski-bounds](techniques/manski-bounds) (worst-case + MTR + MTS; ATE ∈ [−3.64,+6.36], MTR tightens LB to 0) | 15.34 | ✅ | ✅ | N/A |
+| 5 | [causal-discovery-pc](techniques/causal-discovery-pc) (Spirtes-Glymour-Scheines PC; recovers X0→X2←X1 v-structure exactly) | 15.35 | ✅ | ✅ | N/A |
+| 6 | [case-crossover](techniques/case-crossover) (Maclure 1:1 & 1:M MH; recovers OR 2.81 & 2.32 vs truth 2.5) | 15.36 | ✅ | ✅ | N/A |
+| 7 | [causal-forest](techniques/causal-forest) (Athey-Wager GRF R-forest; τ̂ monotone in x0 across grid) | 15.37 | ✅ | ✅ | N/A |
+| 8 | [mediation-natural-effects](techniques/mediation-natural-effects) (VanderWeele closed form; NDE 0.51/NIE 0.62 vs truth 0.50/0.64) | 15.38 | ✅ | ✅ | N/A |
+| 9 | [transportability-generalizability](techniques/transportability-generalizability) (Cole-Stuart IOW; transported ATE 2.59 vs truth 2.50) | 15.39 | ✅ | ✅ | N/A |
+| 10 | [fractional-polynomials](techniques/fractional-polynomials) (Royston-Altman FP2 closed test; recovers powers (−0.5, +0.5)) | 5.14 | ✅ | ✅ | N/A |
+| 11 | [random-survival-forest](techniques/random-survival-forest) (Ishwaran log-rank splits + NA CHF; Harrell C = 0.742) | 11.24 | ✅ | ✅ | N/A |
+| 12 | [accelerated-failure-time](techniques/accelerated-failure-time) (Weibull/log-normal MLE; recovers β=(+0.51,−0.82), σ=0.39) | 11.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 53** — R (`PSweight`, `ivreg`, `Counterfactual`, `bounds`, `pcalg`, `survival::clogit`, `grf`, `mediation`, `generalize`, `mfp`, `randomForestSRC`, `survival::survreg`) or Python (`linearmodels`, `causal-learn`, `econml`, `lifelines`, `sksurv`, `causallib`, custom) — Spark ML has no first-class causal-inference / partial-identification / classical-parametric survival surface.
+
+### Batch 54 — Cleanup (Ch 15/24/46/47 – weak IVs, learning theory, emerging LM techniques)
+
+Twelve more gap fillers, mixing remaining Ch 15 workhorses (weak-IV
+robust CIs, path-specific effects), Ch 24 disease-mapping empirical
+Bayes, Ch 46 learning-theory bounds (U-statistics, Rademacher, VC,
+Efron-Stein), and Ch 47 emerging LM techniques (RAG, in-context
+learning, speculative decoding, Mamba SSMs, JEPA).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [weak-instruments-anderson-rubin](techniques/weak-instruments-anderson-rubin) (Cragg-Donald F + AR CI; strong-IV CI narrow, weak-IV CI honestly wide) | 15.40 | ✅ | ✅ | N/A |
+| 2 | [path-specific-effects](techniques/path-specific-effects) (Avin-Shpitser-Pearl / VanderWeele-Chiba; recovers 4-path decomposition to 3 decimals) | 15.41 | ✅ | ✅ | N/A |
+| 3 | [u-statistics](techniques/u-statistics) (Hoeffding 1948 + projection var; Gini 1.120 vs truth 1.128, SE within 7 %) | 46.9 | ✅ | ✅ | N/A |
+| 4 | [rademacher-complexity](techniques/rademacher-complexity) (Bartlett-Mendelson; linear-ball R̂ 0.066 matches B/√n) | 46.10 | ✅ | ✅ | N/A |
+| 5 | [vc-dimension](techniques/vc-dimension) (empirical shatter lower bound; half-planes in ℝᵖ recover p+1 exactly) | 46.11 | ✅ | ✅ | N/A |
+| 6 | [efron-stein-inequality](techniques/efron-stein-inequality) (resample-i variance bound; ES ≥ Var for mean, variance, median) | 46.12 | ✅ | ✅ | N/A |
+| 7 | [retrieval-augmented-generation](techniques/retrieval-augmented-generation) (TF-IDF retriever + template LM; recovers 3 survival docs from 6-doc corpus) | 47.19 | ✅ | ✅ | N/A |
+| 8 | [in-context-learning](techniques/in-context-learning) (OLS-as-transformer proxy; MSE 8.1 → 0.002 as K rises 0 → 32) | 47.20 | ✅ | ✅ | N/A |
+| 9 | [speculative-decoding](techniques/speculative-decoding) (Leviathan rejection sampler; 4.10× speedup with aligned draft) | 47.21 | ✅ | ✅ | N/A |
+| 10 | [mamba-state-space-transformer](techniques/mamba-state-space-transformer) (LTI SSM; recurrent = convolutional to 10⁻¹⁷, L=500 stable) | 47.22 | ✅ | ✅ | N/A |
+| 11 | [jepa-self-supervised](techniques/jepa-self-supervised) (I-JEPA-flavour toy; EMA target + loss 1.79 → 0.25 over 400 epochs) | 47.23 | ✅ | ✅ | N/A |
+| 12 | [poisson-gamma-empirical-bayes](techniques/poisson-gamma-empirical-bayes) (Clayton-Kaldor 1987 shrinkage; MAE ↓ 34 % overall, 49 % in small areas) | 24.19 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 54** — R (`ivmodel`, `paths`, `Ustat`, `DCluster`, `SpatialEpi`, `INLA`, `ellmer`, `chattr`) or Python (`linearmodels`, `causal-learn`, `causallib`, `mamba-ssm`, `state-spaces`, LangChain, `pymc`, `transformers`, `vLLM`, custom) — Spark ML has no first-class causal-inference, LM-inference, or learning-theory surface.
+
+### Batch 55 — Cleanup (SMC, small-area, theory, survey, meta / bootstrap gaps)
+
+Twelve more gap fillers: sequential Monte Carlo, small-area
+estimation, composite-likelihood family (Ch 46), simulated-moments
+family (Ch 45), theory bundle (concentration, PAC-Bayes), Fisher /
+Cauchy p-value combiners, wild cluster bootstrap, complex survey
+design, expert prior elicitation, and cross-classified random-effects.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [particle-filter-smc](techniques/particle-filter-smc) (Gordon-Salmond-Smith bootstrap; PF RMSE 0.582 ≈ Kalman 0.583) | 18.10 | ✅ | ✅ | N/A |
+| 2 | [fay-herriot-small-area](techniques/fay-herriot-small-area) (Fay-Herriot 1979 EBLUP; MAE ↓ 61 % vs direct estimator) | 27.6 | ✅ | ✅ | N/A |
+| 3 | [composite-likelihood](techniques/composite-likelihood) (Lindsay / Varin-Reid-Firth; pairwise CL matches full MLE on Gaussian) | 46.13 | ✅ | ✅ | N/A |
+| 4 | [method-of-simulated-moments](techniques/method-of-simulated-moments) (McFadden / Pakes-Pollard; log-normal (μ, σ) 0.295, 0.396 vs truth 0.3, 0.4) | 45.7 | ✅ | ✅ | N/A |
+| 5 | [indirect-inference](techniques/indirect-inference) (Gouriéroux-Monfort-Renault MA(1) via AR(2); θ̂=0.57 vs truth 0.6) | 45.8 | ✅ | ✅ | N/A |
+| 6 | [concentration-inequalities](techniques/concentration-inequalities) (Markov/Chebyshev/Hoeffding/Bernstein; empirical ≤ bound across t) | 46.14 | ✅ | ✅ | N/A |
+| 7 | [pac-bayes-bounds](techniques/pac-bayes-bounds) (McAllester + Catoni; bound tight when KL(Q‖P) small) | 46.15 | ✅ | ✅ | N/A |
+| 8 | [fisher-combine-pvalues](techniques/fisher-combine-pvalues) (Fisher / Stouffer / Cauchy; 10 mildly-sig p → 2.5e−7) | 22.16 | ✅ | ✅ | N/A |
+| 9 | [wild-cluster-bootstrap](techniques/wild-cluster-bootstrap) (Cameron-Gelbach-Miller G=12; 95 % CI [0.461, 0.589] covers truth 0.5) | 12.15 | ✅ | ✅ | N/A |
+| 10 | [complex-survey-design](techniques/complex-survey-design) (Kish-Cochran HT + jackknife; naive 2.96 vs HT 3.94 with unequal weights) | 27.7 | ✅ | ✅ | N/A |
+| 11 | [elicitation-of-priors](techniques/elicitation-of-priors) (Kadane / O'Hagan SHELF; Beta(4.5, 6.6) & N(0.5, 0.24) matched to expert quantiles) | 23.20 | ✅ | ✅ | N/A |
+| 12 | [cross-classified-random-effects](techniques/cross-classified-random-effects) (Raudenbush-Bryk CCREM; σ̂² recovers school + neigh + resid vs mis-spec) | 8.19 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 55** — R (`pomp`, `sae`, `CompRandFld`, `gmm`, `indirectInference`, `metap`, `poolr`, `fwildclusterboot`, `survey`, `SHELF`, `lme4`) or Python (`particles`, `samplics`, `pyblp`, `scipy.stats`, `wildboottest`, `statsmodels.MixedLM`, `pymer4`, custom) — Spark ML has no first-class SMC, small-area, learning-theory, survey-design or mixed-effects surface.
+
+### Batch 56 — Cleanup (epi / survival / MCMC / trials / kernels / OT gaps)
+
+Twelve more gap fillers: two epi study designs, two survival methods
+(piecewise-exp + DeepSurv), two Bayesian samplers (RJ-MCMC + bridge
+sampling), a smoother (Nadaraya-Watson), optimal transport, MRP,
+two adaptive-trial designs (RAR + platform), a panel model (RI-CLPM),
+and PROCOVA covariate adjustment.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [nested-case-control](techniques/nested-case-control) (Thomas 1977 1:K risk-set matching; HR 3.21 (1:1) → 3.27 (1:4) vs truth 3) | 15.42 | ✅ | ✅ | N/A |
+| 2 | [piecewise-exponential-model](techniques/piecewise-exponential-model) (Friedman split-and-Poisson MLE; λ̂ = (0.20, 0.50, 0.81) vs (0.20, 0.50, 1.00), ĤR = 2.09) | 11.26 | ✅ | ✅ | N/A |
+| 3 | [deep-survival-network](techniques/deep-survival-network) (Katzman DeepSurv; C = 0.739 vs linear Cox 0.622 on nonlinear hazard) | 11.27 | ✅ | ✅ | N/A |
+| 4 | [nadaraya-watson-kernel-regression](techniques/nadaraya-watson-kernel-regression) (LOO-CV bandwidth; RMSE 0.07 vs Silverman 0.25 on `sin(1.5x) + 0.3x`) | 5.15 | ✅ | ✅ | N/A |
+| 5 | [optimal-transport-wasserstein](techniques/optimal-transport-wasserstein) (1-D W₁ + Sinkhorn; matches analytic W₁ = 1 on N(0,1) vs N(1,1)) | 46.16 | ✅ | ✅ | N/A |
+| 6 | [reversible-jump-mcmc](techniques/reversible-jump-mcmc) (Green 1995 mixture-order; posterior P(k=2) = 0.997 on 2-comp mixture) | 25.6 | ✅ | ✅ | N/A |
+| 7 | [bridge-sampling-evidence](techniques/bridge-sampling-evidence) (Meng-Wong iterative; Ẑ = 5.04 vs truth 5.00, harmonic-mean fails at 0.46) | 25.7 | ✅ | ✅ | N/A |
+| 8 | [mrp-poststratification](techniques/mrp-poststratification) (Gelman-Little / Park-Gelman-Bafumi; matches poststrat mean 0.373 vs truth 0.379) | 27.8 | ✅ | ✅ | N/A |
+| 9 | [response-adaptive-randomization](techniques/response-adaptive-randomization) (Wei-Durham + Thompson BAR; Thompson allocates 87 % to better arm) | 44.13 | ✅ | ✅ | N/A |
+| 10 | [platform-trial-design](techniques/platform-trial-design) (Woodcock-LaVange; winner graduates 93 %, harmful arm hit for futility 71 %) | 44.14 | ✅ | ✅ | N/A |
+| 11 | [ri-clpm-random-intercept-cross-lagged](techniques/ri-clpm-random-intercept-cross-lagged) (Hamaker 2015; recovers φ_xy = +0.14, classical CLPM misses at 0) | 20.30 | ✅ | ✅ | N/A |
+| 12 | [prognostic-score-covariate-adjustment](techniques/prognostic-score-covariate-adjustment) (Hansen 2008 / Schuler PROCOVA; SE 0.10 vs 0.18 → 3× ESS) | 44.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 56** — R (`Epi`, `survival`, `survivalmodels`, `KernSmooth`, `transport`, `rjmcmc`, `bridgesampling`, `rstanarm`, `brms`, `adaptr`, `pipe`, `lavaan`, `RATES`) or Python (`lifelines`, `sksurv`, `pycox`, `statsmodels`, `POT`, `pymc`, `semopy`, `procova`, custom) — Spark ML has no first-class survival-ML, MCMC, small-area, adaptive-trial, or panel-SEM surface.
+
+### Batch 57 — Cleanup (score matching / DRE / QMC / MC variance reduction / trend / agreement gaps)
+
+Twelve more gap fillers: two density-estimation methods (score
+matching, DRE), a sampling design (RSS), agreement (Bland-Altman),
+two Bayesian samplers (adaptive Metropolis, SGLD), QMC, a trend test
+(Cochran-Armitage), a survival model (first-hitting-time / IG),
+BIBD, and two classical MC variance-reduction techniques (antithetic
+/ control variates, Rao-Blackwellisation).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [score-matching](techniques/score-matching) (Hyvarinen 2005; Gaussian recovers μ, σ without touching normalising constant) | 46.17 | ✅ | ✅ | N/A |
+| 2 | [density-ratio-estimation](techniques/density-ratio-estimation) (Sugiyama uLSIF; matches analytic ratio N(0,1)/N(1,1.5)) | 46.18 | ✅ | ✅ | N/A |
+| 3 | [ranked-set-sampling](techniques/ranked-set-sampling) (McIntyre 1952; up to 3.4× variance reduction over SRS with m=8) | 27.9 | ✅ | ✅ | N/A |
+| 4 | [bland-altman-agreement](techniques/bland-altman-agreement) (Bland-Altman 1986; LoA ±6.1 reveals disagreement corr=0.977 hides) | 13.16 | ✅ | ✅ | N/A |
+| 5 | [adaptive-metropolis-haario](techniques/adaptive-metropolis-haario) (Haario 2001; drops lag-1 autocorr 0.99 → 0.76 on anisotropic 2-D) | 25.8 | ✅ | ✅ | N/A |
+| 6 | [stochastic-gradient-mcmc](techniques/stochastic-gradient-mcmc) (Welling-Teh SGLD; Bayesian linreg posterior matches analytic mean) | 25.9 | ✅ | ✅ | N/A |
+| 7 | [quasi-monte-carlo-sobol](techniques/quasi-monte-carlo-sobol) (Owen-scrambled Sobol; 158× RMSE reduction over MC, d=3 N=4096) | 45.9 | ✅ | ✅ | N/A |
+| 8 | [cochran-armitage-trend](techniques/cochran-armitage-trend) (Cochran 1954 / Armitage 1955; Z = +5.36 on true linear dose-response) | 4.16 | ✅ | ✅ | N/A |
+| 9 | [first-hitting-time-model](techniques/first-hitting-time-model) (Whitmore IG survival; recovers (μ, λ) = (3.04, 9.82) at 42% censoring) | 11.28 | ✅ | ✅ | N/A |
+| 10 | [balanced-incomplete-block-design](techniques/balanced-incomplete-block-design) (Yates / Fisher Fano-plane BIBD; recovers treatment effects with block structure) | 32.9 | ✅ | ✅ | N/A |
+| 11 | [antithetic-control-variates](techniques/antithetic-control-variates) (Hammersley-Morton; 28× (antithetic) / 54× (CV) variance reduction on E[exp(U)]) | 45.10 | ✅ | ✅ | N/A |
+| 12 | [rao-blackwellization](techniques/rao-blackwellization) (Rao 1945 / Blackwell 1947; 1.5× variance reduction via conditional on latent) | 45.11 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 57** — R (`densratio`, `RSSampling`, `blandr`, `adaptMCMC`, `SGmcmc`, `randtoolbox`, `DescTools`, `threg`, `AlgDesign`, `crossdes`) or Python (`densratio`, `pyCompare`, `pymc`, `tfp`, `scipy.stats.qmc`, `scipy.stats.invgauss`, `pyDOE2`, custom) — Spark ML has no first-class score-matching, MCMC, QMC, or classical-design surface.
+
+### Batch 58 — Cleanup (nested sampling / slice / LM fine-tuning / theory / classical inference gaps)
+
+Twelve more gap fillers: two Bayesian samplers (nested sampling,
+slice sampler), three LM training / prompting techniques (LoRA, DPO,
+CoT + self-consistency), NN theory (NTK), a hurdle model, a
+one-outlier test (Grubbs / Rosner), OR-homogeneity (Woolf), active
+learning, model soups, and a structural-break test (Chow / QLR).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [nested-sampling](techniques/nested-sampling) (Skilling 2006; recovers Z = 0.10 on 1-D Gaussian target) | 25.10 | ✅ | ✅ | N/A |
+| 2 | [slice-sampler](techniques/slice-sampler) (Neal 2003 stepping-out + shrinkage; matches analytic P(X<0) on bimodal) | 25.11 | ✅ | ✅ | N/A |
+| 3 | [lora-peft](techniques/lora-peft) (Hu 2021 low-rank adapter; 12–47 % trainable params on synthetic linear layer) | 47.24 | ✅ | ✅ | N/A |
+| 4 | [dpo-direct-preference-optimization](techniques/dpo-direct-preference-optimization) (Rafailov 2023; β=0.5 → 74 % mass on argmax action) | 47.25 | ✅ | ✅ | N/A |
+| 5 | [chain-of-thought-reasoning](techniques/chain-of-thought-reasoning) (Wei 2022 + Wang 2022 self-consistency; K=41 → 0.74 accuracy from 0.55 single) | 47.26 | ✅ | ✅ | N/A |
+| 6 | [neural-tangent-kernel](techniques/neural-tangent-kernel) (Jacot 2018; NTK regression vs wide MLP corr 0.9957 on test) | 46.19 | ✅ | ✅ | N/A |
+| 7 | [hurdle-model](techniques/hurdle-model) (Mullahy 1986; recovers gate + count betas; plain Poisson biased) | 7.20 | ✅ | ✅ | N/A |
+| 8 | [grubbs-outlier-test](techniques/grubbs-outlier-test) (Grubbs + Rosner ESD; single test flags G=4.92, ESD detects 3 injected outliers) | 3.26 | ✅ | ✅ | N/A |
+| 9 | [woolf-homogeneity-of-or](techniques/woolf-homogeneity-of-or) (Woolf 1955; correctly non-sig for common OR, p=3e-6 for interaction) | 4.17 | ✅ | ✅ | N/A |
+| 10 | [active-learning-query-strategies](techniques/active-learning-query-strategies) (Settles survey; uncertainty / margin / random pool baselines) | 47.27 | ✅ | ✅ | N/A |
+| 11 | [model-soups-fine-tune-averaging](techniques/model-soups-fine-tune-averaging) (Wortsman 2022; soup ≈ ensemble w/ one forward pass) | 47.28 | ✅ | ✅ | N/A |
+| 12 | [chow-test-structural-break](techniques/chow-test-structural-break) (Chow 1960 + Andrews QLR; QLR picks true τ*=100 with supF=336) | 12.16 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 58** — R (`nestedmodels`, `mcmc::slice.sample`, `pscl`, `outliers`, `EnvStats`, `DescTools`, `strucchange`, `ALEval`) or Python (`dynesty`, `nestle`, `pymc`, `peft`, `trl`, `neural-tangents`, `statsmodels`, `modAL`, `mergekit`, `scipy`, custom) — Spark ML has no first-class NS / slice / LM-fine-tuning / NN-theory / structural-break surface.
+
+### Batch 59 — Cleanup (Kalman variants / health economics / classical CIs / explainability / weighted logrank / GPLVM)
+
+Twelve more gap fillers: three Kalman-family filters (EnKF, EKF,
+UKF), health-economic CEA, two classical CIs (Wilson score for
+proportion, Fieller for ratio), actuarial Bühlmann credibility,
+three XAI methods (LIME, integrated gradients, EBM), weighted
+log-rank (Fleming-Harrington), and a nonlinear dim-red (GPLVM).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [ensemble-kalman-filter](techniques/ensemble-kalman-filter) (Evensen 1994; RMSE 0.46 vs obs RMSE 1.06 on nonlinear 2-D) | 18.11 | ✅ | ✅ | N/A |
+| 2 | [extended-kalman-filter](techniques/extended-kalman-filter) (Jazwinski / Anderson-Moore; RMSE 0.26 on 1-D quadratic-obs system) | 18.12 | ✅ | ✅ | N/A |
+| 3 | [unscented-kalman-filter](techniques/unscented-kalman-filter) (Julier-Uhlmann sigma points; RMSE 0.27 matches EKF w/o Jacobian) | 18.13 | ✅ | ✅ | N/A |
+| 4 | [cost-effectiveness-analysis](techniques/cost-effectiveness-analysis) (Drummond; ICER ≈ 39k, CEAC 85 % CE at $50k WTP) | 44.16 | ✅ | ✅ | N/A |
+| 5 | [wilson-score-interval-proportion](techniques/wilson-score-interval-proportion) (Wilson 1927 / Agresti-Coull / Jeffreys / CP; Wald degenerate at x=0) | 4.18 | ✅ | ✅ | N/A |
+| 6 | [fieller-interval-ratio](techniques/fieller-interval-ratio) (Fieller 1954; unbounded CI correctly flags weak denominator) | 3.27 | ✅ | ✅ | N/A |
+| 7 | [buhlmann-credibility](techniques/buhlmann-credibility) (Bühlmann 1967; 35 % MSE reduction over raw group means) | 24.20 | ✅ | ✅ | N/A |
+| 8 | [lime-local-explanations](techniques/lime-local-explanations) (Ribeiro 2016; local coefs match analytic gradients at x*) | 47.29 | ✅ | ✅ | N/A |
+| 9 | [integrated-gradients](techniques/integrated-gradients) (Sundararajan 2017; completeness Σ IG = Δf exactly) | 47.30 | ✅ | ✅ | N/A |
+| 10 | [explainable-boosting-machine](techniques/explainable-boosting-machine) (Nori 2019 / Lou 2013; R² 0.92, recovers tanh shape) | 47.31 | ✅ | ✅ | N/A |
+| 11 | [fleming-harrington-weighted-logrank](techniques/fleming-harrington-weighted-logrank) (G(0,1) p=0.018 vs classical p=0.073 for delayed benefit) | 11.29 | ✅ | ✅ | N/A |
+| 12 | [gaussian-process-latent-variable-model](techniques/gaussian-process-latent-variable-model) (Lawrence 2004; PCA-init RBF-GPLVM on 6-D projected swiss roll) | 6.16 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 59** — R (`dartR`, `KFAS`, `mvKf`, `BCEA`, `heemod`, `binom`, `PropCIs`, `mratios`, `actuar`, `lime`, `interpret`, `survival`, `kergp`) or Python (`filterpy`, `dapper`, `scipy.stats`, `statsmodels.stats.proportion`, `chainladder`, `lime`, `captum`, `interpret`, `lifelines`, GPy, gpflow, custom) — Spark ML has no first-class filtering, health-economics, explainability, weighted-survival, or GP-latent-variable surface.
+
+### Batch 60 — Cleanup (XAI II / BART / credibility / LLM architecture / cutpoints / SSL gaps)
+
+Twelve more gap fillers: four XAI methods (anchor, counterfactual,
+PDP+ICE, ALE), BART Bayesian ensemble, Bühlmann-Straub credibility,
+three LLM architecture components (RoPE, GQA, FlashAttention), two
+classifier-cutpoint methods (F1-optimal, Youden J), and semi-
+supervised pseudo-labelling.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [anchor-explanations](techniques/anchor-explanations) (Ribeiro 2018; greedy anchor recovers logical rule with precision 1.00) | 47.32 | ✅ | ✅ | N/A |
+| 2 | [counterfactual-explanations](techniques/counterfactual-explanations) (Wachter 2017; sparse Δincome flips loan-approval prediction) | 47.33 | ✅ | ✅ | N/A |
+| 3 | [pdp-ice-plots](techniques/pdp-ice-plots) (Friedman + Goldstein; ICE fans reveal x0·x1 interaction PDP averages away) | 47.34 | ✅ | ✅ | N/A |
+| 4 | [ale-accumulated-local-effects](techniques/ale-accumulated-local-effects) (Apley 2020; recovers tanh(x0) under ρ=0.9 correlation, PDP would fail) | 47.35 | ✅ | ✅ | N/A |
+| 5 | [bart-bayesian-additive-regression-trees](techniques/bart-bayesian-additive-regression-trees) (Chipman 2010; stumps surrogate R² 0.83 on nonlinear task) | 5.16 | ✅ | ✅ | N/A |
+| 6 | [buhlmann-straub-credibility](techniques/buhlmann-straub-credibility) (per-group exposure; 93 % MSE reduction with variable exposures) | 24.21 | ✅ | ✅ | N/A |
+| 7 | [rope-rotary-position-embedding](techniques/rope-rotary-position-embedding) (Su 2021; shift invariance verified to 10⁻¹⁵) | 47.36 | ✅ | ✅ | N/A |
+| 8 | [grouped-query-attention](techniques/grouped-query-attention) (Ainslie 2023; 4× KV-cache reduction w/ n_kv_heads = n_q_heads/4) | 47.37 | ✅ | ✅ | N/A |
+| 9 | [flash-attention](techniques/flash-attention) (Dao 2022 tiled online softmax; matches naive to machine precision) | 47.38 | ✅ | ✅ | N/A |
+| 10 | [f1-optimal-threshold](techniques/f1-optimal-threshold) (5 % prevalence; t*=0.77 lifts F1 from 0.32 → 0.49 vs t=0.5 baseline) | 26.9 | ✅ | ✅ | N/A |
+| 11 | [youden-optimal-cutpoint](techniques/youden-optimal-cutpoint) (Youden 1950; recovers ROC-optimal cut vs over-sensitive t=0.5) | 26.10 | ✅ | ✅ | N/A |
+| 12 | [semi-supervised-pseudo-labeling](techniques/semi-supervised-pseudo-labeling) (Lee 2013; illustrates the confirmation-bias caveat) | 47.39 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 60** — R (`iml`, `pdp`, `ICEbox`, `ALEPlot`, `BART`, `dbarts`, `actuar`, `cutpointr`, `OptimalCutpoints`, `RSSL`) or Python (`alibi`, `DiCE`, `pymc-bart`, `chainladder`, `rotary-embedding-torch`, `flash-attn`, `sklearn`, custom) — Spark ML has no first-class XAI / BART / credibility / LLM-architecture / cutpoint / SSL surface.
+
 Later batches: any remaining chapters.
 
 ---
