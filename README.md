@@ -1760,6 +1760,30 @@ hypercube).
 
 **PySpark N/A across Batch 51** — these are R (`mclust`, `flexmix`, `mlogit`, `OpenMx`, `pROC`, `metafor`, `rstan`, `DoE.base`, `AlgDesign`, `lhs`) or Python (`sklearn.mixture`, `scipy.stats`, `pyDOE2`, `xlogit`, `numpyro`, custom) — Spark ML has no first-class support for these classical / Bayesian / DOE tools.
 
+### Batch 52 — Cleanup (Ch 15 causal-inference workhorses + earlier gaps)
+
+Twelve more gap fillers, primarily filling out Ch 15 causal-inference
+methods (IPTW, AIPW, g-computation, MSM, Rosenbaum bounds, DML,
+entropy balancing, CEM) plus a Cox-with-time-varying-covariates,
+network meta-analysis, 2PL/3PL IRT, and a normality-tests roundup.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [iptw](techniques/iptw) (ATE/ATT/ATC/ATO weighting; recovers true ATE 0.5) | 15.6 | ✅ | ✅ | N/A |
+| 2 | [aipw-doubly-robust](techniques/aipw-doubly-robust) (Robins-Rotnitzky-Zhao; g-formula + IPTW + AIPW side-by-side) | 15.8 | ✅ | ✅ | N/A |
+| 3 | [g-computation](techniques/g-computation) (parametric g-formula + bootstrap SE; recovers ATE 0.5) | 15.20 | ✅ | ✅ | N/A |
+| 4 | [marginal-structural-model](techniques/marginal-structural-model) (stabilised IPTW 2-time-point; recovers period effects) | 15.19 | ✅ | ✅ | N/A |
+| 5 | [rosenbaum-bounds](techniques/rosenbaum-bounds) (matched-pair sensitivity; critical Γ ≈ 1.8 for 45/60 discordant) | 15.23 | ✅ | ✅ | N/A |
+| 6 | [dml-double-ml](techniques/dml-double-ml) (Chernozhukov DML-PLR with GBM nuisances; recovers θ=0.60) | 15.25 | ✅ | ✅ | N/A |
+| 7 | [entropy-balancing](techniques/entropy-balancing) (Hainmueller Newton dual; exact moment matching, ESS 912/2000) | 15.55 | ✅ | ✅ | N/A |
+| 8 | [coarsened-exact-matching](techniques/coarsened-exact-matching) (Iacus-King-Porro CEM; ATT 0.59 vs truth 0.5) | 15.10 | ✅ | ✅ | N/A |
+| 9 | [cox-time-varying](techniques/cox-time-varying) (counting-process partial likelihood; recovers HR=1.7) | 11.10 | ✅ | ✅ | N/A |
+| 10 | [network-meta-analysis](techniques/network-meta-analysis) (contrast-based RE-NMA; recovers ranking B>A>C) | 22.15 | ✅ | ✅ | N/A |
+| 11 | [irt-2pl-3pl](techniques/irt-2pl-3pl) (marginal MLE via GH quadrature; 2PL b recovered to 0.2) | 20.4/20.5 | ✅ | ✅ | N/A |
+| 12 | [normality-tests](techniques/normality-tests) (Shapiro/A-D/JB/KS; correctly reject non-normal cases) | 3.24/3.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 52** — R (`WeightIt`, `AIPW`, `stdReg`, `ipw`, `rbounds`, `DoubleML`, `ebal`, `MatchIt`, `survival`, `netmeta`, `mirt`, `nortest`) or Python (`causalinference`, `zepid`, `DoubleML`, `econml`, `lifelines`, `scipy.stats`, custom) — Spark ML has no first-class causal-inference / IRT / meta-analysis surface.
+
 Later batches: any remaining chapters.
 
 ---
