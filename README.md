@@ -1859,6 +1859,31 @@ design, expert prior elicitation, and cross-classified random-effects.
 
 **PySpark N/A across Batch 55** — R (`pomp`, `sae`, `CompRandFld`, `gmm`, `indirectInference`, `metap`, `poolr`, `fwildclusterboot`, `survey`, `SHELF`, `lme4`) or Python (`particles`, `samplics`, `pyblp`, `scipy.stats`, `wildboottest`, `statsmodels.MixedLM`, `pymer4`, custom) — Spark ML has no first-class SMC, small-area, learning-theory, survey-design or mixed-effects surface.
 
+### Batch 56 — Cleanup (epi / survival / MCMC / trials / kernels / OT gaps)
+
+Twelve more gap fillers: two epi study designs, two survival methods
+(piecewise-exp + DeepSurv), two Bayesian samplers (RJ-MCMC + bridge
+sampling), a smoother (Nadaraya-Watson), optimal transport, MRP,
+two adaptive-trial designs (RAR + platform), a panel model (RI-CLPM),
+and PROCOVA covariate adjustment.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [nested-case-control](techniques/nested-case-control) (Thomas 1977 1:K risk-set matching; HR 3.21 (1:1) → 3.27 (1:4) vs truth 3) | 15.42 | ✅ | ✅ | N/A |
+| 2 | [piecewise-exponential-model](techniques/piecewise-exponential-model) (Friedman split-and-Poisson MLE; λ̂ = (0.20, 0.50, 0.81) vs (0.20, 0.50, 1.00), ĤR = 2.09) | 11.26 | ✅ | ✅ | N/A |
+| 3 | [deep-survival-network](techniques/deep-survival-network) (Katzman DeepSurv; C = 0.739 vs linear Cox 0.622 on nonlinear hazard) | 11.27 | ✅ | ✅ | N/A |
+| 4 | [nadaraya-watson-kernel-regression](techniques/nadaraya-watson-kernel-regression) (LOO-CV bandwidth; RMSE 0.07 vs Silverman 0.25 on `sin(1.5x) + 0.3x`) | 5.15 | ✅ | ✅ | N/A |
+| 5 | [optimal-transport-wasserstein](techniques/optimal-transport-wasserstein) (1-D W₁ + Sinkhorn; matches analytic W₁ = 1 on N(0,1) vs N(1,1)) | 46.16 | ✅ | ✅ | N/A |
+| 6 | [reversible-jump-mcmc](techniques/reversible-jump-mcmc) (Green 1995 mixture-order; posterior P(k=2) = 0.997 on 2-comp mixture) | 25.6 | ✅ | ✅ | N/A |
+| 7 | [bridge-sampling-evidence](techniques/bridge-sampling-evidence) (Meng-Wong iterative; Ẑ = 5.04 vs truth 5.00, harmonic-mean fails at 0.46) | 25.7 | ✅ | ✅ | N/A |
+| 8 | [mrp-poststratification](techniques/mrp-poststratification) (Gelman-Little / Park-Gelman-Bafumi; matches poststrat mean 0.373 vs truth 0.379) | 27.8 | ✅ | ✅ | N/A |
+| 9 | [response-adaptive-randomization](techniques/response-adaptive-randomization) (Wei-Durham + Thompson BAR; Thompson allocates 87 % to better arm) | 44.13 | ✅ | ✅ | N/A |
+| 10 | [platform-trial-design](techniques/platform-trial-design) (Woodcock-LaVange; winner graduates 93 %, harmful arm hit for futility 71 %) | 44.14 | ✅ | ✅ | N/A |
+| 11 | [ri-clpm-random-intercept-cross-lagged](techniques/ri-clpm-random-intercept-cross-lagged) (Hamaker 2015; recovers φ_xy = +0.14, classical CLPM misses at 0) | 20.30 | ✅ | ✅ | N/A |
+| 12 | [prognostic-score-covariate-adjustment](techniques/prognostic-score-covariate-adjustment) (Hansen 2008 / Schuler PROCOVA; SE 0.10 vs 0.18 → 3× ESS) | 44.15 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 56** — R (`Epi`, `survival`, `survivalmodels`, `KernSmooth`, `transport`, `rjmcmc`, `bridgesampling`, `rstanarm`, `brms`, `adaptr`, `pipe`, `lavaan`, `RATES`) or Python (`lifelines`, `sksurv`, `pycox`, `statsmodels`, `POT`, `pymc`, `semopy`, `procova`, custom) — Spark ML has no first-class survival-ML, MCMC, small-area, adaptive-trial, or panel-SEM surface.
+
 Later batches: any remaining chapters.
 
 ---
