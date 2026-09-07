@@ -1784,6 +1784,31 @@ network meta-analysis, 2PL/3PL IRT, and a normality-tests roundup.
 
 **PySpark N/A across Batch 52** — R (`WeightIt`, `AIPW`, `stdReg`, `ipw`, `rbounds`, `DoubleML`, `ebal`, `MatchIt`, `survival`, `netmeta`, `mirt`, `nortest`) or Python (`causalinference`, `zepid`, `DoubleML`, `econml`, `lifelines`, `scipy.stats`, custom) — Spark ML has no first-class causal-inference / IRT / meta-analysis surface.
 
+### Batch 53 — Cleanup (Ch 15 causal-inference frontier + cross-chapter gaps)
+
+Twelve more gap fillers, mostly in Ch 15 (overlap weighting, CACE,
+quantile treatment effects, Manski bounds, PC causal discovery,
+case-crossover, causal forest, natural mediation effects,
+transportability) plus Ch 5 fractional polynomials, Ch 11 random
+survival forest and Ch 11 accelerated failure time.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [overlap-weighting](techniques/overlap-weighting) (Li-Morgan-Zaslavsky ATO; SMD 0.00 vs IPTW-ATE 0.05, weights bounded ≤ 0.5) | 15.31 | ✅ | ✅ | N/A |
+| 2 | [principal-stratification-cace](techniques/principal-stratification-cace) (Wald / 2SLS CACE; recovers 1.91 vs truth 2.00 under 40 % compliance) | 15.32 | ✅ | ✅ | N/A |
+| 3 | [quantile-treatment-effects](techniques/quantile-treatment-effects) (Firpo IPW QTE; recovers rank-shift 0.63→2.31 across τ=0.1→0.9) | 15.33 | ✅ | ✅ | N/A |
+| 4 | [manski-bounds](techniques/manski-bounds) (worst-case + MTR + MTS; ATE ∈ [−3.64,+6.36], MTR tightens LB to 0) | 15.34 | ✅ | ✅ | N/A |
+| 5 | [causal-discovery-pc](techniques/causal-discovery-pc) (Spirtes-Glymour-Scheines PC; recovers X0→X2←X1 v-structure exactly) | 15.35 | ✅ | ✅ | N/A |
+| 6 | [case-crossover](techniques/case-crossover) (Maclure 1:1 & 1:M MH; recovers OR 2.81 & 2.32 vs truth 2.5) | 15.36 | ✅ | ✅ | N/A |
+| 7 | [causal-forest](techniques/causal-forest) (Athey-Wager GRF R-forest; τ̂ monotone in x0 across grid) | 15.37 | ✅ | ✅ | N/A |
+| 8 | [mediation-natural-effects](techniques/mediation-natural-effects) (VanderWeele closed form; NDE 0.51/NIE 0.62 vs truth 0.50/0.64) | 15.38 | ✅ | ✅ | N/A |
+| 9 | [transportability-generalizability](techniques/transportability-generalizability) (Cole-Stuart IOW; transported ATE 2.59 vs truth 2.50) | 15.39 | ✅ | ✅ | N/A |
+| 10 | [fractional-polynomials](techniques/fractional-polynomials) (Royston-Altman FP2 closed test; recovers powers (−0.5, +0.5)) | 5.14 | ✅ | ✅ | N/A |
+| 11 | [random-survival-forest](techniques/random-survival-forest) (Ishwaran log-rank splits + NA CHF; Harrell C = 0.742) | 11.24 | ✅ | ✅ | N/A |
+| 12 | [accelerated-failure-time](techniques/accelerated-failure-time) (Weibull/log-normal MLE; recovers β=(+0.51,−0.82), σ=0.39) | 11.25 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 53** — R (`PSweight`, `ivreg`, `Counterfactual`, `bounds`, `pcalg`, `survival::clogit`, `grf`, `mediation`, `generalize`, `mfp`, `randomForestSRC`, `survival::survreg`) or Python (`linearmodels`, `causal-learn`, `econml`, `lifelines`, `sksurv`, `causallib`, custom) — Spark ML has no first-class causal-inference / partial-identification / classical-parametric survival surface.
+
 Later batches: any remaining chapters.
 
 ---
