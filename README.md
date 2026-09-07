@@ -1910,6 +1910,31 @@ BIBD, and two classical MC variance-reduction techniques (antithetic
 
 **PySpark N/A across Batch 57** — R (`densratio`, `RSSampling`, `blandr`, `adaptMCMC`, `SGmcmc`, `randtoolbox`, `DescTools`, `threg`, `AlgDesign`, `crossdes`) or Python (`densratio`, `pyCompare`, `pymc`, `tfp`, `scipy.stats.qmc`, `scipy.stats.invgauss`, `pyDOE2`, custom) — Spark ML has no first-class score-matching, MCMC, QMC, or classical-design surface.
 
+### Batch 58 — Cleanup (nested sampling / slice / LM fine-tuning / theory / classical inference gaps)
+
+Twelve more gap fillers: two Bayesian samplers (nested sampling,
+slice sampler), three LM training / prompting techniques (LoRA, DPO,
+CoT + self-consistency), NN theory (NTK), a hurdle model, a
+one-outlier test (Grubbs / Rosner), OR-homogeneity (Woolf), active
+learning, model soups, and a structural-break test (Chow / QLR).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [nested-sampling](techniques/nested-sampling) (Skilling 2006; recovers Z = 0.10 on 1-D Gaussian target) | 25.10 | ✅ | ✅ | N/A |
+| 2 | [slice-sampler](techniques/slice-sampler) (Neal 2003 stepping-out + shrinkage; matches analytic P(X<0) on bimodal) | 25.11 | ✅ | ✅ | N/A |
+| 3 | [lora-peft](techniques/lora-peft) (Hu 2021 low-rank adapter; 12–47 % trainable params on synthetic linear layer) | 47.24 | ✅ | ✅ | N/A |
+| 4 | [dpo-direct-preference-optimization](techniques/dpo-direct-preference-optimization) (Rafailov 2023; β=0.5 → 74 % mass on argmax action) | 47.25 | ✅ | ✅ | N/A |
+| 5 | [chain-of-thought-reasoning](techniques/chain-of-thought-reasoning) (Wei 2022 + Wang 2022 self-consistency; K=41 → 0.74 accuracy from 0.55 single) | 47.26 | ✅ | ✅ | N/A |
+| 6 | [neural-tangent-kernel](techniques/neural-tangent-kernel) (Jacot 2018; NTK regression vs wide MLP corr 0.9957 on test) | 46.19 | ✅ | ✅ | N/A |
+| 7 | [hurdle-model](techniques/hurdle-model) (Mullahy 1986; recovers gate + count betas; plain Poisson biased) | 7.20 | ✅ | ✅ | N/A |
+| 8 | [grubbs-outlier-test](techniques/grubbs-outlier-test) (Grubbs + Rosner ESD; single test flags G=4.92, ESD detects 3 injected outliers) | 3.26 | ✅ | ✅ | N/A |
+| 9 | [woolf-homogeneity-of-or](techniques/woolf-homogeneity-of-or) (Woolf 1955; correctly non-sig for common OR, p=3e-6 for interaction) | 4.17 | ✅ | ✅ | N/A |
+| 10 | [active-learning-query-strategies](techniques/active-learning-query-strategies) (Settles survey; uncertainty / margin / random pool baselines) | 47.27 | ✅ | ✅ | N/A |
+| 11 | [model-soups-fine-tune-averaging](techniques/model-soups-fine-tune-averaging) (Wortsman 2022; soup ≈ ensemble w/ one forward pass) | 47.28 | ✅ | ✅ | N/A |
+| 12 | [chow-test-structural-break](techniques/chow-test-structural-break) (Chow 1960 + Andrews QLR; QLR picks true τ*=100 with supF=336) | 12.16 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 58** — R (`nestedmodels`, `mcmc::slice.sample`, `pscl`, `outliers`, `EnvStats`, `DescTools`, `strucchange`, `ALEval`) or Python (`dynesty`, `nestle`, `pymc`, `peft`, `trl`, `neural-tangents`, `statsmodels`, `modAL`, `mergekit`, `scipy`, custom) — Spark ML has no first-class NS / slice / LM-fine-tuning / NN-theory / structural-break surface.
+
 Later batches: any remaining chapters.
 
 ---
