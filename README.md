@@ -1809,6 +1809,31 @@ survival forest and Ch 11 accelerated failure time.
 
 **PySpark N/A across Batch 53** — R (`PSweight`, `ivreg`, `Counterfactual`, `bounds`, `pcalg`, `survival::clogit`, `grf`, `mediation`, `generalize`, `mfp`, `randomForestSRC`, `survival::survreg`) or Python (`linearmodels`, `causal-learn`, `econml`, `lifelines`, `sksurv`, `causallib`, custom) — Spark ML has no first-class causal-inference / partial-identification / classical-parametric survival surface.
 
+### Batch 54 — Cleanup (Ch 15/24/46/47 – weak IVs, learning theory, emerging LM techniques)
+
+Twelve more gap fillers, mixing remaining Ch 15 workhorses (weak-IV
+robust CIs, path-specific effects), Ch 24 disease-mapping empirical
+Bayes, Ch 46 learning-theory bounds (U-statistics, Rademacher, VC,
+Efron-Stein), and Ch 47 emerging LM techniques (RAG, in-context
+learning, speculative decoding, Mamba SSMs, JEPA).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [weak-instruments-anderson-rubin](techniques/weak-instruments-anderson-rubin) (Cragg-Donald F + AR CI; strong-IV CI narrow, weak-IV CI honestly wide) | 15.40 | ✅ | ✅ | N/A |
+| 2 | [path-specific-effects](techniques/path-specific-effects) (Avin-Shpitser-Pearl / VanderWeele-Chiba; recovers 4-path decomposition to 3 decimals) | 15.41 | ✅ | ✅ | N/A |
+| 3 | [u-statistics](techniques/u-statistics) (Hoeffding 1948 + projection var; Gini 1.120 vs truth 1.128, SE within 7 %) | 46.9 | ✅ | ✅ | N/A |
+| 4 | [rademacher-complexity](techniques/rademacher-complexity) (Bartlett-Mendelson; linear-ball R̂ 0.066 matches B/√n) | 46.10 | ✅ | ✅ | N/A |
+| 5 | [vc-dimension](techniques/vc-dimension) (empirical shatter lower bound; half-planes in ℝᵖ recover p+1 exactly) | 46.11 | ✅ | ✅ | N/A |
+| 6 | [efron-stein-inequality](techniques/efron-stein-inequality) (resample-i variance bound; ES ≥ Var for mean, variance, median) | 46.12 | ✅ | ✅ | N/A |
+| 7 | [retrieval-augmented-generation](techniques/retrieval-augmented-generation) (TF-IDF retriever + template LM; recovers 3 survival docs from 6-doc corpus) | 47.19 | ✅ | ✅ | N/A |
+| 8 | [in-context-learning](techniques/in-context-learning) (OLS-as-transformer proxy; MSE 8.1 → 0.002 as K rises 0 → 32) | 47.20 | ✅ | ✅ | N/A |
+| 9 | [speculative-decoding](techniques/speculative-decoding) (Leviathan rejection sampler; 4.10× speedup with aligned draft) | 47.21 | ✅ | ✅ | N/A |
+| 10 | [mamba-state-space-transformer](techniques/mamba-state-space-transformer) (LTI SSM; recurrent = convolutional to 10⁻¹⁷, L=500 stable) | 47.22 | ✅ | ✅ | N/A |
+| 11 | [jepa-self-supervised](techniques/jepa-self-supervised) (I-JEPA-flavour toy; EMA target + loss 1.79 → 0.25 over 400 epochs) | 47.23 | ✅ | ✅ | N/A |
+| 12 | [poisson-gamma-empirical-bayes](techniques/poisson-gamma-empirical-bayes) (Clayton-Kaldor 1987 shrinkage; MAE ↓ 34 % overall, 49 % in small areas) | 24.19 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 54** — R (`ivmodel`, `paths`, `Ustat`, `DCluster`, `SpatialEpi`, `INLA`, `ellmer`, `chattr`) or Python (`linearmodels`, `causal-learn`, `causallib`, `mamba-ssm`, `state-spaces`, LangChain, `pymc`, `transformers`, `vLLM`, custom) — Spark ML has no first-class causal-inference, LM-inference, or learning-theory surface.
+
 Later batches: any remaining chapters.
 
 ---
