@@ -1884,6 +1884,32 @@ and PROCOVA covariate adjustment.
 
 **PySpark N/A across Batch 56** — R (`Epi`, `survival`, `survivalmodels`, `KernSmooth`, `transport`, `rjmcmc`, `bridgesampling`, `rstanarm`, `brms`, `adaptr`, `pipe`, `lavaan`, `RATES`) or Python (`lifelines`, `sksurv`, `pycox`, `statsmodels`, `POT`, `pymc`, `semopy`, `procova`, custom) — Spark ML has no first-class survival-ML, MCMC, small-area, adaptive-trial, or panel-SEM surface.
 
+### Batch 57 — Cleanup (score matching / DRE / QMC / MC variance reduction / trend / agreement gaps)
+
+Twelve more gap fillers: two density-estimation methods (score
+matching, DRE), a sampling design (RSS), agreement (Bland-Altman),
+two Bayesian samplers (adaptive Metropolis, SGLD), QMC, a trend test
+(Cochran-Armitage), a survival model (first-hitting-time / IG),
+BIBD, and two classical MC variance-reduction techniques (antithetic
+/ control variates, Rao-Blackwellisation).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [score-matching](techniques/score-matching) (Hyvarinen 2005; Gaussian recovers μ, σ without touching normalising constant) | 46.17 | ✅ | ✅ | N/A |
+| 2 | [density-ratio-estimation](techniques/density-ratio-estimation) (Sugiyama uLSIF; matches analytic ratio N(0,1)/N(1,1.5)) | 46.18 | ✅ | ✅ | N/A |
+| 3 | [ranked-set-sampling](techniques/ranked-set-sampling) (McIntyre 1952; up to 3.4× variance reduction over SRS with m=8) | 27.9 | ✅ | ✅ | N/A |
+| 4 | [bland-altman-agreement](techniques/bland-altman-agreement) (Bland-Altman 1986; LoA ±6.1 reveals disagreement corr=0.977 hides) | 13.16 | ✅ | ✅ | N/A |
+| 5 | [adaptive-metropolis-haario](techniques/adaptive-metropolis-haario) (Haario 2001; drops lag-1 autocorr 0.99 → 0.76 on anisotropic 2-D) | 25.8 | ✅ | ✅ | N/A |
+| 6 | [stochastic-gradient-mcmc](techniques/stochastic-gradient-mcmc) (Welling-Teh SGLD; Bayesian linreg posterior matches analytic mean) | 25.9 | ✅ | ✅ | N/A |
+| 7 | [quasi-monte-carlo-sobol](techniques/quasi-monte-carlo-sobol) (Owen-scrambled Sobol; 158× RMSE reduction over MC, d=3 N=4096) | 45.9 | ✅ | ✅ | N/A |
+| 8 | [cochran-armitage-trend](techniques/cochran-armitage-trend) (Cochran 1954 / Armitage 1955; Z = +5.36 on true linear dose-response) | 4.16 | ✅ | ✅ | N/A |
+| 9 | [first-hitting-time-model](techniques/first-hitting-time-model) (Whitmore IG survival; recovers (μ, λ) = (3.04, 9.82) at 42% censoring) | 11.28 | ✅ | ✅ | N/A |
+| 10 | [balanced-incomplete-block-design](techniques/balanced-incomplete-block-design) (Yates / Fisher Fano-plane BIBD; recovers treatment effects with block structure) | 32.9 | ✅ | ✅ | N/A |
+| 11 | [antithetic-control-variates](techniques/antithetic-control-variates) (Hammersley-Morton; 28× (antithetic) / 54× (CV) variance reduction on E[exp(U)]) | 45.10 | ✅ | ✅ | N/A |
+| 12 | [rao-blackwellization](techniques/rao-blackwellization) (Rao 1945 / Blackwell 1947; 1.5× variance reduction via conditional on latent) | 45.11 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 57** — R (`densratio`, `RSSampling`, `blandr`, `adaptMCMC`, `SGmcmc`, `randtoolbox`, `DescTools`, `threg`, `AlgDesign`, `crossdes`) or Python (`densratio`, `pyCompare`, `pymc`, `tfp`, `scipy.stats.qmc`, `scipy.stats.invgauss`, `pyDOE2`, custom) — Spark ML has no first-class score-matching, MCMC, QMC, or classical-design surface.
+
 Later batches: any remaining chapters.
 
 ---
