@@ -1735,6 +1735,31 @@ monitoring.
 
 **PySpark N/A across Batch 50** — A/B analytics live in R (`pwr`, `stats`, `gsDesign`, `rpact`, `inferference`, `grf`, `msm`, `bayesAB`) or Python (`scipy.stats`, `statsmodels`, `causalml`, `econml`, `planout`, custom + commercial SDKs like `eppo-sdk` / `statsig` / `growthbook`); Spark provides the scalable metric backend but the statistical layer runs elsewhere.
 
+### Batch 51 — Cleanup (Ch 36 gaps + high-value gaps in earlier chapters)
+
+Twelve targeted gap fillers: 4 remaining Ch 36 mixture / latent methods
+(LPA, mixture regression, conjoint/DCE, factor mixture) plus 8 standout
+gaps identified across Chs 14/17/21/22/45 (DeLong AUC, meta-regression,
+trim-fill, HMC/NUTS, importance sampling, Taguchi, D-optimal, Latin
+hypercube).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [latent-profile-analysis](techniques/latent-profile-analysis) (Gaussian mixture on continuous items; BIC picks K=3) | 36.2 | ✅ | ✅ | N/A |
+| 2 | [mixture-regression](techniques/mixture-regression) (EM for 2-class opposite-slope mixture; 90% label recovery) | 36.3 | ✅ | ✅ | N/A |
+| 3 | [conjoint-choice](techniques/conjoint-choice) (MNL from scratch; McFadden pseudo-R² 0.44) | 36.7 | ✅ | ✅ | N/A |
+| 4 | [factor-mixture-model](techniques/factor-mixture-model) (FMM via GMM + SVD loadings; recovered to 0.05) | 36.10 | ✅ | ✅ | N/A |
+| 5 | [delong-auc-test](techniques/delong-auc-test) (placement values + DeLong SE; diff 0.079 p=0.02) | 21.3 | ✅ | ✅ | N/A |
+| 6 | [meta-regression](techniques/meta-regression) (REML + moderator; 87% heterogeneity explained) | 22.5 | ✅ | ✅ | N/A |
+| 7 | [trim-fill](techniques/trim-fill) (Duval-Tweedie L₀ + mirror imputation; adjusts naive 0.378→0.355) | 22.4 | ✅ | ✅ | N/A |
+| 8 | [hmc-nuts](techniques/hmc-nuts) (leapfrog HMC on 2-D correlated Gaussian; recovers mean and Σ) | 14.4 | ✅ | ✅ | N/A |
+| 9 | [importance-sampling](techniques/importance-sampling) (SNIS + ESS; good vs bad proposal contrast) | 45.6 | ✅ | ✅ | N/A |
+| 10 | [taguchi-methods](techniques/taguchi-methods) (L9 orthogonal array + SNR; per-level SNR ranking) | 17.15 | ✅ | ✅ | N/A |
+| 11 | [d-optimal-design](techniques/d-optimal-design) (Fedorov exchange; 9-run design at 158% D-eff per run) | 17.19 | ✅ | ✅ | N/A |
+| 12 | [latin-hypercube-sampling](techniques/latin-hypercube-sampling) (LHS + Maximin; min dist 0.325 vs random 0.230) | 45.7 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 51** — these are R (`mclust`, `flexmix`, `mlogit`, `OpenMx`, `pROC`, `metafor`, `rstan`, `DoE.base`, `AlgDesign`, `lhs`) or Python (`sklearn.mixture`, `scipy.stats`, `pyDOE2`, `xlogit`, `numpyro`, custom) — Spark ML has no first-class support for these classical / Bayesian / DOE tools.
+
 Later batches: any remaining chapters.
 
 ---
