@@ -1935,6 +1935,31 @@ learning, model soups, and a structural-break test (Chow / QLR).
 
 **PySpark N/A across Batch 58** — R (`nestedmodels`, `mcmc::slice.sample`, `pscl`, `outliers`, `EnvStats`, `DescTools`, `strucchange`, `ALEval`) or Python (`dynesty`, `nestle`, `pymc`, `peft`, `trl`, `neural-tangents`, `statsmodels`, `modAL`, `mergekit`, `scipy`, custom) — Spark ML has no first-class NS / slice / LM-fine-tuning / NN-theory / structural-break surface.
 
+### Batch 59 — Cleanup (Kalman variants / health economics / classical CIs / explainability / weighted logrank / GPLVM)
+
+Twelve more gap fillers: three Kalman-family filters (EnKF, EKF,
+UKF), health-economic CEA, two classical CIs (Wilson score for
+proportion, Fieller for ratio), actuarial Bühlmann credibility,
+three XAI methods (LIME, integrated gradients, EBM), weighted
+log-rank (Fleming-Harrington), and a nonlinear dim-red (GPLVM).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [ensemble-kalman-filter](techniques/ensemble-kalman-filter) (Evensen 1994; RMSE 0.46 vs obs RMSE 1.06 on nonlinear 2-D) | 18.11 | ✅ | ✅ | N/A |
+| 2 | [extended-kalman-filter](techniques/extended-kalman-filter) (Jazwinski / Anderson-Moore; RMSE 0.26 on 1-D quadratic-obs system) | 18.12 | ✅ | ✅ | N/A |
+| 3 | [unscented-kalman-filter](techniques/unscented-kalman-filter) (Julier-Uhlmann sigma points; RMSE 0.27 matches EKF w/o Jacobian) | 18.13 | ✅ | ✅ | N/A |
+| 4 | [cost-effectiveness-analysis](techniques/cost-effectiveness-analysis) (Drummond; ICER ≈ 39k, CEAC 85 % CE at $50k WTP) | 44.16 | ✅ | ✅ | N/A |
+| 5 | [wilson-score-interval-proportion](techniques/wilson-score-interval-proportion) (Wilson 1927 / Agresti-Coull / Jeffreys / CP; Wald degenerate at x=0) | 4.18 | ✅ | ✅ | N/A |
+| 6 | [fieller-interval-ratio](techniques/fieller-interval-ratio) (Fieller 1954; unbounded CI correctly flags weak denominator) | 3.27 | ✅ | ✅ | N/A |
+| 7 | [buhlmann-credibility](techniques/buhlmann-credibility) (Bühlmann 1967; 35 % MSE reduction over raw group means) | 24.20 | ✅ | ✅ | N/A |
+| 8 | [lime-local-explanations](techniques/lime-local-explanations) (Ribeiro 2016; local coefs match analytic gradients at x*) | 47.29 | ✅ | ✅ | N/A |
+| 9 | [integrated-gradients](techniques/integrated-gradients) (Sundararajan 2017; completeness Σ IG = Δf exactly) | 47.30 | ✅ | ✅ | N/A |
+| 10 | [explainable-boosting-machine](techniques/explainable-boosting-machine) (Nori 2019 / Lou 2013; R² 0.92, recovers tanh shape) | 47.31 | ✅ | ✅ | N/A |
+| 11 | [fleming-harrington-weighted-logrank](techniques/fleming-harrington-weighted-logrank) (G(0,1) p=0.018 vs classical p=0.073 for delayed benefit) | 11.29 | ✅ | ✅ | N/A |
+| 12 | [gaussian-process-latent-variable-model](techniques/gaussian-process-latent-variable-model) (Lawrence 2004; PCA-init RBF-GPLVM on 6-D projected swiss roll) | 6.16 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 59** — R (`dartR`, `KFAS`, `mvKf`, `BCEA`, `heemod`, `binom`, `PropCIs`, `mratios`, `actuar`, `lime`, `interpret`, `survival`, `kergp`) or Python (`filterpy`, `dapper`, `scipy.stats`, `statsmodels.stats.proportion`, `chainladder`, `lime`, `captum`, `interpret`, `lifelines`, GPy, gpflow, custom) — Spark ML has no first-class filtering, health-economics, explainability, weighted-survival, or GP-latent-variable surface.
+
 Later batches: any remaining chapters.
 
 ---
