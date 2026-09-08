@@ -2009,6 +2009,32 @@ Dantzig selector.
 
 **PySpark N/A across Batch 61** — R (`strucchange`, `ess`, `icenReg`, `msm`, `mstate`, `bujar`, `rTensor`, `INLA`, `e1071`, `spatialreg`, `quantreg`, `flare`) or Python (`ruptures`, `scipy.linalg.expm`, `lifelines`, `tensorly`, `sklearn.svm`, `PySAL`, `econml`, `shap`, `scipy.optimize.linprog`, custom) — Spark ML has no first-class multi-break / MCMC / interval-survival / multi-state / tensor / INLA / SVR / spatial-DiD / QIV / SHAP-interaction / Dantzig surface.
 
+### Batch 62 — Cleanup (point-process / risk / matrix-completion / MC / RIF / semi-Markov / SEM / LLM / SSL / XAI)
+
+Twelve more long-tail fillers: self-exciting temporal processes,
+coherent tail risk, low-rank matrix completion, scalable coresets,
+classical MC sampling, RIF-based unconditional quantile regression,
+sojourn-time multi-state survival, spatial-error econometrics, LLM
+context extension, contrastive-free SSL, ICE-curve CATE clustering,
+and attribution-stability diagnostics.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [hawkes-process](techniques/hawkes-process) (Hawkes 1971; Ogata thinning + Ozaki MLE, (μ̂, α̂, β̂)=(0.53, 0.45, 1.65) vs truth (0.5, 0.6, 1.5)) | 47.41 | ✅ | ✅ | N/A |
+| 2 | [cvar-expected-shortfall](techniques/cvar-expected-shortfall) (Rockafellar-Uryasev 2000; RU-CVaR matches tail-mean ES for t₃ losses across α∈{0.90, 0.95, 0.99}) | 47.42 | ✅ | ✅ | N/A |
+| 3 | [matrix-completion-svt](techniques/matrix-completion-svt) (Cai-Candès-Shen 2010; 50×40 rank-3 truth, 62 % observed → exact recovery, rel err 0.0000) | 47.43 | ✅ | ✅ | N/A |
+| 4 | [coreset-selection](techniques/coreset-selection) (Feldman-Langberg 2011 sensitivity; k-means cost error 24 %→0.4 % as coreset grows 50→500) | 47.44 | ✅ | ✅ | N/A |
+| 5 | [rejection-sampling](techniques/rejection-sampling) (von Neumann 1951; truncN(0,1) on [0,3] via Exp(1) proposal, KS-stat 0.0045 on 20 000 samples) | 47.45 | ✅ | ✅ | N/A |
+| 6 | [rif-regression-firpo](techniques/rif-regression-firpo) (Firpo-Fortin-Lemieux 2009; RIF slopes diverge from cond QR under HTE at τ=0.10 / 0.90) | 47.46 | ✅ | ✅ | N/A |
+| 7 | [semi-markov-multistate](techniques/semi-markov-multistate) (Foucher 2010 Weibull sojourn; MLE (1.53, 3.10, 0.71) vs truth (1.5, 3.0, 0.7)) | 47.47 | ✅ | ✅ | N/A |
+| 8 | [spatial-error-model-sem](techniques/spatial-error-model-sem) (Anselin 1988; SEM MLE recovers β=(0.96, 1.98, −0.46) vs truth (1, 2, −0.5)) | 47.48 | ✅ | ✅ | N/A |
+| 9 | [yarn-context-extension](techniques/yarn-context-extension) (Peng-Quesnelle-Sharkey-Chan 2023; scale 16× preserves 34 % high freqs, attn temp 1.28) | 47.49 | ✅ | ✅ | N/A |
+| 10 | [byol-simsiam](techniques/byol-simsiam) (Grill 2020; Chen-He 2021; loss 1.26 → 0.25 with EMA + stop-grad, feature std 0.25 -> no collapse) | 47.50 | ✅ | ✅ | N/A |
+| 11 | [cate-clustering-ice](techniques/cate-clustering-ice) (Zhao-Hastie 2021; ARI(cluster, true moderator) = 1.000) | 47.51 | ✅ | ✅ | N/A |
+| 12 | [attribution-stability](techniques/attribution-stability) (Yeh 2019; correlated features drop bootstrap top-3 Jaccard 1.00 → 0.43) | 47.52 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 62** — R (`hawkes`, `PerformanceAnalytics`, `softImpute`, `submodlib` [Py], `ars`, `dineq`, `SemiMarkov`, `spatialreg`, `ICEbox`, `iml`) or Python (`tick`, `empyrical`, `fancyimpute`, `submodlib`, `scipy.stats`, `statsmodels`, `pysal`, `transformers`/`vllm`, `lightly`, `PyCEbox`, `shap`/`captum`) — Spark ML has no first-class point-process / CVaR / matrix-completion / coreset / rejection / RIF / semi-Markov / SEM / LLM-context / SSL-image / ICE-clustering / attribution-stability surface.
+
 Later batches: any remaining chapters.
 
 ---
