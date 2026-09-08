@@ -2061,6 +2061,32 @@ and Mendelian-randomization pleiotropy checks.
 
 **PySpark N/A across Batch 63** — R (`PlackettLuce`, `mlogit`, `notearsC`, `dHSIC`, `Sim.DiffProc`, `ipred`, `BayesFactor`, `contextual`, `car`, `gWQS`, `FrF2`, `MendelianRandomization`) or Python (`choix`, `xlogit`, `causalnex`/`dagma`, `hyppo`, `sdeint`/`diffrax`, `sklearn.BaggingRegressor`, `pymc`, `mabwiser`, `scipy.stats`, `wqspy`, `pyDOE`, custom) — Spark ML has no first-class ranking / mixed-logit / DAG / kernel-independence / SDE / OOB-bagging / Bayes-factor / Thompson / robust-variance / WQS / DoE / MR-Egger surface.
 
+### Batch 64 — Cleanup (kernel-2-sample / rating / lasso-solvers / boosting / KAN / sketches / cluster-val / HF-vol / LSH)
+
+Twelve more long-tail fillers: multivariate distribution testing,
+online player ratings, coordinate-descent / ADMM lasso solvers,
+classical AdaBoost, Kolmogorov-Arnold Networks, streaming
+cardinality / membership sketches, cluster-validation
+diagnostics, high-frequency realized volatility, and MinHash-LSH
+near-neighbour retrieval.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [mmd-two-sample-test](techniques/mmd-two-sample-test) (Gretton et al 2012; detects mean / variance / mixture shifts (all p ≈ 0.005) missed by univariate tests) | 47.65 | ✅ | ✅ | N/A |
+| 2 | [elo-glicko-rating](techniques/elo-glicko-rating) (Elo 1978 / Glickman 1999; Corr(final Elo, true skill) = 0.987 after 4 000 games) | 47.66 | ✅ | ✅ | N/A |
+| 3 | [coordinate-descent-lasso](techniques/coordinate-descent-lasso) (Friedman-Hastie-Tibshirani 2010; 6 sweeps to converge at λ=0.05, exact support recovery) | 47.67 | ✅ | ✅ | N/A |
+| 4 | [admm-consensus](techniques/admm-consensus) (Boyd et al 2011; consensus ADMM recovers β to 0.003 across 5 agents in 15 outer iters) | 47.68 | ✅ | ✅ | N/A |
+| 5 | [adaboost-classifier](techniques/adaboost-classifier) (Freund-Schapire 1997; single stump 0.63 → AdaBoost T=200 0.91 on concentric rings) | 47.69 | ✅ | ✅ | N/A |
+| 6 | [kolmogorov-arnold-network](techniques/kolmogorov-arnold-network) (Liu et al 2024; 1-layer additive KAN R² 0.997 vs MLP 0.970 vs linear 0.033) | 47.70 | ✅ | ✅ | N/A |
+| 7 | [hyperloglog-cardinality](techniques/hyperloglog-cardinality) (Flajolet et al 2007; b=14 (64 KB) → 0.1–1 % error on 10³–10⁶ distinct items) | 47.71 | ✅ | ✅ | N/A |
+| 8 | [bloom-filter-membership](techniques/bloom-filter-membership) (Bloom 1970; empirical FP 0.0102 vs target 0.010 at 11.7 KB for n=10 000; 0 false negatives) | 47.72 | ✅ | ✅ | N/A |
+| 9 | [hopkins-clusterability](techniques/hopkins-clusterability) (Hopkins-Skellam 1954; uniform H=0.50, cluster H=0.97, grid H=0.27 avg over 20 seeds) | 47.73 | ✅ | ✅ | N/A |
+| 10 | [silhouette-clusters](techniques/silhouette-clusters) (Rousseeuw 1987; k=3 wins for both separated (0.82) and overlapping (0.45) 3-cluster data) | 47.74 | ✅ | ✅ | N/A |
+| 11 | [realized-volatility-hf](techniques/realized-volatility-hf) (Andersen-Bollerslev 1998; sqrt(RV)→0.020 as M grows, BV isolates jumps, two-scales fixes noise) | 47.75 | ✅ | ✅ | N/A |
+| 12 | [min-hash-lsh](techniques/min-hash-lsh) (Broder 1997; LSH K=128, b=32, r=4 recovers 5/5 planted duplicate pairs among 200 sets, only 14 candidates) | 47.76 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 64** — R (`kernlab`, `PlayerRatings`, `glmnet`, `ADMM`, `adabag`, no KAN, `hll`, `bloomfilter`, `clustertend`, `cluster`, `highfrequency`, `LSHR`) or Python (`hyppo`, `skelo`/`trueskill`, `sklearn`/`celer`, `cvxpy`, `sklearn.AdaBoostClassifier`, `pykan`, `datasketch`, `pybloom`, `pyclustertend`, `sklearn.metrics`, `arch`, `datasketch.MinHash`) — Spark ML has no first-class MMD / rating-system / ADMM-lasso / KAN / HLL-native (HLL++ available via `approx_count_distinct`) / cluster-validation-index / realized-vol / MinHash-LSH surface (MinHashLSH does exist in `pyspark.ml.feature` for Jaccard).
+
 Later batches: any remaining chapters.
 
 ---
