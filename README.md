@@ -1985,6 +1985,30 @@ supervised pseudo-labelling.
 
 **PySpark N/A across Batch 60** — R (`iml`, `pdp`, `ICEbox`, `ALEPlot`, `BART`, `dbarts`, `actuar`, `cutpointr`, `OptimalCutpoints`, `RSSL`) or Python (`alibi`, `DiCE`, `pymc-bart`, `chainladder`, `rotary-embedding-torch`, `flash-attn`, `sklearn`, custom) — Spark ML has no first-class XAI / BART / credibility / LLM-architecture / cutpoint / SSL surface.
 
+### Batch 61 — Cleanup (long-tail: multi-break / MCMC / survival / econometrics / SVR / XAI / sparse)
+
+Twelve more gap fillers: multi-break testing, elliptical-slice MCMC,
+interval-censored + multi-state + Buckley-James survival, tensor
+decomposition, INLA, SVR, spatial DiD, quantile IV, SHAP interactions,
+Dantzig selector.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [bai-perron-multiple-breaks](techniques/bai-perron-multiple-breaks) (Bai-Perron 1998; DP + BIC picks m=2 breaks at 69, 139 vs truth 70, 140) | 12.17 | ✅ | ✅ | N/A |
+| 2 | [elliptical-slice-sampling](techniques/elliptical-slice-sampling) (Murray-Adams-MacKay 2010; ESS mean corr 0.999 with analytic GP posterior) | 25.12 | ✅ | ✅ | N/A |
+| 3 | [turnbull-interval-censored](techniques/turnbull-interval-censored) (Turnbull 1976 NPMLE; S(10)=0.41 vs truth 0.37 under check-up censoring) | 11.30 | ✅ | ✅ | N/A |
+| 4 | [illness-death-model](techniques/illness-death-model) (3-state Markov; exact-MLE q̂ within 5 % of truth; P(dead \| t=10) 0.55) | 11.31 | ✅ | ✅ | N/A |
+| 5 | [buckley-james-aft](techniques/buckley-james-aft) (Buckley-James 1979 semi-param AFT; β̂=(1.76, 0.49) at 32 % censoring) | 11.32 | ✅ | ✅ | N/A |
+| 6 | [tensor-decomposition-tucker-cp](techniques/tensor-decomposition-tucker-cp) (Tucker + CP-ALS; recovers rank-2 tensor to relative error 0.21) | 6.17 | ✅ | ✅ | N/A |
+| 7 | [inla-integrated-nested-laplace](techniques/inla-integrated-nested-laplace) (Rue-Martino-Chopin 2009; grid-Laplace over precision matches oracle Bayes) | 25.13 | ✅ | ✅ | N/A |
+| 8 | [support-vector-regression](techniques/support-vector-regression) (Drucker 1996 / Smola-Scholkopf; RBF SVR MSE 0.035 recovering sin(x)) | 5.17 | ✅ | ✅ | N/A |
+| 9 | [spatial-diff-in-diff](techniques/spatial-diff-in-diff) (Delgado-Florax SLX-DiD; δ̂=+2.38, θ̂=+0.62 vs truth 2.0, 0.8) | 15.43 | ✅ | ✅ | N/A |
+| 10 | [quantile-iv-regression](techniques/quantile-iv-regression) (Chernozhukov-Hansen; α̂=1.00 corrects naive-QR bias 0.84) | 15.44 | ✅ | ✅ | N/A |
+| 11 | [shap-interactions](techniques/shap-interactions) (Lundberg 2018; exact enumeration reveals (0, 2) as the true interaction pair) | 47.40 | ✅ | ✅ | N/A |
+| 12 | [dantzig-selector](techniques/dantzig-selector) (Candes-Tao 2007 LP; recovers 3-sparse support with (1.45, −0.90, 0.84)) | 6.18 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 61** — R (`strucchange`, `ess`, `icenReg`, `msm`, `mstate`, `bujar`, `rTensor`, `INLA`, `e1071`, `spatialreg`, `quantreg`, `flare`) or Python (`ruptures`, `scipy.linalg.expm`, `lifelines`, `tensorly`, `sklearn.svm`, `PySAL`, `econml`, `shap`, `scipy.optimize.linprog`, custom) — Spark ML has no first-class multi-break / MCMC / interval-survival / multi-state / tensor / INLA / SVR / spatial-DiD / QIV / SHAP-interaction / Dantzig surface.
+
 Later batches: any remaining chapters.
 
 ---
