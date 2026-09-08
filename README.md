@@ -2087,6 +2087,32 @@ near-neighbour retrieval.
 
 **PySpark N/A across Batch 64** — R (`kernlab`, `PlayerRatings`, `glmnet`, `ADMM`, `adabag`, no KAN, `hll`, `bloomfilter`, `clustertend`, `cluster`, `highfrequency`, `LSHR`) or Python (`hyppo`, `skelo`/`trueskill`, `sklearn`/`celer`, `cvxpy`, `sklearn.AdaBoostClassifier`, `pykan`, `datasketch`, `pybloom`, `pyclustertend`, `sklearn.metrics`, `arch`, `datasketch.MinHash`) — Spark ML has no first-class MMD / rating-system / ADMM-lasso / KAN / HLL-native (HLL++ available via `approx_count_distinct`) / cluster-validation-index / realized-vol / MinHash-LSH surface (MinHashLSH does exist in `pyspark.ml.feature` for Jaccard).
 
+### Batch 65 — Cleanup (EM / clustering algorithms + validation / BPE / PQ / HNSW / RFF / SVGD / CatBoost)
+
+Twelve more long-tail fillers: EM for finite mixtures, non-convex
+and density-varying clustering algorithms, gap / Davies-Bouldin
+K-selection, subword tokenisation, vector-search compression and
+graph-based ANN, kernel approximation, Stein-variational Bayesian
+inference, and CatBoost's ordered-target-statistic remedy for
+leakage.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [em-algorithm-mixture](techniques/em-algorithm-mixture) (Dempster-Laird-Rubin 1977; 1-D GMM recovers π̂/μ̂/σ̂ within 3 %; BIC picks K=3) | 47.77 | ✅ | ✅ | N/A |
+| 2 | [spectral-clustering](techniques/spectral-clustering) (Ng-Jordan-Weiss 2001; k-NN Laplacian ARI 1.000 on moons & rings vs k-means 0.32 / ~0) | 47.78 | ✅ | ✅ | N/A |
+| 3 | [hdbscan-clustering](techniques/hdbscan-clustering) (Campello-Moulavi-Sander 2013; 3-density clusters + noise ARI 0.775 vs k-means 0.743 with noise absorption) | 47.79 | ✅ | ✅ | N/A |
+| 4 | [affinity-propagation](techniques/affinity-propagation) (Frey-Dueck 2007; 4-corner blobs recovered with ARI 1.000 across 4 preference settings) | 47.80 | ✅ | ✅ | N/A |
+| 5 | [gap-statistic-cluster](techniques/gap-statistic-cluster) (Tibshirani-Walther-Hastie 2001; picks K=3 (Gap +2.53) on 3-cluster and K=1 on uniform) | 47.81 | ✅ | ✅ | N/A |
+| 6 | [davies-bouldin-index](techniques/davies-bouldin-index) (Davies-Bouldin 1979; min at K=3 (DB 0.16 / 0.59) for both separated and overlapping clusters) | 47.82 | ✅ | ✅ | N/A |
+| 7 | [byte-pair-encoding-bpe](techniques/byte-pair-encoding-bpe) (Sennrich et al 2016; learns morphemes `low`, `er`, `est`; OOV `lowering` -> subwords) | 47.83 | ✅ | ✅ | N/A |
+| 8 | [product-quantization-pq](techniques/product-quantization-pq) (Jegou-Douze-Schmid 2011; M=16 K=256 -> 16 B/vec (16x compress), Recall@10 = 0.55) | 47.84 | ✅ | ✅ | N/A |
+| 9 | [hnsw-ann-search](techniques/hnsw-ann-search) (Malkov-Yashunin 2018; fallback proximity graph Recall@10 0.50 → 0.93 as ef 20 → 400) | 47.85 | ✅ | ✅ | N/A |
+| 10 | [random-fourier-features](techniques/random-fourier-features) (Rahimi-Recht 2007; RFF ridge D=2000 MSE 0.42 vs exact kernel-ridge 0.39) | 47.86 | ✅ | ✅ | N/A |
+| 11 | [stein-variational-gradient](techniques/stein-variational-gradient) (Liu-Wang 2016; 30 particles hit both modes of ½N(±2, 1) with std 2.16 vs truth √5) | 47.87 | ✅ | ✅ | N/A |
+| 12 | [catboost-ordered-boosting](techniques/catboost-ordered-boosting) (Prokhorenkova et al 2018; leaky enc train MSE 0.066 vs ordered 0.134 exposes leakage) | 47.88 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 65** — R (`mclust`, `kernlab`, `dbscan`, `apcluster`, `cluster`, `fpc`, `text2vec`, `RcppFaiss`, `RcppHNSW`, no RFF, no SVGD, `catboost`) or Python (`sklearn.mixture`, `sklearn.cluster`, `sklearn.cluster.HDBSCAN`, `sklearn.cluster.AffinityPropagation`, `gap-statistic`, `sklearn.metrics`, `tokenizers`, `faiss`, `hnswlib`, `sklearn.kernel_approximation`, `pyro`, `catboost`) — Spark ML has some clustering (KMeans, GMM, BisectingKMeans) but nothing matching this batch's HDBSCAN / AP / gap / DB / BPE / PQ / HNSW / RFF / SVGD / ordered-boosting scope.
+
 Later batches: any remaining chapters.
 
 ---
