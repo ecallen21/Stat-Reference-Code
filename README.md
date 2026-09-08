@@ -2113,6 +2113,33 @@ leakage.
 
 **PySpark N/A across Batch 65** — R (`mclust`, `kernlab`, `dbscan`, `apcluster`, `cluster`, `fpc`, `text2vec`, `RcppFaiss`, `RcppHNSW`, no RFF, no SVGD, `catboost`) or Python (`sklearn.mixture`, `sklearn.cluster`, `sklearn.cluster.HDBSCAN`, `sklearn.cluster.AffinityPropagation`, `gap-statistic`, `sklearn.metrics`, `tokenizers`, `faiss`, `hnswlib`, `sklearn.kernel_approximation`, `pyro`, `catboost`) — Spark ML has some clustering (KMeans, GMM, BisectingKMeans) but nothing matching this batch's HDBSCAN / AP / gap / DB / BPE / PQ / HNSW / RFF / SVGD / ordered-boosting scope.
 
+### Batch 66 — Cleanup (sparse GP / Hopfield / LLM prompting / EMD / Welch PSD / interaction / IPP / HNN / noisy labels / CPC / Frank-Wolfe)
+
+Twelve more long-tail fillers spanning scalable Gaussian processes,
+associative memory, LLM reasoning patterns (self-consistency and
+tree-of-thoughts), classical signal decomposition and spectral
+analysis, black-box interaction detection, inhomogeneous point
+processes, physics-inspired networks, robust training under label
+noise, self-supervised representation learning on sequences, and a
+projection-free convex-optimisation solver.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [sparse-gaussian-process](techniques/sparse-gaussian-process) (Snelson-Ghahramani 2005 / Titsias 2009; FITC M=30 -> rel err ~0 vs full GP on n=500) | 47.89 | ✅ | ✅ | N/A |
+| 2 | [hopfield-network](techniques/hopfield-network) (Hopfield 1982; N=100 Hebbian storage, capacity limit 0.14 N reproduced; P=5 30 % flip -> 5/5 recovery, P=20 -> 1/20) | 47.90 | ✅ | ✅ | N/A |
+| 3 | [self-consistency-prompting](techniques/self-consistency-prompting) (Wang et al 2022; K=1 acc 0.23 -> K=40 acc 0.89 via majority-vote over 4-step chains) | 47.91 | ✅ | ✅ | N/A |
+| 4 | [tree-of-thoughts](techniques/tree-of-thoughts) (Yao et al 2023; Game-of-24 CoT (100 chains) 0.35 vs ToT BFS beam=32 -> 0.78) | 47.92 | ✅ | ✅ | N/A |
+| 5 | [empirical-mode-decomposition](techniques/empirical-mode-decomposition) (Huang et al 1998; IMFs isolate 1 Hz / 3 Hz components, residue tracks linear trend) | 47.93 | ✅ | ✅ | N/A |
+| 6 | [welch-power-spectral-density](techniques/welch-power-spectral-density) (Welch 1967; nperseg=2048 pinpoints 60 & 220 Hz, P(60)=0.50 vs truth 0.50, Parseval holds) | 47.94 | ✅ | ✅ | N/A |
+| 7 | [friedmans-h-statistic](techniques/friedmans-h-statistic) (Friedman-Popescu 2008; H(0,2)=0.83 flags true pair vs ≤0.20 elsewhere) | 47.95 | ✅ | ✅ | N/A |
+| 8 | [poisson-point-process-inhomog](techniques/poisson-point-process-inhomog) (Cox 1955 / Ogata 1981; MLE α̂=0.36 β̂=+0.31 γ̂=1.64 τ̂=14.3 vs truth (0.4, 0.3, 2, 20)) | 47.96 | ✅ | ✅ | N/A |
+| 9 | [hnn-hamiltonian-neural-networks](techniques/hnn-hamiltonian-neural-networks) (Greydanus et al 2019; HNN drift 0.0000 vs MLP drift 0.30 on 20-s pendulum roll-out) | 47.97 | ✅ | ✅ | N/A |
+| 10 | [noisy-label-cotraining](techniques/noisy-label-cotraining) (Han et al 2018; +3-4 pts over noisy-tree baseline at 10-40 % label noise) | 47.98 | ✅ | ✅ | N/A |
+| 11 | [contrastive-predictive-coding](techniques/contrastive-predictive-coding) (van den Oord et al 2018; linear InfoNCE retrieval acc 0.65 vs 0.50 chance on 12 sinusoids) | 47.99 | ✅ | ✅ | N/A |
+| 12 | [frank-wolfe-conditional-gradient](techniques/frank-wolfe-conditional-gradient) (Frank-Wolfe 1956; L1-ball radius=10 recovers true 3-sparse (1.56, -1.01, 0.79)) | 47.100 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 66** — R (limited SGP, no Hopfield, no LLM tooling, `Rlibeemd`, `stats::spectrum`/`spectral`, `iml`, `spatstat`, no HNN, no co-teach, no CPC, `CVXR`) or Python (`GPflow`/`gpytorch`, custom Hopfield/`hflayers`, `litellm`/`langchain`/`vllm`, `PyEMD`, `scipy.signal`, `sklearn.inspection`, `tick`/`NHPoisson`, `torchdyn`/`hamiltonian-nn`, `cleanlab`, `cpc-audio`/`torchaudio`, `cvxpy`) — Spark ML has no first-class scalable-GP / associative-memory / LLM-reasoning / EMD / Welch-PSD / interaction-detection / IPP-MLE / physics-NN / co-teaching / CPC / Frank-Wolfe surface.
+
 Later batches: any remaining chapters.
 
 ---
