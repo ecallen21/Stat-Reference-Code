@@ -2140,6 +2140,31 @@ projection-free convex-optimisation solver.
 
 **PySpark N/A across Batch 66** — R (limited SGP, no Hopfield, no LLM tooling, `Rlibeemd`, `stats::spectrum`/`spectral`, `iml`, `spatstat`, no HNN, no co-teach, no CPC, `CVXR`) or Python (`GPflow`/`gpytorch`, custom Hopfield/`hflayers`, `litellm`/`langchain`/`vllm`, `PyEMD`, `scipy.signal`, `sklearn.inspection`, `tick`/`NHPoisson`, `torchdyn`/`hamiltonian-nn`, `cleanlab`, `cpc-audio`/`torchaudio`, `cvxpy`) — Spark ML has no first-class scalable-GP / associative-memory / LLM-reasoning / EMD / Welch-PSD / interaction-detection / IPP-MLE / physics-NN / co-teaching / CPC / Frank-Wolfe surface.
 
+### Batch 67 — Cleanup (GoF trio / XGBoost / LightGBM / RMSprop / NAG / cGAN / WGAN / top-k+top-p / prompt tuning / TabNet)
+
+Twelve more long-tail fillers spanning three classical EDF /
+moment-based goodness-of-fit tests, two industrial gradient-boosting
+frameworks, two accelerated / adaptive first-order optimisers, two
+generative-adversarial variants, and three modern LLM / tabular-DL
+techniques.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [anderson-darling-test](techniques/anderson-darling-test) (Anderson-Darling 1954; N(0,1) p=0.29 vs t3 / uniform / outliers p<10^-4) | 47.101 | ✅ | ✅ | N/A |
+| 2 | [cramer-von-mises-test](techniques/cramer-von-mises-test) (Cramér 1928 / von Mises 1931; W^2=0.045 (N) vs 0.72-1.01 (uniform/Laplace/t3) with p≤0.011) | 47.102 | ✅ | ✅ | N/A |
+| 3 | [jarque-bera-test](techniques/jarque-bera-test) (Jarque-Bera 1980; log-normal JB=14 945 vs N(0,1) JB=6.6) | 47.103 | ✅ | ✅ | N/A |
+| 4 | [xgboost-boosting](techniques/xgboost-boosting) (Chen-Guestrin 2016 KDD; from-scratch Newton boost T=500 test MSE 0.82) | 47.104 | ✅ | ✅ | N/A |
+| 5 | [lightgbm-histogram-boosting](techniques/lightgbm-histogram-boosting) (Ke et al 2017 NeurIPS; hist-GBM 65x faster than exact-split at similar/better MSE) | 47.105 | ✅ | ✅ | N/A |
+| 6 | [rmsprop-optimizer](techniques/rmsprop-optimizer) (Tieleman-Hinton 2012; RMSprop reaches ‖x‖ 0.35 vs SGD 1.02 on κ=100 quadratic) | 47.106 | ✅ | ✅ | N/A |
+| 7 | [nesterov-accelerated-gradient](techniques/nesterov-accelerated-gradient) (Nesterov 1983; NAG 162 iters to 1e-3 on κ=100 vs GD >200) | 47.107 | ✅ | ✅ | N/A |
+| 8 | [conditional-gan-cgan](techniques/conditional-gan-cgan) (Mirza-Osindero 2014; equilibrium D acc 0.51 -> 0.50 with per-class optimum G) | 47.108 | ✅ | ✅ | N/A |
+| 9 | [wgan-wasserstein-gan](techniques/wgan-wasserstein-gan) (Arjovsky-Chintala-Bottou 2017; W_1 grows linearly with shift while JS saturates at log 2) | 47.109 | ✅ | ✅ | N/A |
+| 10 | [topk-topp-nucleus-sampling](techniques/topk-topp-nucleus-sampling) (Fan 2018 / Holtzman 2020; top-p 0.99 -> 45 unique tokens vs greedy K=1 -> 1) | 47.110 | ✅ | ✅ | N/A |
+| 11 | [prefix-prompt-tuning](techniques/prefix-prompt-tuning) (Li-Liang 2021 / Lester 2021; 2-16 tunable prompt params match full-FT acc on toy) | 47.111 | ✅ | ✅ | N/A |
+| 12 | [tabnet-tabular-attention](techniques/tabnet-tabular-attention) (Arik-Pfister 2021; sequential sparsemax mask recovers {0, 3, 7} true active features) | 47.112 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 67** — R (`nortest`, `goftest`, `tseries`, `xgboost`, `lightgbm`, `torch`, `torch`, no GAN, no WGAN, no decoding, no prompt-tuning, no TabNet) or Python (`scipy.stats`, `scipy.stats`, `scipy.stats`, `xgboost`, `lightgbm`/`sklearn.HistGBM`, `torch.optim.RMSprop`, `torch.optim.SGD(nesterov)`, `torchGAN`, `torchGAN`, `transformers.generation`, `peft`, `pytorch-tabnet`) — Spark ML has classical GLM / GBT / RF but nothing matching this batch's tail-focused GoF / XGBoost-native / LightGBM / adaptive-optimizer / GAN / decoding / prompt-tuning / TabNet surface.
+
 Later batches: any remaining chapters.
 
 ---
