@@ -2191,6 +2191,32 @@ greedy sparse-regression algorithms.
 
 **PySpark N/A across Batch 68** — R (`stats::t.test`, no Grad-CAM, no SmoothGrad, `prophet`, `text2vec`/`word2vec`, `recosystem`, no NCF, `EPGLM`, `gRain`/`bnlearn`, `lars`, no OMP, no C51) or Python (`scipy.stats`, `pytorch-grad-cam`, `captum.NoiseTunnel`, `prophet`/`neuralprophet`, `gensim`, `implicit`/`LightFM`, `recommenders`, `GPy`+custom, `pgmpy`/`libDAI`, `sklearn.Lars`, `sklearn.OrthogonalMatchingPursuit`, `dopamine`/`torchrl`) — Spark ML has KMeans / ALS (implicit) but nothing matching this batch's classical Welch / vision-XAI / distributional-RL / Prophet / word2vec / NCF / EP / loopy-BP / LARS / OMP / C51 surface.
 
+### Batch 69 — Cleanup (SINDy / DMD / RTS smoother / FM / LambdaMART / kernel-SHAP / RRF / beta-binomial / Hoeffding-D / Reptile / LODA / KTA)
+
+Twelve more long-tail fillers spanning data-driven dynamical
+systems, state-space smoothing, factorization / ranking / recsys
+models, model-agnostic Shapley explanations, retrieval fusion,
+hierarchical proportions, nonlinear-independence testing,
+first-order meta-learning, streaming anomaly detection, and
+kernel-selection scoring.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [sindy-sparse-dynamics](techniques/sindy-sparse-dynamics) (Brunton-Proctor-Kutz 2016 PNAS; exact recovery of Van der Pol: dx1/dt = -x0 + x1 - x0^2 x1) | 47.125 | ✅ | ✅ | N/A |
+| 2 | [dynamic-mode-decomposition-dmd](techniques/dynamic-mode-decomposition-dmd) (Schmid 2010; dominant DMD freqs [2.0, 3.0] recovered; rel-recon-err 0.0000) | 47.126 | ✅ | ✅ | N/A |
+| 3 | [rts-kalman-smoother](techniques/rts-kalman-smoother) (Rauch-Tung-Striebel 1965; KF RMSE 0.33 → RTS RMSE 0.18, variance tightened 49 %) | 47.127 | ✅ | ✅ | N/A |
+| 4 | [factorization-machines](techniques/factorization-machines) (Rendle 2010 ICDM; k=4 FM MSE 0.026 vs Ridge 0.035 on sparse binary + true (0, 3) interaction) | 47.128 | ✅ | ✅ | N/A |
+| 5 | [learning-to-rank-lambdamart](techniques/learning-to-rank-lambdamart) (Burges 2010 MSR-TR; LambdaMART-lite NDCG@10 = 0.996 vs random 0.691) | 47.129 | ✅ | ✅ | N/A |
+| 6 | [shapley-permutation-explainer](techniques/shapley-permutation-explainer) (Strumbelj-Kononenko 2010 / Lundberg-Lee 2017; perm-exact / perm-MC / Kernel SHAP all sum to +2.500 (efficiency)) | 47.130 | ✅ | ✅ | N/A |
+| 7 | [reciprocal-rank-fusion](techniques/reciprocal-rank-fusion) (Cormack-Clarke-Buttcher 2009 SIGIR; RRF (k=1) NDCG@10 = 0.936 vs individual ~0.9) | 47.131 | ✅ | ✅ | N/A |
+| 8 | [beta-binomial-hierarchical](techniques/beta-binomial-hierarchical) (Efron-Morris 1975; EB shrinkage MSE 0.0010 vs MLE 0.0036 (71 % lift) on baseball data) | 47.132 | ✅ | ✅ | N/A |
+| 9 | [hoeffding-d-independence](techniques/hoeffding-d-independence) (Hoeffding 1948; D detects quadratic (p<0.005, Spearman -0.15) & sinusoid) | 47.133 | ✅ | ✅ | N/A |
+| 10 | [reptile-meta-learning](techniques/reptile-meta-learning) (Nichol-Achiam-Schulman 2018; meta-init 3-shot MSE 1.43 vs wide-random-init 2.44 at K=20) | 47.134 | ✅ | ✅ | N/A |
+| 11 | [loda-anomaly-detection](techniques/loda-anomaly-detection) (Pevny 2016; K=100 random projections → LODA top-20 precision 1.000 = IsolationForest) | 47.135 | ✅ | ✅ | N/A |
+| 12 | [kernel-target-alignment](techniques/kernel-target-alignment) (Cristianini et al 2001; RBF alignment peaks at σ ~ 1–3 (A ≈ 0.49) for sign-boundary target) | 47.136 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 69** — R (`sindyr`, no DMD, `KFAS`/`dlm`, `libFMR`, `xgboost`+`lightgbm`, `iml`/`fastshap`, no RRF, `VGAM`, `Hmisc`, no Reptile, no LODA, `kernlab`) or Python (`pysindy`, `pydmd`, `filterpy`, `xLearn`/`pywFM`, `lightgbm.LGBMRanker`, `shap`, `ranx`, `pymc`, `hyppo`, `learn2learn`, `pyod`, `sklearn`+custom) — Spark ML has some tabular / ALS support but nothing matching this batch's dynamics / smoother / FM / LTR-lambda / SHAP / RRF / beta-binomial / Hoeffding / Reptile / LODA / KTA surface.
+
 Later batches: any remaining chapters.
 
 ---
