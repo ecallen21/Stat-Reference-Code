@@ -2165,6 +2165,32 @@ techniques.
 
 **PySpark N/A across Batch 67** — R (`nortest`, `goftest`, `tseries`, `xgboost`, `lightgbm`, `torch`, `torch`, no GAN, no WGAN, no decoding, no prompt-tuning, no TabNet) or Python (`scipy.stats`, `scipy.stats`, `scipy.stats`, `xgboost`, `lightgbm`/`sklearn.HistGBM`, `torch.optim.RMSprop`, `torch.optim.SGD(nesterov)`, `torchGAN`, `torchGAN`, `transformers.generation`, `peft`, `pytorch-tabnet`) — Spark ML has classical GLM / GBT / RF but nothing matching this batch's tail-focused GoF / XGBoost-native / LightGBM / adaptive-optimizer / GAN / decoding / prompt-tuning / TabNet surface.
 
+### Batch 68 — Cleanup (Welch t / vision-XAI / distributional-RL / Prophet / word2vec / ALS / NCF / EP / loopy-BP / LARS / OMP)
+
+Twelve more long-tail fillers spanning classical Welch's test, two
+gradient-based saliency methods for CNNs, distributional
+reinforcement learning, additive time-series forecasting, foundational
+word / user-item embeddings, two collaborative-filtering baselines,
+two graphical-model approximate-inference methods, and two classical
+greedy sparse-regression algorithms.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [welchs-t-test](techniques/welchs-t-test) (Welch 1947; Type-I ~0.05 (target) vs Student 0.003 (deflated) under unequal var + unbalanced n) | 47.113 | ✅ | ✅ | N/A |
+| 2 | [grad-cam-saliency](techniques/grad-cam-saliency) (Selvaraju et al 2017 ICCV; ReLU-weighted heatmap peaks inside true 3×3 signal region) | 47.114 | ✅ | ✅ | N/A |
+| 3 | [smoothgrad-saliency](techniques/smoothgrad-saliency) (Smilkov et al 2017; denoises raw gradients via Gaussian noise averaging) | 47.115 | ✅ | ✅ | N/A |
+| 4 | [prophet-forecasting](techniques/prophet-forecasting) (Taylor-Letham 2018; Prophet RMSE 0.38 vs seasonal-naive 1.05, persistence 2.75) | 47.116 | ✅ | ✅ | N/A |
+| 5 | [word2vec-skipgram](techniques/word2vec-skipgram) (Mikolov et al 2013; within-cluster cosine 0.63-0.69 vs cross-cluster 0.13-0.31) | 47.117 | ✅ | ✅ | N/A |
+| 6 | [matrix-factorization-als-recsys](techniques/matrix-factorization-als-recsys) (Hu-Koren-Volinsky 2008 ICDM; hit@10 = 100 % vs popularity baseline 59 %) | 47.118 | ✅ | ✅ | N/A |
+| 7 | [neural-collaborative-filtering](techniques/neural-collaborative-filtering) (He et al 2017 WWW; MLP head captures nonlinear u-v interaction linear GMF misses) | 47.119 | ✅ | ✅ | N/A |
+| 8 | [expectation-propagation-ep](techniques/expectation-propagation-ep) (Minka 2001 UAI; probit-regression EP mean 1.33 matches grid mean 1.34) | 47.120 | ✅ | ✅ | N/A |
+| 9 | [belief-propagation-loopy](techniques/belief-propagation-loopy) (Pearl 1988 / Yedidia et al 2005; 3×3 Ising loopy-BP matches exact enumeration to 2 dp) | 47.121 | ✅ | ✅ | N/A |
+| 10 | [lars-least-angle-regression](techniques/lars-least-angle-regression) (Efron et al 2004; step 5 recovers true 4-sparse support (1.66, -1.16, 0.71, -0.53)) | 47.122 | ✅ | ✅ | N/A |
+| 11 | [orthogonal-matching-pursuit](techniques/orthogonal-matching-pursuit) (Pati et al 1993; K=4 OMP recovers β̂=(1.49, -0.99, 0.77, -0.59) matches truth to 3 dp) | 47.123 | ✅ | ✅ | N/A |
+| 12 | [distributional-rl-c51](techniques/distributional-rl-c51) (Bellemare-Dabney-Munos 2017 ICML; C51 recovers bimodal Var[Z]=1.0, P(z<0)=0.50 for the two-mode return) | 47.124 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 68** — R (`stats::t.test`, no Grad-CAM, no SmoothGrad, `prophet`, `text2vec`/`word2vec`, `recosystem`, no NCF, `EPGLM`, `gRain`/`bnlearn`, `lars`, no OMP, no C51) or Python (`scipy.stats`, `pytorch-grad-cam`, `captum.NoiseTunnel`, `prophet`/`neuralprophet`, `gensim`, `implicit`/`LightFM`, `recommenders`, `GPy`+custom, `pgmpy`/`libDAI`, `sklearn.Lars`, `sklearn.OrthogonalMatchingPursuit`, `dopamine`/`torchrl`) — Spark ML has KMeans / ALS (implicit) but nothing matching this batch's classical Welch / vision-XAI / distributional-RL / Prophet / word2vec / NCF / EP / loopy-BP / LARS / OMP / C51 surface.
+
 Later batches: any remaining chapters.
 
 ---
