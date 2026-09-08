@@ -2217,6 +2217,31 @@ kernel-selection scoring.
 
 **PySpark N/A across Batch 69** — R (`sindyr`, no DMD, `KFAS`/`dlm`, `libFMR`, `xgboost`+`lightgbm`, `iml`/`fastshap`, no RRF, `VGAM`, `Hmisc`, no Reptile, no LODA, `kernlab`) or Python (`pysindy`, `pydmd`, `filterpy`, `xLearn`/`pywFM`, `lightgbm.LGBMRanker`, `shap`, `ranx`, `pymc`, `hyppo`, `learn2learn`, `pyod`, `sklearn`+custom) — Spark ML has some tabular / ALS support but nothing matching this batch's dynamics / smoother / FM / LTR-lambda / SHAP / RRF / beta-binomial / Hoeffding / Reptile / LODA / KTA surface.
 
+### Batch 70 — Cleanup (SEM / CMA-ES / PSO / SA / GA / Savitzky-Golay / Hodrick-Prescott / Butterworth / Rainbow-DQN / NoisyNets / OpenAI-ES / GCN)
+
+Twelve more long-tail fillers covering confirmatory latent-variable
+modeling, five population-based / stochastic global optimisers,
+three classical signal-processing filters, three deep-RL
+improvements (Rainbow / NoisyNet exploration / OpenAI ES), and
+graph-convolutional semi-supervised node classification.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [structural-equation-modeling](techniques/structural-equation-modeling) (Joreskog 1970; one-factor CFA n=400, p=5: chi^2=7.27, df=5, CFI≈0.985) | 47.137 | ✅ | ✅ | N/A |
+| 2 | [cma-es-evolution-strategy](techniques/cma-es-evolution-strategy) (Hansen-Ostermeier 2001; 5-D Rosenbrock @ 500 iters: f=0.000000, ‖x−1‖∞=0.0000) | 47.138 | ✅ | ✅ | N/A |
+| 3 | [particle-swarm-optimization](techniques/particle-swarm-optimization) (Kennedy-Eberhart 1995; 5-D Rastrigin @ 500 iters: f=0.0000, swarm converges) | 47.139 | ✅ | ✅ | N/A |
+| 4 | [simulated-annealing](techniques/simulated-annealing) (Kirkpatrick-Gelatt-Vecchi 1983; 1-D multi-well x*=0.000; 15-city TSP 3.77 vs random 8.48) | 47.140 | ✅ | ✅ | N/A |
+| 5 | [genetic-algorithm](techniques/genetic-algorithm) (Holland 1975; Goldberg 1989; 30-item knapsack 500 gens value=310 vs greedy 305) | 47.141 | ✅ | ✅ | N/A |
+| 6 | [savitzky-golay-filter](techniques/savitzky-golay-filter) (Savitzky-Golay 1964; sin+3sin-3t signal RMSE 0.299 → 0.074 at w=51,p=3) | 47.142 | ✅ | ✅ | N/A |
+| 7 | [hodrick-prescott-filter](techniques/hodrick-prescott-filter) (Hodrick-Prescott 1997; λ=1600 trend RMSE 0.30, cycle RMSE 0.54 on 200-pt series) | 47.143 | ✅ | ✅ | N/A |
+| 8 | [butterworth-bandpass](techniques/butterworth-bandpass) (Butterworth 1930; 30-70 Hz bandpass retains 78.5% energy, dominant peak 50 Hz) | 47.144 | ✅ | ✅ | N/A |
+| 9 | [rainbow-dqn](techniques/rainbow-dqn) (Hessel et al 2018 AAAI; tabular Double-Q + PER + n-step on 7-chain: greedy policy [1,1,1,1,1,1,0]) | 47.145 | ✅ | ✅ | N/A |
+| 10 | [noisy-networks-exploration](techniques/noisy-networks-exploration) (Fortunato et al 2018 ICLR; contextual-bandit greedy acc 95.3% vs chance 25%) | 47.146 | ✅ | ✅ | N/A |
+| 11 | [evolution-strategies-openai](techniques/evolution-strategies-openai) (Salimans et al 2017; 5-D step function f=0 at 50 iters, gradient methods fail) | 47.147 | ✅ | ✅ | N/A |
+| 12 | [gcn-graph-convolutional](techniques/gcn-graph-convolutional) (Kipf-Welling 2017 ICLR; 3-community SBM GCN test acc 93.3% vs LR baseline 37.1%) | 47.148 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 70** — R (`lavaan`/`sem`, `cmaes`, `pso`, `GenSA`, `GA`, `signal`, `mFilter`, `signal`, no Rainbow, no NoisyNet, custom-ES, custom-GCN) or Python (`semopy`/`factor_analyzer`, `cmaes`/`pycma`, `pyswarm`/`pyswarms`, `scipy.optimize.dual_annealing`, `DEAP`/`pymoo`, `scipy.signal.savgol_filter`, `statsmodels.tsa.filters.hp_filter`, `scipy.signal.butter`, `stable_baselines3`/`cleanrl`, custom, custom, `pytorch-geometric`/`dgl`) — Spark ML has no SEM, no global-optimiser suite, no signal-processing / DSP module, and no deep-RL / GNN support; this cleanup batch is squarely single-node.
+
 Later batches: any remaining chapters.
 
 ---
