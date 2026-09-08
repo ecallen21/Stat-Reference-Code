@@ -2035,6 +2035,32 @@ and attribution-stability diagnostics.
 
 **PySpark N/A across Batch 62** — R (`hawkes`, `PerformanceAnalytics`, `softImpute`, `submodlib` [Py], `ars`, `dineq`, `SemiMarkov`, `spatialreg`, `ICEbox`, `iml`) or Python (`tick`, `empyrical`, `fancyimpute`, `submodlib`, `scipy.stats`, `statsmodels`, `pysal`, `transformers`/`vllm`, `lightly`, `PyCEbox`, `shap`/`captum`) — Spark ML has no first-class point-process / CVaR / matrix-completion / coreset / rejection / RIF / semi-Markov / SEM / LLM-context / SSL-image / ICE-clustering / attribution-stability surface.
 
+### Batch 63 — Cleanup (rankings / choice / causal-DAG / kernel-ind / SDE / bagging / Bayes-factor / bandit / classical variance / mixtures / DoE / MR)
+
+Twelve more long-tail gap fillers spanning ranking / choice
+modelling, continuous DAG learning, kernel-based independence
+testing, stochastic differential equations, ensemble variance
+reduction, Bayesian hypothesis testing, adaptive bandits, robust
+variance tests, environmental exposure mixtures, DoE screening,
+and Mendelian-randomization pleiotropy checks.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [plackett-luce-ranking](techniques/plackett-luce-ranking) (Plackett 1975 / Luce 1959; MM-alg recovers (1.91, 1.42, 0.97, 0.47, 0.23) vs truth (1.90, 1.43, 0.95, 0.48, 0.24)) | 47.53 | ✅ | ✅ | N/A |
+| 2 | [mixed-logit-mnl](techniques/mixed-logit-mnl) (McFadden-Train 2000; sim-MLE μ̂=(0.96, −0.49), σ̂=(0.23, 0.33) vs truth (1, −0.5) / (0.4, 0.3) via 200 Halton draws) | 47.54 | ✅ | ✅ | N/A |
+| 3 | [notears-dag-learning](techniques/notears-dag-learning) (Zheng-Aragam-Ravikumar-Xing 2018; exact DAG recovery on d=4 truth, SHD 0) | 47.55 | ✅ | ✅ | N/A |
+| 4 | [hsic-independence](techniques/hsic-independence) (Gretton et al 2005; RBF-HSIC detects independent (p≈1), linear, quadratic, sinusoidal (all p<10⁻³)) | 47.56 | ✅ | ✅ | N/A |
+| 5 | [euler-maruyama-sde](techniques/euler-maruyama-sde) (Maruyama 1955; GBM E[S_T]=104.8 vs 105.1, OU stat var 0.0268 vs 0.0267) | 47.57 | ✅ | ✅ | N/A |
+| 6 | [bagging-oob](techniques/bagging-oob) (Breiman 1996; single-tree CV R² 0.49 → bagged B=200 OOB R² 0.71; coverage → 1.0) | 47.58 | ✅ | ✅ | N/A |
+| 7 | [savage-dickey-bf](techniques/savage-dickey-bf) (Dickey 1971; BF₀₁=9.4 for true μ=0.0, BF₁₀=1.2×10⁷ for true μ=1.0) | 47.59 | ✅ | ✅ | N/A |
+| 8 | [thompson-sampling](techniques/thompson-sampling) (Thompson 1933; 5-arm bandit T=5000 regret 85 vs UCB1 180) | 47.60 | ✅ | ✅ | N/A |
+| 9 | [levene-brown-forsythe](techniques/levene-brown-forsythe) (Levene 1960; Brown-Forsythe 1974; equal p=0.58, σ=(1,2,3.5) p<10⁻⁶, robust to t₃) | 47.61 | ✅ | ✅ | N/A |
+| 10 | [weighted-quantile-sum-wqs](techniques/weighted-quantile-sum-wqs) (Carrico et al 2015; w̄[0]=0.44, w̄[3]=0.45 for truly bad exposures; β̂₁=0.46 vs truth 0.40) | 47.62 | ✅ | ✅ | N/A |
+| 11 | [plackett-burman-screening](techniques/plackett-burman-screening) (Plackett-Burman 1946; 8 factors in N=12 runs; top-3 |effect| ranking matches truth (1, 3, 6)) | 47.63 | ✅ | ✅ | N/A |
+| 12 | [mr-egger-pleiotropy](techniques/mr-egger-pleiotropy) (Bowden-Davey Smith-Burgess 2015; IVW β̂=0.50 biased, MR-Egger β̂=0.38 consistent under α₀=0.02) | 47.64 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 63** — R (`PlackettLuce`, `mlogit`, `notearsC`, `dHSIC`, `Sim.DiffProc`, `ipred`, `BayesFactor`, `contextual`, `car`, `gWQS`, `FrF2`, `MendelianRandomization`) or Python (`choix`, `xlogit`, `causalnex`/`dagma`, `hyppo`, `sdeint`/`diffrax`, `sklearn.BaggingRegressor`, `pymc`, `mabwiser`, `scipy.stats`, `wqspy`, `pyDOE`, custom) — Spark ML has no first-class ranking / mixed-logit / DAG / kernel-independence / SDE / OOB-bagging / Bayes-factor / Thompson / robust-variance / WQS / DoE / MR-Egger surface.
+
 Later batches: any remaining chapters.
 
 ---
