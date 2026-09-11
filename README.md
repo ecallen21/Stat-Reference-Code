@@ -2242,6 +2242,273 @@ graph-convolutional semi-supervised node classification.
 
 **PySpark N/A across Batch 70** — R (`lavaan`/`sem`, `cmaes`, `pso`, `GenSA`, `GA`, `signal`, `mFilter`, `signal`, no Rainbow, no NoisyNet, custom-ES, custom-GCN) or Python (`semopy`/`factor_analyzer`, `cmaes`/`pycma`, `pyswarm`/`pyswarms`, `scipy.optimize.dual_annealing`, `DEAP`/`pymoo`, `scipy.signal.savgol_filter`, `statsmodels.tsa.filters.hp_filter`, `scipy.signal.butter`, `stable_baselines3`/`cleanrl`, custom, custom, `pytorch-geometric`/`dgl`) — Spark ML has no SEM, no global-optimiser suite, no signal-processing / DSP module, and no deep-RL / GNN support; this cleanup batch is squarely single-node.
 
+### Batch 71 — Cleanup (GraphSAGE / GAT / Triplet / Siamese / SimCLR / Barlow Twins / Viterbi / Baum-Welch / CRF / Beam / BPE / ViT)
+
+Twelve more long-tail fillers covering two inductive / attention-
+based GNN architectures, four metric-learning and self-supervised
+representation-learning methods, four classical sequence-model
+inference algorithms (Viterbi decoding, Baum-Welch EM, linear-chain
+CRF, beam-search decoding), sub-word BPE tokenisation, and the
+vision Transformer.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [graphsage-inductive-gnn](techniques/graphsage-inductive-gnn) (Hamilton-Ying-Leskovec 2017 NeurIPS; 3-community SBM test acc 0.66 vs LR 0.37) | 47.149 | ✅ | ✅ | N/A |
+| 2 | [graph-attention-networks-gat](techniques/graph-attention-networks-gat) (Velickovic et al 2018 ICLR; 4-head GAT test acc 0.82 vs LR baseline 0.37) | 47.150 | ✅ | ✅ | N/A |
+| 3 | [deep-metric-learning-triplet](techniques/deep-metric-learning-triplet) (Schroff-Kalenichenko-Philbin 2015 FaceNet; noisy-synth kNN acc 1.00 vs PCA 0.44) | 47.151 | ✅ | ✅ | N/A |
+| 4 | [siamese-networks](techniques/siamese-networks) (Bromley 1994; Koch et al 2015; noisy-synth 4-way one-shot 1.00 vs raw 0.34) | 47.152 | ✅ | ✅ | N/A |
+| 5 | [simclr-contrastive](techniques/simclr-contrastive) (Chen-Kornblith-Norouzi-Hinton 2020 ICML; SSL 16-D LR acc 0.883 vs random 0.794) | 47.153 | ✅ | ✅ | N/A |
+| 6 | [barlow-twins](techniques/barlow-twins) (Zbontar-Jing-Misra-LeCun-Deny 2021 ICML; SSL 16-D LR acc 0.828 vs random 0.794) | 47.154 | ✅ | ✅ | N/A |
+| 7 | [viterbi-algorithm](techniques/viterbi-algorithm) (Viterbi 1967 IEEE-IT; fair/loaded die HMM decoding acc 0.65 on T=300 rolls) | 47.155 | ✅ | ✅ | N/A |
+| 8 | [baum-welch-hmm](techniques/baum-welch-hmm) (Baum-Petrie 1966; Baum et al 1970; T=800 EM lifts LL -1922 -> -1408, aligns loaded state) | 47.156 | ✅ | ✅ | N/A |
+| 9 | [crf-conditional-random-field](techniques/crf-conditional-random-field) (Lafferty-McCallum-Pereira 2001 ICML; token acc 0.670 vs no-trans 0.625) | 47.157 | ✅ | ✅ | N/A |
+| 10 | [beam-search-decoding](techniques/beam-search-decoding) (Reddy 1977; Lowerre 1976; B=1 log-prob -23.13 vs B>=2 -2.18 on toy bigram LM) | 47.158 | ✅ | ✅ | N/A |
+| 11 | [bpe-tokenization](techniques/bpe-tokenization) (Gage 1994; Sennrich et al 2016 ACL; 50 merges give 84.5% token reduction, generalises to unseen 'narrowly') | 47.159 | ✅ | ✅ | N/A |
+| 12 | [vision-transformer-vit](techniques/vision-transformer-vit) (Dosovitskiy et al 2021 ICLR; toy 8x8 shapes 3-class ViT [CLS]+LR acc 1.000) | 47.160 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 71** — R (`reticulate` to Python for all four GNN / metric / SSL / ViT; `HMM::viterbi`, `HMM::baumWelch`, `crfsuite`, pure-R beam search, `tokenizers.bpe`) or Python (`pytorch-geometric`/`dgl` for GNNs, `pytorch-metric-learning`/`tensorflow-similarity` for triplet / Siamese, `lightly`/`solo-learn` for SimCLR / Barlow, `hmmlearn` for HMM / BW, `sklearn_crfsuite`/`pystruct` for CRF, `transformers.generate` for beam, `sentencepiece`/`huggingface tokenizers`, `timm`/`transformers.ViTModel`) — Spark ML has no GNN / metric-learning / SSL / HMM / CRF / neural-tokeniser / ViT support; this cleanup batch is squarely single-node deep-learning territory.
+
+### Batch 72 — Cleanup (Lottery Ticket / Double Descent / SAM / Lookahead / RAdam / One-Cycle / SWA / MP-Train / Grad-Ckpt / ALiBi / RMSNorm / WS)
+
+Twelve more long-tail fillers on modern deep-net **training and
+architecture** techniques: two phenomena of over-parametrised
+learning (lottery ticket + double descent), five optimiser wrappers
+and learning-rate schedules (SAM, Lookahead, RAdam, One-Cycle, SWA),
+two memory / compute optimisations (mixed precision, gradient
+checkpointing), and three architecture tricks (ALiBi position bias,
+RMSNorm, weight standardisation).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [lottery-ticket-hypothesis](techniques/lottery-ticket-hypothesis) (Frankle-Carbin 2019 ICLR; 94% sparse ticket MSE 0.090 vs dense 0.073) | 47.161 | ✅ | ✅ | N/A |
+| 2 | [double-descent](techniques/double-descent) (Belkin et al 2019 PNAS; Nakkiran et al 2020 ICLR; peak test MSE 19.58 at p=n=40, descends to ~4 as p>>n) | 47.162 | ✅ | ✅ | N/A |
+| 3 | [sam-sharpness-aware-minimization](techniques/sam-sharpness-aware-minimization) (Foret et al 2021 ICLR; moons+noise MLP: SAM 0.771/flatness 0.003 vs SGD 0.757/0.010) | 47.163 | ✅ | ✅ | N/A |
+| 4 | [lookahead-optimizer](techniques/lookahead-optimizer) (Zhang-Lucas-Ba-Hinton 2019 NeurIPS; more robust at extreme lr, +1 pt at lr=1.0) | 47.164 | ✅ | ✅ | N/A |
+| 5 | [rectified-adam-radam](techniques/rectified-adam-radam) (Liu et al 2020 ICLR; early-iter loss 15 vs Adam 34 at step 20 under high noise) | 47.165 | ✅ | ✅ | N/A |
+| 6 | [one-cycle-super-convergence](techniques/one-cycle-super-convergence) (Smith 2018; triangular lr sweep with reversed momentum, 5-10x faster on non-convex nets) | 47.166 | ✅ | ✅ | N/A |
+| 7 | [stochastic-weight-averaging-swa](techniques/stochastic-weight-averaging-swa) (Izmailov et al 2018 UAI; SWA test acc 0.710 vs SGD endpoint 0.698) | 47.167 | ✅ | ✅ | N/A |
+| 8 | [mixed-precision-training](techniques/mixed-precision-training) (Micikevicius et al 2018 ICLR; FP16 recovers 1e-8 via loss scale 2^15 vs underflow to 0) | 47.168 | ✅ | ✅ | N/A |
+| 9 | [gradient-checkpointing](techniques/gradient-checkpointing) (Chen et al 2016; 25-layer MLP: 4.3x memory reduction, gradients bit-exact) | 47.169 | ✅ | ✅ | N/A |
+| 10 | [alibi-linear-attention-bias](techniques/alibi-linear-attention-bias) (Press-Smith-Lewis 2022 ICLR; 4-head slopes give per-head attention radius 3->100 at T=512) | 47.170 | ✅ | ✅ | N/A |
+| 11 | [rmsnorm-normalization](techniques/rmsnorm-normalization) (Zhang-Sennrich 2019 NeurIPS; 56.6% faster than LayerNorm on 128x512 tensor) | 47.171 | ✅ | ✅ | N/A |
+| 12 | [weight-standardization](techniques/weight-standardization) (Qiao et al 2019; per-channel weight normalisation, pairs with GroupNorm for micro-batch training) | 47.172 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 72** — R (`reticulate` to Python for most; pure-R double-descent / one-cycle / RMSNorm / weight-standardisation demos) or Python (`torch.nn.utils.prune`/OpenLTH for LTH, `sam-optimizer` for SAM, `pytorch_optimizer` for Lookahead / RAdam, `torch.optim.lr_scheduler.OneCycleLR` for one-cycle, `torch.optim.swa_utils` for SWA, `torch.amp` for MP training, `torch.utils.checkpoint` for grad-ckpt, `transformers` Bloom/MPT/OPT for ALiBi, `torch.nn.RMSNorm`/LlamaRMSNorm for RMSNorm, `kornia`/`timm` for weight standardisation) — Spark ML has no deep-net training-toolbox support; this cleanup batch is squarely single-node deep-learning training territory.
+
+### Batch 73 — Cleanup (PagedAttention / KV-quant / TP / PP / FSDP / ZeRO / bitsandbytes / GPTQ / AWQ / FLAN / CAI / ToT)
+
+Twelve more long-tail fillers on modern LLM SYSTEMS and ALIGNMENT
+techniques: two LLM-inference memory optimisations (PagedAttention,
+KV-cache quant), four parallelism / sharding strategies (tensor
+parallel, pipeline parallel, FSDP, ZeRO), three post-training
+weight-quantisation methods (LLM.int8, GPTQ, AWQ), and three
+alignment / reasoning methods (FLAN instruction tuning,
+Constitutional AI, Tree of Thoughts).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [paged-attention-vllm](techniques/paged-attention-vllm) (Kwon et al 2023 SOSP; block allocator + copy-on-write fork, shares 3/5 blocks across sibling sequences) | 47.173 | ✅ | ✅ | N/A |
+| 2 | [kv-cache-quantization](techniques/kv-cache-quantization) (Sheng 2023 FlexGen; Liu 2023 KIVI; INT8 K per-channel rel-err 0.0017, INT4 V per-group 0.066, 56% memory saved) | 47.174 | ✅ | ✅ | N/A |
+| 3 | [tensor-parallelism](techniques/tensor-parallelism) (Shoeybi 2020 Megatron-LM; TP block bit-exact to single-device (rel-err 4e-16), 1/n_shards memory) | 47.175 | ✅ | ✅ | N/A |
+| 4 | [pipeline-parallelism](techniques/pipeline-parallelism) (Huang 2019 GPipe; K=8, M=32 → 82.1% pipeline efficiency, bubble = (K-1)/(M+K-1)) | 47.176 | ✅ | ✅ | N/A |
+| 5 | [fsdp-fully-sharded-data-parallel](techniques/fsdp-fully-sharded-data-parallel) (Zhao 2023 VLDB; 7B LLM 112GB→14GB per rank at N=8, 87.5% memory reduction) | 47.177 | ✅ | ✅ | N/A |
+| 6 | [zero-redundancy-optimizer](techniques/zero-redundancy-optimizer) (Rajbhandari 2020 SC; 30B model 480→30GB per rank (stage 3), 7.5GB with offload) | 47.178 | ✅ | ✅ | N/A |
+| 7 | [bitsandbytes-int8-llm](techniques/bitsandbytes-int8-llm) (Dettmers 2022 NeurIPS; outlier-decomposed INT8 rel-err 0.003 vs naive 0.05, 15x lower error) | 47.179 | ✅ | ✅ | N/A |
+| 8 | [gptq-quantization](techniques/gptq-quantization) (Frantar 2023 ICLR; Hessian-guided INT4 rel-err 0.116 vs RTN 0.162, 4x storage saving) | 47.180 | ✅ | ✅ | N/A |
+| 9 | [awq-quantization](techniques/awq-quantization) (Lin 2024 MLSys; activation-aware INT4 rel-err 0.081 vs RTN 0.104, α* search) | 47.181 | ✅ | ✅ | N/A |
+| 10 | [instruction-tuning-flan](techniques/instruction-tuning-flan) (Wei 2022 ICLR; multi-task natural-language instructions enable zero-shot task generalisation) | 47.182 | ✅ | ✅ | N/A |
+| 11 | [constitutional-ai](techniques/constitutional-ai) (Bai 2022 Anthropic; critique-and-revise loop lifts preference score -1.67 → +1.67 on toy harmfulness) | 47.183 | ✅ | ✅ | N/A |
+| 12 | [tree-of-thoughts-reasoning](techniques/tree-of-thoughts-reasoning) (Yao 2023 NeurIPS; Game-of-24 CoT-greedy 2/7 vs ToT beam=8 4/7 solved) | 47.184 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 73** — R (`reticulate` to Python for all twelve; these are LLM systems / alignment techniques with no R ecosystem) or Python (`vllm` for PagedAttention, `vllm`/`FlexGen`/`llama.cpp` for KV quant, `megatron-lm`/`colossalai` for TP, `torch.distributed.pipeline`/`deepspeed` for PP, `torch.distributed.fsdp` for FSDP, `deepspeed` for ZeRO, `bitsandbytes` for LLM.int8, `auto-gptq`/`optimum` for GPTQ, `llm-awq`/`autoawq`/`vllm.awq` for AWQ, `transformers.Trainer`+FLAN-T5/Tulu for FLAN, `trl`/`trlx` for CAI, `princeton-nlp/tree-of-thought-llm`/`langgraph`/`lmql` for ToT) — Spark ML has no LLM inference / alignment / large-model training support; this cleanup batch is squarely modern-LLM systems territory.
+
+### Batch 74 — Cleanup (Medusa / MQA / SWA / DPR / ColBERT / Reranker / HyDE / Self-RAG / RECOMP / MoD / PRM / BoN)
+
+Twelve more long-tail fillers on modern LLM INFERENCE, RETRIEVAL,
+and REASONING techniques: one speculative-decoding variant
+(Medusa), two attention efficiencies (MQA/GQA, sliding-window),
+four retrieval / RAG methods (DPR, ColBERT, cross-encoder,
+HyDE), two RAG-pipeline extensions (Self-RAG, RECOMP), one
+mixture-of-experts across depth (MoD), and two reasoning /
+selection methods (PRM, best-of-N).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [medusa-speculative-heads](techniques/medusa-speculative-heads) (Cai et al 2024; 2 heads + tree verify → 2.58 tokens/step vs 1 baseline) | 47.185 | ✅ | ✅ | N/A |
+| 2 | [multi-query-attention](techniques/multi-query-attention) (Shazeer 2019, Ainslie 2023 GQA; MQA cuts KV memory 32× vs MHA on 32-head model) | 47.186 | ✅ | ✅ | N/A |
+| 3 | [sliding-window-attention](techniques/sliding-window-attention) (Beltagy 2020 Longformer, Jiang 2023 Mistral; W=64 rel-diff 0.24 vs full at T=128) | 47.187 | ✅ | ✅ | N/A |
+| 4 | [dense-passage-retrieval-dpr](techniques/dense-passage-retrieval-dpr) (Karpukhin et al 2020 EMNLP; DPR R@1 1.00 vs BM25 0.75 on 8-pair QA) | 47.188 | ✅ | ✅ | N/A |
+| 5 | [colbert-late-interaction](techniques/colbert-late-interaction) (Khattab-Zaharia 2020 SIGIR; MaxSim per-token retrieval, 3/3 on rare-term queries) | 47.189 | ✅ | ✅ | N/A |
+| 6 | [cross-encoder-reranker](techniques/cross-encoder-reranker) (Nogueira-Cho 2019; second-stage BERT([q;SEP;p]) reranking on top-k) | 47.190 | ✅ | ✅ | N/A |
+| 7 | [hyde-hypothetical-doc](techniques/hyde-hypothetical-doc) (Gao et al 2022 ACL; HyDE R@1 3/5 vs plain-DPR 0/5 on paraphrased queries) | 47.191 | ✅ | ✅ | N/A |
+| 8 | [self-rag](techniques/self-rag) (Asai et al 2024 ICLR; reflection tokens IsRel/IsSup/IsUse for retrieve-when-needed critique) | 47.192 | ✅ | ✅ | N/A |
+| 9 | [context-compression-recomp](techniques/context-compression-recomp) (Xu et al 2024 ICLR; extractive top-p compresses 80→15-29 tokens, preserves answer) | 47.193 | ✅ | ✅ | N/A |
+| 10 | [mixture-of-depths](techniques/mixture-of-depths) (Raposo et al 2024 DeepMind; per-token per-block router cuts compute 50% at keep_frac=0.5) | 47.194 | ✅ | ✅ | N/A |
+| 11 | [process-reward-model-prm](techniques/process-reward-model-prm) (Lightman et al 2023 OpenAI PRM800K; PRM downgrades 'lucky' chain 1.0 ORM → 0.30 PRM) | 47.195 | ✅ | ✅ | N/A |
+| 12 | [best-of-n-sampling](techniques/best-of-n-sampling) (Cobbe 2021, Nakano 2021 WebGPT; N=256 reduces expected error 74× on toy) | 47.196 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 74** — R (`reticulate` to Python for all; these are LLM / retrieval / reasoning-time methods with no R ecosystem) or Python (`FasterDecoding/Medusa` for Medusa, `transformers.LlamaAttention` for MQA/GQA, `transformers.Mistral`/`Longformer` for SWA, `sentence-transformers`/`haystack` for DPR, `colbert-ai`/`ragatouille` for ColBERT, `sentence-transformers.CrossEncoder`/`MonoT5` for reranker, `llama-index`/`langchain` HyDE for HyDE, `AkariAsai/self-rag` for Self-RAG, `carriex/recomp`/`llmlingua` for RECOMP, DeepMind JAX reference for MoD, `openai/prm800k`/Math-Shepherd for PRM, `transformers.generate(num_return_sequences=…)` for best-of-N) — Spark ML has no LLM inference / retrieval / reasoning support; this cleanup batch is squarely modern-LLM territory.
+
+### Batch 75 — Cleanup (KTO / ORPO / SimPO / SPIN / Reflexion / ReAct / Toolformer / Function-Call / Verifier / Debate / AutoGen / CrewAI)
+
+Twelve more long-tail fillers on modern LLM ALIGNMENT and AGENTIC
+techniques: four preference-optimisation variants beyond DPO
+(KTO, ORPO, SimPO, SPIN), four reasoning / tool-use methods
+(Reflexion, ReAct, Toolformer, function calling), one verifier-
+guided search, and three multi-agent orchestration patterns
+(debate, AutoGen, CrewAI).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [kto-kahneman-tversky](techniques/kto-kahneman-tversky) (Ethayarajh et al 2024; unpaired thumbs labels shift liked mass 70%→93%, disliked 30%→7%) | 47.197 | ✅ | ✅ | N/A |
+| 2 | [orpo-odds-ratio](techniques/orpo-odds-ratio) (Hong-Lee-Thorne 2024 EMNLP; SFT+OR loss, no ref model, chosen prob → 0.989 in 150 iters) | 47.198 | ✅ | ✅ | N/A |
+| 3 | [simpo-simple-preference](techniques/simpo-simple-preference) (Meng-Xia-Chen 2024; length-normalised reference-free preference with target margin γ) | 47.199 | ✅ | ✅ | N/A |
+| 4 | [spin-self-play-fine-tuning](techniques/spin-self-play-fine-tuning) (Chen et al 2024 ICML; KL(π‖human) 0.30→0.075 over 5 self-play rounds using human samples only) | 47.200 | ✅ | ✅ | N/A |
+| 5 | [reflexion-self-critique](techniques/reflexion-self-critique) (Shinn et al 2023 NeurIPS; episodic memory of failed actions: 5/6 vs baseline 4/6 on arithmetic puzzles) | 47.201 | ✅ | ✅ | N/A |
+| 6 | [react-reasoning-acting](techniques/react-reasoning-acting) (Yao et al 2023 ICLR; Thought/Action/Observation loop: 3/3 vs CoT-only 0/3 on QA + calc questions) | 47.202 | ✅ | ✅ | N/A |
+| 7 | [toolformer-tool-use](techniques/toolformer-tool-use) (Schick et al 2023 NeurIPS; perplexity-filtered self-supervised API insertions, KEEP only useful ones) | 47.203 | ✅ | ✅ | N/A |
+| 8 | [function-calling-openai](techniques/function-calling-openai) (OpenAI 2023; JSON-schema-validated structured tool calls for get_weather + calc) | 47.204 | ✅ | ✅ | N/A |
+| 9 | [verifier-guided-search](techniques/verifier-guided-search) (Uesato 2022; Lightman 2023; beam=3 verifier: 4/5 vs greedy-N=20 1/5 on arithmetic-target task) | 47.205 | ✅ | ✅ | N/A |
+| 10 | [multi-agent-debate](techniques/multi-agent-debate) (Du et al 2023; 3-agent 3-round debate: 93% vs single-agent 55% on arithmetic QA) | 47.206 | ✅ | ✅ | N/A |
+| 11 | [autogen-multi-agent](techniques/autogen-multi-agent) (Wu et al 2023 Microsoft; planner+coder+reviewer 4-message conversation to TASK COMPLETE) | 47.207 | ✅ | ✅ | N/A |
+| 12 | [crewai-hierarchical-agents](techniques/crewai-hierarchical-agents) (Moura 2024; sequential + manager-hierarchical processes on researcher/writer/editor task DAG) | 47.208 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 75** — R (`reticulate` to Python for all; these are LLM alignment / agentic methods with no R ecosystem) or Python (`trl.KTOTrainer`/`ORPOTrainer`/`CPOTrainer` for preference variants, `uclaml/SPIN` for self-play, `noahshinn024/reflexion`/`langgraph` for Reflexion, `langchain.ReActAgent`/`llama-index` for ReAct, `conceptofmind/toolformer` for Toolformer, `openai`/`anthropic` SDKs for function calling, `llm-reasoners`/`princeton-nlp/tree-of-thought-llm` for verifier search, `composable-models/llm-multiagent-debate` for debate, `pyautogen` for AutoGen, `crewai` for CrewAI) — Spark ML has no alignment / agent / tool-use support; this cleanup batch is squarely modern-LLM territory.
+
+### Batch 76 — Cleanup (DDIM / CFG / LDM / Score-SDE / ControlNet / RectFlow / CM / Judge / MMLU / RAGAS / Contam / Datasheets)
+
+Twelve more long-tail fillers on modern DIFFUSION and LLM-EVAL
+techniques: seven diffusion-family variants (DDIM, CFG, Latent
+Diffusion, Score-SDE, ControlNet, Rectified Flow, Consistency
+Models), one LM auto-eval (LLM-as-a-Judge), two benchmark evals
+(MMLU-style, RAGAS), one contamination detector, and one dataset
+documentation standard (Datasheets).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [ddim-implicit-diffusion](techniques/ddim-implicit-diffusion) (Song-Meng-Ermon 2021 ICLR; deterministic reverse, 10 vs 100 DDPM steps) | 47.209 | ✅ | ✅ | N/A |
+| 2 | [classifier-free-guidance](techniques/classifier-free-guidance) (Ho-Salimans 2021; w=1 tight around cond mode, w>>1 overshoots, w<0 negative prompt) | 47.210 | ✅ | ✅ | N/A |
+| 3 | [latent-diffusion-ldm](techniques/latent-diffusion-ldm) (Rombach et al 2022 CVPR; 16x compression, 256x cheaper diffusion FLOPs) | 47.211 | ✅ | ✅ | N/A |
+| 4 | [score-based-sde](techniques/score-based-sde) (Song et al 2021 ICLR; reverse-SDE Euler on 3-mode GM recovers means [-1.96, 2.01, 1.95]) | 47.212 | ✅ | ✅ | N/A |
+| 5 | [controlnet-conditional](techniques/controlnet-conditional) (Zhang et al 2023 ICCV; zero-init gives identity at start, ~8.4 steering post-training) | 47.213 | ✅ | ✅ | N/A |
+| 6 | [rectified-flow](techniques/rectified-flow) (Liu-Gong-Liu 2023; straight-line flow, 1 vs 20-step similar quality on toy 2-mode target) | 47.214 | ✅ | ✅ | N/A |
+| 7 | [consistency-models](techniques/consistency-models) (Song et al 2023 ICML; 1-step generation on 3-mode GM, samples per mode 117/145/238) | 47.215 | ✅ | ✅ | N/A |
+| 8 | [llm-as-a-judge](techniques/llm-as-a-judge) (Zheng et al 2023; detailed response scores 7/10 vs vague 3.7/10, 1.00 position-swap agreement) | 47.216 | ✅ | ✅ | N/A |
+| 9 | [mmlu-benchmark-eval](techniques/mmlu-benchmark-eval) (Hendrycks et al 2021 ICLR; 5-shot per-letter log-prob scoring on 57 subjects) | 47.217 | ✅ | ✅ | N/A |
+| 10 | [ragas-rag-evaluation](techniques/ragas-rag-evaluation) (Es et al 2024 EACL; good answer faithfulness 1.00, off-topic 0.00, relevance 0.59 vs 0.26) | 47.218 | ✅ | ✅ | N/A |
+| 11 | [contamination-detection](techniques/contamination-detection) (Sainz 2023, Golchin 2024; guided-completion + membership inference + rephrase-drop detect memorisation) | 47.219 | ✅ | ✅ | N/A |
+| 12 | [datasheets-for-datasets](techniques/datasheets-for-datasets) (Gebru et al 2018 CACM; 7-section template with 0 missing (good) vs 23 missing (bad)) | 47.220 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 76** — R (`reticulate` to Python for all except pure-R datasheets template; these are diffusion / LM-eval methods with no R ecosystem) or Python (`diffusers.DDIMScheduler` for DDIM, `diffusers.StableDiffusionPipeline(guidance_scale=…)` for CFG, `diffusers.StableDiffusionPipeline`/`AutoencoderKL` for LDM, `yang-song/score_sde` for score-SDE, `diffusers.ControlNetModel` for ControlNet, `gnobitab/RectifiedFlow`/SD3 FlowMatch for rectified flow, `openai/consistency_models`/`diffusers.CMScheduler` for CM, MT-Bench / alpaca-eval for judge, `lm-eval-harness` for MMLU, `ragas` for RAGAS, `lm-eval-harness` contamination flags for detection, HuggingFace dataset cards / MLCommons Croissant for datasheets) — Spark ML has no diffusion / LM-eval support; this cleanup batch is modern-generative-and-eval territory.
+
+### Batch 77 — Cleanup (Video Diff / DreamBooth / TI / 3DGS / NeRF / CLIP / DINO / MAE / SAM / AudioLDM / Whisper / wav2vec)
+
+Twelve more long-tail fillers across MULTIMODAL FOUNDATION MODELS
+and 3D / AUDIO generation: one video-diffusion, two subject-driven
+tuning methods (DreamBooth, Textual Inversion), two 3D-scene
+representations (3D Gaussian Splatting, NeRF), five vision
+foundation models (CLIP, DINO, MAE, SAM, ViT-SSL cousins), and
+three audio models (AudioLDM, Whisper, wav2vec 2.0).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [video-diffusion](techniques/video-diffusion) (Ho et al 2022; SVD 2023; +temporal attn cuts frame-to-frame variation 1.90 → 0.93) | 47.221 | ✅ | ✅ | N/A |
+| 2 | [dreambooth-subject-tuning](techniques/dreambooth-subject-tuning) (Ruiz et al 2023 CVPR; prior-preservation cuts class-drift loss 0.358 → 0.004) | 47.222 | ✅ | ✅ | N/A |
+| 3 | [textual-inversion](techniques/textual-inversion) (Gal et al 2022 ICLR; single token embedding cosine 0.999 to truth, 64x cheaper than DreamBooth) | 47.223 | ✅ | ✅ | N/A |
+| 4 | [gaussian-splatting-3d](techniques/gaussian-splatting-3d) (Kerbl et al 2023 SIGGRAPH; 20-Gaussian toy scene projected + composited to 48x48 image) | 47.224 | ✅ | ✅ | N/A |
+| 5 | [nerf-neural-radiance-fields](techniques/nerf-neural-radiance-fields) (Mildenhall et al 2020 ECCV; volume-render 1024 rays x 64 samples, 77.4% pixel coverage) | 47.225 | ✅ | ✅ | N/A |
+| 6 | [clip-vision-language](techniques/clip-vision-language) (Radford et al 2021 ICML; aligned diagonal contrastive loss 0.0002 vs random 7.78, 5/5 zero-shot) | 47.226 | ✅ | ✅ | N/A |
+| 7 | [dino-self-supervised-vision](techniques/dino-self-supervised-vision) (Caron et al 2021 ICCV; EMA student-teacher with multi-crop + centering) | 47.227 | ✅ | ✅ | N/A |
+| 8 | [mae-masked-autoencoders](techniques/mae-masked-autoencoders) (He et al 2022 CVPR; 75% mask ratio gives best recon MSE 0.81, encoder handles 25%) | 47.228 | ✅ | ✅ | N/A |
+| 9 | [sam-segment-anything](techniques/sam-segment-anything) (Kirillov et al 2023 ICCV; foundation image encoder + prompt encoder + mask decoder for click/box prompts) | 47.229 | ✅ | ✅ | N/A |
+| 10 | [audio-diffusion-audioldm](techniques/audio-diffusion-audioldm) (Liu et al 2023 ICML; mel-spec latent-diffusion denoise cuts MSE 3.95 → 0.06, 98.5% reduction) | 47.230 | ✅ | ✅ | N/A |
+| 11 | [speech-recognition-whisper](techniques/speech-recognition-whisper) (Radford et al 2022 OpenAI; encoder-decoder Transformer on 680k hrs weakly-supervised audio, 99 langs) | 47.231 | ✅ | ✅ | N/A |
+| 12 | [wav2vec-ssl-audio](techniques/wav2vec-ssl-audio) (Baevski et al 2020 NeurIPS; CNN+Transformer contrastive-quantised SSL, correct-target loss 2.58 vs random 4.59) | 47.232 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 77** — R (`reticulate` to Python for all; these are multimodal generative / foundation methods with no R ecosystem) or Python (`diffusers.StableVideoDiffusionPipeline`/CogVideoX for video, `diffusers train_dreambooth.py`/`kohya-ss` for DreamBooth, `diffusers textual_inversion.py` for TI, `graphdeco-inria/gaussian-splatting`/`nerfstudio splatfacto` for 3DGS, `nerfstudio`/`instant-ngp` for NeRF, `openai/CLIP`/`open_clip` for CLIP, `facebookresearch/dino`/DINOv2 for DINO, `facebookresearch/mae`/`timm` for MAE, `facebookresearch/segment-anything`/SAM2 for SAM, `haoheliu/AudioLDM`/`audiocraft` for AudioLDM, `openai-whisper`/`faster-whisper` for Whisper, `facebookresearch/fairseq wav2vec`/`transformers.Wav2Vec2Model` for wav2vec) — Spark ML has no vision / audio / 3D generative-model support; this cleanup batch is modern-multimodal territory.
+
+### Batch 78 — Cleanup (TFT / N-BEATS / DeepAR / Informer / Autoformer / PatchTST / TSMixer / DeepSVDD / SAINT / FT-Transformer / AutoGluon / TPOT)
+
+Twelve more long-tail fillers on modern DEEP TIME-SERIES,
+TABULAR, and AutoML methods: seven deep forecasters (TFT,
+N-BEATS, DeepAR, Informer, Autoformer, PatchTST, TSMixer), one
+deep anomaly detector (Deep SVDD), two tabular Transformers
+(SAINT, FT-Transformer), and two AutoML systems (AutoGluon,
+TPOT).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [temporal-fusion-transformer](techniques/temporal-fusion-transformer) (Lim et al 2021 IJF; VSN ranks features 0.46 sinusoid vs 0.16 noise, PI coverage 1.00) | 47.233 | ✅ | ✅ | N/A |
+| 2 | [n-beats](techniques/n-beats) (Oreshkin et al 2020 ICLR; trend + Fourier blocks, MSE 0.41 vs naive 6.01, 15x better) | 47.234 | ✅ | ✅ | N/A |
+| 3 | [deepar-probabilistic-forecast](techniques/deepar-probabilistic-forecast) (Salinas 2020 IJF; 200 MC samples, 5-95% PI coverage = 0.90 (nominal 0.90)) | 47.235 | ✅ | ✅ | N/A |
+| 4 | [informer-long-sequence](techniques/informer-long-sequence) (Zhou 2021 AAAI; ProbSparse with u=log L is 56x cheaper than full attention at L=512) | 47.236 | ✅ | ✅ | N/A |
+| 5 | [autoformer-decomposition](techniques/autoformer-decomposition) (Wu 2021 NeurIPS; detects seasonal period 25 (truth 24), MSE 1.42 vs naive 11.94) | 47.237 | ✅ | ✅ | N/A |
+| 6 | [patch-tst](techniques/patch-tst) (Nie 2023 ICLR; patching + channel-independent, 6 patches from 48-step window) | 47.238 | ✅ | ✅ | N/A |
+| 7 | [tsmixer-mlp-mixer](techniques/tsmixer-mlp-mixer) (Chen 2023 TMLR; alternating time-mix + feature-mix MLPs, all-MLP no attention) | 47.239 | ✅ | ✅ | N/A |
+| 8 | [deep-svdd-anomaly](techniques/deep-svdd-anomaly) (Ruff 2018 ICML; TP 26/30 anomalies at 95th-pctile threshold, FP 10/200 normals) | 47.240 | ✅ | ✅ | N/A |
+| 9 | [saint-tabular-transformer](techniques/saint-tabular-transformer) (Somepalli 2021; col-attn + row-attn + contrastive pretraining for tabular) | 47.241 | ✅ | ✅ | N/A |
+| 10 | [ft-transformer-tabular](techniques/ft-transformer-tabular) (Gorishniy 2021 NeurIPS; per-feature tokenisation + [CLS] token Transformer) | 47.242 | ✅ | ✅ | N/A |
+| 11 | [autogluon-automl](techniques/autogluon-automl) (Erickson 2020; 4-model stack ridge/RF/GBM/KNN with NNLS-fit weights on diabetes) | 47.243 | ✅ | ✅ | N/A |
+| 12 | [tpot-automl-genetic](techniques/tpot-automl-genetic) (Olson-Moore 2016 ICML; GP search 4 gens x pop 6 finds standard→SelectKBest→GBM pipeline) | 47.244 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 78** — R (`reticulate` to Python for most; forecasting techniques largely lack R deep-learning equivalents) or Python (`darts`/`neuralforecast`/`gluonts`/`pytorch-forecasting` for the seven deep forecasters, `pyod.models.DeepSVDD` for anomaly, `somepalli/saint`/`yandex-research/rtdl` for tabular Transformers, `autogluon-tabular`/`flaml`/`h2o.automl` for AutoGluon, `tpot`/`auto-sklearn` for TPOT) — Spark ML has SparkML basic forecasting / anomaly primitives but nothing matching this batch's deep-forecaster / tabular-Transformer / AutoML surface.
+
+### Batch 79 — Cleanup (CountMin / Reservoir / SMOTE / ADASYN / Tomek / ENN / Focal / Class-Bal / MCC / DiCE / CRPS / H-L)
+
+Twelve more long-tail fillers on IMBALANCED-LEARNING,
+STREAMING SKETCHES, PROPER SCORING, and EXPLAINABILITY:
+two streaming primitives (Count-Min, Reservoir), four
+resampling / cleaning methods (SMOTE, ADASYN, Tomek, ENN),
+two imbalance-aware losses (Focal, Class-Balanced), one
+balanced classification metric (MCC), one diverse-CF
+explainer (DiCE), one strictly proper scoring rule (CRPS),
+and one calibration test (Hosmer-Lemeshow).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [count-min-sketch](techniques/count-min-sketch) (Cormode-Muthukrishnan 2005; w=1024 k=5 CMS 0% over-estimate on 100k Zipf stream, w=64 k=3 2563%) | 47.245 | ✅ | ✅ | N/A |
+| 2 | [reservoir-sampling](techniques/reservoir-sampling) (Vitter 1985 + Efraimidis-Spirakis 2006 A-Res; N=100k k=100 empirical p=0.0010 vs theoretical 0.0010) | 47.246 | ✅ | ✅ | N/A |
+| 3 | [smote-oversampling](techniques/smote-oversampling) (Chawla 2002 JAIR; recall 0.17→0.67 on 98/2 imbalance, precision drops as expected) | 47.247 | ✅ | ✅ | N/A |
+| 4 | [adasyn-oversampling](techniques/adasyn-oversampling) (He et al 2008 IJCNN; density-scaled synths, mean r=0.86 across minority) | 47.248 | ✅ | ✅ | N/A |
+| 5 | [tomek-links-undersampling](techniques/tomek-links-undersampling) (Tomek 1976; removes 21 boundary majority samples, F1 0.53→0.55) | 47.249 | ✅ | ✅ | N/A |
+| 6 | [edited-nn-cleaning](techniques/edited-nn-cleaning) (Wilson 1972; cleans 14% of samples under 15% label noise, precision 0.94→0.97) | 47.250 | ✅ | ✅ | N/A |
+| 7 | [focal-loss-imbalance](techniques/focal-loss-imbalance) (Lin et al 2017 RetinaNet; (1-p_t)^2 = 0.0001 at p_t=0.99, suppresses easy examples) | 47.251 | ✅ | ✅ | N/A |
+| 8 | [class-balanced-loss](techniques/class-balanced-loss) (Cui et al 2019 CVPR; effective-number reweighting softer than inverse-frequency) | 47.252 | ✅ | ✅ | N/A |
+| 9 | [matthews-correlation-coefficient](techniques/matthews-correlation-coefficient) (Matthews 1975; MCC=0 for majority-only baseline where accuracy=0.99) | 47.253 | ✅ | ✅ | N/A |
+| 10 | [dice-diverse-counterfactuals](techniques/dice-diverse-counterfactuals) (Mothilal 2020 FAT*; 3 diverse CFs each with distinct pivotal feature, L1 diversity 22) | 47.254 | ✅ | ✅ | N/A |
+| 11 | [proper-scoring-rules-crps](techniques/proper-scoring-rules-crps) (Gneiting-Raftery 2007 JASA; perfect N(0,1) CRPS 0.234 vs biased 0.343 vs over-disp 0.659) | 47.255 | ✅ | ✅ | N/A |
+| 12 | [hosmer-lemeshow-test](techniques/hosmer-lemeshow-test) (Hosmer-Lemeshow 1980; well-fit p=0.76, mis-cal p^2 p≈0) | 47.256 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 79** — R (`smotefamily`/`UBL`/`unbalanced`/`themis` for resamplers, `ResourceSelection` for H-L, `scoringRules` for CRPS, `mltools`/`yardstick` for MCC, `counterfactuals` for DiCE, `bloomfilter`/`stream` for sketches) or Python (`imbalanced-learn` for SMOTE/ADASYN/Tomek/ENN, `datasketch` for CMS, `dice-ml`/`alibi` for DiCE, `properscoring` for CRPS, `torchvision.ops.sigmoid_focal_loss` for focal, `sklearn.metrics.matthews_corrcoef` for MCC) — SparkML has no imbalanced-learning / explainability / proper-scoring surface, and streaming primitives live in Structured Streaming rather than as reusable sketch classes.
+
+### Batch 80 — Cleanup (GSD / LD-spending / CP-futility / SSR / CRM / 3+3 / BOIN / basket / SW-CRT / CRT / factorial / win-ratio)
+
+Twelve more long-tail fillers on CLINICAL-TRIAL DESIGN and
+adaptive methods: three group-sequential machinery pieces
+(Pocock/OBF boundaries, Lan-DeMets alpha spending, conditional
+power / futility), one sample-size adaptation (CHW), three
+dose-finding methods (CRM, 3+3, BOIN), one Bayesian basket
+design with hierarchical borrowing, and four cluster / factorial /
+composite trial designs (stepped-wedge, parallel CRT, 2x2
+factorial, hierarchical win-ratio).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [group-sequential-design](techniques/group-sequential-design) (Pocock 1977; OBF 1979; K=4 alpha=0.05 gives Pocock c=2.36, OBF c=2.02) | 47.257 | ✅ | ✅ | N/A |
+| 2 | [alpha-spending-lan-demets](techniques/alpha-spending-lan-demets) (Lan-DeMets 1983 Biometrika; OBF-spending 0.006 at t=0.5 vs Pocock 0.031) | 47.258 | ✅ | ✅ | N/A |
+| 3 | [conditional-power-futility](techniques/conditional-power-futility) (Lan-Wittes 1988; CP(observed)=0.62 at Z=1 t=0.5, futility drops Type-I 0.024→0.020) | 47.259 | ✅ | ✅ | N/A |
+| 4 | [sample-size-reestimation](techniques/sample-size-reestimation) (Wittes-Brittain 1990; CHW 1999; blinded SSR n=30→revised n=114; CHW Type-I=0.050) | 47.260 | ✅ | ✅ | N/A |
+| 5 | [crm-continual-reassessment](techniques/crm-continual-reassessment) (O'Quigley 1990 Biometrics; 10 cohorts converge to dose 3 true tox 0.18 near target 0.25) | 47.261 | ✅ | ✅ | N/A |
+| 6 | [three-plus-three-dose-escalation](techniques/three-plus-three-dose-escalation) (Storer 1989 Biometrics; 1000 sims 47.8% pick true MTD, mean 14.6 patients) | 47.262 | ✅ | ✅ | N/A |
+| 7 | [boin-bayesian-optimal-interval](techniques/boin-bayesian-optimal-interval) (Liu-Yuan 2015 JRSS-C; lambda_e=0.20 lambda_d=0.30, 52.8% MTD selection vs 3+3's 47.8%) | 47.263 | ✅ | ✅ | N/A |
+| 8 | [basket-trial-design](techniques/basket-trial-design) (Berry 2013; Simon 2016; 5-basket MH hierarchical borrowing, tau=0.71, protects null basket) | 47.264 | ✅ | ✅ | N/A |
+| 9 | [stepped-wedge-design](techniques/stepped-wedge-design) (Hussey-Hughes 2007; K=12 T=5, cluster+period FE OLS 200-trial mean theta=0.52 (true 0.50), SE 0.14) | 47.265 | ✅ | ✅ | N/A |
+| 10 | [cluster-randomized-trial](techniques/cluster-randomized-trial) (Donner-Klar 2000; DEFF=2.45 at m=30 ICC=0.05; cluster-summary p=0.019 vs naive 0.0001) | 47.266 | ✅ | ✅ | N/A |
+| 11 | [factorial-2x2-trial](techniques/factorial-2x2-trial) (Piantadosi 2005; N=800 2x2 factorial SE(A)=0.07 vs single-trial N=400 SE=0.10) | 47.267 | ✅ | ✅ | N/A |
+| 12 | [win-ratio-analysis](techniques/win-ratio-analysis) (Pocock 2012 EHJ; 3-tier hierarchical WR=1.10 CI (1.09,1.11) beats naive Wilcoxon p=0.007) | 47.268 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 80** — R (`gsDesign`/`rpact`/`ldbounds` for group-sequential + spending, `dfcrm`/`bcrm`/`trialr` for CRM, `BOIN`/`boinet` for BOIN, `bhmbasket`/`basket` for basket trials, `swCRTdesign`/`SWSamp` for stepped-wedge, `clusterPower`/`CRTSize` for CRTs, `WWR`/`WINrat` for win-ratio) or Python (`rpact`/`UBCRM`/`PyMC` via reticulate + from-scratch demos) — SparkML has no clinical-trial design surface; adaptive designs, dose-finding, and sequential monitoring are entirely a statistician's-desk / DSMB-cockpit domain rather than a Spark-cluster one.
+
 Later batches: any remaining chapters.
 
 ---
