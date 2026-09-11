@@ -2401,6 +2401,32 @@ documentation standard (Datasheets).
 
 **PySpark N/A across Batch 76** — R (`reticulate` to Python for all except pure-R datasheets template; these are diffusion / LM-eval methods with no R ecosystem) or Python (`diffusers.DDIMScheduler` for DDIM, `diffusers.StableDiffusionPipeline(guidance_scale=…)` for CFG, `diffusers.StableDiffusionPipeline`/`AutoencoderKL` for LDM, `yang-song/score_sde` for score-SDE, `diffusers.ControlNetModel` for ControlNet, `gnobitab/RectifiedFlow`/SD3 FlowMatch for rectified flow, `openai/consistency_models`/`diffusers.CMScheduler` for CM, MT-Bench / alpaca-eval for judge, `lm-eval-harness` for MMLU, `ragas` for RAGAS, `lm-eval-harness` contamination flags for detection, HuggingFace dataset cards / MLCommons Croissant for datasheets) — Spark ML has no diffusion / LM-eval support; this cleanup batch is modern-generative-and-eval territory.
 
+### Batch 77 — Cleanup (Video Diff / DreamBooth / TI / 3DGS / NeRF / CLIP / DINO / MAE / SAM / AudioLDM / Whisper / wav2vec)
+
+Twelve more long-tail fillers across MULTIMODAL FOUNDATION MODELS
+and 3D / AUDIO generation: one video-diffusion, two subject-driven
+tuning methods (DreamBooth, Textual Inversion), two 3D-scene
+representations (3D Gaussian Splatting, NeRF), five vision
+foundation models (CLIP, DINO, MAE, SAM, ViT-SSL cousins), and
+three audio models (AudioLDM, Whisper, wav2vec 2.0).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [video-diffusion](techniques/video-diffusion) (Ho et al 2022; SVD 2023; +temporal attn cuts frame-to-frame variation 1.90 → 0.93) | 47.221 | ✅ | ✅ | N/A |
+| 2 | [dreambooth-subject-tuning](techniques/dreambooth-subject-tuning) (Ruiz et al 2023 CVPR; prior-preservation cuts class-drift loss 0.358 → 0.004) | 47.222 | ✅ | ✅ | N/A |
+| 3 | [textual-inversion](techniques/textual-inversion) (Gal et al 2022 ICLR; single token embedding cosine 0.999 to truth, 64x cheaper than DreamBooth) | 47.223 | ✅ | ✅ | N/A |
+| 4 | [gaussian-splatting-3d](techniques/gaussian-splatting-3d) (Kerbl et al 2023 SIGGRAPH; 20-Gaussian toy scene projected + composited to 48x48 image) | 47.224 | ✅ | ✅ | N/A |
+| 5 | [nerf-neural-radiance-fields](techniques/nerf-neural-radiance-fields) (Mildenhall et al 2020 ECCV; volume-render 1024 rays x 64 samples, 77.4% pixel coverage) | 47.225 | ✅ | ✅ | N/A |
+| 6 | [clip-vision-language](techniques/clip-vision-language) (Radford et al 2021 ICML; aligned diagonal contrastive loss 0.0002 vs random 7.78, 5/5 zero-shot) | 47.226 | ✅ | ✅ | N/A |
+| 7 | [dino-self-supervised-vision](techniques/dino-self-supervised-vision) (Caron et al 2021 ICCV; EMA student-teacher with multi-crop + centering) | 47.227 | ✅ | ✅ | N/A |
+| 8 | [mae-masked-autoencoders](techniques/mae-masked-autoencoders) (He et al 2022 CVPR; 75% mask ratio gives best recon MSE 0.81, encoder handles 25%) | 47.228 | ✅ | ✅ | N/A |
+| 9 | [sam-segment-anything](techniques/sam-segment-anything) (Kirillov et al 2023 ICCV; foundation image encoder + prompt encoder + mask decoder for click/box prompts) | 47.229 | ✅ | ✅ | N/A |
+| 10 | [audio-diffusion-audioldm](techniques/audio-diffusion-audioldm) (Liu et al 2023 ICML; mel-spec latent-diffusion denoise cuts MSE 3.95 → 0.06, 98.5% reduction) | 47.230 | ✅ | ✅ | N/A |
+| 11 | [speech-recognition-whisper](techniques/speech-recognition-whisper) (Radford et al 2022 OpenAI; encoder-decoder Transformer on 680k hrs weakly-supervised audio, 99 langs) | 47.231 | ✅ | ✅ | N/A |
+| 12 | [wav2vec-ssl-audio](techniques/wav2vec-ssl-audio) (Baevski et al 2020 NeurIPS; CNN+Transformer contrastive-quantised SSL, correct-target loss 2.58 vs random 4.59) | 47.232 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 77** — R (`reticulate` to Python for all; these are multimodal generative / foundation methods with no R ecosystem) or Python (`diffusers.StableVideoDiffusionPipeline`/CogVideoX for video, `diffusers train_dreambooth.py`/`kohya-ss` for DreamBooth, `diffusers textual_inversion.py` for TI, `graphdeco-inria/gaussian-splatting`/`nerfstudio splatfacto` for 3DGS, `nerfstudio`/`instant-ngp` for NeRF, `openai/CLIP`/`open_clip` for CLIP, `facebookresearch/dino`/DINOv2 for DINO, `facebookresearch/mae`/`timm` for MAE, `facebookresearch/segment-anything`/SAM2 for SAM, `haoheliu/AudioLDM`/`audiocraft` for AudioLDM, `openai-whisper`/`faster-whisper` for Whisper, `facebookresearch/fairseq wav2vec`/`transformers.Wav2Vec2Model` for wav2vec) — Spark ML has no vision / audio / 3D generative-model support; this cleanup batch is modern-multimodal territory.
+
 Later batches: any remaining chapters.
 
 ---
