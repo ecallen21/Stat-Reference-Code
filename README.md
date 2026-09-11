@@ -2481,6 +2481,34 @@ and one calibration test (Hosmer-Lemeshow).
 
 **PySpark N/A across Batch 79** — R (`smotefamily`/`UBL`/`unbalanced`/`themis` for resamplers, `ResourceSelection` for H-L, `scoringRules` for CRPS, `mltools`/`yardstick` for MCC, `counterfactuals` for DiCE, `bloomfilter`/`stream` for sketches) or Python (`imbalanced-learn` for SMOTE/ADASYN/Tomek/ENN, `datasketch` for CMS, `dice-ml`/`alibi` for DiCE, `properscoring` for CRPS, `torchvision.ops.sigmoid_focal_loss` for focal, `sklearn.metrics.matthews_corrcoef` for MCC) — SparkML has no imbalanced-learning / explainability / proper-scoring surface, and streaming primitives live in Structured Streaming rather than as reusable sketch classes.
 
+### Batch 80 — Cleanup (GSD / LD-spending / CP-futility / SSR / CRM / 3+3 / BOIN / basket / SW-CRT / CRT / factorial / win-ratio)
+
+Twelve more long-tail fillers on CLINICAL-TRIAL DESIGN and
+adaptive methods: three group-sequential machinery pieces
+(Pocock/OBF boundaries, Lan-DeMets alpha spending, conditional
+power / futility), one sample-size adaptation (CHW), three
+dose-finding methods (CRM, 3+3, BOIN), one Bayesian basket
+design with hierarchical borrowing, and four cluster / factorial /
+composite trial designs (stepped-wedge, parallel CRT, 2x2
+factorial, hierarchical win-ratio).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [group-sequential-design](techniques/group-sequential-design) (Pocock 1977; OBF 1979; K=4 alpha=0.05 gives Pocock c=2.36, OBF c=2.02) | 47.257 | ✅ | ✅ | N/A |
+| 2 | [alpha-spending-lan-demets](techniques/alpha-spending-lan-demets) (Lan-DeMets 1983 Biometrika; OBF-spending 0.006 at t=0.5 vs Pocock 0.031) | 47.258 | ✅ | ✅ | N/A |
+| 3 | [conditional-power-futility](techniques/conditional-power-futility) (Lan-Wittes 1988; CP(observed)=0.62 at Z=1 t=0.5, futility drops Type-I 0.024→0.020) | 47.259 | ✅ | ✅ | N/A |
+| 4 | [sample-size-reestimation](techniques/sample-size-reestimation) (Wittes-Brittain 1990; CHW 1999; blinded SSR n=30→revised n=114; CHW Type-I=0.050) | 47.260 | ✅ | ✅ | N/A |
+| 5 | [crm-continual-reassessment](techniques/crm-continual-reassessment) (O'Quigley 1990 Biometrics; 10 cohorts converge to dose 3 true tox 0.18 near target 0.25) | 47.261 | ✅ | ✅ | N/A |
+| 6 | [three-plus-three-dose-escalation](techniques/three-plus-three-dose-escalation) (Storer 1989 Biometrics; 1000 sims 47.8% pick true MTD, mean 14.6 patients) | 47.262 | ✅ | ✅ | N/A |
+| 7 | [boin-bayesian-optimal-interval](techniques/boin-bayesian-optimal-interval) (Liu-Yuan 2015 JRSS-C; lambda_e=0.20 lambda_d=0.30, 52.8% MTD selection vs 3+3's 47.8%) | 47.263 | ✅ | ✅ | N/A |
+| 8 | [basket-trial-design](techniques/basket-trial-design) (Berry 2013; Simon 2016; 5-basket MH hierarchical borrowing, tau=0.71, protects null basket) | 47.264 | ✅ | ✅ | N/A |
+| 9 | [stepped-wedge-design](techniques/stepped-wedge-design) (Hussey-Hughes 2007; K=12 T=5, cluster+period FE OLS 200-trial mean theta=0.52 (true 0.50), SE 0.14) | 47.265 | ✅ | ✅ | N/A |
+| 10 | [cluster-randomized-trial](techniques/cluster-randomized-trial) (Donner-Klar 2000; DEFF=2.45 at m=30 ICC=0.05; cluster-summary p=0.019 vs naive 0.0001) | 47.266 | ✅ | ✅ | N/A |
+| 11 | [factorial-2x2-trial](techniques/factorial-2x2-trial) (Piantadosi 2005; N=800 2x2 factorial SE(A)=0.07 vs single-trial N=400 SE=0.10) | 47.267 | ✅ | ✅ | N/A |
+| 12 | [win-ratio-analysis](techniques/win-ratio-analysis) (Pocock 2012 EHJ; 3-tier hierarchical WR=1.10 CI (1.09,1.11) beats naive Wilcoxon p=0.007) | 47.268 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 80** — R (`gsDesign`/`rpact`/`ldbounds` for group-sequential + spending, `dfcrm`/`bcrm`/`trialr` for CRM, `BOIN`/`boinet` for BOIN, `bhmbasket`/`basket` for basket trials, `swCRTdesign`/`SWSamp` for stepped-wedge, `clusterPower`/`CRTSize` for CRTs, `WWR`/`WINrat` for win-ratio) or Python (`rpact`/`UBCRM`/`PyMC` via reticulate + from-scratch demos) — SparkML has no clinical-trial design surface; adaptive designs, dose-finding, and sequential monitoring are entirely a statistician's-desk / DSMB-cockpit domain rather than a Spark-cluster one.
+
 Later batches: any remaining chapters.
 
 ---
