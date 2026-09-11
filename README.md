@@ -2322,6 +2322,33 @@ Constitutional AI, Tree of Thoughts).
 
 **PySpark N/A across Batch 73** — R (`reticulate` to Python for all twelve; these are LLM systems / alignment techniques with no R ecosystem) or Python (`vllm` for PagedAttention, `vllm`/`FlexGen`/`llama.cpp` for KV quant, `megatron-lm`/`colossalai` for TP, `torch.distributed.pipeline`/`deepspeed` for PP, `torch.distributed.fsdp` for FSDP, `deepspeed` for ZeRO, `bitsandbytes` for LLM.int8, `auto-gptq`/`optimum` for GPTQ, `llm-awq`/`autoawq`/`vllm.awq` for AWQ, `transformers.Trainer`+FLAN-T5/Tulu for FLAN, `trl`/`trlx` for CAI, `princeton-nlp/tree-of-thought-llm`/`langgraph`/`lmql` for ToT) — Spark ML has no LLM inference / alignment / large-model training support; this cleanup batch is squarely modern-LLM systems territory.
 
+### Batch 74 — Cleanup (Medusa / MQA / SWA / DPR / ColBERT / Reranker / HyDE / Self-RAG / RECOMP / MoD / PRM / BoN)
+
+Twelve more long-tail fillers on modern LLM INFERENCE, RETRIEVAL,
+and REASONING techniques: one speculative-decoding variant
+(Medusa), two attention efficiencies (MQA/GQA, sliding-window),
+four retrieval / RAG methods (DPR, ColBERT, cross-encoder,
+HyDE), two RAG-pipeline extensions (Self-RAG, RECOMP), one
+mixture-of-experts across depth (MoD), and two reasoning /
+selection methods (PRM, best-of-N).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [medusa-speculative-heads](techniques/medusa-speculative-heads) (Cai et al 2024; 2 heads + tree verify → 2.58 tokens/step vs 1 baseline) | 47.185 | ✅ | ✅ | N/A |
+| 2 | [multi-query-attention](techniques/multi-query-attention) (Shazeer 2019, Ainslie 2023 GQA; MQA cuts KV memory 32× vs MHA on 32-head model) | 47.186 | ✅ | ✅ | N/A |
+| 3 | [sliding-window-attention](techniques/sliding-window-attention) (Beltagy 2020 Longformer, Jiang 2023 Mistral; W=64 rel-diff 0.24 vs full at T=128) | 47.187 | ✅ | ✅ | N/A |
+| 4 | [dense-passage-retrieval-dpr](techniques/dense-passage-retrieval-dpr) (Karpukhin et al 2020 EMNLP; DPR R@1 1.00 vs BM25 0.75 on 8-pair QA) | 47.188 | ✅ | ✅ | N/A |
+| 5 | [colbert-late-interaction](techniques/colbert-late-interaction) (Khattab-Zaharia 2020 SIGIR; MaxSim per-token retrieval, 3/3 on rare-term queries) | 47.189 | ✅ | ✅ | N/A |
+| 6 | [cross-encoder-reranker](techniques/cross-encoder-reranker) (Nogueira-Cho 2019; second-stage BERT([q;SEP;p]) reranking on top-k) | 47.190 | ✅ | ✅ | N/A |
+| 7 | [hyde-hypothetical-doc](techniques/hyde-hypothetical-doc) (Gao et al 2022 ACL; HyDE R@1 3/5 vs plain-DPR 0/5 on paraphrased queries) | 47.191 | ✅ | ✅ | N/A |
+| 8 | [self-rag](techniques/self-rag) (Asai et al 2024 ICLR; reflection tokens IsRel/IsSup/IsUse for retrieve-when-needed critique) | 47.192 | ✅ | ✅ | N/A |
+| 9 | [context-compression-recomp](techniques/context-compression-recomp) (Xu et al 2024 ICLR; extractive top-p compresses 80→15-29 tokens, preserves answer) | 47.193 | ✅ | ✅ | N/A |
+| 10 | [mixture-of-depths](techniques/mixture-of-depths) (Raposo et al 2024 DeepMind; per-token per-block router cuts compute 50% at keep_frac=0.5) | 47.194 | ✅ | ✅ | N/A |
+| 11 | [process-reward-model-prm](techniques/process-reward-model-prm) (Lightman et al 2023 OpenAI PRM800K; PRM downgrades 'lucky' chain 1.0 ORM → 0.30 PRM) | 47.195 | ✅ | ✅ | N/A |
+| 12 | [best-of-n-sampling](techniques/best-of-n-sampling) (Cobbe 2021, Nakano 2021 WebGPT; N=256 reduces expected error 74× on toy) | 47.196 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 74** — R (`reticulate` to Python for all; these are LLM / retrieval / reasoning-time methods with no R ecosystem) or Python (`FasterDecoding/Medusa` for Medusa, `transformers.LlamaAttention` for MQA/GQA, `transformers.Mistral`/`Longformer` for SWA, `sentence-transformers`/`haystack` for DPR, `colbert-ai`/`ragatouille` for ColBERT, `sentence-transformers.CrossEncoder`/`MonoT5` for reranker, `llama-index`/`langchain` HyDE for HyDE, `AkariAsai/self-rag` for Self-RAG, `carriex/recomp`/`llmlingua` for RECOMP, DeepMind JAX reference for MoD, `openai/prm800k`/Math-Shepherd for PRM, `transformers.generate(num_return_sequences=…)` for best-of-N) — Spark ML has no LLM inference / retrieval / reasoning support; this cleanup batch is squarely modern-LLM territory.
+
 Later batches: any remaining chapters.
 
 ---
