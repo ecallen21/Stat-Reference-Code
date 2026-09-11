@@ -2242,6 +2242,32 @@ graph-convolutional semi-supervised node classification.
 
 **PySpark N/A across Batch 70** — R (`lavaan`/`sem`, `cmaes`, `pso`, `GenSA`, `GA`, `signal`, `mFilter`, `signal`, no Rainbow, no NoisyNet, custom-ES, custom-GCN) or Python (`semopy`/`factor_analyzer`, `cmaes`/`pycma`, `pyswarm`/`pyswarms`, `scipy.optimize.dual_annealing`, `DEAP`/`pymoo`, `scipy.signal.savgol_filter`, `statsmodels.tsa.filters.hp_filter`, `scipy.signal.butter`, `stable_baselines3`/`cleanrl`, custom, custom, `pytorch-geometric`/`dgl`) — Spark ML has no SEM, no global-optimiser suite, no signal-processing / DSP module, and no deep-RL / GNN support; this cleanup batch is squarely single-node.
 
+### Batch 71 — Cleanup (GraphSAGE / GAT / Triplet / Siamese / SimCLR / Barlow Twins / Viterbi / Baum-Welch / CRF / Beam / BPE / ViT)
+
+Twelve more long-tail fillers covering two inductive / attention-
+based GNN architectures, four metric-learning and self-supervised
+representation-learning methods, four classical sequence-model
+inference algorithms (Viterbi decoding, Baum-Welch EM, linear-chain
+CRF, beam-search decoding), sub-word BPE tokenisation, and the
+vision Transformer.
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [graphsage-inductive-gnn](techniques/graphsage-inductive-gnn) (Hamilton-Ying-Leskovec 2017 NeurIPS; 3-community SBM test acc 0.66 vs LR 0.37) | 47.149 | ✅ | ✅ | N/A |
+| 2 | [graph-attention-networks-gat](techniques/graph-attention-networks-gat) (Velickovic et al 2018 ICLR; 4-head GAT test acc 0.82 vs LR baseline 0.37) | 47.150 | ✅ | ✅ | N/A |
+| 3 | [deep-metric-learning-triplet](techniques/deep-metric-learning-triplet) (Schroff-Kalenichenko-Philbin 2015 FaceNet; noisy-synth kNN acc 1.00 vs PCA 0.44) | 47.151 | ✅ | ✅ | N/A |
+| 4 | [siamese-networks](techniques/siamese-networks) (Bromley 1994; Koch et al 2015; noisy-synth 4-way one-shot 1.00 vs raw 0.34) | 47.152 | ✅ | ✅ | N/A |
+| 5 | [simclr-contrastive](techniques/simclr-contrastive) (Chen-Kornblith-Norouzi-Hinton 2020 ICML; SSL 16-D LR acc 0.883 vs random 0.794) | 47.153 | ✅ | ✅ | N/A |
+| 6 | [barlow-twins](techniques/barlow-twins) (Zbontar-Jing-Misra-LeCun-Deny 2021 ICML; SSL 16-D LR acc 0.828 vs random 0.794) | 47.154 | ✅ | ✅ | N/A |
+| 7 | [viterbi-algorithm](techniques/viterbi-algorithm) (Viterbi 1967 IEEE-IT; fair/loaded die HMM decoding acc 0.65 on T=300 rolls) | 47.155 | ✅ | ✅ | N/A |
+| 8 | [baum-welch-hmm](techniques/baum-welch-hmm) (Baum-Petrie 1966; Baum et al 1970; T=800 EM lifts LL -1922 -> -1408, aligns loaded state) | 47.156 | ✅ | ✅ | N/A |
+| 9 | [crf-conditional-random-field](techniques/crf-conditional-random-field) (Lafferty-McCallum-Pereira 2001 ICML; token acc 0.670 vs no-trans 0.625) | 47.157 | ✅ | ✅ | N/A |
+| 10 | [beam-search-decoding](techniques/beam-search-decoding) (Reddy 1977; Lowerre 1976; B=1 log-prob -23.13 vs B>=2 -2.18 on toy bigram LM) | 47.158 | ✅ | ✅ | N/A |
+| 11 | [bpe-tokenization](techniques/bpe-tokenization) (Gage 1994; Sennrich et al 2016 ACL; 50 merges give 84.5% token reduction, generalises to unseen 'narrowly') | 47.159 | ✅ | ✅ | N/A |
+| 12 | [vision-transformer-vit](techniques/vision-transformer-vit) (Dosovitskiy et al 2021 ICLR; toy 8x8 shapes 3-class ViT [CLS]+LR acc 1.000) | 47.160 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 71** — R (`reticulate` to Python for all four GNN / metric / SSL / ViT; `HMM::viterbi`, `HMM::baumWelch`, `crfsuite`, pure-R beam search, `tokenizers.bpe`) or Python (`pytorch-geometric`/`dgl` for GNNs, `pytorch-metric-learning`/`tensorflow-similarity` for triplet / Siamese, `lightly`/`solo-learn` for SimCLR / Barlow, `hmmlearn` for HMM / BW, `sklearn_crfsuite`/`pystruct` for CRF, `transformers.generate` for beam, `sentencepiece`/`huggingface tokenizers`, `timm`/`transformers.ViTModel`) — Spark ML has no GNN / metric-learning / SSL / HMM / CRF / neural-tokeniser / ViT support; this cleanup batch is squarely single-node deep-learning territory.
+
 Later batches: any remaining chapters.
 
 ---
