@@ -2375,6 +2375,32 @@ guided search, and three multi-agent orchestration patterns
 
 **PySpark N/A across Batch 75** — R (`reticulate` to Python for all; these are LLM alignment / agentic methods with no R ecosystem) or Python (`trl.KTOTrainer`/`ORPOTrainer`/`CPOTrainer` for preference variants, `uclaml/SPIN` for self-play, `noahshinn024/reflexion`/`langgraph` for Reflexion, `langchain.ReActAgent`/`llama-index` for ReAct, `conceptofmind/toolformer` for Toolformer, `openai`/`anthropic` SDKs for function calling, `llm-reasoners`/`princeton-nlp/tree-of-thought-llm` for verifier search, `composable-models/llm-multiagent-debate` for debate, `pyautogen` for AutoGen, `crewai` for CrewAI) — Spark ML has no alignment / agent / tool-use support; this cleanup batch is squarely modern-LLM territory.
 
+### Batch 76 — Cleanup (DDIM / CFG / LDM / Score-SDE / ControlNet / RectFlow / CM / Judge / MMLU / RAGAS / Contam / Datasheets)
+
+Twelve more long-tail fillers on modern DIFFUSION and LLM-EVAL
+techniques: seven diffusion-family variants (DDIM, CFG, Latent
+Diffusion, Score-SDE, ControlNet, Rectified Flow, Consistency
+Models), one LM auto-eval (LLM-as-a-Judge), two benchmark evals
+(MMLU-style, RAGAS), one contamination detector, and one dataset
+documentation standard (Datasheets).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [ddim-implicit-diffusion](techniques/ddim-implicit-diffusion) (Song-Meng-Ermon 2021 ICLR; deterministic reverse, 10 vs 100 DDPM steps) | 47.209 | ✅ | ✅ | N/A |
+| 2 | [classifier-free-guidance](techniques/classifier-free-guidance) (Ho-Salimans 2021; w=1 tight around cond mode, w>>1 overshoots, w<0 negative prompt) | 47.210 | ✅ | ✅ | N/A |
+| 3 | [latent-diffusion-ldm](techniques/latent-diffusion-ldm) (Rombach et al 2022 CVPR; 16x compression, 256x cheaper diffusion FLOPs) | 47.211 | ✅ | ✅ | N/A |
+| 4 | [score-based-sde](techniques/score-based-sde) (Song et al 2021 ICLR; reverse-SDE Euler on 3-mode GM recovers means [-1.96, 2.01, 1.95]) | 47.212 | ✅ | ✅ | N/A |
+| 5 | [controlnet-conditional](techniques/controlnet-conditional) (Zhang et al 2023 ICCV; zero-init gives identity at start, ~8.4 steering post-training) | 47.213 | ✅ | ✅ | N/A |
+| 6 | [rectified-flow](techniques/rectified-flow) (Liu-Gong-Liu 2023; straight-line flow, 1 vs 20-step similar quality on toy 2-mode target) | 47.214 | ✅ | ✅ | N/A |
+| 7 | [consistency-models](techniques/consistency-models) (Song et al 2023 ICML; 1-step generation on 3-mode GM, samples per mode 117/145/238) | 47.215 | ✅ | ✅ | N/A |
+| 8 | [llm-as-a-judge](techniques/llm-as-a-judge) (Zheng et al 2023; detailed response scores 7/10 vs vague 3.7/10, 1.00 position-swap agreement) | 47.216 | ✅ | ✅ | N/A |
+| 9 | [mmlu-benchmark-eval](techniques/mmlu-benchmark-eval) (Hendrycks et al 2021 ICLR; 5-shot per-letter log-prob scoring on 57 subjects) | 47.217 | ✅ | ✅ | N/A |
+| 10 | [ragas-rag-evaluation](techniques/ragas-rag-evaluation) (Es et al 2024 EACL; good answer faithfulness 1.00, off-topic 0.00, relevance 0.59 vs 0.26) | 47.218 | ✅ | ✅ | N/A |
+| 11 | [contamination-detection](techniques/contamination-detection) (Sainz 2023, Golchin 2024; guided-completion + membership inference + rephrase-drop detect memorisation) | 47.219 | ✅ | ✅ | N/A |
+| 12 | [datasheets-for-datasets](techniques/datasheets-for-datasets) (Gebru et al 2018 CACM; 7-section template with 0 missing (good) vs 23 missing (bad)) | 47.220 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 76** — R (`reticulate` to Python for all except pure-R datasheets template; these are diffusion / LM-eval methods with no R ecosystem) or Python (`diffusers.DDIMScheduler` for DDIM, `diffusers.StableDiffusionPipeline(guidance_scale=…)` for CFG, `diffusers.StableDiffusionPipeline`/`AutoencoderKL` for LDM, `yang-song/score_sde` for score-SDE, `diffusers.ControlNetModel` for ControlNet, `gnobitab/RectifiedFlow`/SD3 FlowMatch for rectified flow, `openai/consistency_models`/`diffusers.CMScheduler` for CM, MT-Bench / alpaca-eval for judge, `lm-eval-harness` for MMLU, `ragas` for RAGAS, `lm-eval-harness` contamination flags for detection, HuggingFace dataset cards / MLCommons Croissant for datasheets) — Spark ML has no diffusion / LM-eval support; this cleanup batch is modern-generative-and-eval territory.
+
 Later batches: any remaining chapters.
 
 ---
