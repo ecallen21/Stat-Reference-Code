@@ -2427,6 +2427,32 @@ three audio models (AudioLDM, Whisper, wav2vec 2.0).
 
 **PySpark N/A across Batch 77** — R (`reticulate` to Python for all; these are multimodal generative / foundation methods with no R ecosystem) or Python (`diffusers.StableVideoDiffusionPipeline`/CogVideoX for video, `diffusers train_dreambooth.py`/`kohya-ss` for DreamBooth, `diffusers textual_inversion.py` for TI, `graphdeco-inria/gaussian-splatting`/`nerfstudio splatfacto` for 3DGS, `nerfstudio`/`instant-ngp` for NeRF, `openai/CLIP`/`open_clip` for CLIP, `facebookresearch/dino`/DINOv2 for DINO, `facebookresearch/mae`/`timm` for MAE, `facebookresearch/segment-anything`/SAM2 for SAM, `haoheliu/AudioLDM`/`audiocraft` for AudioLDM, `openai-whisper`/`faster-whisper` for Whisper, `facebookresearch/fairseq wav2vec`/`transformers.Wav2Vec2Model` for wav2vec) — Spark ML has no vision / audio / 3D generative-model support; this cleanup batch is modern-multimodal territory.
 
+### Batch 78 — Cleanup (TFT / N-BEATS / DeepAR / Informer / Autoformer / PatchTST / TSMixer / DeepSVDD / SAINT / FT-Transformer / AutoGluon / TPOT)
+
+Twelve more long-tail fillers on modern DEEP TIME-SERIES,
+TABULAR, and AutoML methods: seven deep forecasters (TFT,
+N-BEATS, DeepAR, Informer, Autoformer, PatchTST, TSMixer), one
+deep anomaly detector (Deep SVDD), two tabular Transformers
+(SAINT, FT-Transformer), and two AutoML systems (AutoGluon,
+TPOT).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [temporal-fusion-transformer](techniques/temporal-fusion-transformer) (Lim et al 2021 IJF; VSN ranks features 0.46 sinusoid vs 0.16 noise, PI coverage 1.00) | 47.233 | ✅ | ✅ | N/A |
+| 2 | [n-beats](techniques/n-beats) (Oreshkin et al 2020 ICLR; trend + Fourier blocks, MSE 0.41 vs naive 6.01, 15x better) | 47.234 | ✅ | ✅ | N/A |
+| 3 | [deepar-probabilistic-forecast](techniques/deepar-probabilistic-forecast) (Salinas 2020 IJF; 200 MC samples, 5-95% PI coverage = 0.90 (nominal 0.90)) | 47.235 | ✅ | ✅ | N/A |
+| 4 | [informer-long-sequence](techniques/informer-long-sequence) (Zhou 2021 AAAI; ProbSparse with u=log L is 56x cheaper than full attention at L=512) | 47.236 | ✅ | ✅ | N/A |
+| 5 | [autoformer-decomposition](techniques/autoformer-decomposition) (Wu 2021 NeurIPS; detects seasonal period 25 (truth 24), MSE 1.42 vs naive 11.94) | 47.237 | ✅ | ✅ | N/A |
+| 6 | [patch-tst](techniques/patch-tst) (Nie 2023 ICLR; patching + channel-independent, 6 patches from 48-step window) | 47.238 | ✅ | ✅ | N/A |
+| 7 | [tsmixer-mlp-mixer](techniques/tsmixer-mlp-mixer) (Chen 2023 TMLR; alternating time-mix + feature-mix MLPs, all-MLP no attention) | 47.239 | ✅ | ✅ | N/A |
+| 8 | [deep-svdd-anomaly](techniques/deep-svdd-anomaly) (Ruff 2018 ICML; TP 26/30 anomalies at 95th-pctile threshold, FP 10/200 normals) | 47.240 | ✅ | ✅ | N/A |
+| 9 | [saint-tabular-transformer](techniques/saint-tabular-transformer) (Somepalli 2021; col-attn + row-attn + contrastive pretraining for tabular) | 47.241 | ✅ | ✅ | N/A |
+| 10 | [ft-transformer-tabular](techniques/ft-transformer-tabular) (Gorishniy 2021 NeurIPS; per-feature tokenisation + [CLS] token Transformer) | 47.242 | ✅ | ✅ | N/A |
+| 11 | [autogluon-automl](techniques/autogluon-automl) (Erickson 2020; 4-model stack ridge/RF/GBM/KNN with NNLS-fit weights on diabetes) | 47.243 | ✅ | ✅ | N/A |
+| 12 | [tpot-automl-genetic](techniques/tpot-automl-genetic) (Olson-Moore 2016 ICML; GP search 4 gens x pop 6 finds standard→SelectKBest→GBM pipeline) | 47.244 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 78** — R (`reticulate` to Python for most; forecasting techniques largely lack R deep-learning equivalents) or Python (`darts`/`neuralforecast`/`gluonts`/`pytorch-forecasting` for the seven deep forecasters, `pyod.models.DeepSVDD` for anomaly, `somepalli/saint`/`yandex-research/rtdl` for tabular Transformers, `autogluon-tabular`/`flaml`/`h2o.automl` for AutoGluon, `tpot`/`auto-sklearn` for TPOT) — Spark ML has SparkML basic forecasting / anomaly primitives but nothing matching this batch's deep-forecaster / tabular-Transformer / AutoML surface.
+
 Later batches: any remaining chapters.
 
 ---
