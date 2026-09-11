@@ -2349,6 +2349,32 @@ selection methods (PRM, best-of-N).
 
 **PySpark N/A across Batch 74** — R (`reticulate` to Python for all; these are LLM / retrieval / reasoning-time methods with no R ecosystem) or Python (`FasterDecoding/Medusa` for Medusa, `transformers.LlamaAttention` for MQA/GQA, `transformers.Mistral`/`Longformer` for SWA, `sentence-transformers`/`haystack` for DPR, `colbert-ai`/`ragatouille` for ColBERT, `sentence-transformers.CrossEncoder`/`MonoT5` for reranker, `llama-index`/`langchain` HyDE for HyDE, `AkariAsai/self-rag` for Self-RAG, `carriex/recomp`/`llmlingua` for RECOMP, DeepMind JAX reference for MoD, `openai/prm800k`/Math-Shepherd for PRM, `transformers.generate(num_return_sequences=…)` for best-of-N) — Spark ML has no LLM inference / retrieval / reasoning support; this cleanup batch is squarely modern-LLM territory.
 
+### Batch 75 — Cleanup (KTO / ORPO / SimPO / SPIN / Reflexion / ReAct / Toolformer / Function-Call / Verifier / Debate / AutoGen / CrewAI)
+
+Twelve more long-tail fillers on modern LLM ALIGNMENT and AGENTIC
+techniques: four preference-optimisation variants beyond DPO
+(KTO, ORPO, SimPO, SPIN), four reasoning / tool-use methods
+(Reflexion, ReAct, Toolformer, function calling), one verifier-
+guided search, and three multi-agent orchestration patterns
+(debate, AutoGen, CrewAI).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [kto-kahneman-tversky](techniques/kto-kahneman-tversky) (Ethayarajh et al 2024; unpaired thumbs labels shift liked mass 70%→93%, disliked 30%→7%) | 47.197 | ✅ | ✅ | N/A |
+| 2 | [orpo-odds-ratio](techniques/orpo-odds-ratio) (Hong-Lee-Thorne 2024 EMNLP; SFT+OR loss, no ref model, chosen prob → 0.989 in 150 iters) | 47.198 | ✅ | ✅ | N/A |
+| 3 | [simpo-simple-preference](techniques/simpo-simple-preference) (Meng-Xia-Chen 2024; length-normalised reference-free preference with target margin γ) | 47.199 | ✅ | ✅ | N/A |
+| 4 | [spin-self-play-fine-tuning](techniques/spin-self-play-fine-tuning) (Chen et al 2024 ICML; KL(π‖human) 0.30→0.075 over 5 self-play rounds using human samples only) | 47.200 | ✅ | ✅ | N/A |
+| 5 | [reflexion-self-critique](techniques/reflexion-self-critique) (Shinn et al 2023 NeurIPS; episodic memory of failed actions: 5/6 vs baseline 4/6 on arithmetic puzzles) | 47.201 | ✅ | ✅ | N/A |
+| 6 | [react-reasoning-acting](techniques/react-reasoning-acting) (Yao et al 2023 ICLR; Thought/Action/Observation loop: 3/3 vs CoT-only 0/3 on QA + calc questions) | 47.202 | ✅ | ✅ | N/A |
+| 7 | [toolformer-tool-use](techniques/toolformer-tool-use) (Schick et al 2023 NeurIPS; perplexity-filtered self-supervised API insertions, KEEP only useful ones) | 47.203 | ✅ | ✅ | N/A |
+| 8 | [function-calling-openai](techniques/function-calling-openai) (OpenAI 2023; JSON-schema-validated structured tool calls for get_weather + calc) | 47.204 | ✅ | ✅ | N/A |
+| 9 | [verifier-guided-search](techniques/verifier-guided-search) (Uesato 2022; Lightman 2023; beam=3 verifier: 4/5 vs greedy-N=20 1/5 on arithmetic-target task) | 47.205 | ✅ | ✅ | N/A |
+| 10 | [multi-agent-debate](techniques/multi-agent-debate) (Du et al 2023; 3-agent 3-round debate: 93% vs single-agent 55% on arithmetic QA) | 47.206 | ✅ | ✅ | N/A |
+| 11 | [autogen-multi-agent](techniques/autogen-multi-agent) (Wu et al 2023 Microsoft; planner+coder+reviewer 4-message conversation to TASK COMPLETE) | 47.207 | ✅ | ✅ | N/A |
+| 12 | [crewai-hierarchical-agents](techniques/crewai-hierarchical-agents) (Moura 2024; sequential + manager-hierarchical processes on researcher/writer/editor task DAG) | 47.208 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 75** — R (`reticulate` to Python for all; these are LLM alignment / agentic methods with no R ecosystem) or Python (`trl.KTOTrainer`/`ORPOTrainer`/`CPOTrainer` for preference variants, `uclaml/SPIN` for self-play, `noahshinn024/reflexion`/`langgraph` for Reflexion, `langchain.ReActAgent`/`llama-index` for ReAct, `conceptofmind/toolformer` for Toolformer, `openai`/`anthropic` SDKs for function calling, `llm-reasoners`/`princeton-nlp/tree-of-thought-llm` for verifier search, `composable-models/llm-multiagent-debate` for debate, `pyautogen` for AutoGen, `crewai` for CrewAI) — Spark ML has no alignment / agent / tool-use support; this cleanup batch is squarely modern-LLM territory.
+
 Later batches: any remaining chapters.
 
 ---
