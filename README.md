@@ -2268,6 +2268,33 @@ vision Transformer.
 
 **PySpark N/A across Batch 71** — R (`reticulate` to Python for all four GNN / metric / SSL / ViT; `HMM::viterbi`, `HMM::baumWelch`, `crfsuite`, pure-R beam search, `tokenizers.bpe`) or Python (`pytorch-geometric`/`dgl` for GNNs, `pytorch-metric-learning`/`tensorflow-similarity` for triplet / Siamese, `lightly`/`solo-learn` for SimCLR / Barlow, `hmmlearn` for HMM / BW, `sklearn_crfsuite`/`pystruct` for CRF, `transformers.generate` for beam, `sentencepiece`/`huggingface tokenizers`, `timm`/`transformers.ViTModel`) — Spark ML has no GNN / metric-learning / SSL / HMM / CRF / neural-tokeniser / ViT support; this cleanup batch is squarely single-node deep-learning territory.
 
+### Batch 72 — Cleanup (Lottery Ticket / Double Descent / SAM / Lookahead / RAdam / One-Cycle / SWA / MP-Train / Grad-Ckpt / ALiBi / RMSNorm / WS)
+
+Twelve more long-tail fillers on modern deep-net **training and
+architecture** techniques: two phenomena of over-parametrised
+learning (lottery ticket + double descent), five optimiser wrappers
+and learning-rate schedules (SAM, Lookahead, RAdam, One-Cycle, SWA),
+two memory / compute optimisations (mixed precision, gradient
+checkpointing), and three architecture tricks (ALiBi position bias,
+RMSNorm, weight standardisation).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [lottery-ticket-hypothesis](techniques/lottery-ticket-hypothesis) (Frankle-Carbin 2019 ICLR; 94% sparse ticket MSE 0.090 vs dense 0.073) | 47.161 | ✅ | ✅ | N/A |
+| 2 | [double-descent](techniques/double-descent) (Belkin et al 2019 PNAS; Nakkiran et al 2020 ICLR; peak test MSE 19.58 at p=n=40, descends to ~4 as p>>n) | 47.162 | ✅ | ✅ | N/A |
+| 3 | [sam-sharpness-aware-minimization](techniques/sam-sharpness-aware-minimization) (Foret et al 2021 ICLR; moons+noise MLP: SAM 0.771/flatness 0.003 vs SGD 0.757/0.010) | 47.163 | ✅ | ✅ | N/A |
+| 4 | [lookahead-optimizer](techniques/lookahead-optimizer) (Zhang-Lucas-Ba-Hinton 2019 NeurIPS; more robust at extreme lr, +1 pt at lr=1.0) | 47.164 | ✅ | ✅ | N/A |
+| 5 | [rectified-adam-radam](techniques/rectified-adam-radam) (Liu et al 2020 ICLR; early-iter loss 15 vs Adam 34 at step 20 under high noise) | 47.165 | ✅ | ✅ | N/A |
+| 6 | [one-cycle-super-convergence](techniques/one-cycle-super-convergence) (Smith 2018; triangular lr sweep with reversed momentum, 5-10x faster on non-convex nets) | 47.166 | ✅ | ✅ | N/A |
+| 7 | [stochastic-weight-averaging-swa](techniques/stochastic-weight-averaging-swa) (Izmailov et al 2018 UAI; SWA test acc 0.710 vs SGD endpoint 0.698) | 47.167 | ✅ | ✅ | N/A |
+| 8 | [mixed-precision-training](techniques/mixed-precision-training) (Micikevicius et al 2018 ICLR; FP16 recovers 1e-8 via loss scale 2^15 vs underflow to 0) | 47.168 | ✅ | ✅ | N/A |
+| 9 | [gradient-checkpointing](techniques/gradient-checkpointing) (Chen et al 2016; 25-layer MLP: 4.3x memory reduction, gradients bit-exact) | 47.169 | ✅ | ✅ | N/A |
+| 10 | [alibi-linear-attention-bias](techniques/alibi-linear-attention-bias) (Press-Smith-Lewis 2022 ICLR; 4-head slopes give per-head attention radius 3->100 at T=512) | 47.170 | ✅ | ✅ | N/A |
+| 11 | [rmsnorm-normalization](techniques/rmsnorm-normalization) (Zhang-Sennrich 2019 NeurIPS; 56.6% faster than LayerNorm on 128x512 tensor) | 47.171 | ✅ | ✅ | N/A |
+| 12 | [weight-standardization](techniques/weight-standardization) (Qiao et al 2019; per-channel weight normalisation, pairs with GroupNorm for micro-batch training) | 47.172 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 72** — R (`reticulate` to Python for most; pure-R double-descent / one-cycle / RMSNorm / weight-standardisation demos) or Python (`torch.nn.utils.prune`/OpenLTH for LTH, `sam-optimizer` for SAM, `pytorch_optimizer` for Lookahead / RAdam, `torch.optim.lr_scheduler.OneCycleLR` for one-cycle, `torch.optim.swa_utils` for SWA, `torch.amp` for MP training, `torch.utils.checkpoint` for grad-ckpt, `transformers` Bloom/MPT/OPT for ALiBi, `torch.nn.RMSNorm`/LlamaRMSNorm for RMSNorm, `kornia`/`timm` for weight standardisation) — Spark ML has no deep-net training-toolbox support; this cleanup batch is squarely single-node deep-learning training territory.
+
 Later batches: any remaining chapters.
 
 ---
