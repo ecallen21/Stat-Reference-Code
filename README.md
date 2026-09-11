@@ -2453,6 +2453,34 @@ TPOT).
 
 **PySpark N/A across Batch 78** — R (`reticulate` to Python for most; forecasting techniques largely lack R deep-learning equivalents) or Python (`darts`/`neuralforecast`/`gluonts`/`pytorch-forecasting` for the seven deep forecasters, `pyod.models.DeepSVDD` for anomaly, `somepalli/saint`/`yandex-research/rtdl` for tabular Transformers, `autogluon-tabular`/`flaml`/`h2o.automl` for AutoGluon, `tpot`/`auto-sklearn` for TPOT) — Spark ML has SparkML basic forecasting / anomaly primitives but nothing matching this batch's deep-forecaster / tabular-Transformer / AutoML surface.
 
+### Batch 79 — Cleanup (CountMin / Reservoir / SMOTE / ADASYN / Tomek / ENN / Focal / Class-Bal / MCC / DiCE / CRPS / H-L)
+
+Twelve more long-tail fillers on IMBALANCED-LEARNING,
+STREAMING SKETCHES, PROPER SCORING, and EXPLAINABILITY:
+two streaming primitives (Count-Min, Reservoir), four
+resampling / cleaning methods (SMOTE, ADASYN, Tomek, ENN),
+two imbalance-aware losses (Focal, Class-Balanced), one
+balanced classification metric (MCC), one diverse-CF
+explainer (DiCE), one strictly proper scoring rule (CRPS),
+and one calibration test (Hosmer-Lemeshow).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [count-min-sketch](techniques/count-min-sketch) (Cormode-Muthukrishnan 2005; w=1024 k=5 CMS 0% over-estimate on 100k Zipf stream, w=64 k=3 2563%) | 47.245 | ✅ | ✅ | N/A |
+| 2 | [reservoir-sampling](techniques/reservoir-sampling) (Vitter 1985 + Efraimidis-Spirakis 2006 A-Res; N=100k k=100 empirical p=0.0010 vs theoretical 0.0010) | 47.246 | ✅ | ✅ | N/A |
+| 3 | [smote-oversampling](techniques/smote-oversampling) (Chawla 2002 JAIR; recall 0.17→0.67 on 98/2 imbalance, precision drops as expected) | 47.247 | ✅ | ✅ | N/A |
+| 4 | [adasyn-oversampling](techniques/adasyn-oversampling) (He et al 2008 IJCNN; density-scaled synths, mean r=0.86 across minority) | 47.248 | ✅ | ✅ | N/A |
+| 5 | [tomek-links-undersampling](techniques/tomek-links-undersampling) (Tomek 1976; removes 21 boundary majority samples, F1 0.53→0.55) | 47.249 | ✅ | ✅ | N/A |
+| 6 | [edited-nn-cleaning](techniques/edited-nn-cleaning) (Wilson 1972; cleans 14% of samples under 15% label noise, precision 0.94→0.97) | 47.250 | ✅ | ✅ | N/A |
+| 7 | [focal-loss-imbalance](techniques/focal-loss-imbalance) (Lin et al 2017 RetinaNet; (1-p_t)^2 = 0.0001 at p_t=0.99, suppresses easy examples) | 47.251 | ✅ | ✅ | N/A |
+| 8 | [class-balanced-loss](techniques/class-balanced-loss) (Cui et al 2019 CVPR; effective-number reweighting softer than inverse-frequency) | 47.252 | ✅ | ✅ | N/A |
+| 9 | [matthews-correlation-coefficient](techniques/matthews-correlation-coefficient) (Matthews 1975; MCC=0 for majority-only baseline where accuracy=0.99) | 47.253 | ✅ | ✅ | N/A |
+| 10 | [dice-diverse-counterfactuals](techniques/dice-diverse-counterfactuals) (Mothilal 2020 FAT*; 3 diverse CFs each with distinct pivotal feature, L1 diversity 22) | 47.254 | ✅ | ✅ | N/A |
+| 11 | [proper-scoring-rules-crps](techniques/proper-scoring-rules-crps) (Gneiting-Raftery 2007 JASA; perfect N(0,1) CRPS 0.234 vs biased 0.343 vs over-disp 0.659) | 47.255 | ✅ | ✅ | N/A |
+| 12 | [hosmer-lemeshow-test](techniques/hosmer-lemeshow-test) (Hosmer-Lemeshow 1980; well-fit p=0.76, mis-cal p^2 p≈0) | 47.256 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 79** — R (`smotefamily`/`UBL`/`unbalanced`/`themis` for resamplers, `ResourceSelection` for H-L, `scoringRules` for CRPS, `mltools`/`yardstick` for MCC, `counterfactuals` for DiCE, `bloomfilter`/`stream` for sketches) or Python (`imbalanced-learn` for SMOTE/ADASYN/Tomek/ENN, `datasketch` for CMS, `dice-ml`/`alibi` for DiCE, `properscoring` for CRPS, `torchvision.ops.sigmoid_focal_loss` for focal, `sklearn.metrics.matthews_corrcoef` for MCC) — SparkML has no imbalanced-learning / explainability / proper-scoring surface, and streaming primitives live in Structured Streaming rather than as reusable sketch classes.
+
 Later batches: any remaining chapters.
 
 ---
