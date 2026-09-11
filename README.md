@@ -2295,6 +2295,33 @@ RMSNorm, weight standardisation).
 
 **PySpark N/A across Batch 72** — R (`reticulate` to Python for most; pure-R double-descent / one-cycle / RMSNorm / weight-standardisation demos) or Python (`torch.nn.utils.prune`/OpenLTH for LTH, `sam-optimizer` for SAM, `pytorch_optimizer` for Lookahead / RAdam, `torch.optim.lr_scheduler.OneCycleLR` for one-cycle, `torch.optim.swa_utils` for SWA, `torch.amp` for MP training, `torch.utils.checkpoint` for grad-ckpt, `transformers` Bloom/MPT/OPT for ALiBi, `torch.nn.RMSNorm`/LlamaRMSNorm for RMSNorm, `kornia`/`timm` for weight standardisation) — Spark ML has no deep-net training-toolbox support; this cleanup batch is squarely single-node deep-learning training territory.
 
+### Batch 73 — Cleanup (PagedAttention / KV-quant / TP / PP / FSDP / ZeRO / bitsandbytes / GPTQ / AWQ / FLAN / CAI / ToT)
+
+Twelve more long-tail fillers on modern LLM SYSTEMS and ALIGNMENT
+techniques: two LLM-inference memory optimisations (PagedAttention,
+KV-cache quant), four parallelism / sharding strategies (tensor
+parallel, pipeline parallel, FSDP, ZeRO), three post-training
+weight-quantisation methods (LLM.int8, GPTQ, AWQ), and three
+alignment / reasoning methods (FLAN instruction tuning,
+Constitutional AI, Tree of Thoughts).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [paged-attention-vllm](techniques/paged-attention-vllm) (Kwon et al 2023 SOSP; block allocator + copy-on-write fork, shares 3/5 blocks across sibling sequences) | 47.173 | ✅ | ✅ | N/A |
+| 2 | [kv-cache-quantization](techniques/kv-cache-quantization) (Sheng 2023 FlexGen; Liu 2023 KIVI; INT8 K per-channel rel-err 0.0017, INT4 V per-group 0.066, 56% memory saved) | 47.174 | ✅ | ✅ | N/A |
+| 3 | [tensor-parallelism](techniques/tensor-parallelism) (Shoeybi 2020 Megatron-LM; TP block bit-exact to single-device (rel-err 4e-16), 1/n_shards memory) | 47.175 | ✅ | ✅ | N/A |
+| 4 | [pipeline-parallelism](techniques/pipeline-parallelism) (Huang 2019 GPipe; K=8, M=32 → 82.1% pipeline efficiency, bubble = (K-1)/(M+K-1)) | 47.176 | ✅ | ✅ | N/A |
+| 5 | [fsdp-fully-sharded-data-parallel](techniques/fsdp-fully-sharded-data-parallel) (Zhao 2023 VLDB; 7B LLM 112GB→14GB per rank at N=8, 87.5% memory reduction) | 47.177 | ✅ | ✅ | N/A |
+| 6 | [zero-redundancy-optimizer](techniques/zero-redundancy-optimizer) (Rajbhandari 2020 SC; 30B model 480→30GB per rank (stage 3), 7.5GB with offload) | 47.178 | ✅ | ✅ | N/A |
+| 7 | [bitsandbytes-int8-llm](techniques/bitsandbytes-int8-llm) (Dettmers 2022 NeurIPS; outlier-decomposed INT8 rel-err 0.003 vs naive 0.05, 15x lower error) | 47.179 | ✅ | ✅ | N/A |
+| 8 | [gptq-quantization](techniques/gptq-quantization) (Frantar 2023 ICLR; Hessian-guided INT4 rel-err 0.116 vs RTN 0.162, 4x storage saving) | 47.180 | ✅ | ✅ | N/A |
+| 9 | [awq-quantization](techniques/awq-quantization) (Lin 2024 MLSys; activation-aware INT4 rel-err 0.081 vs RTN 0.104, α* search) | 47.181 | ✅ | ✅ | N/A |
+| 10 | [instruction-tuning-flan](techniques/instruction-tuning-flan) (Wei 2022 ICLR; multi-task natural-language instructions enable zero-shot task generalisation) | 47.182 | ✅ | ✅ | N/A |
+| 11 | [constitutional-ai](techniques/constitutional-ai) (Bai 2022 Anthropic; critique-and-revise loop lifts preference score -1.67 → +1.67 on toy harmfulness) | 47.183 | ✅ | ✅ | N/A |
+| 12 | [tree-of-thoughts-reasoning](techniques/tree-of-thoughts-reasoning) (Yao 2023 NeurIPS; Game-of-24 CoT-greedy 2/7 vs ToT beam=8 4/7 solved) | 47.184 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 73** — R (`reticulate` to Python for all twelve; these are LLM systems / alignment techniques with no R ecosystem) or Python (`vllm` for PagedAttention, `vllm`/`FlexGen`/`llama.cpp` for KV quant, `megatron-lm`/`colossalai` for TP, `torch.distributed.pipeline`/`deepspeed` for PP, `torch.distributed.fsdp` for FSDP, `deepspeed` for ZeRO, `bitsandbytes` for LLM.int8, `auto-gptq`/`optimum` for GPTQ, `llm-awq`/`autoawq`/`vllm.awq` for AWQ, `transformers.Trainer`+FLAN-T5/Tulu for FLAN, `trl`/`trlx` for CAI, `princeton-nlp/tree-of-thought-llm`/`langgraph`/`lmql` for ToT) — Spark ML has no LLM inference / alignment / large-model training support; this cleanup batch is squarely modern-LLM systems territory.
+
 Later batches: any remaining chapters.
 
 ---
