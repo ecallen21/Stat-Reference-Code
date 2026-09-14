@@ -2509,6 +2509,33 @@ factorial, hierarchical win-ratio).
 
 **PySpark N/A across Batch 80** — R (`gsDesign`/`rpact`/`ldbounds` for group-sequential + spending, `dfcrm`/`bcrm`/`trialr` for CRM, `BOIN`/`boinet` for BOIN, `bhmbasket`/`basket` for basket trials, `swCRTdesign`/`SWSamp` for stepped-wedge, `clusterPower`/`CRTSize` for CRTs, `WWR`/`WINrat` for win-ratio) or Python (`rpact`/`UBCRM`/`PyMC` via reticulate + from-scratch demos) — SparkML has no clinical-trial design surface; adaptive designs, dose-finding, and sequential monitoring are entirely a statistician's-desk / DSMB-cockpit domain rather than a Spark-cluster one.
 
+### Batch 81 — Cleanup (DL / HKSJ / Egger / I² / L1O / cumulative-meta / Hyperband / ASHA / PBT / TPE / DARTS / BOHB)
+
+Twelve more long-tail fillers on META-ANALYSIS and
+HYPERPARAMETER OPTIMIZATION: six meta-analysis primitives
+(DL random-effects, HKSJ adjustment, Egger publication-bias
+test, I² heterogeneity, leave-one-out, cumulative
+meta-analysis) and six hyperparameter-search methods
+(Hyperband, ASHA / successive halving, PBT, TPE, DARTS
+architecture search, BOHB).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [dersimonian-laird-random-effects](techniques/dersimonian-laird-random-effects) (DL 1986 CCT; I²=86% at K=10 tau=0.2, RE CI (0.42,0.62) vs FE (0.47,0.54)) | 47.269 | ✅ | ✅ | N/A |
+| 2 | [hartung-knapp-sidik-jonkman](techniques/hartung-knapp-sidik-jonkman) (HK 2001; SJ 2002; Type-I 0.092 (DL) vs 0.052 (HKSJ) on K=8 heterogeneous meta) | 47.270 | ✅ | ✅ | N/A |
+| 3 | [egger-test-publication-bias](techniques/egger-test-publication-bias) (Egger et al 1997 BMJ; intercept t-test on standardised-effect vs precision regression) | 47.271 | ✅ | ✅ | N/A |
+| 4 | [i-squared-heterogeneity](techniques/i-squared-heterogeneity) (Higgins-Thompson 2002; I²≈0/47/96% at tau=0/0.2/0.4; prediction-interval widens to (−0.34, 1.34)) | 47.272 | ✅ | ✅ | N/A |
+| 5 | [leave-one-out-meta](techniques/leave-one-out-meta) (Cochrane sensitivity; outlier removal flags 0.11 shift as INFLUENTIAL vs full pool 0.51) | 47.273 | ✅ | ✅ | N/A |
+| 6 | [cumulative-meta-analysis](techniques/cumulative-meta-analysis) (Lau 1992 NEJM; 12-study evidence timeline; cumulative CI first crossed sig in 1981) | 47.274 | ✅ | ✅ | N/A |
+| 7 | [hyperband-multi-fidelity](techniques/hyperband-multi-fidelity) (Li et al 2018 JMLR; R=81 eta=3, 5 brackets pick lr=0.01, hidden=64 target region) | 47.275 | ✅ | ✅ | N/A |
+| 8 | [successive-halving-asha](techniques/successive-halving-asha) (Karnin 2013; Li 2020 MLSys; sync SH 27→9→3→1; ASHA promotes 40 configs across rungs 1→3→9→27) | 47.276 | ✅ | ✅ | N/A |
+| 9 | [population-based-training](techniques/population-based-training) (Jaderberg 2017 DeepMind; N=12 pop converges to target weight 3.0 with evolving lr schedule) | 47.277 | ✅ | ✅ | N/A |
+| 10 | [tpe-tree-parzen-estimator](techniques/tpe-tree-parzen-estimator) (Bergstra et al 2011 NeurIPS; density-ratio SMBO; converges near x=0.7 minimum in 30 evals) | 47.278 | ✅ | ✅ | N/A |
+| 11 | [neural-architecture-search-darts](techniques/neural-architecture-search-darts) (Liu 2019 ICLR; 4-op softmax concentrates p=0.88 at 'square' when true f=0.5x²) | 47.279 | ✅ | ✅ | N/A |
+| 12 | [bohb-bayesian-hyperband](techniques/bohb-bayesian-hyperband) (Falkner 2018 ICML; TPE+SH beats plain Hyperband at x=0.7 target: BOHB=0.685 vs HB=0.805) | 47.280 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 81** — R (`metafor`/`meta`/`dmetar`/`metasens` for the meta-analysis half; `mlr3hyperband`/`mlr3mbo`/reticulate + Ray Tune for the HPO half) or Python (`PythonMeta`/`pymeta`, `Ray Tune`, `Optuna`, `hyperopt`, `hpbandster`, `NNI`, `AutoKeras` + from-scratch demos) — SparkML has neither a meta-analysis pipeline nor a bandit-based multi-fidelity scheduler; both live in specialist R packages / Python HPO frameworks rather than on a Spark cluster.
+
 Later batches: any remaining chapters.
 
 ---
