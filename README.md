@@ -2799,7 +2799,36 @@ optimal-MISE kernel-density estimator (Epanechnikov).
 
 **PySpark N/A across Batch 90** — R (`DEoptim`/`GenSA`/`BB`/`CVXR`/`imager`/`MASS`/`robustbase`/base R `density`/`KernSmooth`) or Python (`scipy.optimize.differential_evolution`/`scipy.optimize.basinhopping`/`pyproximal`/`skimage.restoration.denoise_tv_chambolle`/`sklearn.linear_model.HuberRegressor`/`transformers.ReformerModel`/`transformers.LongformerModel`/`linformer-pytorch`/`performer-pytorch`/`sklearn.neighbors.KernelDensity` + from-scratch demos) — SparkML has no evolutionary-optimisation / splitting-method / robust-M-estimator / efficient-attention / kernel-density surface; these methods live in specialist optimisation, DL, and robust-stats libraries rather than a Spark cluster.
 
-Later batches: any remaining chapters.
+### Batch 91 — Chapter 2 closing: Probability Foundations
+
+Final batch closing the one Chapter 2 gap identified by the
+project audit. Twelve foundational-probability entries with
+CROSS-REFERENCES pointing at the many places each distribution
+already appears earlier in the tree (survival, GLMs, robust
+stats, Bayesian workflows, extreme-value theory, MCMC).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [weibull-distribution](techniques/weibull-distribution) (Weibull 1939, 1951; shape controls hazard; MLE via Newton) | 47.389 | ✅ | ✅ | N/A |
+| 2 | [lognormal-distribution](techniques/lognormal-distribution) (Aitchison-Brown 1957; log-transform + Normal MLE) | 47.390 | ✅ | ✅ | N/A |
+| 3 | [hypergeometric-distribution](techniques/hypergeometric-distribution) (Feller I; sampling without replacement, FPC) | 47.391 | ✅ | ✅ | N/A |
+| 4 | [cauchy-distribution](techniques/cauchy-distribution) (heavy-tailed; no mean/variance; use median/IQR) | 47.392 | ✅ | ✅ | N/A |
+| 5 | [pareto-distribution](techniques/pareto-distribution) (Pareto 1897; 80-20 at alpha=log5/log4; closed-form MLE) | 47.393 | ✅ | ✅ | N/A |
+| 6 | [stable-distributions](techniques/stable-distributions) (Levy 1925; Chambers-Mallows-Stuck sampler; generalised CLT limit) | 47.394 | ✅ | ✅ | N/A |
+| 7 | [wishart-distribution](techniques/wishart-distribution) (Wishart 1928; Bartlett decomposition; MVN precision prior) | 47.395 | ✅ | ✅ | N/A |
+| 8 | [multivariate-normal-distribution](techniques/multivariate-normal-distribution) (foundational; Cholesky sampler; chi^2_p quadratic form) | 47.396 | ✅ | ✅ | N/A |
+| 9 | [exponential-family-framework](techniques/exponential-family-framework) (Fisher-Koopman-Pitman; unified E[T(X)] = A'(eta)) | 47.397 | ✅ | ✅ | N/A |
+| 10 | [location-scale-families](techniques/location-scale-families) (X = mu + sigma Z; Fisher-info diagonal in (mu, log sigma)) | 47.398 | ✅ | ✅ | N/A |
+| 11 | [probability-integral-transform](techniques/probability-integral-transform) (Fisher 1922; Rosenblatt 1952; PIT + inverse-CDF + copula) | 47.399 | ✅ | ✅ | N/A |
+| 12 | [central-limit-theorem-demos](techniques/central-limit-theorem-demos) (Laplace 1810; Lyapunov 1901; Berry-Esseen O(1/sqrt(n)); Cauchy failure) | 47.400 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 91** — R (base R `dweibull` / `dlnorm` / `dhyper` / `dcauchy` / `stabledist` / `rWishart` / `MASS::mvrnorm` / `MCMCpack`) or Python (`scipy.stats.weibull_min` / `lognorm` / `hypergeom` / `cauchy` / `pareto` / `levy_stable` / `wishart` / `multivariate_normal` + from-scratch demos) — SparkML has no foundational-probability distribution surface; these methods live in numpy/scipy/statsmodels and R base rather than a Spark cluster.
+
+### Bookkeeping note on chapter numbering
+
+Some batch labels (e.g. "Batch 22 — Chapter 22: IRT / Psychometrics") use the CHAPTER NUMBERS from the earlier reference-guide version that seeded this repository. The current `stat_techniques_reference_v124.docx` has since re-ordered a handful of chapters, so the same content may live under a different number now. Chapter NAMES remain accurate — the numbers themselves are historical labels of individual batches.
+
+**Coverage status.** With Batch 91 the reference-guide-driven build is effectively complete: all 47 chapters have at least one dedicated batch, and 1 095 technique folders cover the long tail (Chapter 47 alone contributes ~ 250 subsections via §47.001-§47.400). Later batches: any remaining ad-hoc requests.
 
 ---
 
