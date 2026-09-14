@@ -2509,7 +2509,326 @@ factorial, hierarchical win-ratio).
 
 **PySpark N/A across Batch 80** — R (`gsDesign`/`rpact`/`ldbounds` for group-sequential + spending, `dfcrm`/`bcrm`/`trialr` for CRM, `BOIN`/`boinet` for BOIN, `bhmbasket`/`basket` for basket trials, `swCRTdesign`/`SWSamp` for stepped-wedge, `clusterPower`/`CRTSize` for CRTs, `WWR`/`WINrat` for win-ratio) or Python (`rpact`/`UBCRM`/`PyMC` via reticulate + from-scratch demos) — SparkML has no clinical-trial design surface; adaptive designs, dose-finding, and sequential monitoring are entirely a statistician's-desk / DSMB-cockpit domain rather than a Spark-cluster one.
 
-Later batches: any remaining chapters.
+### Batch 81 — Cleanup (DL / HKSJ / Egger / I² / L1O / cumulative-meta / Hyperband / ASHA / PBT / TPE / DARTS / BOHB)
+
+Twelve more long-tail fillers on META-ANALYSIS and
+HYPERPARAMETER OPTIMIZATION: six meta-analysis primitives
+(DL random-effects, HKSJ adjustment, Egger publication-bias
+test, I² heterogeneity, leave-one-out, cumulative
+meta-analysis) and six hyperparameter-search methods
+(Hyperband, ASHA / successive halving, PBT, TPE, DARTS
+architecture search, BOHB).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [dersimonian-laird-random-effects](techniques/dersimonian-laird-random-effects) (DL 1986 CCT; I²=86% at K=10 tau=0.2, RE CI (0.42,0.62) vs FE (0.47,0.54)) | 47.269 | ✅ | ✅ | N/A |
+| 2 | [hartung-knapp-sidik-jonkman](techniques/hartung-knapp-sidik-jonkman) (HK 2001; SJ 2002; Type-I 0.092 (DL) vs 0.052 (HKSJ) on K=8 heterogeneous meta) | 47.270 | ✅ | ✅ | N/A |
+| 3 | [egger-test-publication-bias](techniques/egger-test-publication-bias) (Egger et al 1997 BMJ; intercept t-test on standardised-effect vs precision regression) | 47.271 | ✅ | ✅ | N/A |
+| 4 | [i-squared-heterogeneity](techniques/i-squared-heterogeneity) (Higgins-Thompson 2002; I²≈0/47/96% at tau=0/0.2/0.4; prediction-interval widens to (−0.34, 1.34)) | 47.272 | ✅ | ✅ | N/A |
+| 5 | [leave-one-out-meta](techniques/leave-one-out-meta) (Cochrane sensitivity; outlier removal flags 0.11 shift as INFLUENTIAL vs full pool 0.51) | 47.273 | ✅ | ✅ | N/A |
+| 6 | [cumulative-meta-analysis](techniques/cumulative-meta-analysis) (Lau 1992 NEJM; 12-study evidence timeline; cumulative CI first crossed sig in 1981) | 47.274 | ✅ | ✅ | N/A |
+| 7 | [hyperband-multi-fidelity](techniques/hyperband-multi-fidelity) (Li et al 2018 JMLR; R=81 eta=3, 5 brackets pick lr=0.01, hidden=64 target region) | 47.275 | ✅ | ✅ | N/A |
+| 8 | [successive-halving-asha](techniques/successive-halving-asha) (Karnin 2013; Li 2020 MLSys; sync SH 27→9→3→1; ASHA promotes 40 configs across rungs 1→3→9→27) | 47.276 | ✅ | ✅ | N/A |
+| 9 | [population-based-training](techniques/population-based-training) (Jaderberg 2017 DeepMind; N=12 pop converges to target weight 3.0 with evolving lr schedule) | 47.277 | ✅ | ✅ | N/A |
+| 10 | [tpe-tree-parzen-estimator](techniques/tpe-tree-parzen-estimator) (Bergstra et al 2011 NeurIPS; density-ratio SMBO; converges near x=0.7 minimum in 30 evals) | 47.278 | ✅ | ✅ | N/A |
+| 11 | [neural-architecture-search-darts](techniques/neural-architecture-search-darts) (Liu 2019 ICLR; 4-op softmax concentrates p=0.88 at 'square' when true f=0.5x²) | 47.279 | ✅ | ✅ | N/A |
+| 12 | [bohb-bayesian-hyperband](techniques/bohb-bayesian-hyperband) (Falkner 2018 ICML; TPE+SH beats plain Hyperband at x=0.7 target: BOHB=0.685 vs HB=0.805) | 47.280 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 81** — R (`metafor`/`meta`/`dmetar`/`metasens` for the meta-analysis half; `mlr3hyperband`/`mlr3mbo`/reticulate + Ray Tune for the HPO half) or Python (`PythonMeta`/`pymeta`, `Ray Tune`, `Optuna`, `hyperopt`, `hpbandster`, `NNI`, `AutoKeras` + from-scratch demos) — SparkML has neither a meta-analysis pipeline nor a bandit-based multi-fidelity scheduler; both live in specialist R packages / Python HPO frameworks rather than on a Spark cluster.
+
+### Batch 82 — Cleanup (T-scale / Platt / ECE / Beta / Hist / WGAN-GP / CycleGAN / β-VAE / IWAE / Matrix-Profile / ROCKET / Shapelet)
+
+Twelve more long-tail fillers across CALIBRATION,
+GENERATIVE MODELS, and TIME-SERIES CLASSIFICATION: five
+post-hoc calibrators (temperature, Platt, Beta, histogram
+binning, ECE metric), four generative-model variants
+(WGAN-GP, CycleGAN, β-VAE, IWAE), and three time-series
+tools (Matrix Profile, ROCKET, Shapelet Transform).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [temperature-scaling](techniques/temperature-scaling) (Guo et al 2017 ICML; ECE 0.09→0.01 with T=0.97, predictions unchanged) | 47.281 | ✅ | ✅ | N/A |
+| 2 | [platt-scaling](techniques/platt-scaling) (Platt 1999; sigmoid(A·score + B) calibration for margin-based classifiers) | 47.282 | ✅ | ✅ | N/A |
+| 3 | [expected-calibration-error](techniques/expected-calibration-error) (Naeini 2015; Guo 2017; ECE 0.16, adaptive vs equal-width) | 47.283 | ✅ | ✅ | N/A |
+| 4 | [beta-calibration](techniques/beta-calibration) (Kull et al 2017 AISTATS; asymmetric miscalibration Brier 0.36→0.22 vs Platt 0.25) | 47.284 | ✅ | ✅ | N/A |
+| 5 | [histogram-binning-calibration](techniques/histogram-binning-calibration) (Zadrozny-Elkan 2001 ICML; non-monotone miscal Brier 0.24→0.19 with M=10 adaptive bins) | 47.285 | ✅ | ✅ | N/A |
+| 6 | [wgan-gp-gradient-penalty](techniques/wgan-gp-gradient-penalty) (Gulrajani 2017 NeurIPS; GP replaces weight clipping, λ=10 canonical) | 47.286 | ✅ | ✅ | N/A |
+| 7 | [cyclegan-unpaired-translation](techniques/cyclegan-unpaired-translation) (Zhu 2017 ICCV; cycle-consistency + adversarial for unpaired domain translation) | 47.287 | ✅ | ✅ | N/A |
+| 8 | [beta-vae-disentangle](techniques/beta-vae-disentangle) (Higgins et al 2017 ICLR; β-scaled ELBO for disentangled latent factors) | 47.288 | ✅ | ✅ | N/A |
+| 9 | [iwae-importance-weighted](techniques/iwae-importance-weighted) (Burda 2016 ICLR; K-sample IS tightens ELBO monotonically; gap 0.2 nats at K=1 to <0.02 at K=500) | 47.289 | ✅ | ✅ | N/A |
+| 10 | [matrix-profile-anomaly](techniques/matrix-profile-anomaly) (Yeh et al 2016 ICDM; detects planted step-discord at index 292 vs planted 330) | 47.290 | ✅ | ✅ | N/A |
+| 11 | [rocket-random-conv-features](techniques/rocket-random-conv-features) (Dempster 2020 DAMI; 200 random kernels + Ridge on 2-class sine 100% test acc vs 48% baseline) | 47.291 | ✅ | ✅ | N/A |
+| 12 | [shapelet-transform](techniques/shapelet-transform) (Ye-Keogh 2009 KDD; Hills 2014 DAMI; info-gain-selected shapelets + logistic 100% test acc) | 47.292 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 82** — R (`probably`/`betacal`/`yardstick` for calibration; `tsmp`/reticulate + PyTorch for generative + TSC) or Python (`netcal`/`sklearn.calibration`/`torchcalibration` for calibration; `torch`/`tf-gan`/`disentanglement-lib`/`Pyro`/`TFP` for generative; `stumpy`/`sktime`/`tslearn` for TSC + from-scratch demos) — SparkML has no post-hoc calibration API, no GAN / VAE surface, and no matrix-profile / shapelet primitive; each of these lives in specialist calibration / deep-learning / time-series toolboxes.
+
+### Batch 83 — Cleanup (IoU / NMS / YOLO / Faster-RCNN / U-Net / Dice / F-Tversky / FCN / DETR / FCOS / Panoptic / RandAug)
+
+Twelve more long-tail fillers on COMPUTER VISION: two
+box-overlap / post-processing primitives (IoU-family, NMS),
+four detectors (YOLO, Faster R-CNN, DETR, FCOS), three
+segmentation architectures (U-Net, FCN, Panoptic), two
+segmentation losses (Dice, Focal Tversky), and one
+augmentation strategy (RandAugment / AutoAugment).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [iou-generalized-iou](techniques/iou-generalized-iou) (Rezatofighi 2019 CVPR; Zheng 2020 AAAI; GIoU/DIoU/CIoU provide gradient where IoU=0) | 47.293 | ✅ | ✅ | N/A |
+| 2 | [non-max-suppression-nms](techniques/non-max-suppression-nms) (Neubeck-Van Gool 2006; Bodla 2017 soft-NMS with score decay) | 47.294 | ✅ | ✅ | N/A |
+| 3 | [yolo-object-detection](techniques/yolo-object-detection) (Redmon et al 2016 CVPR; SxS grid, per-cell (x,y,w,h,obj,C classes), lambda_coord=5, lambda_noobj=0.5) | 47.295 | ✅ | ✅ | N/A |
+| 4 | [faster-rcnn-region-proposal](techniques/faster-rcnn-region-proposal) (Ren 2015 NIPS; 14x14 feature map, 9 anchors/cell, 4 pos anchors from 2 GTs) | 47.296 | ✅ | ✅ | N/A |
+| 5 | [u-net-segmentation](techniques/u-net-segmentation) (Ronneberger 2015 MICCAI; encoder-decoder with skip connections, Dice 0.59 on noisy 32x32 demo) | 47.297 | ✅ | ✅ | N/A |
+| 6 | [dice-loss-segmentation](techniques/dice-loss-segmentation) (Milletari 2016 3DV; 1% foreground: BCE 0.21 misleading, Dice 1.0 rejects trivial predictor) | 47.298 | ✅ | ✅ | N/A |
+| 7 | [focal-tversky-loss](techniques/focal-tversky-loss) (Salehi 2017; Abraham-Khan 2019 ISBI; alpha=0.7 penalises FN, focal gamma amplifies hard examples) | 47.299 | ✅ | ✅ | N/A |
+| 8 | [semantic-segmentation-fcn](techniques/semantic-segmentation-fcn) (Long 2015 CVPR; 1x1 convs + bilinear upsampling + skip fusion FCN-32s/16s/8s) | 47.300 | ✅ | ✅ | N/A |
+| 9 | [detr-transformer-detection](techniques/detr-transformer-detection) (Carion 2020 ECCV; Hungarian bipartite matching, no NMS needed, 100 object queries) | 47.301 | ✅ | ✅ | N/A |
+| 10 | [anchor-free-fcos](techniques/anchor-free-fcos) (Tian 2019 ICCV; per-point (l,t,r,b) + centerness peak at box centre) | 47.302 | ✅ | ✅ | N/A |
+| 11 | [panoptic-segmentation](techniques/panoptic-segmentation) (Kirillov 2019 CVPR; PQ = SQ*RQ, toy 3-class demo mean PQ 0.67) | 47.303 | ✅ | ✅ | N/A |
+| 12 | [randaugment-autoaugment](techniques/randaugment-autoaugment) (Cubuk 2019 AA; 2020 RA; N=2 M=9 ImageNet default, N=2 M=14 CIFAR) | 47.304 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 83** — R (`torch` (R) with custom heads or reticulate + `torchvision`/`mmdetection`/`segmentation-models-pytorch`/`monai`) or Python (`torchvision.ops` / `torchvision.models.detection` / `torchvision.models.segmentation`, `ultralytics` YOLOv8, `mmdetection`, `detectron2`, `mmsegmentation`, `monai`, `segmentation-models-pytorch`, `panopticapi`, `timm`, `albumentations` + from-scratch demos) — SparkML has no computer-vision detection / segmentation surface; deep-learning CV is dominated by PyTorch / TensorFlow toolboxes rather than a Spark cluster.
+
+### Batch 84 — Cleanup (LinUCB / SVAR / IRF / FEVD / Holt-Winters / ESN / SOM / Deep-Sets / W-bary / Sinkhorn / Gumbel / STE)
+
+Twelve more long-tail fillers spanning CONTEXTUAL BANDITS,
+TIME-SERIES ECONOMETRICS, and DIFFERENTIABLE-DISCRETE
+tricks: one contextual bandit (LinUCB), three SVAR
+outputs (SVAR identification, IRF, FEVD), one classical
+forecast (Holt-Winters), two neural architectures (ESN,
+SOM), one invariant network (Deep Sets), two OT tools
+(Wasserstein barycenter, Sinkhorn divergence), and two
+discrete-gradient tricks (Gumbel-Softmax, Straight-Through
+Estimator).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [linucb-contextual-bandit](techniques/linucb-contextual-bandit) (Li et al 2010 WWW; 4-arm 5-D T=2000 sub-linear regret ~27 vs linear-regret random baseline) | 47.305 | ✅ | ✅ | N/A |
+| 2 | [structural-var-svar](techniques/structural-var-svar) (Sims 1980; Blanchard-Quah 1989; Cholesky B0^-1 reproduces Sigma to eps=0) | 47.306 | ✅ | ✅ | N/A |
+| 3 | [impulse-response-function](techniques/impulse-response-function) (Sims 1980; VAR(1) IRF y1<-e1=0.99, y2<-e1=0.50, decays to <0.01 by h=15) | 47.307 | ✅ | ✅ | N/A |
+| 4 | [variance-decomposition-fevd](techniques/variance-decomposition-fevd) (Sims 1980; y1 driven 99.8% by e1, y2 receives 54%/46% at long horizon) | 47.308 | ✅ | ✅ | N/A |
+| 5 | [holt-winters-forecasting](techniques/holt-winters-forecasting) (Holt 1957; Winters 1960; triple-exp smoothing with trend + seasonal) | 47.309 | ✅ | ✅ | N/A |
+| 6 | [echo-state-network](techniques/echo-state-network) (Jaeger 2001; 200-neuron reservoir ridge readout; test RMSE 0.03 vs lag-1 baseline 1.4) | 47.310 | ✅ | ✅ | N/A |
+| 7 | [self-organizing-map](techniques/self-organizing-map) (Kohonen 1982 Biol Cybern; 6x6 grid preserves 3 well-separated cluster topology; U-matrix visualisation) | 47.311 | ✅ | ✅ | N/A |
+| 8 | [deepset-permutation-invariant](techniques/deepset-permutation-invariant) (Zaheer 2017 NeurIPS; rho(sum phi(x)) identical across permutations; naive-concat baseline changes) | 47.312 | ✅ | ✅ | N/A |
+| 9 | [wasserstein-barycenter](techniques/wasserstein-barycenter) (Agueh-Carlier 2011; Cuturi-Doucet 2014 ICML; barycenter translates mean linearly in weights) | 47.313 | ✅ | ✅ | N/A |
+| 10 | [sinkhorn-divergence](techniques/sinkhorn-divergence) (Cuturi 2013; Feydy 2019 AISTATS; S_eps(mu,mu)=0 de-biased vs OT_eps(mu,mu)>0) | 47.314 | ✅ | ✅ | N/A |
+| 11 | [gumbel-softmax-relaxation](techniques/gumbel-softmax-relaxation) (Jang 2017; Maddison 2017 ICLR; tau=5 -> avg top 0.42, tau=0.1 -> 0.94) | 47.315 | ✅ | ✅ | N/A |
+| 12 | [straight-through-estimator](techniques/straight-through-estimator) (Bengio 2013; forward = sign, backward = identity; binary-weight fit converges in ~10 SGD steps) | 47.316 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 84** — R (`contextual`/`vars`/`svars`/`forecast`/`kohonen`/`reservoir`/`T4transport`/`transport`/`torch` (R) + reticulate wrappers) or Python (`contextualbandits`/`MABWiser`/`vowpalwabbit` for bandits; `statsmodels.tsa`, `darts` for econometrics; `reservoirpy`/`minisom` for the neural specialists; POT / `geomloss` for OT; `torch.nn.functional.gumbel_softmax` and custom autograd for the gradient tricks) — SparkML has no contextual-bandit / SVAR / OT / discrete-gradient surface; these techniques live in specialist R and Python libraries rather than a Spark cluster.
+
+### Batch 85 — Cleanup (ProxGrad / FISTA / L-BFGS / CG / LM / MM / Tweedie / Dirichlet / IG-GLM / Mahal-Match / GenMatch / TPS)
+
+Twelve more long-tail fillers spanning OPTIMIZATION,
+GLM families, and CAUSAL MATCHING: six optimisation
+algorithms (proximal gradient, FISTA, L-BFGS,
+conjugate gradient, Levenberg-Marquardt, MM); three
+exponential-family GLMs (Tweedie compound-Poisson-gamma,
+Dirichlet compositional, Inverse Gaussian); two matching
+methods (Mahalanobis, genetic); and one 2-D smoother
+(thin-plate splines).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [proximal-gradient-method](techniques/proximal-gradient-method) (Combettes-Wajs 2005; Parikh-Boyd 2014; ISTA on LASSO recovers 5 true nonzeros) | 47.317 | ✅ | ✅ | N/A |
+| 2 | [fista-accelerated-proximal](techniques/fista-accelerated-proximal) (Beck-Teboulle 2009; O(1/k^2) vs ISTA O(1/k); gap 6e-9 at iter 30) | 47.318 | ✅ | ✅ | N/A |
+| 3 | [lbfgs-quasi-newton](techniques/lbfgs-quasi-newton) (Liu-Nocedal 1989; Byrd 1995; 15 iters to closed-form ridge, dist 3e-7) | 47.319 | ✅ | ✅ | N/A |
+| 4 | [conjugate-gradient-cg](techniques/conjugate-gradient-cg) (Hestenes-Stiefel 1952; n=100 SPD in 37 iters; 2-cluster A converges in 2 iters) | 47.320 | ✅ | ✅ | N/A |
+| 5 | [gauss-newton-lm-nlls](techniques/gauss-newton-lm-nlls) (Levenberg 1944; Marquardt 1963; nonlinear exp fit (a,b,c) recovered in 10 iters) | 47.321 | ✅ | ✅ | N/A |
+| 6 | [mm-majorization-minimization](techniques/mm-majorization-minimization) (Hunter-Lange 2004 Am Stat; L1 median robust to outliers, LASSO via ridge subproblems) | 47.322 | ✅ | ✅ | N/A |
+| 7 | [tweedie-glm-regression](techniques/tweedie-glm-regression) (Tweedie 1984; Jorgensen 1987; compound-Poisson-gamma p=1.5, 50% zeros, IRLS recovers beta) | 47.323 | ✅ | ✅ | N/A |
+| 8 | [dirichlet-regression](techniques/dirichlet-regression) (Campbell-Mosimann 1987; Maier 2014 JStatSoft; K=3 taxa, MLE recovers 3-covariate beta) | 47.324 | ✅ | ✅ | N/A |
+| 9 | [inverse-gaussian-glm](techniques/inverse-gaussian-glm) (Tweedie 1957; McCullagh-Nelder 1989; log-link IRLS recovers beta from IG samples) | 47.325 | ✅ | ✅ | N/A |
+| 10 | [mahalanobis-distance-matching](techniques/mahalanobis-distance-matching) (Rubin 1980 Biometrics; SMD 0.5→0.03 after matching, Cochrane threshold 0.1) | 47.326 | ✅ | ✅ | N/A |
+| 11 | [genetic-matching-causal](techniques/genetic-matching-causal) (Diamond-Sekhon 2013 REStat; GA search over W minimises worst-case |SMD|) | 47.327 | ✅ | ✅ | N/A |
+| 12 | [thin-plate-splines](techniques/thin-plate-splines) (Duchon 1977; Wahba 1990; K(r)=r^2 log r; 2-D smoothing on 60 scattered points) | 47.328 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 85** — R (`glmnet`/`ncvreg`/`admm.lasso`/`stats::optim`/`stats::nls`/`minpack.lm`/`statmod`/`tweedie`/`cplm`/`DirichletReg`/`brms`/`MASS`/`MatchIt`/`Matching`/`optmatch`/`fields`/`mgcv`) or Python (`sklearn.linear_model`/`celer`/`proxop`/`pyproximal`/`scipy.optimize`/`torch.optim`/`scipy.sparse.linalg`/`statsmodels.genmod`/`dirichlet`/`PyMC`/`scipy.spatial.distance`/`causalmatch`/`scipy.interpolate` + from-scratch demos) — SparkML has no proximal / L-BFGS / LM / MM optimisation, no exponential-family GLM beyond Poisson/Binomial, no matching, and no TPS surface; these techniques all live in specialist R / Python numerical libraries rather than a Spark cluster.
+
+### Batch 86 — Cleanup (SampEn / DFA / Hilbert / Multitaper / Cook / Sobol / Morris / Safe-Screen / SAGA / Subgrad / Mirror / Prox-Newton)
+
+Twelve more long-tail fillers spanning SIGNAL PROCESSING,
+REGRESSION DIAGNOSTICS, GLOBAL SENSITIVITY, and MODERN
+OPTIMISATION: four time-series / signal tools (sample
+entropy, DFA/Hurst, Hilbert analytic signal, multitaper
+spectra), one regression diagnostic (Cook's D / leverage),
+two sensitivity analyses (Sobol variance-based, Morris
+elementary effects), and five optimisation methods (safe
+screening, SAGA variance reduction, subgradient, mirror
+descent, proximal Newton).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [sample-entropy-signal](techniques/sample-entropy-signal) (Richman-Moorman 2000 AJP; SampEn sine~0, chaos~0.6, gaussian~2.3) | 47.329 | ✅ | ✅ | N/A |
+| 2 | [dfa-hurst-fluctuation](techniques/dfa-hurst-fluctuation) (Peng et al 1994 PRE; alpha=0.5 white, 1.0 pink, 1.5 Brown, 0 anti-persistent) | 47.330 | ✅ | ✅ | N/A |
+| 3 | [hilbert-transform-analytic](techniques/hilbert-transform-analytic) (Hilbert 1912; Gabor 1946; envelope + instantaneous freq via FFT) | 47.331 | ✅ | ✅ | N/A |
+| 4 | [multitaper-spectral-density](techniques/multitaper-spectral-density) (Thomson 1982 Proc IEEE; DPSS-tapered PSD lower variance vs periodogram) | 47.332 | ✅ | ✅ | N/A |
+| 5 | [cook-distance-leverage](techniques/cook-distance-leverage) (Cook 1977 Technometrics; leverage h_ii, Cook's D thresholds 2p/n and 4/n) | 47.333 | ✅ | ✅ | N/A |
+| 6 | [sobol-variance-sensitivity](techniques/sobol-variance-sensitivity) (Sobol 1993; Saltelli 2008; first-order + total-effect indices on Ishigami) | 47.334 | ✅ | ✅ | N/A |
+| 7 | [morris-elementary-effects](techniques/morris-elementary-effects) (Morris 1991 Technometrics; mu* + sigma screening at r(d+1) evals) | 47.335 | ✅ | ✅ | N/A |
+| 8 | [safe-screening-lasso](techniques/safe-screening-lasso) (El Ghaoui 2010; Fercoq 2015 ICML; EXACT feature exclusion before LASSO solve) | 47.336 | ✅ | ✅ | N/A |
+| 9 | [sag-saga-variance-reduction](techniques/sag-saga-variance-reduction) (Roux 2012 NeurIPS; Defazio 2014 NeurIPS; linear convergence at SGD cost) | 47.337 | ✅ | ✅ | N/A |
+| 10 | [subgradient-method](techniques/subgradient-method) (Shor 1985; Boyd-Xiao-Mutapcic 2004; O(1/sqrt(k)) for non-smooth convex) | 47.338 | ✅ | ✅ | N/A |
+| 11 | [mirror-descent](techniques/mirror-descent) (Nemirovsky-Yudin 1983; Beck-Teboulle 2003; exp-grad on simplex, O(sqrt(log d / T))) | 47.339 | ✅ | ✅ | N/A |
+| 12 | [proximal-newton](techniques/proximal-newton) (Lee-Sun-Saunders 2014 SIAM; superlinear for composite logistic-LASSO) | 47.340 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 86** — R (`nonlinearTseries`/`fractal`/`signal`/`seewave`/`multitaper`/`stats::influence.measures`/`sensitivity`/`glmnet`/`ncvreg`/`quantreg`/`reticulate` wrappers) or Python (`antropy`/`nolds`/`MFDFA`/`scipy.signal.hilbert`/`scipy.signal.windows.dpss`/`mne`/`nitime`/`statsmodels.OLSInfluence`/`SALib`/`UQpy`/`celer`/`sklearn`/`cvxpy` + from-scratch demos) — SparkML has no signal-processing / regression-diagnostic / global-sensitivity / advanced-optimisation surface; these techniques all live in specialist libraries rather than a Spark cluster.
+
+### Batch 87 — Cleanup (RandSVD / Nystrom / Lanczos / Nelder-Mead / CEM / SPRT / MALA / NSGA-II / Theta / Croston / AdamW / Lion)
+
+Twelve more long-tail fillers spanning NUMERICAL LINEAR ALGEBRA,
+DERIVATIVE-FREE & MULTI-OBJECTIVE OPTIMISATION, SEQUENTIAL
+INFERENCE, MCMC, CLASSICAL FORECASTING, and MODERN DL
+OPTIMISERS: three matrix-approximation kernels (randomised
+SVD, Nystrom kernel approximation, Lanczos iteration), three
+derivative-free / multi-objective optimisers (Nelder-Mead
+simplex, cross-entropy method, NSGA-II), one sequential test
+(Wald's SPRT), one gradient-based MCMC (MALA), two industrial
+forecasting classics (theta method, Croston / SBC), and two
+modern deep-learning optimisers (AdamW, Lion).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [randomized-svd](techniques/randomized-svd) (Halko-Martinsson-Tropp 2011 SIAM Review; ~6× speedup for low-rank matrices) | 47.341 | ✅ | ✅ | N/A |
+| 2 | [nystrom-approximation](techniques/nystrom-approximation) (Williams-Seeger 2001 NeurIPS; m=100 landmarks, ~0.6% relative kernel error) | 47.342 | ✅ | ✅ | N/A |
+| 3 | [lanczos-iteration](techniques/lanczos-iteration) (Lanczos 1950 JRNBS; Krylov tridiagonalisation, k=60 gives 5e-6 top-eig error) | 47.343 | ✅ | ✅ | N/A |
+| 4 | [nelder-mead-simplex](techniques/nelder-mead-simplex) (Nelder-Mead 1965 Comput J; derivative-free Rosenbrock d=5 in 631 iters) | 47.344 | ✅ | ✅ | N/A |
+| 5 | [cross-entropy-method](techniques/cross-entropy-method) (Rubinstein 1997 EJOR; rare-event + Rastrigin d=5 to global optimum) | 47.345 | ✅ | ✅ | N/A |
+| 6 | [wald-sprt](techniques/wald-sprt) (Wald 1945 AnnMathStat; ASN ~37 vs fixed-N 155 at alpha=beta=0.05) | 47.346 | ✅ | ✅ | N/A |
+| 7 | [mala-langevin](techniques/mala-langevin) (Roberts-Tweedie 1996 Bernoulli; gradient MCMC with 0.574 optimal acceptance) | 47.347 | ✅ | ✅ | N/A |
+| 8 | [nsga-ii](techniques/nsga-ii) (Deb-Pratap-Agarwal-Meyarivan 2002 IEEE TEC; ZDT1 Pareto front L1=0.004) | 47.348 | ✅ | ✅ | N/A |
+| 9 | [theta-method-forecast](techniques/theta-method-forecast) (Assimakopoulos-Nikolopoulos 2000 IJF; M3 competition winner) | 47.349 | ✅ | ✅ | N/A |
+| 10 | [croston-intermittent-demand](techniques/croston-intermittent-demand) (Croston 1972 OpsResQ; Syntetos-Boylan 2005 JORS bias correction) | 47.350 | ✅ | ✅ | N/A |
+| 11 | [adamw-decoupled-weight-decay](techniques/adamw-decoupled-weight-decay) (Loshchilov-Hutter 2019 ICLR; default optimiser for BERT/GPT/ViT) | 47.351 | ✅ | ✅ | N/A |
+| 12 | [lion-optimizer](techniques/lion-optimizer) (Chen et al 2023 arXiv; sign-based momentum, 33% less state than AdamW) | 47.352 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 87** — R (`rsvd`/`kernlab`/`RSpectra`/`optim`/`CEoptim`/`Sequential`/`LaplacesDemon`/`nsga2R`/`forecast`/`tsintermittent`/`torch`/`reticulate` wrappers) or Python (`sklearn.utils.extmath.randomized_svd`/`sklearn.kernel_approximation.Nystroem`/`scipy.sparse.linalg.eigsh`/`scipy.optimize.minimize`/`pymoo.NSGA2`/`blackjax.mala`/`sktime.ThetaForecaster`/`statsforecast.IMAPA`/`torch.optim.AdamW`/`lion-pytorch` + from-scratch demos) — SparkML has no derivative-free / multi-objective / gradient-MCMC / intermittent-demand / modern-DL-optimiser surface; these methods live in specialist libraries and DL frameworks rather than a Spark cluster.
+
+### Batch 88 — Cleanup (Adagrad / Nadam / Adafactor / LAMB / Shampoo / PT-MCMC / BPS / BSTS / STFT / RK4 / Gauss-Legendre / Chebyshev)
+
+Twelve more long-tail fillers spanning MODERN DL OPTIMISERS,
+ADVANCED MCMC, BAYESIAN STRUCTURAL TIME SERIES, SIGNAL
+PROCESSING, and CLASSICAL NUMERICAL METHODS: five DL
+optimiser refinements (Adagrad, Nadam, Adafactor, LAMB,
+Shampoo — sparse-feature-friendly, Nesterov, sublinear
+memory, layer-wise adaptive, Kronecker-factored second
+order), two advanced MCMC methods (parallel tempering,
+bouncy particle sampler), one Bayesian state-space
+forecaster (BSTS), one time-frequency transform (STFT), and
+three foundational numerical-analysis kernels (Runge-Kutta 4
+ODE integration, Gauss-Legendre quadrature, Chebyshev
+polynomial approximation).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [adagrad](techniques/adagrad) (Duchi-Hazan-Singer 2011 JMLR; per-parameter LR, 2x lower MSE than SGD on sparse features) | 47.353 | ✅ | ✅ | N/A |
+| 2 | [nadam-optimizer](techniques/nadam-optimizer) (Dozat 2016 ICLR-WS; Nesterov-accelerated Adam, faster tail convergence) | 47.354 | ✅ | ✅ | N/A |
+| 3 | [adafactor](techniques/adafactor) (Shazeer-Stern 2018 ICML; sublinear memory via row/col factorisation, 65% saving) | 47.355 | ✅ | ✅ | N/A |
+| 4 | [lamb-optimizer](techniques/lamb-optimizer) (You et al 2020 ICLR; layer-wise trust-ratio, BERT in 76 minutes) | 47.356 | ✅ | ✅ | N/A |
+| 5 | [shampoo-optimizer](techniques/shampoo-optimizer) (Gupta-Koren-Singer 2018 ICML; Kronecker-factored second-order, 99% smaller than full Adagrad) | 47.357 | ✅ | ✅ | N/A |
+| 6 | [parallel-tempering-mcmc](techniques/parallel-tempering-mcmc) (Geyer 1991; replica-exchange fixes single-chain bimodal trap) | 47.358 | ✅ | ✅ | N/A |
+| 7 | [bouncy-particle-sampler](techniques/bouncy-particle-sampler) (Bouchard-Cote et al 2018 JASA; non-reversible PDMP MCMC) | 47.359 | ✅ | ✅ | N/A |
+| 8 | [bsts-bayesian-structural-ts](techniques/bsts-bayesian-structural-ts) (Scott-Varian 2014 IJMMNO; local-linear + seasonal Kalman forecast) | 47.360 | ✅ | ✅ | N/A |
+| 9 | [stft-short-time-fourier](techniques/stft-short-time-fourier) (Allen-Rabiner 1977 ProcIEEE; chirp tracked to +/-2Hz, machine-precision reconstruction) | 47.361 | ✅ | ✅ | N/A |
+| 10 | [runge-kutta-integration](techniques/runge-kutta-integration) (Runge 1895; Kutta 1901; O(h^4) global error, backbone of solve_ivp) | 47.362 | ✅ | ✅ | N/A |
+| 11 | [gauss-legendre-quadrature](techniques/gauss-legendre-quadrature) (Gauss 1814; Golub-Welsch 1969; exact for polys degree 2n-1) | 47.363 | ✅ | ✅ | N/A |
+| 12 | [chebyshev-approximation](techniques/chebyshev-approximation) (Chebyshev 1854; Clenshaw-Curtis 1960; geometric convergence for smooth f) | 47.364 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 88** — R (`torch`/`keras`/`nimble`/`RZigZag`/`bsts`/`KFAS`/`dlm`/`seewave`/`signal`/`deSolve`/`pracma`/`statmod`/`chebpol`) or Python (`torch.optim.Adagrad`/`torch.optim.NAdam`/`transformers.Adafactor`/`torch_optimizer.Lamb`/`optax.scale_by_shampoo`/`emcee.PTSampler`/`pdmp_jax`/`pybsts`/`scipy.signal.stft`/`scipy.integrate.solve_ivp`/`numpy.polynomial.legendre.leggauss`/`numpy.polynomial.chebyshev.Chebyshev` + from-scratch demos) — SparkML has no modern-DL-optimiser / advanced-MCMC / Bayesian state-space / spectral-signal / numerical-analysis surface; these live in DL frameworks, MCMC / signal specialist libraries, and classical numerical-analysis toolboxes rather than a Spark cluster.
+
+### Batch 89 — Cleanup (Trust Region / IPM / SQP / GMRES / PCG / Verlet / Zig-Zag / SMC / LTS / MCD / Hampel / HC)
+
+Twelve more long-tail fillers spanning CONSTRAINED
+OPTIMISATION, KRYLOV LINEAR SOLVERS, SYMPLECTIC ODE
+INTEGRATION, ADVANCED MCMC (PDMP + tempered SMC), and ROBUST
+STATISTICS / MULTIPLE TESTING: three constrained-optimisation
+solvers (trust region, interior-point, SQP), two Krylov linear
+solvers (GMRES for non-symmetric, PCG for SPD), one symplectic
+integrator (Velocity Verlet / Leapfrog), two modern MCMC methods
+(Zig-Zag PDMP, tempered SMC samplers), three robust
+statistics classics (Least Trimmed Squares, MCD covariance,
+Hampel identifier), and one sparse-signal-detection statistic
+(Higher Criticism).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [trust-region-optimization](techniques/trust-region-optimization) (Powell 1970; dog-leg Rosenbrock d=10 to 1e-20 in 36 iters) | 47.365 | ✅ | ✅ | N/A |
+| 2 | [interior-point-method](techniques/interior-point-method) (Karmarkar 1984; Nesterov-Nemirovski 1994; log-barrier LP matches HiGHS) | 47.366 | ✅ | ✅ | N/A |
+| 3 | [sequential-quadratic-programming](techniques/sequential-quadratic-programming) (Wilson 1963; Powell 1978; damped-BFGS matches SLSQP in 19 iters) | 47.367 | ✅ | ✅ | N/A |
+| 4 | [gmres-krylov-solver](techniques/gmres-krylov-solver) (Saad-Schultz 1986 SIAM J. Sci. Stat.; 12 matvecs for 1e-12 on clustered spectrum) | 47.368 | ✅ | ✅ | N/A |
+| 5 | [preconditioned-conjugate-gradient](techniques/preconditioned-conjugate-gradient) (Hestenes-Stiefel 1952; Concus-Golub-O'Leary 1976; kappa=1000 solvable in 1 step with perfect M) | 47.369 | ✅ | ✅ | N/A |
+| 6 | [verlet-leapfrog-symplectic](techniques/verlet-leapfrog-symplectic) (Verlet 1967 Phys Rev; bounded energy for T=5000 vs RK4 88% drift) | 47.370 | ✅ | ✅ | N/A |
+| 7 | [zig-zag-sampler](techniques/zig-zag-sampler) (Bierkens-Fearnhead-Roberts 2019 AnnStat; coordinate-wise PDMP MCMC) | 47.371 | ✅ | ✅ | N/A |
+| 8 | [smc-samplers-del-moral](techniques/smc-samplers-del-moral) (Del Moral-Doucet-Jasra 2006 JRSS-B; tempered particle system with marginal likelihood) | 47.372 | ✅ | ✅ | N/A |
+| 9 | [least-trimmed-squares](techniques/least-trimmed-squares) (Rousseeuw 1984 JASA; 50% breakdown, 10x tighter than OLS at 30% contamination) | 47.373 | ✅ | ✅ | N/A |
+| 10 | [mcd-robust-covariance](techniques/mcd-robust-covariance) (Rousseeuw 1985; FAST-MCD 1999; 6x tighter cov at 30% contamination) | 47.374 | ✅ | ✅ | N/A |
+| 11 | [hampel-identifier](techniques/hampel-identifier) (Hampel 1971 AnnMathStat; MAD-based robust 3-sigma, 6x RMSE reduction after sliding filter) | 47.375 | ✅ | ✅ | N/A |
+| 12 | [higher-criticism-multiple-testing](techniques/higher-criticism-multiple-testing) (Donoho-Jin 2004 AnnStat; optimal sparse-mixture detection) | 47.376 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 89** — R (`trust`/`nloptr`/`CVXR`/`Rglpk`/`Rlinsolve`/`pracma`/`RZigZag`/`SMC`/`particles`/`robustbase`/`rrcov`/`MASS`) or Python (`scipy.optimize.minimize` (`trust-*`, `SLSQP`)/`scipy.optimize.linprog`/`scipy.sparse.linalg.gmres`/`scipy.sparse.linalg.cg`/`blackjax.tempered_smc`/`pdmp_jax`/`sklearn.covariance.MinCovDet`/`sklearn.linear_model.HuberRegressor` + from-scratch demos) — SparkML has no constrained-optimisation / Krylov-solver / symplectic-integrator / PDMP-MCMC / robust-covariance / sparse-detection surface; these methods live in specialist optimisation, MCMC, and robust-statistics libraries rather than a Spark cluster.
+
+### Batch 90 — Cleanup (DE / Basin / BB / DR / Chambolle-Pock / Huber / Tukey / Reformer / Longformer / Linformer / Performer / Epanechnikov)
+
+Twelve more long-tail fillers spanning EVOLUTIONARY /
+GLOBAL OPTIMISATION, SPLITTING & SPECTRAL FIRST-ORDER
+METHODS, ROBUST M-ESTIMATORS, EFFICIENT-ATTENTION
+TRANSFORMER VARIANTS, and OPTIMAL-MISE KERNEL DENSITY:
+two global optimisers (differential evolution, basin
+hopping), three splitting / spectral first-order methods
+(Barzilai-Borwein step, Douglas-Rachford splitting,
+Chambolle-Pock primal-dual), two robust M-estimators
+(Huber, Tukey biweight), four efficient-attention
+transformer variants (Reformer LSH, Longformer sparse,
+Linformer projection, Performer FAVOR+), and one classical
+optimal-MISE kernel-density estimator (Epanechnikov).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [differential-evolution](techniques/differential-evolution) (Storn-Price 1997 JGO; Rastrigin d=2 to global 0.0 in 300 gens) | 47.377 | ✅ | ✅ | N/A |
+| 2 | [basin-hopping](techniques/basin-hopping) (Wales-Doye 1997 JPCA; hop + local-min for rugged energy landscapes) | 47.378 | ✅ | ✅ | N/A |
+| 3 | [barzilai-borwein-step](techniques/barzilai-borwein-step) (Barzilai-Borwein 1988 IMA JNA; 30 000x tighter than fixed-step GD at kappa=1e3) | 47.379 | ✅ | ✅ | N/A |
+| 4 | [douglas-rachford-splitting](techniques/douglas-rachford-splitting) (Douglas-Rachford 1956; Combettes-Wajs 2005; LASSO matches sklearn to 4 decimals) | 47.380 | ✅ | ✅ | N/A |
+| 5 | [chambolle-pock-primal-dual](techniques/chambolle-pock-primal-dual) (Chambolle-Pock 2011 J Math Imag; TV denoising RMSE 0.31 -> 0.12) | 47.381 | ✅ | ✅ | N/A |
+| 6 | [huber-m-estimator](techniques/huber-m-estimator) (Huber 1964 AnnMathStat; 5.6x tighter than OLS at 15% outliers, matches sklearn) | 47.382 | ✅ | ✅ | N/A |
+| 7 | [tukey-biweight-m-estimator](techniques/tukey-biweight-m-estimator) (Beaton-Tukey 1974 Technometrics; redescending psi, 27x tighter at 20% outliers) | 47.383 | ✅ | ✅ | N/A |
+| 8 | [reformer-lsh-attention](techniques/reformer-lsh-attention) (Kitaev-Kaiser-Levskaya 2020 ICLR; 1.5% error at 6.8% of score pairs) | 47.384 | ✅ | ✅ | N/A |
+| 9 | [longformer-sparse-attention](techniques/longformer-sparse-attention) (Beltagy-Peters-Cohan 2020; window+global, 3.2% error at 3.1% pairs) | 47.385 | ✅ | ✅ | N/A |
+| 10 | [linformer-projection](techniques/linformer-projection) (Wang et al 2020; low-rank sequence projection, 2.7% error at k=16) | 47.386 | ✅ | ✅ | N/A |
+| 11 | [performer-random-features](techniques/performer-random-features) (Choromanski et al 2021 ICLR; FAVOR+ unbiased softmax-kernel estimator) | 47.387 | ✅ | ✅ | N/A |
+| 12 | [epanechnikov-kernel-density](techniques/epanechnikov-kernel-density) (Epanechnikov 1969; optimal-MISE kernel, ISE 0.003 on bimodal) | 47.388 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 90** — R (`DEoptim`/`GenSA`/`BB`/`CVXR`/`imager`/`MASS`/`robustbase`/base R `density`/`KernSmooth`) or Python (`scipy.optimize.differential_evolution`/`scipy.optimize.basinhopping`/`pyproximal`/`skimage.restoration.denoise_tv_chambolle`/`sklearn.linear_model.HuberRegressor`/`transformers.ReformerModel`/`transformers.LongformerModel`/`linformer-pytorch`/`performer-pytorch`/`sklearn.neighbors.KernelDensity` + from-scratch demos) — SparkML has no evolutionary-optimisation / splitting-method / robust-M-estimator / efficient-attention / kernel-density surface; these methods live in specialist optimisation, DL, and robust-stats libraries rather than a Spark cluster.
+
+### Batch 91 — Chapter 2 closing: Probability Foundations
+
+Final batch closing the one Chapter 2 gap identified by the
+project audit. Twelve foundational-probability entries with
+CROSS-REFERENCES pointing at the many places each distribution
+already appears earlier in the tree (survival, GLMs, robust
+stats, Bayesian workflows, extreme-value theory, MCMC).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [weibull-distribution](techniques/weibull-distribution) (Weibull 1939, 1951; shape controls hazard; MLE via Newton) | 47.389 | ✅ | ✅ | N/A |
+| 2 | [lognormal-distribution](techniques/lognormal-distribution) (Aitchison-Brown 1957; log-transform + Normal MLE) | 47.390 | ✅ | ✅ | N/A |
+| 3 | [hypergeometric-distribution](techniques/hypergeometric-distribution) (Feller I; sampling without replacement, FPC) | 47.391 | ✅ | ✅ | N/A |
+| 4 | [cauchy-distribution](techniques/cauchy-distribution) (heavy-tailed; no mean/variance; use median/IQR) | 47.392 | ✅ | ✅ | N/A |
+| 5 | [pareto-distribution](techniques/pareto-distribution) (Pareto 1897; 80-20 at alpha=log5/log4; closed-form MLE) | 47.393 | ✅ | ✅ | N/A |
+| 6 | [stable-distributions](techniques/stable-distributions) (Levy 1925; Chambers-Mallows-Stuck sampler; generalised CLT limit) | 47.394 | ✅ | ✅ | N/A |
+| 7 | [wishart-distribution](techniques/wishart-distribution) (Wishart 1928; Bartlett decomposition; MVN precision prior) | 47.395 | ✅ | ✅ | N/A |
+| 8 | [multivariate-normal-distribution](techniques/multivariate-normal-distribution) (foundational; Cholesky sampler; chi^2_p quadratic form) | 47.396 | ✅ | ✅ | N/A |
+| 9 | [exponential-family-framework](techniques/exponential-family-framework) (Fisher-Koopman-Pitman; unified E[T(X)] = A'(eta)) | 47.397 | ✅ | ✅ | N/A |
+| 10 | [location-scale-families](techniques/location-scale-families) (X = mu + sigma Z; Fisher-info diagonal in (mu, log sigma)) | 47.398 | ✅ | ✅ | N/A |
+| 11 | [probability-integral-transform](techniques/probability-integral-transform) (Fisher 1922; Rosenblatt 1952; PIT + inverse-CDF + copula) | 47.399 | ✅ | ✅ | N/A |
+| 12 | [central-limit-theorem-demos](techniques/central-limit-theorem-demos) (Laplace 1810; Lyapunov 1901; Berry-Esseen O(1/sqrt(n)); Cauchy failure) | 47.400 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 91** — R (base R `dweibull` / `dlnorm` / `dhyper` / `dcauchy` / `stabledist` / `rWishart` / `MASS::mvrnorm` / `MCMCpack`) or Python (`scipy.stats.weibull_min` / `lognorm` / `hypergeom` / `cauchy` / `pareto` / `levy_stable` / `wishart` / `multivariate_normal` + from-scratch demos) — SparkML has no foundational-probability distribution surface; these methods live in numpy/scipy/statsmodels and R base rather than a Spark cluster.
+
+### Bookkeeping note on chapter numbering
+
+Some batch labels (e.g. "Batch 22 — Chapter 22: IRT / Psychometrics") use the CHAPTER NUMBERS from the earlier reference-guide version that seeded this repository. The current `stat_techniques_reference_v124.docx` has since re-ordered a handful of chapters, so the same content may live under a different number now. Chapter NAMES remain accurate — the numbers themselves are historical labels of individual batches.
+
+**Coverage status.** With Batch 91 the reference-guide-driven build is effectively complete: all 47 chapters have at least one dedicated batch, and 1 095 technique folders cover the long tail (Chapter 47 alone contributes ~ 250 subsections via §47.001-§47.400). Later batches: any remaining ad-hoc requests.
 
 ---
 
