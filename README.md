@@ -2617,6 +2617,34 @@ Estimator).
 
 **PySpark N/A across Batch 84** — R (`contextual`/`vars`/`svars`/`forecast`/`kohonen`/`reservoir`/`T4transport`/`transport`/`torch` (R) + reticulate wrappers) or Python (`contextualbandits`/`MABWiser`/`vowpalwabbit` for bandits; `statsmodels.tsa`, `darts` for econometrics; `reservoirpy`/`minisom` for the neural specialists; POT / `geomloss` for OT; `torch.nn.functional.gumbel_softmax` and custom autograd for the gradient tricks) — SparkML has no contextual-bandit / SVAR / OT / discrete-gradient surface; these techniques live in specialist R and Python libraries rather than a Spark cluster.
 
+### Batch 85 — Cleanup (ProxGrad / FISTA / L-BFGS / CG / LM / MM / Tweedie / Dirichlet / IG-GLM / Mahal-Match / GenMatch / TPS)
+
+Twelve more long-tail fillers spanning OPTIMIZATION,
+GLM families, and CAUSAL MATCHING: six optimisation
+algorithms (proximal gradient, FISTA, L-BFGS,
+conjugate gradient, Levenberg-Marquardt, MM); three
+exponential-family GLMs (Tweedie compound-Poisson-gamma,
+Dirichlet compositional, Inverse Gaussian); two matching
+methods (Mahalanobis, genetic); and one 2-D smoother
+(thin-plate splines).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [proximal-gradient-method](techniques/proximal-gradient-method) (Combettes-Wajs 2005; Parikh-Boyd 2014; ISTA on LASSO recovers 5 true nonzeros) | 47.317 | ✅ | ✅ | N/A |
+| 2 | [fista-accelerated-proximal](techniques/fista-accelerated-proximal) (Beck-Teboulle 2009; O(1/k^2) vs ISTA O(1/k); gap 6e-9 at iter 30) | 47.318 | ✅ | ✅ | N/A |
+| 3 | [lbfgs-quasi-newton](techniques/lbfgs-quasi-newton) (Liu-Nocedal 1989; Byrd 1995; 15 iters to closed-form ridge, dist 3e-7) | 47.319 | ✅ | ✅ | N/A |
+| 4 | [conjugate-gradient-cg](techniques/conjugate-gradient-cg) (Hestenes-Stiefel 1952; n=100 SPD in 37 iters; 2-cluster A converges in 2 iters) | 47.320 | ✅ | ✅ | N/A |
+| 5 | [gauss-newton-lm-nlls](techniques/gauss-newton-lm-nlls) (Levenberg 1944; Marquardt 1963; nonlinear exp fit (a,b,c) recovered in 10 iters) | 47.321 | ✅ | ✅ | N/A |
+| 6 | [mm-majorization-minimization](techniques/mm-majorization-minimization) (Hunter-Lange 2004 Am Stat; L1 median robust to outliers, LASSO via ridge subproblems) | 47.322 | ✅ | ✅ | N/A |
+| 7 | [tweedie-glm-regression](techniques/tweedie-glm-regression) (Tweedie 1984; Jorgensen 1987; compound-Poisson-gamma p=1.5, 50% zeros, IRLS recovers beta) | 47.323 | ✅ | ✅ | N/A |
+| 8 | [dirichlet-regression](techniques/dirichlet-regression) (Campbell-Mosimann 1987; Maier 2014 JStatSoft; K=3 taxa, MLE recovers 3-covariate beta) | 47.324 | ✅ | ✅ | N/A |
+| 9 | [inverse-gaussian-glm](techniques/inverse-gaussian-glm) (Tweedie 1957; McCullagh-Nelder 1989; log-link IRLS recovers beta from IG samples) | 47.325 | ✅ | ✅ | N/A |
+| 10 | [mahalanobis-distance-matching](techniques/mahalanobis-distance-matching) (Rubin 1980 Biometrics; SMD 0.5→0.03 after matching, Cochrane threshold 0.1) | 47.326 | ✅ | ✅ | N/A |
+| 11 | [genetic-matching-causal](techniques/genetic-matching-causal) (Diamond-Sekhon 2013 REStat; GA search over W minimises worst-case |SMD|) | 47.327 | ✅ | ✅ | N/A |
+| 12 | [thin-plate-splines](techniques/thin-plate-splines) (Duchon 1977; Wahba 1990; K(r)=r^2 log r; 2-D smoothing on 60 scattered points) | 47.328 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 85** — R (`glmnet`/`ncvreg`/`admm.lasso`/`stats::optim`/`stats::nls`/`minpack.lm`/`statmod`/`tweedie`/`cplm`/`DirichletReg`/`brms`/`MASS`/`MatchIt`/`Matching`/`optmatch`/`fields`/`mgcv`) or Python (`sklearn.linear_model`/`celer`/`proxop`/`pyproximal`/`scipy.optimize`/`torch.optim`/`scipy.sparse.linalg`/`statsmodels.genmod`/`dirichlet`/`PyMC`/`scipy.spatial.distance`/`causalmatch`/`scipy.interpolate` + from-scratch demos) — SparkML has no proximal / L-BFGS / LM / MM optimisation, no exponential-family GLM beyond Poisson/Binomial, no matching, and no TPS surface; these techniques all live in specialist R / Python numerical libraries rather than a Spark cluster.
+
 Later batches: any remaining chapters.
 
 ---
