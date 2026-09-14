@@ -2536,6 +2536,32 @@ architecture search, BOHB).
 
 **PySpark N/A across Batch 81** — R (`metafor`/`meta`/`dmetar`/`metasens` for the meta-analysis half; `mlr3hyperband`/`mlr3mbo`/reticulate + Ray Tune for the HPO half) or Python (`PythonMeta`/`pymeta`, `Ray Tune`, `Optuna`, `hyperopt`, `hpbandster`, `NNI`, `AutoKeras` + from-scratch demos) — SparkML has neither a meta-analysis pipeline nor a bandit-based multi-fidelity scheduler; both live in specialist R packages / Python HPO frameworks rather than on a Spark cluster.
 
+### Batch 82 — Cleanup (T-scale / Platt / ECE / Beta / Hist / WGAN-GP / CycleGAN / β-VAE / IWAE / Matrix-Profile / ROCKET / Shapelet)
+
+Twelve more long-tail fillers across CALIBRATION,
+GENERATIVE MODELS, and TIME-SERIES CLASSIFICATION: five
+post-hoc calibrators (temperature, Platt, Beta, histogram
+binning, ECE metric), four generative-model variants
+(WGAN-GP, CycleGAN, β-VAE, IWAE), and three time-series
+tools (Matrix Profile, ROCKET, Shapelet Transform).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [temperature-scaling](techniques/temperature-scaling) (Guo et al 2017 ICML; ECE 0.09→0.01 with T=0.97, predictions unchanged) | 47.281 | ✅ | ✅ | N/A |
+| 2 | [platt-scaling](techniques/platt-scaling) (Platt 1999; sigmoid(A·score + B) calibration for margin-based classifiers) | 47.282 | ✅ | ✅ | N/A |
+| 3 | [expected-calibration-error](techniques/expected-calibration-error) (Naeini 2015; Guo 2017; ECE 0.16, adaptive vs equal-width) | 47.283 | ✅ | ✅ | N/A |
+| 4 | [beta-calibration](techniques/beta-calibration) (Kull et al 2017 AISTATS; asymmetric miscalibration Brier 0.36→0.22 vs Platt 0.25) | 47.284 | ✅ | ✅ | N/A |
+| 5 | [histogram-binning-calibration](techniques/histogram-binning-calibration) (Zadrozny-Elkan 2001 ICML; non-monotone miscal Brier 0.24→0.19 with M=10 adaptive bins) | 47.285 | ✅ | ✅ | N/A |
+| 6 | [wgan-gp-gradient-penalty](techniques/wgan-gp-gradient-penalty) (Gulrajani 2017 NeurIPS; GP replaces weight clipping, λ=10 canonical) | 47.286 | ✅ | ✅ | N/A |
+| 7 | [cyclegan-unpaired-translation](techniques/cyclegan-unpaired-translation) (Zhu 2017 ICCV; cycle-consistency + adversarial for unpaired domain translation) | 47.287 | ✅ | ✅ | N/A |
+| 8 | [beta-vae-disentangle](techniques/beta-vae-disentangle) (Higgins et al 2017 ICLR; β-scaled ELBO for disentangled latent factors) | 47.288 | ✅ | ✅ | N/A |
+| 9 | [iwae-importance-weighted](techniques/iwae-importance-weighted) (Burda 2016 ICLR; K-sample IS tightens ELBO monotonically; gap 0.2 nats at K=1 to <0.02 at K=500) | 47.289 | ✅ | ✅ | N/A |
+| 10 | [matrix-profile-anomaly](techniques/matrix-profile-anomaly) (Yeh et al 2016 ICDM; detects planted step-discord at index 292 vs planted 330) | 47.290 | ✅ | ✅ | N/A |
+| 11 | [rocket-random-conv-features](techniques/rocket-random-conv-features) (Dempster 2020 DAMI; 200 random kernels + Ridge on 2-class sine 100% test acc vs 48% baseline) | 47.291 | ✅ | ✅ | N/A |
+| 12 | [shapelet-transform](techniques/shapelet-transform) (Ye-Keogh 2009 KDD; Hills 2014 DAMI; info-gain-selected shapelets + logistic 100% test acc) | 47.292 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 82** — R (`probably`/`betacal`/`yardstick` for calibration; `tsmp`/reticulate + PyTorch for generative + TSC) or Python (`netcal`/`sklearn.calibration`/`torchcalibration` for calibration; `torch`/`tf-gan`/`disentanglement-lib`/`Pyro`/`TFP` for generative; `stumpy`/`sktime`/`tslearn` for TSC + from-scratch demos) — SparkML has no post-hoc calibration API, no GAN / VAE surface, and no matrix-profile / shapelet primitive; each of these lives in specialist calibration / deep-learning / time-series toolboxes.
+
 Later batches: any remaining chapters.
 
 ---
