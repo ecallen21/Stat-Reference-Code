@@ -2562,6 +2562,32 @@ tools (Matrix Profile, ROCKET, Shapelet Transform).
 
 **PySpark N/A across Batch 82** — R (`probably`/`betacal`/`yardstick` for calibration; `tsmp`/reticulate + PyTorch for generative + TSC) or Python (`netcal`/`sklearn.calibration`/`torchcalibration` for calibration; `torch`/`tf-gan`/`disentanglement-lib`/`Pyro`/`TFP` for generative; `stumpy`/`sktime`/`tslearn` for TSC + from-scratch demos) — SparkML has no post-hoc calibration API, no GAN / VAE surface, and no matrix-profile / shapelet primitive; each of these lives in specialist calibration / deep-learning / time-series toolboxes.
 
+### Batch 83 — Cleanup (IoU / NMS / YOLO / Faster-RCNN / U-Net / Dice / F-Tversky / FCN / DETR / FCOS / Panoptic / RandAug)
+
+Twelve more long-tail fillers on COMPUTER VISION: two
+box-overlap / post-processing primitives (IoU-family, NMS),
+four detectors (YOLO, Faster R-CNN, DETR, FCOS), three
+segmentation architectures (U-Net, FCN, Panoptic), two
+segmentation losses (Dice, Focal Tversky), and one
+augmentation strategy (RandAugment / AutoAugment).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [iou-generalized-iou](techniques/iou-generalized-iou) (Rezatofighi 2019 CVPR; Zheng 2020 AAAI; GIoU/DIoU/CIoU provide gradient where IoU=0) | 47.293 | ✅ | ✅ | N/A |
+| 2 | [non-max-suppression-nms](techniques/non-max-suppression-nms) (Neubeck-Van Gool 2006; Bodla 2017 soft-NMS with score decay) | 47.294 | ✅ | ✅ | N/A |
+| 3 | [yolo-object-detection](techniques/yolo-object-detection) (Redmon et al 2016 CVPR; SxS grid, per-cell (x,y,w,h,obj,C classes), lambda_coord=5, lambda_noobj=0.5) | 47.295 | ✅ | ✅ | N/A |
+| 4 | [faster-rcnn-region-proposal](techniques/faster-rcnn-region-proposal) (Ren 2015 NIPS; 14x14 feature map, 9 anchors/cell, 4 pos anchors from 2 GTs) | 47.296 | ✅ | ✅ | N/A |
+| 5 | [u-net-segmentation](techniques/u-net-segmentation) (Ronneberger 2015 MICCAI; encoder-decoder with skip connections, Dice 0.59 on noisy 32x32 demo) | 47.297 | ✅ | ✅ | N/A |
+| 6 | [dice-loss-segmentation](techniques/dice-loss-segmentation) (Milletari 2016 3DV; 1% foreground: BCE 0.21 misleading, Dice 1.0 rejects trivial predictor) | 47.298 | ✅ | ✅ | N/A |
+| 7 | [focal-tversky-loss](techniques/focal-tversky-loss) (Salehi 2017; Abraham-Khan 2019 ISBI; alpha=0.7 penalises FN, focal gamma amplifies hard examples) | 47.299 | ✅ | ✅ | N/A |
+| 8 | [semantic-segmentation-fcn](techniques/semantic-segmentation-fcn) (Long 2015 CVPR; 1x1 convs + bilinear upsampling + skip fusion FCN-32s/16s/8s) | 47.300 | ✅ | ✅ | N/A |
+| 9 | [detr-transformer-detection](techniques/detr-transformer-detection) (Carion 2020 ECCV; Hungarian bipartite matching, no NMS needed, 100 object queries) | 47.301 | ✅ | ✅ | N/A |
+| 10 | [anchor-free-fcos](techniques/anchor-free-fcos) (Tian 2019 ICCV; per-point (l,t,r,b) + centerness peak at box centre) | 47.302 | ✅ | ✅ | N/A |
+| 11 | [panoptic-segmentation](techniques/panoptic-segmentation) (Kirillov 2019 CVPR; PQ = SQ*RQ, toy 3-class demo mean PQ 0.67) | 47.303 | ✅ | ✅ | N/A |
+| 12 | [randaugment-autoaugment](techniques/randaugment-autoaugment) (Cubuk 2019 AA; 2020 RA; N=2 M=9 ImageNet default, N=2 M=14 CIFAR) | 47.304 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 83** — R (`torch` (R) with custom heads or reticulate + `torchvision`/`mmdetection`/`segmentation-models-pytorch`/`monai`) or Python (`torchvision.ops` / `torchvision.models.detection` / `torchvision.models.segmentation`, `ultralytics` YOLOv8, `mmdetection`, `detectron2`, `mmsegmentation`, `monai`, `segmentation-models-pytorch`, `panopticapi`, `timm`, `albumentations` + from-scratch demos) — SparkML has no computer-vision detection / segmentation surface; deep-learning CV is dominated by PyTorch / TensorFlow toolboxes rather than a Spark cluster.
+
 Later batches: any remaining chapters.
 
 ---
