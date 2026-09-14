@@ -2736,6 +2736,37 @@ polynomial approximation).
 
 **PySpark N/A across Batch 88** — R (`torch`/`keras`/`nimble`/`RZigZag`/`bsts`/`KFAS`/`dlm`/`seewave`/`signal`/`deSolve`/`pracma`/`statmod`/`chebpol`) or Python (`torch.optim.Adagrad`/`torch.optim.NAdam`/`transformers.Adafactor`/`torch_optimizer.Lamb`/`optax.scale_by_shampoo`/`emcee.PTSampler`/`pdmp_jax`/`pybsts`/`scipy.signal.stft`/`scipy.integrate.solve_ivp`/`numpy.polynomial.legendre.leggauss`/`numpy.polynomial.chebyshev.Chebyshev` + from-scratch demos) — SparkML has no modern-DL-optimiser / advanced-MCMC / Bayesian state-space / spectral-signal / numerical-analysis surface; these live in DL frameworks, MCMC / signal specialist libraries, and classical numerical-analysis toolboxes rather than a Spark cluster.
 
+### Batch 89 — Cleanup (Trust Region / IPM / SQP / GMRES / PCG / Verlet / Zig-Zag / SMC / LTS / MCD / Hampel / HC)
+
+Twelve more long-tail fillers spanning CONSTRAINED
+OPTIMISATION, KRYLOV LINEAR SOLVERS, SYMPLECTIC ODE
+INTEGRATION, ADVANCED MCMC (PDMP + tempered SMC), and ROBUST
+STATISTICS / MULTIPLE TESTING: three constrained-optimisation
+solvers (trust region, interior-point, SQP), two Krylov linear
+solvers (GMRES for non-symmetric, PCG for SPD), one symplectic
+integrator (Velocity Verlet / Leapfrog), two modern MCMC methods
+(Zig-Zag PDMP, tempered SMC samplers), three robust
+statistics classics (Least Trimmed Squares, MCD covariance,
+Hampel identifier), and one sparse-signal-detection statistic
+(Higher Criticism).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [trust-region-optimization](techniques/trust-region-optimization) (Powell 1970; dog-leg Rosenbrock d=10 to 1e-20 in 36 iters) | 47.365 | ✅ | ✅ | N/A |
+| 2 | [interior-point-method](techniques/interior-point-method) (Karmarkar 1984; Nesterov-Nemirovski 1994; log-barrier LP matches HiGHS) | 47.366 | ✅ | ✅ | N/A |
+| 3 | [sequential-quadratic-programming](techniques/sequential-quadratic-programming) (Wilson 1963; Powell 1978; damped-BFGS matches SLSQP in 19 iters) | 47.367 | ✅ | ✅ | N/A |
+| 4 | [gmres-krylov-solver](techniques/gmres-krylov-solver) (Saad-Schultz 1986 SIAM J. Sci. Stat.; 12 matvecs for 1e-12 on clustered spectrum) | 47.368 | ✅ | ✅ | N/A |
+| 5 | [preconditioned-conjugate-gradient](techniques/preconditioned-conjugate-gradient) (Hestenes-Stiefel 1952; Concus-Golub-O'Leary 1976; kappa=1000 solvable in 1 step with perfect M) | 47.369 | ✅ | ✅ | N/A |
+| 6 | [verlet-leapfrog-symplectic](techniques/verlet-leapfrog-symplectic) (Verlet 1967 Phys Rev; bounded energy for T=5000 vs RK4 88% drift) | 47.370 | ✅ | ✅ | N/A |
+| 7 | [zig-zag-sampler](techniques/zig-zag-sampler) (Bierkens-Fearnhead-Roberts 2019 AnnStat; coordinate-wise PDMP MCMC) | 47.371 | ✅ | ✅ | N/A |
+| 8 | [smc-samplers-del-moral](techniques/smc-samplers-del-moral) (Del Moral-Doucet-Jasra 2006 JRSS-B; tempered particle system with marginal likelihood) | 47.372 | ✅ | ✅ | N/A |
+| 9 | [least-trimmed-squares](techniques/least-trimmed-squares) (Rousseeuw 1984 JASA; 50% breakdown, 10x tighter than OLS at 30% contamination) | 47.373 | ✅ | ✅ | N/A |
+| 10 | [mcd-robust-covariance](techniques/mcd-robust-covariance) (Rousseeuw 1985; FAST-MCD 1999; 6x tighter cov at 30% contamination) | 47.374 | ✅ | ✅ | N/A |
+| 11 | [hampel-identifier](techniques/hampel-identifier) (Hampel 1971 AnnMathStat; MAD-based robust 3-sigma, 6x RMSE reduction after sliding filter) | 47.375 | ✅ | ✅ | N/A |
+| 12 | [higher-criticism-multiple-testing](techniques/higher-criticism-multiple-testing) (Donoho-Jin 2004 AnnStat; optimal sparse-mixture detection) | 47.376 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 89** — R (`trust`/`nloptr`/`CVXR`/`Rglpk`/`Rlinsolve`/`pracma`/`RZigZag`/`SMC`/`particles`/`robustbase`/`rrcov`/`MASS`) or Python (`scipy.optimize.minimize` (`trust-*`, `SLSQP`)/`scipy.optimize.linprog`/`scipy.sparse.linalg.gmres`/`scipy.sparse.linalg.cg`/`blackjax.tempered_smc`/`pdmp_jax`/`sklearn.covariance.MinCovDet`/`sklearn.linear_model.HuberRegressor` + from-scratch demos) — SparkML has no constrained-optimisation / Krylov-solver / symplectic-integrator / PDMP-MCMC / robust-covariance / sparse-detection surface; these methods live in specialist optimisation, MCMC, and robust-statistics libraries rather than a Spark cluster.
+
 Later batches: any remaining chapters.
 
 ---
