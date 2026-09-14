@@ -2645,6 +2645,35 @@ methods (Mahalanobis, genetic); and one 2-D smoother
 
 **PySpark N/A across Batch 85** — R (`glmnet`/`ncvreg`/`admm.lasso`/`stats::optim`/`stats::nls`/`minpack.lm`/`statmod`/`tweedie`/`cplm`/`DirichletReg`/`brms`/`MASS`/`MatchIt`/`Matching`/`optmatch`/`fields`/`mgcv`) or Python (`sklearn.linear_model`/`celer`/`proxop`/`pyproximal`/`scipy.optimize`/`torch.optim`/`scipy.sparse.linalg`/`statsmodels.genmod`/`dirichlet`/`PyMC`/`scipy.spatial.distance`/`causalmatch`/`scipy.interpolate` + from-scratch demos) — SparkML has no proximal / L-BFGS / LM / MM optimisation, no exponential-family GLM beyond Poisson/Binomial, no matching, and no TPS surface; these techniques all live in specialist R / Python numerical libraries rather than a Spark cluster.
 
+### Batch 86 — Cleanup (SampEn / DFA / Hilbert / Multitaper / Cook / Sobol / Morris / Safe-Screen / SAGA / Subgrad / Mirror / Prox-Newton)
+
+Twelve more long-tail fillers spanning SIGNAL PROCESSING,
+REGRESSION DIAGNOSTICS, GLOBAL SENSITIVITY, and MODERN
+OPTIMISATION: four time-series / signal tools (sample
+entropy, DFA/Hurst, Hilbert analytic signal, multitaper
+spectra), one regression diagnostic (Cook's D / leverage),
+two sensitivity analyses (Sobol variance-based, Morris
+elementary effects), and five optimisation methods (safe
+screening, SAGA variance reduction, subgradient, mirror
+descent, proximal Newton).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [sample-entropy-signal](techniques/sample-entropy-signal) (Richman-Moorman 2000 AJP; SampEn sine~0, chaos~0.6, gaussian~2.3) | 47.329 | ✅ | ✅ | N/A |
+| 2 | [dfa-hurst-fluctuation](techniques/dfa-hurst-fluctuation) (Peng et al 1994 PRE; alpha=0.5 white, 1.0 pink, 1.5 Brown, 0 anti-persistent) | 47.330 | ✅ | ✅ | N/A |
+| 3 | [hilbert-transform-analytic](techniques/hilbert-transform-analytic) (Hilbert 1912; Gabor 1946; envelope + instantaneous freq via FFT) | 47.331 | ✅ | ✅ | N/A |
+| 4 | [multitaper-spectral-density](techniques/multitaper-spectral-density) (Thomson 1982 Proc IEEE; DPSS-tapered PSD lower variance vs periodogram) | 47.332 | ✅ | ✅ | N/A |
+| 5 | [cook-distance-leverage](techniques/cook-distance-leverage) (Cook 1977 Technometrics; leverage h_ii, Cook's D thresholds 2p/n and 4/n) | 47.333 | ✅ | ✅ | N/A |
+| 6 | [sobol-variance-sensitivity](techniques/sobol-variance-sensitivity) (Sobol 1993; Saltelli 2008; first-order + total-effect indices on Ishigami) | 47.334 | ✅ | ✅ | N/A |
+| 7 | [morris-elementary-effects](techniques/morris-elementary-effects) (Morris 1991 Technometrics; mu* + sigma screening at r(d+1) evals) | 47.335 | ✅ | ✅ | N/A |
+| 8 | [safe-screening-lasso](techniques/safe-screening-lasso) (El Ghaoui 2010; Fercoq 2015 ICML; EXACT feature exclusion before LASSO solve) | 47.336 | ✅ | ✅ | N/A |
+| 9 | [sag-saga-variance-reduction](techniques/sag-saga-variance-reduction) (Roux 2012 NeurIPS; Defazio 2014 NeurIPS; linear convergence at SGD cost) | 47.337 | ✅ | ✅ | N/A |
+| 10 | [subgradient-method](techniques/subgradient-method) (Shor 1985; Boyd-Xiao-Mutapcic 2004; O(1/sqrt(k)) for non-smooth convex) | 47.338 | ✅ | ✅ | N/A |
+| 11 | [mirror-descent](techniques/mirror-descent) (Nemirovsky-Yudin 1983; Beck-Teboulle 2003; exp-grad on simplex, O(sqrt(log d / T))) | 47.339 | ✅ | ✅ | N/A |
+| 12 | [proximal-newton](techniques/proximal-newton) (Lee-Sun-Saunders 2014 SIAM; superlinear for composite logistic-LASSO) | 47.340 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 86** — R (`nonlinearTseries`/`fractal`/`signal`/`seewave`/`multitaper`/`stats::influence.measures`/`sensitivity`/`glmnet`/`ncvreg`/`quantreg`/`reticulate` wrappers) or Python (`antropy`/`nolds`/`MFDFA`/`scipy.signal.hilbert`/`scipy.signal.windows.dpss`/`mne`/`nitime`/`statsmodels.OLSInfluence`/`SALib`/`UQpy`/`celer`/`sklearn`/`cvxpy` + from-scratch demos) — SparkML has no signal-processing / regression-diagnostic / global-sensitivity / advanced-optimisation surface; these techniques all live in specialist libraries rather than a Spark cluster.
+
 Later batches: any remaining chapters.
 
 ---
