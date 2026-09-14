@@ -2704,6 +2704,38 @@ modern deep-learning optimisers (AdamW, Lion).
 
 **PySpark N/A across Batch 87** — R (`rsvd`/`kernlab`/`RSpectra`/`optim`/`CEoptim`/`Sequential`/`LaplacesDemon`/`nsga2R`/`forecast`/`tsintermittent`/`torch`/`reticulate` wrappers) or Python (`sklearn.utils.extmath.randomized_svd`/`sklearn.kernel_approximation.Nystroem`/`scipy.sparse.linalg.eigsh`/`scipy.optimize.minimize`/`pymoo.NSGA2`/`blackjax.mala`/`sktime.ThetaForecaster`/`statsforecast.IMAPA`/`torch.optim.AdamW`/`lion-pytorch` + from-scratch demos) — SparkML has no derivative-free / multi-objective / gradient-MCMC / intermittent-demand / modern-DL-optimiser surface; these methods live in specialist libraries and DL frameworks rather than a Spark cluster.
 
+### Batch 88 — Cleanup (Adagrad / Nadam / Adafactor / LAMB / Shampoo / PT-MCMC / BPS / BSTS / STFT / RK4 / Gauss-Legendre / Chebyshev)
+
+Twelve more long-tail fillers spanning MODERN DL OPTIMISERS,
+ADVANCED MCMC, BAYESIAN STRUCTURAL TIME SERIES, SIGNAL
+PROCESSING, and CLASSICAL NUMERICAL METHODS: five DL
+optimiser refinements (Adagrad, Nadam, Adafactor, LAMB,
+Shampoo — sparse-feature-friendly, Nesterov, sublinear
+memory, layer-wise adaptive, Kronecker-factored second
+order), two advanced MCMC methods (parallel tempering,
+bouncy particle sampler), one Bayesian state-space
+forecaster (BSTS), one time-frequency transform (STFT), and
+three foundational numerical-analysis kernels (Runge-Kutta 4
+ODE integration, Gauss-Legendre quadrature, Chebyshev
+polynomial approximation).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [adagrad](techniques/adagrad) (Duchi-Hazan-Singer 2011 JMLR; per-parameter LR, 2x lower MSE than SGD on sparse features) | 47.353 | ✅ | ✅ | N/A |
+| 2 | [nadam-optimizer](techniques/nadam-optimizer) (Dozat 2016 ICLR-WS; Nesterov-accelerated Adam, faster tail convergence) | 47.354 | ✅ | ✅ | N/A |
+| 3 | [adafactor](techniques/adafactor) (Shazeer-Stern 2018 ICML; sublinear memory via row/col factorisation, 65% saving) | 47.355 | ✅ | ✅ | N/A |
+| 4 | [lamb-optimizer](techniques/lamb-optimizer) (You et al 2020 ICLR; layer-wise trust-ratio, BERT in 76 minutes) | 47.356 | ✅ | ✅ | N/A |
+| 5 | [shampoo-optimizer](techniques/shampoo-optimizer) (Gupta-Koren-Singer 2018 ICML; Kronecker-factored second-order, 99% smaller than full Adagrad) | 47.357 | ✅ | ✅ | N/A |
+| 6 | [parallel-tempering-mcmc](techniques/parallel-tempering-mcmc) (Geyer 1991; replica-exchange fixes single-chain bimodal trap) | 47.358 | ✅ | ✅ | N/A |
+| 7 | [bouncy-particle-sampler](techniques/bouncy-particle-sampler) (Bouchard-Cote et al 2018 JASA; non-reversible PDMP MCMC) | 47.359 | ✅ | ✅ | N/A |
+| 8 | [bsts-bayesian-structural-ts](techniques/bsts-bayesian-structural-ts) (Scott-Varian 2014 IJMMNO; local-linear + seasonal Kalman forecast) | 47.360 | ✅ | ✅ | N/A |
+| 9 | [stft-short-time-fourier](techniques/stft-short-time-fourier) (Allen-Rabiner 1977 ProcIEEE; chirp tracked to +/-2Hz, machine-precision reconstruction) | 47.361 | ✅ | ✅ | N/A |
+| 10 | [runge-kutta-integration](techniques/runge-kutta-integration) (Runge 1895; Kutta 1901; O(h^4) global error, backbone of solve_ivp) | 47.362 | ✅ | ✅ | N/A |
+| 11 | [gauss-legendre-quadrature](techniques/gauss-legendre-quadrature) (Gauss 1814; Golub-Welsch 1969; exact for polys degree 2n-1) | 47.363 | ✅ | ✅ | N/A |
+| 12 | [chebyshev-approximation](techniques/chebyshev-approximation) (Chebyshev 1854; Clenshaw-Curtis 1960; geometric convergence for smooth f) | 47.364 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 88** — R (`torch`/`keras`/`nimble`/`RZigZag`/`bsts`/`KFAS`/`dlm`/`seewave`/`signal`/`deSolve`/`pracma`/`statmod`/`chebpol`) or Python (`torch.optim.Adagrad`/`torch.optim.NAdam`/`transformers.Adafactor`/`torch_optimizer.Lamb`/`optax.scale_by_shampoo`/`emcee.PTSampler`/`pdmp_jax`/`pybsts`/`scipy.signal.stft`/`scipy.integrate.solve_ivp`/`numpy.polynomial.legendre.leggauss`/`numpy.polynomial.chebyshev.Chebyshev` + from-scratch demos) — SparkML has no modern-DL-optimiser / advanced-MCMC / Bayesian state-space / spectral-signal / numerical-analysis surface; these live in DL frameworks, MCMC / signal specialist libraries, and classical numerical-analysis toolboxes rather than a Spark cluster.
+
 Later batches: any remaining chapters.
 
 ---
