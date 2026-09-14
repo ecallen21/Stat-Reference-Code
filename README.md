@@ -2674,6 +2674,36 @@ descent, proximal Newton).
 
 **PySpark N/A across Batch 86** — R (`nonlinearTseries`/`fractal`/`signal`/`seewave`/`multitaper`/`stats::influence.measures`/`sensitivity`/`glmnet`/`ncvreg`/`quantreg`/`reticulate` wrappers) or Python (`antropy`/`nolds`/`MFDFA`/`scipy.signal.hilbert`/`scipy.signal.windows.dpss`/`mne`/`nitime`/`statsmodels.OLSInfluence`/`SALib`/`UQpy`/`celer`/`sklearn`/`cvxpy` + from-scratch demos) — SparkML has no signal-processing / regression-diagnostic / global-sensitivity / advanced-optimisation surface; these techniques all live in specialist libraries rather than a Spark cluster.
 
+### Batch 87 — Cleanup (RandSVD / Nystrom / Lanczos / Nelder-Mead / CEM / SPRT / MALA / NSGA-II / Theta / Croston / AdamW / Lion)
+
+Twelve more long-tail fillers spanning NUMERICAL LINEAR ALGEBRA,
+DERIVATIVE-FREE & MULTI-OBJECTIVE OPTIMISATION, SEQUENTIAL
+INFERENCE, MCMC, CLASSICAL FORECASTING, and MODERN DL
+OPTIMISERS: three matrix-approximation kernels (randomised
+SVD, Nystrom kernel approximation, Lanczos iteration), three
+derivative-free / multi-objective optimisers (Nelder-Mead
+simplex, cross-entropy method, NSGA-II), one sequential test
+(Wald's SPRT), one gradient-based MCMC (MALA), two industrial
+forecasting classics (theta method, Croston / SBC), and two
+modern deep-learning optimisers (AdamW, Lion).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [randomized-svd](techniques/randomized-svd) (Halko-Martinsson-Tropp 2011 SIAM Review; ~6× speedup for low-rank matrices) | 47.341 | ✅ | ✅ | N/A |
+| 2 | [nystrom-approximation](techniques/nystrom-approximation) (Williams-Seeger 2001 NeurIPS; m=100 landmarks, ~0.6% relative kernel error) | 47.342 | ✅ | ✅ | N/A |
+| 3 | [lanczos-iteration](techniques/lanczos-iteration) (Lanczos 1950 JRNBS; Krylov tridiagonalisation, k=60 gives 5e-6 top-eig error) | 47.343 | ✅ | ✅ | N/A |
+| 4 | [nelder-mead-simplex](techniques/nelder-mead-simplex) (Nelder-Mead 1965 Comput J; derivative-free Rosenbrock d=5 in 631 iters) | 47.344 | ✅ | ✅ | N/A |
+| 5 | [cross-entropy-method](techniques/cross-entropy-method) (Rubinstein 1997 EJOR; rare-event + Rastrigin d=5 to global optimum) | 47.345 | ✅ | ✅ | N/A |
+| 6 | [wald-sprt](techniques/wald-sprt) (Wald 1945 AnnMathStat; ASN ~37 vs fixed-N 155 at alpha=beta=0.05) | 47.346 | ✅ | ✅ | N/A |
+| 7 | [mala-langevin](techniques/mala-langevin) (Roberts-Tweedie 1996 Bernoulli; gradient MCMC with 0.574 optimal acceptance) | 47.347 | ✅ | ✅ | N/A |
+| 8 | [nsga-ii](techniques/nsga-ii) (Deb-Pratap-Agarwal-Meyarivan 2002 IEEE TEC; ZDT1 Pareto front L1=0.004) | 47.348 | ✅ | ✅ | N/A |
+| 9 | [theta-method-forecast](techniques/theta-method-forecast) (Assimakopoulos-Nikolopoulos 2000 IJF; M3 competition winner) | 47.349 | ✅ | ✅ | N/A |
+| 10 | [croston-intermittent-demand](techniques/croston-intermittent-demand) (Croston 1972 OpsResQ; Syntetos-Boylan 2005 JORS bias correction) | 47.350 | ✅ | ✅ | N/A |
+| 11 | [adamw-decoupled-weight-decay](techniques/adamw-decoupled-weight-decay) (Loshchilov-Hutter 2019 ICLR; default optimiser for BERT/GPT/ViT) | 47.351 | ✅ | ✅ | N/A |
+| 12 | [lion-optimizer](techniques/lion-optimizer) (Chen et al 2023 arXiv; sign-based momentum, 33% less state than AdamW) | 47.352 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 87** — R (`rsvd`/`kernlab`/`RSpectra`/`optim`/`CEoptim`/`Sequential`/`LaplacesDemon`/`nsga2R`/`forecast`/`tsintermittent`/`torch`/`reticulate` wrappers) or Python (`sklearn.utils.extmath.randomized_svd`/`sklearn.kernel_approximation.Nystroem`/`scipy.sparse.linalg.eigsh`/`scipy.optimize.minimize`/`pymoo.NSGA2`/`blackjax.mala`/`sktime.ThetaForecaster`/`statsforecast.IMAPA`/`torch.optim.AdamW`/`lion-pytorch` + from-scratch demos) — SparkML has no derivative-free / multi-objective / gradient-MCMC / intermittent-demand / modern-DL-optimiser surface; these methods live in specialist libraries and DL frameworks rather than a Spark cluster.
+
 Later batches: any remaining chapters.
 
 ---
