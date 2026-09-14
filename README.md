@@ -2767,6 +2767,38 @@ Hampel identifier), and one sparse-signal-detection statistic
 
 **PySpark N/A across Batch 89** — R (`trust`/`nloptr`/`CVXR`/`Rglpk`/`Rlinsolve`/`pracma`/`RZigZag`/`SMC`/`particles`/`robustbase`/`rrcov`/`MASS`) or Python (`scipy.optimize.minimize` (`trust-*`, `SLSQP`)/`scipy.optimize.linprog`/`scipy.sparse.linalg.gmres`/`scipy.sparse.linalg.cg`/`blackjax.tempered_smc`/`pdmp_jax`/`sklearn.covariance.MinCovDet`/`sklearn.linear_model.HuberRegressor` + from-scratch demos) — SparkML has no constrained-optimisation / Krylov-solver / symplectic-integrator / PDMP-MCMC / robust-covariance / sparse-detection surface; these methods live in specialist optimisation, MCMC, and robust-statistics libraries rather than a Spark cluster.
 
+### Batch 90 — Cleanup (DE / Basin / BB / DR / Chambolle-Pock / Huber / Tukey / Reformer / Longformer / Linformer / Performer / Epanechnikov)
+
+Twelve more long-tail fillers spanning EVOLUTIONARY /
+GLOBAL OPTIMISATION, SPLITTING & SPECTRAL FIRST-ORDER
+METHODS, ROBUST M-ESTIMATORS, EFFICIENT-ATTENTION
+TRANSFORMER VARIANTS, and OPTIMAL-MISE KERNEL DENSITY:
+two global optimisers (differential evolution, basin
+hopping), three splitting / spectral first-order methods
+(Barzilai-Borwein step, Douglas-Rachford splitting,
+Chambolle-Pock primal-dual), two robust M-estimators
+(Huber, Tukey biweight), four efficient-attention
+transformer variants (Reformer LSH, Longformer sparse,
+Linformer projection, Performer FAVOR+), and one classical
+optimal-MISE kernel-density estimator (Epanechnikov).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [differential-evolution](techniques/differential-evolution) (Storn-Price 1997 JGO; Rastrigin d=2 to global 0.0 in 300 gens) | 47.377 | ✅ | ✅ | N/A |
+| 2 | [basin-hopping](techniques/basin-hopping) (Wales-Doye 1997 JPCA; hop + local-min for rugged energy landscapes) | 47.378 | ✅ | ✅ | N/A |
+| 3 | [barzilai-borwein-step](techniques/barzilai-borwein-step) (Barzilai-Borwein 1988 IMA JNA; 30 000x tighter than fixed-step GD at kappa=1e3) | 47.379 | ✅ | ✅ | N/A |
+| 4 | [douglas-rachford-splitting](techniques/douglas-rachford-splitting) (Douglas-Rachford 1956; Combettes-Wajs 2005; LASSO matches sklearn to 4 decimals) | 47.380 | ✅ | ✅ | N/A |
+| 5 | [chambolle-pock-primal-dual](techniques/chambolle-pock-primal-dual) (Chambolle-Pock 2011 J Math Imag; TV denoising RMSE 0.31 -> 0.12) | 47.381 | ✅ | ✅ | N/A |
+| 6 | [huber-m-estimator](techniques/huber-m-estimator) (Huber 1964 AnnMathStat; 5.6x tighter than OLS at 15% outliers, matches sklearn) | 47.382 | ✅ | ✅ | N/A |
+| 7 | [tukey-biweight-m-estimator](techniques/tukey-biweight-m-estimator) (Beaton-Tukey 1974 Technometrics; redescending psi, 27x tighter at 20% outliers) | 47.383 | ✅ | ✅ | N/A |
+| 8 | [reformer-lsh-attention](techniques/reformer-lsh-attention) (Kitaev-Kaiser-Levskaya 2020 ICLR; 1.5% error at 6.8% of score pairs) | 47.384 | ✅ | ✅ | N/A |
+| 9 | [longformer-sparse-attention](techniques/longformer-sparse-attention) (Beltagy-Peters-Cohan 2020; window+global, 3.2% error at 3.1% pairs) | 47.385 | ✅ | ✅ | N/A |
+| 10 | [linformer-projection](techniques/linformer-projection) (Wang et al 2020; low-rank sequence projection, 2.7% error at k=16) | 47.386 | ✅ | ✅ | N/A |
+| 11 | [performer-random-features](techniques/performer-random-features) (Choromanski et al 2021 ICLR; FAVOR+ unbiased softmax-kernel estimator) | 47.387 | ✅ | ✅ | N/A |
+| 12 | [epanechnikov-kernel-density](techniques/epanechnikov-kernel-density) (Epanechnikov 1969; optimal-MISE kernel, ISE 0.003 on bimodal) | 47.388 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 90** — R (`DEoptim`/`GenSA`/`BB`/`CVXR`/`imager`/`MASS`/`robustbase`/base R `density`/`KernSmooth`) or Python (`scipy.optimize.differential_evolution`/`scipy.optimize.basinhopping`/`pyproximal`/`skimage.restoration.denoise_tv_chambolle`/`sklearn.linear_model.HuberRegressor`/`transformers.ReformerModel`/`transformers.LongformerModel`/`linformer-pytorch`/`performer-pytorch`/`sklearn.neighbors.KernelDensity` + from-scratch demos) — SparkML has no evolutionary-optimisation / splitting-method / robust-M-estimator / efficient-attention / kernel-density surface; these methods live in specialist optimisation, DL, and robust-stats libraries rather than a Spark cluster.
+
 Later batches: any remaining chapters.
 
 ---
