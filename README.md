@@ -2588,6 +2588,35 @@ augmentation strategy (RandAugment / AutoAugment).
 
 **PySpark N/A across Batch 83** — R (`torch` (R) with custom heads or reticulate + `torchvision`/`mmdetection`/`segmentation-models-pytorch`/`monai`) or Python (`torchvision.ops` / `torchvision.models.detection` / `torchvision.models.segmentation`, `ultralytics` YOLOv8, `mmdetection`, `detectron2`, `mmsegmentation`, `monai`, `segmentation-models-pytorch`, `panopticapi`, `timm`, `albumentations` + from-scratch demos) — SparkML has no computer-vision detection / segmentation surface; deep-learning CV is dominated by PyTorch / TensorFlow toolboxes rather than a Spark cluster.
 
+### Batch 84 — Cleanup (LinUCB / SVAR / IRF / FEVD / Holt-Winters / ESN / SOM / Deep-Sets / W-bary / Sinkhorn / Gumbel / STE)
+
+Twelve more long-tail fillers spanning CONTEXTUAL BANDITS,
+TIME-SERIES ECONOMETRICS, and DIFFERENTIABLE-DISCRETE
+tricks: one contextual bandit (LinUCB), three SVAR
+outputs (SVAR identification, IRF, FEVD), one classical
+forecast (Holt-Winters), two neural architectures (ESN,
+SOM), one invariant network (Deep Sets), two OT tools
+(Wasserstein barycenter, Sinkhorn divergence), and two
+discrete-gradient tricks (Gumbel-Softmax, Straight-Through
+Estimator).
+
+| # | Technique | Ref | R | Python | PySpark |
+|---|-----------|-----|---|--------|---------|
+| 1 | [linucb-contextual-bandit](techniques/linucb-contextual-bandit) (Li et al 2010 WWW; 4-arm 5-D T=2000 sub-linear regret ~27 vs linear-regret random baseline) | 47.305 | ✅ | ✅ | N/A |
+| 2 | [structural-var-svar](techniques/structural-var-svar) (Sims 1980; Blanchard-Quah 1989; Cholesky B0^-1 reproduces Sigma to eps=0) | 47.306 | ✅ | ✅ | N/A |
+| 3 | [impulse-response-function](techniques/impulse-response-function) (Sims 1980; VAR(1) IRF y1<-e1=0.99, y2<-e1=0.50, decays to <0.01 by h=15) | 47.307 | ✅ | ✅ | N/A |
+| 4 | [variance-decomposition-fevd](techniques/variance-decomposition-fevd) (Sims 1980; y1 driven 99.8% by e1, y2 receives 54%/46% at long horizon) | 47.308 | ✅ | ✅ | N/A |
+| 5 | [holt-winters-forecasting](techniques/holt-winters-forecasting) (Holt 1957; Winters 1960; triple-exp smoothing with trend + seasonal) | 47.309 | ✅ | ✅ | N/A |
+| 6 | [echo-state-network](techniques/echo-state-network) (Jaeger 2001; 200-neuron reservoir ridge readout; test RMSE 0.03 vs lag-1 baseline 1.4) | 47.310 | ✅ | ✅ | N/A |
+| 7 | [self-organizing-map](techniques/self-organizing-map) (Kohonen 1982 Biol Cybern; 6x6 grid preserves 3 well-separated cluster topology; U-matrix visualisation) | 47.311 | ✅ | ✅ | N/A |
+| 8 | [deepset-permutation-invariant](techniques/deepset-permutation-invariant) (Zaheer 2017 NeurIPS; rho(sum phi(x)) identical across permutations; naive-concat baseline changes) | 47.312 | ✅ | ✅ | N/A |
+| 9 | [wasserstein-barycenter](techniques/wasserstein-barycenter) (Agueh-Carlier 2011; Cuturi-Doucet 2014 ICML; barycenter translates mean linearly in weights) | 47.313 | ✅ | ✅ | N/A |
+| 10 | [sinkhorn-divergence](techniques/sinkhorn-divergence) (Cuturi 2013; Feydy 2019 AISTATS; S_eps(mu,mu)=0 de-biased vs OT_eps(mu,mu)>0) | 47.314 | ✅ | ✅ | N/A |
+| 11 | [gumbel-softmax-relaxation](techniques/gumbel-softmax-relaxation) (Jang 2017; Maddison 2017 ICLR; tau=5 -> avg top 0.42, tau=0.1 -> 0.94) | 47.315 | ✅ | ✅ | N/A |
+| 12 | [straight-through-estimator](techniques/straight-through-estimator) (Bengio 2013; forward = sign, backward = identity; binary-weight fit converges in ~10 SGD steps) | 47.316 | ✅ | ✅ | N/A |
+
+**PySpark N/A across Batch 84** — R (`contextual`/`vars`/`svars`/`forecast`/`kohonen`/`reservoir`/`T4transport`/`transport`/`torch` (R) + reticulate wrappers) or Python (`contextualbandits`/`MABWiser`/`vowpalwabbit` for bandits; `statsmodels.tsa`, `darts` for econometrics; `reservoirpy`/`minisom` for the neural specialists; POT / `geomloss` for OT; `torch.nn.functional.gumbel_softmax` and custom autograd for the gradient tricks) — SparkML has no contextual-bandit / SVAR / OT / discrete-gradient surface; these techniques live in specialist R and Python libraries rather than a Spark cluster.
+
 Later batches: any remaining chapters.
 
 ---
